@@ -1,0 +1,55 @@
+{{ define "main" }}
+<!-- Profile section outside of main container for full width -->
+{{ partial "profile.html" . }}
+
+<script>
+// Localized project descriptions - injected from Hugo i18n
+window.PROJECT_DESCRIPTIONS = {
+    games: {{ i18n "projects_description_games" | default "Video game development projects, from prototyping to commercial production." | jsonify }},
+    "apps-web": {{ i18n "projects_description_appsweb" | default "Modern web applications and full-stack solutions using the latest technologies." | jsonify }},
+    "mods-tools": {{ i18n "projects_description_tools" | default "Development tools, mods, and utilities to enhance creative workflows." | jsonify }}
+};
+</script>
+
+<div class="container">
+    <!-- Progress bar pour indiquer le défilement -->
+    <div class="scroll-progress">
+        <div class="scroll-progress-bar"></div>
+    </div>
+
+    <main class="main-content">
+
+        <!-- Section Projects -->
+        <section id="projets">
+            {{ partial "projects.html" . }}
+        </section>
+
+        <!-- Section Expérience -->
+        <section id="experiences">
+            {{ partial "experience.html" . }}
+        </section>
+
+        <!-- Section Recommandations -->
+        <!-- <section id="recommandations">
+            {{ partial "testimonials.html" . }}
+        </section> -->
+
+        {{ partial "skills.html" . }}
+
+        <!-- Section Formation -->
+        <section id="formation">
+            {{ partial "education.html" . }}
+        </section>
+
+        {{ if .Site.Data.config.features.blog }}
+        {{ partial "blog.html" . }}
+        {{ end }}
+
+    </main>
+</div>
+
+<!-- Auto-include person modal if needed -->
+{{ partial "auto-person-modal.html" . }}
+
+{{ end }}
+

@@ -1,0 +1,45 @@
+# ============================================================
+# 💻 PROGRAMMING LANGUAGES — Add your programming languages here
+# ============================================================
+
+- key: "pl_csharp"
+  iconPath: "/images/skills/csharp.svg"
+  experience: 4
+  displayedInPortfolio: true
+  color: "#239120"
+
+- key: "pl_cpp"
+  iconPath: "/images/skills/cplusplus.svg"
+  experience: 3
+  displayedInPortfolio: true
+  color: "#00599C"
+
+- key: "pl_python"
+  iconPath: "/images/skills/python.svg"
+  experience: 2
+  displayedInPortfolio: true
+  color: "#3776AB"
+
+# - key: "pl_javascript"
+#   iconPath: "/images/skills/javascript.svg"
+#   experience: 3
+#   displayedInPortfolio: true
+#   color: "#F7DF1E"
+
+# - key: "pl_html"
+#   iconPath: "/images/skills/html.svg"
+#   experience: 3
+#   displayedInPortfolio: true
+#   color: "#E34F26"
+
+# - key: "pl_css"
+#   iconPath: "/images/skills/css.svg"
+#   experience: 3
+#   displayedInPortfolio: true
+#   color: "#1572B6"
+
+# - key: "pl_sql"
+#   iconPath: "/images/skills/sql.svg"
+#   experience: 2
+#   displayedInPortfolio: true
+#   color: "#4479A1"

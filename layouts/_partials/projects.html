@@ -1,0 +1,83 @@
+<section class="projects-section">
+    <div class="projects-header section-header-unified">
+        <h2 class="section-title-unified">{{ i18n "projects_title" | default (i18n "projects") }}</h2>
+        <p class="projects-subtitle section-subtitle-unified">{{ i18n "projects_subtitle" | default "Building meaningful experiences and tools that make life easier." }}</p>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="tabs" data-can-collapse="true" data-collapse-id="projects">
+        <button class="tab-btn active" data-category="games" data-tab="games">
+            <span class="icon">🎮</span>
+            <span class="tab-label">{{ i18n "games" | default "Jeux" }}</span>
+        </button>
+        <button class="tab-btn" data-category="apps-web" data-tab="apps-web">
+            <span class="icon">💻</span>
+            <span class="tab-label">{{ i18n "apps_web" | default "Apps/Web" }}</span>
+        </button>
+        <button class="tab-btn" data-category="mods-tools" data-tab="mods-tools">
+            <span class="icon">🛠️</span>
+            <span class="tab-label">{{ i18n "mods_tools" | default "Mods & Tools" }}</span>
+        </button>
+    </div>
+
+    <!-- Description Text -->
+    <div class="projects-description">
+    <p id="section-description">{{ i18n "projects_description" | default "Explore my projects by area of expertise: video games, web applications, and developer tools." }}</p>
+    </div>
+
+    <!-- Projects Grid with filterable cards -->
+    <div class="projects-grid" id="projects-grid">
+        {{ range where (where $.Site.RegularPages "Section" "projects") "Draft" false }}
+            {{ if .Params.featured }}
+                {{- $projectImage := .Params.background_image | default .Params.image | default "images/placeholder-project.jpg" -}}
+                {{- $category := "" -}}
+                {{- if hasPrefix .Params.sector "games" -}}
+                    {{- $category = "games" -}}
+                {{- else if hasPrefix .Params.sector "appsweb" -}}
+                    {{- $category = "apps-web" -}}
+                {{- else if or (eq .Params.sector "mods") (eq .Params.sector "tools") -}}
+                    {{- $category = "mods-tools" -}}
+                {{- end -}}
+                
+                {{- if ne $category "" -}}
+                    {{/* Get all technologies for this project */}}
+                    {{ $allTechnologies := slice }}
+                    {{ with .Params.programming_languages }}
+                        {{ $allTechnologies = $allTechnologies | append . }}
+                    {{ end }}
+                    {{ with .Params.frameworks_engines }}
+                        {{ $allTechnologies = $allTechnologies | append . }}
+                    {{ end }}
+                    {{ $allTechnologies = $allTechnologies | uniq }}
+                    
+                    <div class="project-card-wrapper"
+                         data-project-id="{{ .File.BaseFileName }}"
+                         data-background-image="{{ $projectImage }}"
+                         data-sector="{{ .Params.sector }}"
+                         data-category="{{ $category }}"
+                         data-technologies='{{ partial "combined-technologies.html" . }}'>
+                        
+                        {{ partial "project-card-unified.html" (dict 
+                            "title" .Title
+                            "subtitle" .Params.subtitle
+                            "description" .Params.description
+                            "image" $projectImage
+                            "url" .Permalink
+                            "status" (cond (eq .Params.status "completed") (i18n "completed" | default "Completed") (cond (eq .Params.status "in-progress") (i18n "in_progress" | default "In Progress") ""))
+                            "technologies" $allTechnologies
+                            "maxTechnologies" 4
+                        ) }}
+                    </div>
+                {{- end -}}
+            {{ end }}
+        {{ end }}
+    </div>
+    
+    <!-- See All Projects Button -->
+    <div class="projects-see-all">
+        <a href="{{ "/projects/" | relLangURL }}" class="btn-action">
+            <span>{{ i18n "see_all_projects" | default "See all projects" }}</span>
+            {{- partial "icon.html" (dict "iconId" "arrow-right" "size" "18") -}}
+        </a>
+    </div>
+</section>

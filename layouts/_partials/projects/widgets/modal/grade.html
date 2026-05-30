@@ -1,0 +1,82 @@
+{{/*
+  Partial: Grade Modal Enhanced Layout
+  Description: Structure HTML pour l'affichage amélioré des notes académiques dans les modals de project widget
+  Context: 
+    - .Project (Page) - Project page context
+    - .Title (string) - Modal title
+*/}}
+
+{{- $grade := .Project.Params.grade -}}
+{{- if $grade -}}
+  <div class="grade-modal-enhanced">
+    {{/* Stats bar avec informations contextuelles */}}
+    <div class="grade-stats-bar">
+      <div class="grade-context">
+        <strong>{{ $grade.subject | default (i18n "academic_evaluation" | default "Évaluation académique") }}</strong>
+      </div>
+      <div class="grade-meta">
+        {{- if $grade.date -}}
+          <span class="grade-date-chip">{{ $grade.date | dateFormat "2 January 2006" }}</span>
+        {{- end -}}
+        {{- if $grade.professor -}}
+          <span class="grade-prof-chip">{{ $grade.professor }}</span>
+        {{- end -}}
+      </div>
+    </div>
+    
+    {{/* Affichage principal de la note */}}
+    <div class="grade-display-card">
+      <div class="grade-score-section">
+        <div class="grade-value-large">{{ $grade.value }}</div>
+        <div class="grade-scale-text">sur {{ $grade.scale }}</div>
+        {{- if $grade.percentage -}}
+          <div class="grade-percentage-badge">{{ $grade.percentage }}%</div>
+        {{- end -}}
+      </div>
+    </div>
+    
+    {{/* Détails organisés en grille */}}
+    {{- if or $grade.institution $grade.semester $grade.academic_year $grade.comment -}}
+    <div class="grade-details-grid">
+      {{- if $grade.institution -}}
+      <div class="grade-detail-card">
+        <div class="detail-label">{{ i18n "institution" | default "Établissement" }}</div>
+        <div class="detail-value">{{ $grade.institution }}</div>
+      </div>
+      {{- end -}}
+      
+      {{- if $grade.semester -}}
+      <div class="grade-detail-card">
+        <div class="detail-label">{{ i18n "semester" | default "Semestre" }}</div>
+        <div class="detail-value">{{ $grade.semester }}</div>
+      </div>
+      {{- end -}}
+      
+      {{- if $grade.academic_year -}}
+      <div class="grade-detail-card">
+        <div class="detail-label">{{ i18n "academic_year" | default "Année" }}</div>
+        <div class="detail-value">{{ $grade.academic_year }}</div>
+      </div>
+      {{- end -}}
+      
+      {{- if $grade.comment -}}
+      <div class="grade-comment-card">
+        <div class="comment-label">{{ i18n "comment" | default "Commentaire" }}</div>
+        <div class="comment-text">{{ $grade.comment | markdownify }}</div>
+      </div>
+      {{- end -}}
+    </div>
+    {{- end -}}
+  </div>
+{{- else -}}
+  <div class="grade-modal-enhanced">
+    <div class="grade-stats-bar">
+      <div class="grade-context">
+        <strong>Aucune note disponible</strong>
+      </div>
+    </div>
+    <div class="grade-display-card">
+      <p>{{ i18n "no_evaluation_found" | default "Aucune évaluation n'a été trouvée pour ce projet." }}</p>
+    </div>
+  </div>
+{{- end -}}

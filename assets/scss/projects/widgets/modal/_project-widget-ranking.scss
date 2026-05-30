@@ -1,0 +1,238 @@
+// =============================================================================
+// PROJECT WIDGETS - RANKING MODAL STYLES
+// =============================================================================
+// Modal-specific styles for competition ranking project widgets
+// Uses base components from _project-widget-base.scss
+
+.ranking-modal-enhanced {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    
+    // Stats bar showing ranking overview
+    .ranking-stats-bar {
+        @extend .widget-stats-bar;
+        
+        .competition-info {
+            display: flex;
+            gap: 0.5rem;
+            
+            .competition-chip {
+                @extend .widget-badge;
+                background: var(--bg-tertiary);
+                color: var(--text-secondary);
+                border: 1px solid var(--border-color);
+            }
+        }
+        
+        .participants-info {
+            font-weight: 600;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+    }
+    
+    // Main ranking display
+    .ranking-modal-display {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        
+        .ranking-position-large {
+            @extend .widget-card;
+            @extend .widget-card--static;
+            padding: 2rem;
+            text-align: center;
+            
+            .position-number {
+                font-size: 4rem;
+                font-weight: 700;
+                color: var(--accent-primary);
+                line-height: 1;
+                margin-bottom: 0.5rem;
+                text-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                
+                &.position-1 { color: #FFD700; } // Gold
+                &.position-2 { color: #C0C0C0; } // Silver  
+                &.position-3 { color: #CD7F32; } // Bronze
+            }
+            
+            .position-suffix {
+                font-size: 1.5rem;
+                color: var(--text-secondary);
+                font-weight: 500;
+                margin-left: 0.25rem;
+            }
+            
+            .competition-name {
+                font-size: 1.2rem;
+                color: var(--text-primary);
+                margin-top: 1rem;
+                font-weight: 500;
+            }
+        }
+        
+        .competitors-podium {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            
+            .podium-title {
+                font-size: 1.1rem;
+                font-weight: 600;
+                color: var(--text-primary);
+                text-align: center;
+                margin-bottom: 0.5rem;
+            }
+            
+            .podium-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 1rem;
+                
+                .competitor-card {
+                    @extend .widget-card;
+                    @extend .widget-card--compact;
+                    text-align: center;
+                    position: relative;
+                    
+                    .competitor-position {
+                        position: absolute;
+                        top: -8px;
+                        right: -8px;
+                        @extend .widget-badge;
+                        @extend .widget-badge--sm;
+                        background: var(--accent-primary);
+                        color: white;
+                        font-weight: 700;
+                        
+                        &.pos-1 { background: #FFD700; color: #000; }
+                        &.pos-2 { background: #C0C0C0; color: #000; }
+                        &.pos-3 { background: #CD7F32; color: #fff; }
+                    }
+                    
+                    .competitor-avatar {
+                        @extend .widget-icon;
+                        @extend .widget-icon--lg;
+                        margin: 0 auto 1rem;
+                        background: var(--bg-tertiary);
+                        border-radius: 50%;
+                        
+                        img {
+                            width: 100%;
+                            height: 100%;
+                            object-fit: cover;
+                            border-radius: 50%;
+                        }
+                    }
+                    
+                    .competitor-name {
+                        font-size: 1rem;
+                        font-weight: 600;
+                        color: var(--text-primary);
+                        margin-bottom: 0.5rem;
+                    }
+                    
+                    .competitor-details {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 0.25rem;
+                        
+                        .detail-item {
+                            font-size: 0.85rem;
+                            color: var(--text-secondary);
+                            
+                            .detail-label {
+                                font-weight: 500;
+                            }
+                            
+                            .detail-value {
+                                color: var(--text-primary);
+                                font-weight: 600;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        .ranking-details {
+            @extend .widget-card;
+            @extend .widget-card--static;
+            padding: 1.5rem;
+            
+            .details-title {
+                font-size: 1.1rem;
+                font-weight: 600;
+                color: var(--text-primary);
+                margin-bottom: 1rem;
+                text-align: center;
+            }
+            
+            .details-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 1rem;
+                
+                .detail-card {
+                    text-align: center;
+                    padding: 1rem;
+                    background: rgba(255,255,255,0.05);
+                    border-radius: 8px;
+                    border: 1px solid rgba(255,255,255,0.1);
+                    
+                    .detail-label {
+                        font-size: 0.85rem;
+                        color: var(--text-secondary);
+                        margin-bottom: 0.5rem;
+                        text-transform: uppercase;
+                        letter-spacing: 0.05em;
+                    }
+                    
+                    .detail-value {
+                        font-size: 1.1rem;
+                        font-weight: 600;
+                        color: var(--text-primary);
+                    }
+                }
+            }
+        }
+        
+        // Responsive design
+        @media (max-width: 768px) {
+            gap: 1.5rem;
+            
+            .ranking-position-large {
+                padding: 1.5rem;
+                
+                .position-number {
+                    font-size: 3rem;
+                }
+                
+                .position-suffix {
+                    font-size: 1.2rem;
+                }
+            }
+            
+            .competitors-podium {
+                .podium-grid {
+                    grid-template-columns: 1fr;
+                }
+            }
+            
+            .ranking-details {
+                .details-grid {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .ranking-details {
+                .details-grid {
+                    grid-template-columns: 1fr;
+                }
+            }
+        }
+    }
+}

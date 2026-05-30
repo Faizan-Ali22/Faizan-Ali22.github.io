@@ -1,0 +1,379 @@
+// =============================================================================
+// PROJECT WIDGET - CORE CONTAINER
+// =============================================================================
+
+@import 'widget-base';
+
+/* Core Project Widget Container */
+.project-widget {
+  background: rgb(20, 25, 35);
+  border: var(--infobox-border, 1px solid rgba(255,255,255,0.12));
+  border-radius: var(--border-radius-lg);
+  backdrop-filter: none;
+  position: relative;
+  transition: $widget-transition-smooth;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: var(--infobox-shadow, 0 8px 25px rgba(0,0,0,0.4), 0 4px 15px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1));
+  
+  // Widget sizes
+  &.size-small { 
+    grid-column: span 3; 
+    min-height: 100px; 
+  }
+  
+  &.size-medium { 
+    grid-column: span 4; 
+    min-height: 120px; 
+  }
+  
+  &.size-large { 
+    grid-column: span 6; 
+    min-height: 140px; 
+  }
+  
+  &.size-xl { 
+    grid-column: span 8; 
+    min-height: 160px; 
+  }
+  
+  // Expanded state - Very large focus mode spanning full grid width
+  &.expanded {
+    grid-column: 1 / -1 !important; // Override any size class, take full 12-column width
+    position: relative;
+    z-index: 60;
+    transform: scale(1.15) translateY(-30px); // Much larger scale and dramatic lift
+    box-shadow: 
+      0 60px 150px rgba(0,0,0,0.9), 
+      0 30px 80px rgba(0,0,0,0.7), 
+      0 0 0 4px rgba(52,152,219,0.5),
+      inset 0 3px 0 rgba(255,255,255,0.25);
+    border: 4px solid rgba(52,152,219,0.8);
+    min-height: 600px !important; // Much larger minimum height
+    max-height: 90vh; // Allow more viewport usage
+    margin: 3rem 0; // More spacing from other elements
+    
+    .project-widget-header {
+      padding: 3rem;
+      border-bottom: 3px solid rgba(255,255,255,0.15);
+      
+      .project-widget-title {
+        font-size: 1.8rem; // Larger title in focus
+      }
+      
+      .project-widget-summary {
+        font-size: 1.1rem; // Larger summary
+      }
+    }
+    
+    .project-widget-content {
+      padding: 3rem;
+      max-height: calc(90vh - 200px); // Account for larger header
+      overflow-y: auto;
+      font-size: 1.2rem; // Much larger text in expanded mode
+      line-height: 1.6;
+    }
+    
+    // Override all size constraints when expanded
+    &.size-small,
+    &.size-medium, 
+    &.size-large,
+    &.size-xl {
+      grid-column: 1 / -1 !important;
+      min-height: 600px !important;
+    }
+  }
+
+  // (Removed fixed fullscreen style to respect widget frame boundaries)
+  
+  // Closed state: only header is visible
+  &:not(.expanded) {
+    .project-widget-content {
+      display: none;
+    }
+    
+    .project-widget-header {
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
+  }
+  
+  // Expanded state: header + content visible
+  &.expanded {
+    .project-widget-content {
+      display: block;
+      max-height: none;
+      overflow-y: auto;
+    }
+  }
+  
+  // Opening / closing animations
+  &.expanding { 
+    animation: expandProjectWidget 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; 
+    z-index: 150; 
+  }
+  
+  &.collapsing { 
+    animation: collapseProjectWidget 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; 
+    z-index: 50; 
+  }
+  
+  // Shimmer effect
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--infobox-top-bar-gradient, linear-gradient(90deg, var(--primary-blue) 0%, var(--primary-teal) 50%, var(--primary-blue) 100%));
+    background-size: 200% 100%;
+    animation: shimmer 3s ease-in-out infinite;
+    border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  &:hover {
+    transform: translateY(-8px) scale(1.02);
+    border-color: var(--infobox-hover-border, rgba(52,152,219,0.4));
+    box-shadow: var(--infobox-hover-shadow, 0 30px 60px rgba(0,0,0,0.5), 0 15px 35px rgba(52,152,219,0.2), 0 0 30px rgba(52,152,219,0.1), inset 0 1px 0 rgba(255,255,255,0.15));
+    
+    &::before {
+      opacity: 1;
+    }
+    
+    .project-widget-summary {
+      opacity: 1;
+      color: var(--text-secondary);
+    }
+  }
+
+  // When any widget is expanded, heavily blur and hide the rest for dramatic focus
+  .project-widgets.focus-mode & {
+    transition: filter 0.5s ease, opacity 0.5s ease, transform 0.5s ease;
+    filter: blur(8px) brightness(0.15) saturate(0.3);
+    opacity: 0.1;
+    pointer-events: none;
+    transform: scale(0.9) translateY(10px); // shrink and push down non-focused widgets
+  }
+  .project-widgets.focus-mode &.expanded {
+    filter: none;
+    opacity: 1;
+    pointer-events: auto;
+    position: relative;
+    z-index: 60;
+    transform: scale(1.15) translateY(-30px); // much larger and higher lift
+  }
+  .project-widgets.focus-mode &.expanded {
+    filter: none;
+    opacity: 1;
+    pointer-events: auto;
+    position: relative;
+    z-index: 50;
+    transform: scale(1.05) translateY(-12px); // maintain expanded transform
+  }
+}
+
+// Ensure project-widgets container allows proper positioning
+.project-widgets {
+  position: relative; // Required for overlay positioning and transforms
+  
+  // Enhanced for focus mode - much darker backdrop and heavy blur
+  &.focus-mode {
+    // Add heavy background darkening to entire container
+    &::before {
+      content: '';
+      position: absolute;
+      inset: -3rem; // Extend well beyond container
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: none;
+      z-index: 5;
+      opacity: 1;
+      transition: opacity 0.6s ease;
+      pointer-events: none;
+      border-radius: 20px;
+    }
+  }
+}
+
+// Overlay behind the focused widget - very dramatic focus background
+.project-widgets-focus-overlay {
+  position: absolute;
+  inset: -4rem; // Cover well beyond grid container
+  background: 
+    radial-gradient(circle at center, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.95) 100%),
+    linear-gradient(45deg, rgba(52,152,219,0.03) 0%, rgba(0,0,0,0.9) 50%, rgba(52,152,219,0.03) 100%);
+  backdrop-filter: none;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  z-index: 15;
+  border-radius: 30px;
+}
+
+.project-widgets.focus-mode .project-widgets-focus-overlay {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+// Widget header
+.project-widget-header {
+  display: flex;
+  align-items: center;
+  gap: $widget-gap-lg;
+  padding: 2rem;
+  cursor: pointer;
+  transition: $widget-transition-smooth;
+  position: relative;
+  background: var(--infobox-header-bg, linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%));
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 2rem;
+    right: 2rem;
+    height: 1px;
+    background: var(--infobox-header-divider, linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.1) 50%, transparent 100%));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  &:hover {
+    background: var(--infobox-header-hover-bg, linear-gradient(135deg, rgba(52,152,219,0.08) 0%, rgba(255,255,255,0.05) 100%));
+    transform: translateX(4px);
+  }
+  
+  .project-widget.expanded & {
+    &::after {
+      opacity: 1;
+    }
+  }
+}
+
+.project-widget-header-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.project-widget-icon {
+  @include widget-icon-circle(3rem);
+  font-size: 1.4rem;
+  color: var(--text-primary);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2);
+  
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    z-index: -1;
+    transition: all 0.3s ease;
+  }
+  
+  svg {
+    width: 1.4rem;
+    height: 1.4rem;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+  }
+  
+  .project-widget:hover & {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.3);
+  }
+}
+
+.project-widget-title {
+  color: var(--text-primary);
+  font-size: 1.25rem;
+  font-weight: var(--font-weight-bold);
+  margin: 0 0 0.5rem 0;
+  letter-spacing: -0.01em;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.project-widget-summary {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  font-weight: 500;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.project-widget-toggle {
+  @include widget-icon-circle(2rem, var(--infobox-toggle-bg, rgba(255,255,255,0.05)));
+  color: var(--text-muted);
+  backdrop-filter: none;
+}
+
+// Animations
+@keyframes expandProjectWidget {
+  from { transform: scale(1); }
+  to { transform: scale(1.02); }
+}
+
+@keyframes collapseProjectWidget {
+  from { transform: scale(1.02); }
+  to { transform: scale(1); }
+}
+
+@keyframes shimmer {
+  0%, 100% { background-position: -200% 0; }
+  50% { background-position: 200% 0; }
+}
+
+// =============================================================================
+// MOBILE PERFORMANCE OPTIMIZATIONS
+// =============================================================================
+
+@media (max-width: 768px) {
+  // Disable backdrop-filter
+  .project-widget,
+  .project-widget-header,
+  .project-widget-content,
+  .project-widget-toggle,
+  .project-widget-icon {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  
+  // Remove box-shadows
+  .project-widget,
+  .project-widget-header,
+  .project-widget-icon,
+  .project-widget-toggle {
+    box-shadow: none;
+  }
+  
+  // Disable hover effects
+  .project-widget:hover,
+  .project-widget.expanded:hover {
+    transform: none;
+    box-shadow: none;
+  }
+  
+  .project-widget-icon:hover,
+  .project-widget-toggle:hover {
+    transform: none;
+    box-shadow: none;
+  }
+  
+  // Simplify backgrounds
+  .project-widget {
+    background: rgb(20, 25, 35);
+  }
+  
+  .project-widget-toggle,
+  .project-widget-icon {
+    background: rgba(255,255,255,0.05);
+  }
+  
+  // Disable focus overlay
+  .project-widgets-focus-overlay {
+    display: none;
+  }
+}

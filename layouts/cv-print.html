@@ -1,0 +1,468 @@
+{{ define "main" }}
+  {{/* CV Print Page - Black and white printable version */}}
+  {{ $profile := site.Data.profile }}
+  {{ $experiences := (.Site.GetPage "/experiences").Pages.ByParam "start_date" }}
+  {{ $educations := (where (.Site.GetPage "/educations").Pages "File.BaseFileName" "!=" "_index") }}
+  {{ $specialties := site.Data.specialties }}
+  {{ $softSkills := site.Data.soft_skills }}
+  {{ $programmingLanguages := site.Data.programming_languages }}
+  {{ $frameworksEngines := site.Data.frameworks_engines }}
+  {{ $technologies := site.Data.technologies }}
+
+  {{/* Use same styles as normal CV but with different colors */}}
+  {{ $cvStyles := resources.Get "scss/cv.scss" | toCSS | minify }}
+  <link rel="stylesheet" href="{{ $cvStyles.RelPermalink }}" />
+  
+  <!-- Print optimization meta tags for black and white -->
+  <meta name="color-scheme" content="light">
+  <style>
+    /* Color overrides for black and white version */
+    :root {
+      --cv-primary-bg: #ffffff !important;
+      --cv-accent: #000000 !important;
+      --cv-accent-hover: #333333 !important;
+      --cv-accent-light: rgba(0, 0, 0, .1) !important;
+      --cv-accent-border: rgba(0, 0, 0, .2) !important;
+      --cv-accent-muted: rgba(0, 0, 0, .6) !important;
+      --cv-accent-subtle: rgba(0, 0, 0, .05) !important;
+      
+      --cv-white: #ffffff !important;
+      --cv-black: #000000 !important;
+      --cv-text-primary: #000000 !important;
+      --cv-text-secondary: #333333 !important;
+      --cv-text-dark: #555555 !important;
+      --cv-text-light: #000000 !important;
+      --cv-text-darker: #000000 !important;
+      
+      --cv-bg-light: #ffffff !important;
+      --cv-bg-overlay: #f8f9fa !important;
+      --cv-bg-darker: #f0f0f0 !important;
+      
+      --cv-border-light: #e5e7eb !important;
+      --cv-border-gray: #d1d5db !important;
+      --cv-border-muted: #9ca3af !important;
+      --cv-border-subtle: #e5e7eb !important;
+      
+      /* Tags colors - all in grayscale */
+      --cv-tag-lang-bg: rgba(0, 0, 0, .1) !important;
+      --cv-tag-lang-text: #000000 !important;
+      --cv-tag-lang-border: rgba(0, 0, 0, .2) !important;
+      
+      --cv-tag-framework-bg: rgba(0, 0, 0, .05) !important;
+      --cv-tag-framework-text: #000000 !important;
+      --cv-tag-framework-border: rgba(0, 0, 0, .15) !important;
+      
+      --cv-tag-specialty-bg: rgba(0, 0, 0, .08) !important;
+      --cv-tag-specialty-text: #000000 !important;
+      --cv-tag-specialty-border: rgba(0, 0, 0, .18) !important;
+      
+      --cv-tag-soft-bg: rgba(0, 0, 0, .06) !important;
+      --cv-tag-soft-text: #000000 !important;
+      --cv-tag-soft-border: rgba(0, 0, 0, .16) !important;
+      
+      --cv-tag-formation-bg: rgba(0, 0, 0, .12) !important;
+      --cv-tag-formation-text: #000000 !important;
+      --cv-tag-formation-border: rgba(0, 0, 0, .22) !important;
+    }
+    
+    /* Force tous les éléments en noir sur blanc */
+    .cv-page.cv-print * {
+      color: #000000 !important;
+    }
+    
+    /* Exceptions pour les backgrounds */
+    .cv-page.cv-print {
+      background: #ffffff !important;
+    }
+    
+    .cv-page.cv-print .cv-col-left,
+    .cv-page.cv-print .cv-col-right {
+      background: #ffffff !important;
+    }
+    
+    /* Headers et titres */
+    .cv-page.cv-print h1,
+    .cv-page.cv-print h2,
+    .cv-page.cv-print h3,
+    .cv-page.cv-print .cv-section h2 {
+      color: #000000 !important;
+    }
+    
+    /* Links */
+    .cv-page.cv-print a {
+      color: #000000 !important;
+      text-decoration: underline !important;
+    }
+    
+    /* Ensure good contrast for all text elements */
+    .cv-page.cv-print .cv-title,
+    .cv-page.cv-print .cv-subtag,
+    .cv-page.cv-print .cv-item-desc,
+    .cv-page.cv-print .cv-lang-name,
+    .cv-page.cv-print .cv-lang-exp,
+    .cv-page.cv-print .cv-formation-title,
+    .cv-page.cv-print .cv-formation-subtitle,
+    .cv-page.cv-print .cv-formation-period,
+    .cv-page.cv-print .cv-formation-description,
+    .cv-page.cv-print .cv-experience-title,
+    .cv-page.cv-print .cv-experience-company,
+    .cv-page.cv-print .cv-experience-period,
+    .cv-page.cv-print .cv-experience-duration,
+    .cv-page.cv-print .cv-experience-description,
+    .cv-page.cv-print .cv-project-title,
+    .cv-page.cv-print .cv-project-period,
+    .cv-page.cv-print .cv-project-description {
+      color: #000000 !important;
+    }
+    
+    /* Masquer les images, backgrounds et dégradés pour l'impression */
+    .cv-page.cv-print .cv-project-individual {
+      background-image: none !important;
+      background: #f8f9fa !important;
+    }
+    
+    .cv-page.cv-print .cv-project-with-bg {
+      background-image: none !important;
+      background: #f8f9fa !important;
+    }
+    
+    .cv-page.cv-print img:not(.cv-avatar) {
+      display: none !important;
+    }
+    
+    /* Supprimer tous les dégradés et backgrounds complexes */
+    .cv-page.cv-print * {
+      background-image: none !important;
+      background: transparent !important;
+    }
+    
+    /* Supprimer les pseudo-éléments avec dégradés */
+    .cv-page.cv-print .cv-project-individual.cv-project-with-bg::before,
+    .cv-page.cv-print .cv-project-individual::before,
+    .cv-page.cv-print *::before,
+    .cv-page.cv-print *::after {
+      display: none !important;
+      content: none !important;
+      background: none !important;
+      background-image: none !important;
+    }
+    
+    /* Exceptions pour les fonds nécessaires */
+    .cv-page.cv-print,
+    .cv-page.cv-print .cv-col-left,
+    .cv-page.cv-print .cv-col-right {
+      background: #ffffff !important;
+    }
+    
+    .cv-page.cv-print .cv-bg-overlay,
+    .cv-page.cv-print .cv-experience-item,
+    .cv-page.cv-print .cv-project-individual,
+    .cv-page.cv-print .cv-formation-item {
+      background: #f8f9fa !important;
+    }
+    
+    /* Force l'impression économique en noir et blanc */
+    * {
+      -webkit-print-color-adjust: economy !important;
+      print-color-adjust: economy !important;
+    }
+  </style>
+
+  {{ $cvStyle := or .Params.cvStyle "twocol" }}
+  {{ $cvAccent := or .Params.cvAccent "#000000" }}
+  <section class="cv-page cv-print cv--{{ $cvStyle }}" id="cv-print" style="--cv-accent: {{ $cvAccent }};">
+    <!-- Navigation between versions -->
+    <div class="cv-version-nav">
+      <a href="/cv/" class="cv-nav-link cv-nav-color">🎨 Color version</a>
+      <span class="cv-nav-current">🖨️ Print version</span>
+    </div>
+
+    <header class="cv-header">
+      <div class="cv-identite">
+        <div class="cv-id-row">
+          {{ with $profile.media.profileImage }}
+            <img class="cv-avatar cv-avatar--header" src="{{ . }}" alt="{{ $profile.personal.fullName }}">
+          {{ end }}
+          <div>
+            <h1>{{ or $profile.personal.fullName (printf "%s %s" $profile.personal.firstName $profile.personal.lastName) }}</h1>
+            {{ with $profile.contact.status }}<p class="cv-title">{{ . }}</p>{{ end }}
+            {{ with $profile.personal.subtitle }}<p class="cv-subtag">{{ . }}</p>{{ end }}
+          </div>
+        </div>
+      </div>
+      <div class="cv-coordonnees">
+        <ul class="cv-contact-list">
+          {{ with $profile.contact.email }}<li>{{ . }}</li>{{ end }}
+          {{ with $profile.contact.linkedin }}<li><a href="https://{{ . }}" target="_blank" rel="noopener">{{ . }}</a></li>{{ end }}
+          {{ with $profile.contact.location }}<li>{{ . }}</li>{{ end }}
+          {{ with $profile.contact.phone }}<li>{{ . }}</li>{{ end }}
+        </ul>
+        <div class="cv-portfolio-link">
+          <a href="https://clixmods.github.io/" target="_blank" rel="noopener">Portfolio : clixmods.github.io</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="cv-grid">
+      <div class="cv-col cv-col-left">
+        <section class="cv-section cv-summary">
+          <h2>Profil</h2>
+          <div class="cv-summary-top">
+            <div class="cv-summary-text">
+              {{ with $profile.personal.title }}<p class="cv-item-desc">{{ . }}</p>{{ end }}
+              <ul class="cv-summary-bullets">
+                <li>Gameplay</li>
+                <li>Gestion de projet</li>
+                <li>Conception graphique</li>
+                <li>Outils de production</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+    {{ if $programmingLanguages }}
+      <section class="cv-section cv-languages">
+        <h2>Langage Prog.</h2>
+        <ul class="cv-tags cv-language-tags">
+          {{ range first 6 (sort $programmingLanguages "experience" "desc") }}
+            {{ $exp := .experience }}
+            <li class="cv-language-tag">
+              <span class="cv-lang-name">{{ .name }}</span>
+              <span class="cv-lang-exp">
+                {{ if ge $exp 1 }}
+                  {{/* Arrondi intelligent : si >= 1.8 ans, arrondir à l'année supérieure */}}
+                  {{ $roundedExp := math.Round $exp }}
+                  {{ $roundedExp }} {{ if eq $roundedExp 1 }}an{{ else }}ans{{ end }}
+                {{ else }}
+                  {{ printf "%.0f" (mul $exp 12) }} mois
+                {{ end }}
+              </span>
+            </li>
+          {{ end }}
+        </ul>
+      </section>
+    {{ end }}
+
+    {{ if $educations }}
+          <section class="cv-section cv-formations">
+            <h2>Formations</h2>
+            <ul class="cv-list cv-formations-list">
+              {{ range first 3 (sort $educations "Params.start_date" "desc") }}
+                <li class="cv-item cv-formation-item">
+                  <div class="cv-formation-header">
+                    <div class="cv-formation-main">
+                      <h3 class="cv-formation-title">{{ .Title }}</h3>
+                      {{ with .Params.subtitle }}<div class="cv-formation-subtitle">{{ . }}</div>{{ end }}
+                    </div>
+                    <div class="cv-formation-period">
+                      {{ if .Params.start_date }}
+                        {{ dateFormat "2006" .Params.start_date }}{{ if .Params.end_date }} - {{ dateFormat "2006" .Params.end_date }}{{ else }} - En cours{{ end }}
+                      {{ end }}
+                    </div>
+                  </div>
+                  
+                  <div class="cv-formation-description">
+                    {{ .Params.institution }}{{ if .Params.city }} - {{ .Params.city }}{{ end }}
+                  </div>
+                  
+                  {{ with .Params.status }}
+                    <div class="cv-formation-tags">
+                      <span class="cv-formation-status-tag">{{ . }}</span>
+                    </div>
+                  {{ end }}
+                </li>
+              {{ end }}
+            </ul>
+          </section>
+        {{ end }}
+
+        {{/* Centres d'intérêt */}}
+        {{ $interests := or $profile.details.interests $profile.personal.interests }}
+        {{ if or $interests (eq .Site.Language.Lang "fr") }}
+          <section class="cv-section">
+            <h2>Centres d'intérêt</h2>
+            <ul class="cv-tags cv-interests-tags">
+              {{ if $interests }}
+                {{ range $interests }}<li class="cv-interest-tag">{{ . }}</li>{{ end }}
+              {{ else }}
+                <li class="cv-interest-tag">Dessin</li>
+                <li class="cv-interest-tag">Jeux vidéo</li>
+                <li class="cv-interest-tag">Musique</li>
+                <li class="cv-interest-tag">Technologies</li>
+              {{ end }}
+            </ul>
+          </section>
+        {{ end }}
+      </div>
+      <div class="cv-col cv-col-right">
+
+        {{ if $experiences }}
+          <section class="cv-section cv-experiences-section">
+            <h2>Expériences Pro.</h2>
+            {{ range $i, $exp := first 2 $experiences }}
+              {{ $experienceData := partial "helpers/experience-data.html" $exp }}
+              <div class="cv-experience-item">
+                <div class="cv-experience-header">
+                  <div class="cv-experience-main">
+                    <h3 class="cv-experience-title">{{ $exp.Title }}</h3>
+                    <div class="cv-experience-company">
+                      <strong>{{ $exp.Params.company }}</strong>{{ with $exp.Params.location }} - <em>{{ . }}</em>{{ end }}
+                    </div>
+                  </div>
+                  <div class="cv-experience-period">
+                    {{ $experienceData.period }}{{ with $experienceData.duration }}<br><span class="cv-experience-duration">{{ . }}</span>{{ end }}
+                  </div>
+                </div>
+                
+                {{ with $exp.Params.description }}
+                  <div class="cv-experience-description">{{ . | truncate 180 }}</div>
+                {{ end }}
+                
+                {{/* Technologies utilisées (version simplifiée pour l'impression) - support both old format (string) and new format (object with displayInCV) */}}
+                {{ if or $exp.Params.programming_languages $exp.Params.frameworks_engines $exp.Params.specialties }}
+                  <div class="cv-experience-tags">
+                    {{ with $exp.Params.specialties }}
+                      {{ range . }}
+                        {{ $skillName := "" }}
+                        {{ $shouldDisplay := true }}
+                        {{ if reflect.IsMap . }}
+                          {{ $skillName = .specialty }}
+                          {{ $shouldDisplay = .displayInCV | default true }}
+                        {{ else }}
+                          {{ $skillName = . }}
+                        {{ end }}
+                        {{ if $shouldDisplay }}<span class="cv-experience-tag cv-tag-specialty">{{ $skillName }}</span>{{ end }}
+                      {{ end }}
+                    {{ end }}
+                    {{ with $exp.Params.programming_languages }}
+                      {{ range . }}
+                        {{ $skillName := "" }}
+                        {{ $shouldDisplay := true }}
+                        {{ if reflect.IsMap . }}
+                          {{ $skillName = .language }}
+                          {{ $shouldDisplay = .displayInCV | default true }}
+                        {{ else }}
+                          {{ $skillName = . }}
+                        {{ end }}
+                        {{ if $shouldDisplay }}<span class="cv-experience-tag cv-tag-lang">{{ $skillName }}</span>{{ end }}
+                      {{ end }}
+                    {{ end }}
+                    {{ with $exp.Params.frameworks_engines }}
+                      {{ range . }}
+                        {{ $skillName := "" }}
+                        {{ $shouldDisplay := true }}
+                        {{ if reflect.IsMap . }}
+                          {{ $skillName = .framework }}
+                          {{ $shouldDisplay = .displayInCV | default true }}
+                        {{ else }}
+                          {{ $skillName = . }}
+                        {{ end }}
+                        {{ if $shouldDisplay }}<span class="cv-experience-tag cv-tag-framework">{{ $skillName }}</span>{{ end }}
+                      {{ end }}
+                    {{ end }}
+                  </div>
+                {{ end }}
+              </div>
+            {{ end }}
+          </section>
+        {{ end }}
+
+        {{/* Projets (sélection compacte) */}}
+        {{ $selectedProjects := partial "cv/cv-projects-selection.html" . }}
+        {{ if gt (len $selectedProjects) 0 }}
+          <section class="cv-section cv-projects-section">
+            <h2>Projets Informatique</h2>
+            
+            {{/* Projets individuels - sélectionnés dynamiquement */}}
+            {{ range $selectedProjects }}
+              {{ partial "cv/cv-project-item.html" . }}
+            {{ end }}
+            
+            {{/* Projets d'études - groupés */}}
+            <div class="cv-project-individual">
+              <div class="cv-project-header">
+                <div class="cv-project-main">
+                  <h3 class="cv-project-title">Projets d'études</h3>
+                </div>
+                <div class="cv-project-period">2021 - 2024</div>
+              </div>
+              
+              <div class="cv-project-description">
+                13 projets réalisés sur <strong>Unity</strong> et <strong>Unreal</strong> en équipe restreinte pendant les études.
+              </div>
+              
+              <div class="cv-project-tags">
+                <span class="cv-project-tag cv-tag-specialty">Gestion de projet</span>
+                <span class="cv-project-tag cv-tag-specialty">Méthode agile</span>
+                <span class="cv-project-tag cv-tag-lang">C#</span>
+                <span class="cv-project-tag cv-tag-framework">Unity</span>
+              </div>
+            </div>
+            
+            {{/* Game Jam section */}}
+            <div class="cv-project-individual">
+              <div class="cv-project-header">
+                <div class="cv-project-main">
+                  <h3 class="cv-project-title">Game Jam</h3>
+                </div>
+                <div class="cv-project-period">2020 - 2024</div>
+              </div>
+              
+              <div class="cv-project-description">
+                Création de jeux vidéo en <strong>temps restreint</strong> et <strong>contrainte</strong>, avec une équipe aléatoire (dernièrement la Global Game Jam 2024 et les Ludum Jam 1to3).
+              </div>
+              
+              <div class="cv-project-tags">
+                <span class="cv-project-tag cv-tag-specialty">Création agile</span>
+                <span class="cv-project-tag cv-tag-specialty">Game Design</span>
+                <span class="cv-project-tag cv-tag-specialty">Développement rapide</span>
+              </div>
+            </div>
+            
+            {{/* Modding section */}}
+            <div class="cv-project-individual">
+              <div class="cv-project-header">
+                <div class="cv-project-main">
+                  <h3 class="cv-project-title">Modding</h3>
+                </div>
+                <div class="cv-project-period">2016 - 2019</div>
+              </div>
+              
+              <div class="cv-project-description">
+                <strong>Contenu de jeu vidéo</strong> pour le Steam Workshop de <strong>Call of Duty Black Ops 3</strong>.
+                <br/>+ 800 000 téléchargements cumulés
+              </div>
+              
+              <div class="cv-project-tags">
+                <span class="cv-project-tag cv-tag-specialty">Steam Workshop</span>
+                <span class="cv-project-tag cv-tag-specialty">Management communautaire</span>
+              </div>
+            </div>
+            
+          </section>
+        {{ end }}
+
+      </div>
+    </div>
+  </section>
+  
+  <script>
+    (function(){
+      try {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('download') === '1') {
+          // Attendre un peu pour s'assurer que la mise en page est complète avant l'impression
+          window.addEventListener('load', function(){
+            setTimeout(function(){ window.print(); }, 150);
+          });
+        }
+      } catch (e) { /* ignorer */ }
+    })();
+  </script>
+  
+  <!-- Boutons d'export placés après le CV -->
+  <div class="cv-external-controls">
+    <a href="/cv/" class="cv-export cv-export-color">🎨 Color version</a>
+    <button class="cv-export cv-export-print" onclick="window.print()">🖨️ Imprimer B&N</button>
+  </div>
+{{ end }}

@@ -1,0 +1,67 @@
+<section id="profil" class="profile-section hero-centered">
+    {{ with .Site.Data.profile }}
+    <div class="hero-main">
+        <div class="hero-avatar">
+            <div class="avatar-container">
+                {{- $profileImage := partial "get-optimized-image.html" (dict "imagePath" .media.profileImage "width" 400 "quality" 90) -}}
+                <img src="{{ $profileImage.src }}" 
+                     alt="{{ .personal.fullName }}" 
+                     class="hero-profile-image"
+                     {{- if and $profileImage.isResource (gt $profileImage.width 0) }} width="{{ $profileImage.width }}"{{ end -}}
+                     {{- if and $profileImage.isResource (gt $profileImage.height 0) }} height="{{ $profileImage.height }}"{{ end -}}>
+                <div class="status-badge {{ if .availability.available }}available{{ else }}unavailable{{ end }}">
+                    {{ i18n .availability.status | default .availability.status }}
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-content">
+            <p class="hero-greeting">{{ i18n "hero_greeting" | default "👋 Bonjour, je suis" }} <span class="hero-name">{{ .personal.firstName }}</span></p>
+            <h1 class="hero-title">
+                {{ range .personal.heroTitle }}
+                <span class="hero-action">{{ . }}</span>
+                {{ end }}
+            </h1>
+            
+            <p class="hero-description">
+                {{ i18n "hero_description" | default "A versatile developer passionate about building exceptional digital experiences." }}
+            </p>
+
+            <div class="hero-actions">
+                <a href="mailto:{{ with $.Site.Data.profile.contact.email }}{{ . }}{{ else }}your.email@example.com{{ end }}" class="btn-action">
+                    {{- partial "icon.html" (dict "iconId" "email" "size" "18") -}}
+                    Contact
+                </a>
+                <a href="/cv/" class="btn-action primary cv-choice-trigger">
+                    {{- partial "icon.html" (dict "iconId" "document-download" "size" "18") -}}
+                    {{ i18n "download_cv" | default "Download CV" }}
+                </a>
+            </div>
+
+            <div class="hero-stats" style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+                <div class="stat-item">
+                    <div class="stat-value">{{ with $.Site.Data.profile.personal.yearsExperience }}{{ . }}{{ else }}0{{ end }}</div>
+                    <div class="stat-label">{{ i18n "years_pro_experience" | default "ans d'expérience pro" }}</div>
+                </div>
+                <div class="stat-item">
+                    {{- $allProjects := where (where $.Site.RegularPages "Section" "projects") "Draft" false -}}
+                    {{- $gamesPro := where $allProjects ".Params.sector" "games-professionnel" -}}
+                    {{- $gamesPerso := where $allProjects ".Params.sector" "games-personnel" -}}
+                    {{- $gamesJams := where $allProjects ".Params.sector" "games-gamejams" -}}
+                    {{- $gamesCount := add (add (len $gamesPro) (len $gamesPerso)) (len $gamesJams) -}}
+                
+                    <div class="stat-value">{{ if eq $gamesCount 0 }}0{{ else }}{{ $gamesCount }}{{ end }}</div>
+                    <div class="stat-label">{{ i18n "games_created" | default "jeux créés" }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="hero-bottom" onclick="(function(){const target=document.querySelector('main.main-content section:first-child') || document.querySelector('#recommandations');if(target){const rect=target.getBoundingClientRect();const pos=rect.top+window.pageYOffset;window.scrollTo({top:pos-100,behavior:'smooth'});}else{console.log('No target section found');}})()">
+        <div class="hero-scroll-indicator">
+            {{- partial "icon.html" (dict "iconId" "arrow-down" "size" "48") -}}
+        </div>
+    </div>
+
+    {{- end }}
+</section>

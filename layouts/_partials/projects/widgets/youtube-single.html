@@ -1,0 +1,41 @@
+{{/*
+  Partial: YouTube Single Widget
+  Description: Widget pour afficher une vidéo YouTube single d'un projet
+  Context: 
+    - .video (dict) - Données de la vidéo avec .video_id, .title, .description, .date, .duration, .size
+    - .File.BaseFileName (string) - ID du projet
+*/}}
+
+{{- if .video -}}
+  {{- $video := .video -}}
+  {{- $widgetSize := (or .size ($video.size | default "size-large")) -}}
+    
+<div class="project-widget youtube-single-widget gallery-box {{ $widgetSize }}" onclick="event.stopPropagation(); openYouTubeModal('{{ $video.video_id }}', '{{ $video.title }}');">
+  <!-- Zone visuelle (miniature) -->
+  <div class="youtube-single-visual">
+    <img src="https://img.youtube.com/vi/{{ $video.video_id }}/maxresdefault.jpg" alt="{{ $video.title }}" loading="lazy">
+    <div class="youtube-single-play-overlay">
+      <div class="youtube-single-play-button">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M8,5.14V19.14L19,12.14L8,5.14Z"/>
+        </svg>
+      </div>
+    </div>
+    {{- if $video.duration -}}
+    <div class="youtube-single-duration">{{ $video.duration }}</div>
+    {{- end -}}
+  </div>
+  
+  <!-- Header en bas, séparé, affichant le titre -->
+  <div class="project-widget-header youtube-single-footer">
+    <h3 class="project-widget-title">{{ $video.video_title }}</h3>
+  </div>
+  
+  <!-- Content (non utilisé mais requis pour la cohérence du système) -->
+  <div class="project-widget-content">
+    <div class="youtube-single-placeholder">
+      <p>Ce widget ouvre le visionneur vidéo intégré.</p>
+    </div>
+  </div>
+</div>
+{{- end -}}

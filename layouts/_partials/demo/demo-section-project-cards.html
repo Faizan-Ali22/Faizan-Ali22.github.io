@@ -1,0 +1,48 @@
+   <!-- Section Cards de Projets -->
+    <section class="demo-section">
+        <h2>🃏 Cards de Projets (project-card-unified)</h2>
+        
+        <h3>Cards de projets unifiées</h3>
+        <div class="demo-element-wrapper">
+            <div class="css-class-info">
+                <strong>Container grid :</strong> <code>.projects-grid</code><br>
+                <strong>Partial :</strong> <code>{{ "{{" }} partial "project-card-unified.html" (dict ...) {{ "}}" }}</code><br>
+                <strong>Note :</strong> Utilise le composant unifié avec effet glassmorphisme et support des technologies<br>
+                <strong>Classes principales :</strong> <code>.project-card-unified</code>, <code>.project-card-unified-image</code>, <code>.project-card-unified-content</code>, <code>.project-card-unified-detailed-info</code><br>
+                <strong>Attributs data :</strong> <code>data-project-id="[id]"</code>, <code>data-category="[secteur]"</code> (pour filtrage JS si nécessaire)
+            </div>
+            <div class="projects-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px;">
+                {{ partial "project-card-unified.html" (dict 
+                    "title" "Jeu PS5 Démo"
+                    "subtitle" "Un jeu d'action next-gen"
+                    "description" "Jeu d'action et d'aventure développé pour PlayStation 5 avec des graphismes époustouflants et un gameplay innovant utilisant les fonctionnalités DualSense."
+                    "image" "/images/placeholder-project.jpg"
+                    "url" "/projects/demo-game"
+                    "role" "🎮"
+                    "status" "Terminé"
+                    "technologies" (slice "Unity" "C#" "Blender" "Substance Painter")
+                ) }}
+                
+                {{ partial "project-card-unified.html" (dict 
+                    "title" "Application Web"
+                    "subtitle" "E-commerce moderne"
+                    "description" "Plateforme e-commerce complète avec gestion des stocks, paiements en ligne, et tableau de bord administrateur. Architecture microservices moderne."
+                    "image" "/images/placeholder-project.jpg"
+                    "url" "/projects/demo-webapp"
+                    "role" "🛒"
+                    "status" "En cours"
+                    "technologies" (slice "React" "Node.js" "MongoDB" "Docker" "AWS")
+                ) }}
+                
+                {{ partial "project-card-unified.html" (dict 
+                    "title" "Outil de Développement"
+                    "subtitle" "Plugin VS Code"
+                    "description" "Extension VS Code pour améliorer la productivité des développeurs avec autocomplétion intelligente et refactoring automatique."
+                    "image" "/images/placeholder-project.jpg"
+                    "url" "/projects/demo-tool"
+                    "role" "🔧"
+                    "technologies" (slice "TypeScript" "VS Code API" "Node.js")
+                ) }}
+            </div>
+        </div>
+    </section>

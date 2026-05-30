@@ -1,0 +1,111 @@
+{{/*
+  Partial: Specialties Modal Layout
+  Description: Structure HTML pour l'affichage des spécialités dans les modals de project widget
+  Context: 
+    - .specialties (slice) - Liste des spécialités utilisées dans le projet
+    - .projectId (string) - ID du projet pour contextualiser les actions
+    - .profileData (dict) - Données du profil pour la section développeur
+*/}}
+
+{{- $specialties := .specialties -}}
+{{- $projectId := .projectId | default "" -}}
+{{- $profileData := .profileData -}}
+
+{{- if $specialties -}}
+  {{- $total := len $specialties -}}
+  {{- $totalExperience := 0 -}}
+  {{- $categories := dict -}}
+  
+  {{/* Calculer l'expérience totale et grouper par type/catégorie si nécessaire */}}
+  {{- range $specialties -}}
+    {{- $experience := .experience | default 0 -}}
+    {{- $totalExperience = add $totalExperience $experience -}}
+    {{/* Les spécialités n'ont pas de catégories, mais on pourrait les grouper par domaine d'expertise */}}
+  {{- end -}}
+  
+  {{- $avgExperience := 0 -}}
+  {{- if gt $total 0 -}}
+    {{- $avgExperience = div $totalExperience $total -}}
+  {{- end -}}
+
+  <div class="specialties-modal">
+    {{/* Barre de statistiques */}}
+    <div class="specialties-stats-bar">
+      <div class="widget-count">
+        <strong>{{ $total }}</strong> {{ i18n "domains_applied" | default "domaines appliqués" }}
+      </div>
+    </div>
+    
+    {{/* Note développeur */}}
+    {{- if $profileData -}}
+    <div class="developer-profile-note">
+      <div class="profile-avatar">
+        <img src="{{ $profileData.media.profileImage }}" alt="{{ $profileData.personal.fullName }}" loading="lazy">
+      </div>
+      <div class="profile-note-content">
+        <div class="profile-note-title">{{ i18n "specialties_of_for_project" | default "Spécialités de {0} pour ce projet" | replaceRE "\\{0\\}" $profileData.personal.firstName }}</div>
+        <div class="profile-note-subtitle">{{ $profileData.personal.title }}</div>
+      </div>
+    </div>
+    {{- end -}}
+    
+    {{/* Grille des spécialités */}}
+    <div class="specialties-grid">
+      {{- range $specialties -}}
+        {{- $specialtyName := i18n .key | default (.name | default "Spécialité") -}}
+        {{- $specialtyIcon := .icon | default "🧩" -}}
+        {{- $specialtySubtitle := .subtitle | default "" -}}
+        {{- $specialtyExperience := .experience | default 0 -}}
+        {{- $yearLabel := cond (eq $specialtyExperience 1) (i18n "year_singular" | default "year") (i18n "years_plural" | default "years") -}}
+        
+        <div class="specialty-card" 
+             data-specialty="{{ $specialtyName }}" 
+             tabindex="0" 
+             role="button" 
+             aria-label="{{ i18n "view_details_of" | default "Voir les détails de" }} {{ $specialtyName }}"
+             onclick="openSkillModal('{{ $specialtyName }}', '{{ $specialtyIcon }}', '{{ i18n "specialty" | default "Spécialité" }}', '{{ $specialtyExperience }}', 'emoji', '{{ .key }}')"
+             style="cursor: pointer;">
+          
+          {{/* En-tête de spécialité */}}
+          <div class="specialty-header">
+            <div class="specialty-icon widget-icon widget-icon--lg" aria-hidden="true">{{ $specialtyIcon }}</div>
+            <div class="specialty-info">
+              <div class="specialty-title">{{ $specialtyName }}</div>
+              {{- if $specialtySubtitle -}}
+                <div class="specialty-subtitle">{{ $specialtySubtitle }}</div>
+              {{- end -}}
+            </div>
+          </div>
+          
+          {{/* Badge simple avec années d'expérience */}}
+          <div class="specialty-badge widget-badge">
+            {{ $specialtyExperience }} {{ $yearLabel | upper }}
+          </div>
+        </div>
+      {{- end -}}
+    </div>
+    
+    {{/* Note d'interaction */}}
+    <div class="specialties-interaction-note">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z"/>
+      </svg>
+      {{ i18n "click_specialty_see_projects" | default "Cliquez sur une spécialité pour voir les projets associés et plus de détails" }}
+    </div>
+  </div>
+{{- else -}}
+  <div class="specialties-modal">
+    <div class="specialties-stats-bar">
+      <div class="specialties-count">
+        <strong>0</strong> spécialités
+      </div>
+    </div>
+    <div class="specialties-empty">
+      <div class="empty-icon" aria-hidden="true">🧩</div>
+      <div class="empty-message">
+        <h4>Aucune spécialité spécifiée</h4>
+        <p>Ce projet n'a pas de spécialités définies dans ses métadonnées.</p>
+      </div>
+    </div>
+  </div>
+{{- end -}}

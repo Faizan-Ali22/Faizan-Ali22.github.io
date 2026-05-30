@@ -1,0 +1,64 @@
+{{/* Helper to retrieve all technologies from a project (page or object) */}}
+{{/* Usage: {{ partial "get-all-technologies.html" $projectPage }} */}}
+{{ $allTech := slice }}
+
+{{/* If it's a Hugo page, use .Params */}}
+{{ if .Params }}
+    {{/* Add programming languages */}}
+    {{ with .Params.programming_languages }}
+        {{ $allTech = $allTech | append . }}
+    {{ end }}
+
+    {{/* Add frameworks and engines */}}
+    {{ with .Params.frameworks_engines }}
+        {{ $allTech = $allTech | append . }}
+    {{ end }}
+
+    {{/* Add specialties */}}
+    {{ with .Params.specialties }}
+        {{ $allTech = $allTech | append . }}
+    {{ end }}
+
+    {{/* Add soft skills */}}
+    {{ with .Params.soft_skills }}
+        {{ $allTech = $allTech | append . }}
+    {{ end }}
+
+    {{/* Add development tools */}}
+    {{ with .Params.tools }}
+        {{ $allTech = $allTech | append . }}
+    {{ end }}
+
+    {{/* Add legacy technologies for compatibility */}}
+    {{ with .Params.technologies }}
+        {{ $allTech = $allTech | append . }}
+    {{ end }}
+{{ else }}
+    {{/* If it's a direct object (inline project) */}}
+    {{ with .programming_languages }}
+        {{ $allTech = $allTech | append . }}
+    {{ end }}
+
+    {{ with .frameworks_engines }}
+        {{ $allTech = $allTech | append . }}
+    {{ end }}
+
+    {{ with .specialties }}
+        {{ $allTech = $allTech | append . }}
+    {{ end }}
+
+    {{ with .soft_skills }}
+        {{ $allTech = $allTech | append . }}
+    {{ end }}
+
+    {{ with .tools }}
+        {{ $allTech = $allTech | append . }}
+    {{ end }}
+
+    {{ with .technologies }}
+        {{ $allTech = $allTech | append . }}
+    {{ end }}
+{{ end }}
+
+{{/* Deduplicate and return */}}
+{{ return ($allTech | uniq) }}

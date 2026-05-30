@@ -1,0 +1,65 @@
+{{ define "main" }}
+<main class="people-page">
+    <div class="container">
+        <div class="people-profile">
+            {{ if .Params.avatar }}
+            <div class="people-avatar">
+                <img src="{{ .Params.avatar }}" alt="{{ .Title }}">
+            </div>
+            {{ else }}
+            <div class="people-avatar placeholder">
+                <span>{{ substr .Title 0 1 | upper }}</span>
+            </div>
+            {{ end }}
+            
+            <div class="people-info">
+                <h1>{{ .Title }}</h1>
+                
+                {{ if .Params.position }}
+                <div class="people-position">{{ .Params.position }}</div>
+                {{ end }}
+                
+                {{ if .Params.company }}
+                <div class="people-company">{{ .Params.company }}</div>
+                {{ end }}
+                
+                {{ if .Params.bio }}
+                <div class="people-bio">
+                    <p>{{ .Params.bio }}</p>
+                </div>
+                {{ end }}
+                
+                <div class="people-contact">
+                    {{ if .Params.email }}
+                    <a href="mailto:{{ .Params.email }}" class="contact-link">
+                        📧 {{ .Params.email }}
+                    </a>
+                    {{ end }}
+                    
+                    {{ if .Params.linkedin }}
+                    <a href="{{ .Params.linkedin }}" class="contact-link" target="_blank">
+                        💼 LinkedIn
+                    </a>
+                    {{ end }}
+                    
+                    {{ if .Params.github }}
+                    <a href="{{ .Params.github }}" class="contact-link" target="_blank">
+                        💻 GitHub
+                    </a>
+                    {{ end }}
+                    
+                    {{ if .Params.website }}
+                    <a href="{{ .Params.website }}" class="contact-link" target="_blank">
+                        🌐 Site web
+                    </a>
+                    {{ end }}
+                </div>
+            </div>
+        </div>
+        
+        <div class="people-content">
+            {{ .Content }}
+        </div>
+    </div>
+</main>
+{{ end }}

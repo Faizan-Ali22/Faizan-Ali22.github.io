@@ -1,0 +1,86 @@
+/* ========================================
+  TROPHIES BUTTON COMPONENT
+  ======================================== */
+
+.trophies-container {
+  position: relative;
+}
+
+.trophies-btn {
+  position: relative;
+  min-width: 80px !important;
+  padding: 6px 12px !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+  background: rgba(255, 215, 0, 0.1) !important;
+  border: 1px solid rgba(255, 215, 0, 0.3) !important;
+}
+
+.trophies-btn:hover {
+  background: rgba(255, 215, 0, 0.2) !important;
+  border-color: rgba(255, 215, 0, 0.5) !important;
+}
+
+.trophy-count {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #FFD700;
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  margin-top: 1px;
+}
+
+.trophy-progress {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 215, 0, 0.2);
+  border-radius: 2px;
+  overflow: hidden;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.trophy-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #FFD700 0%, #FFA500 100%);
+  border-radius: 2px;
+  transition: width 0.5s ease;
+  box-shadow: 0 0 4px rgba(255, 215, 0, 0.4);
+  width: 0%;
+}
+
+/* ========================================
+  TROPHIES BUTTON ANIMATION EFFECT
+  ======================================== */
+
+.trophies-btn.new-trophy {
+  animation: pulse-trophy 1s ease-in-out;
+}
+
+@keyframes pulse-trophy {
+  0%, 100% { 
+    background: rgba(255, 215, 0, 0.1) !important;
+    border-color: rgba(255, 215, 0, 0.3) !important;
+    transform: scale(1);
+  }
+  50% { 
+    background: rgba(255, 215, 0, 0.3) !important;
+    border-color: rgba(255, 215, 0, 0.6) !important;
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+  }
+}
+
+/* ========================================
+   RESPONSIVE DESIGN FOR BUTTON
+   ======================================== */
+
+@media (max-width: 480px) {
+  .trophies-btn {
+    min-width: 60px !important;
+    padding: 4px 8px !important;
+  }
+
+  .trophy-count {
+    font-size: 0.7rem;
+  }
+}

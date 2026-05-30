@@ -1,0 +1,704 @@
+/* ================================================================
+   RIGHT DOCK STYLES - Dock à droite pour trophées et langue
+   ================================================================ */
+
+/* Import des styles de notifications */
+@import 'notifications';
+
+/* Variables du Right Dock - harmonisées avec les autres docks */
+:root {
+  --right-dock-width: auto;
+  --right-dock-height: 72px;
+  --right-dock-padding: 12px;
+  --right-dock-gap: 8px;
+  --right-dock-button-size: 48px;
+  --right-dock-button-size-mobile: 40px;
+  
+  /* Position */
+  --right-dock-top: 20px;
+  --right-dock-right: 20px;
+  --right-dock-z-index: 1001;
+  
+  /* Apparence harmonisée avec top-dock */
+  --right-dock-bg: var(--top-dock-bg, rgba(47, 47, 47, 0.35));
+  --right-dock-border: var(--top-dock-border, rgba(255, 255, 255, 0.40));
+  --right-dock-blur: var(--top-dock-blur, 10px);
+  --right-dock-shadow: var(--top-dock-shadow, rgba(0, 0, 0, 0.4));
+  --right-dock-transition: var(--top-dock-transition, 150ms ease-out);
+  --right-dock-radius: var(--top-dock-radius, 48px);
+  --right-dock-text: var(--top-dock-text, #F4F4F5);
+}
+
+/* Thème clair - harmonisé avec top-dock */
+[data-theme="light"] {
+  --right-dock-bg: var(--top-dock-bg, rgba(255, 255, 255, 0.75));
+  --right-dock-border: var(--top-dock-border, rgba(0, 0, 0, 0.1));
+  --right-dock-text: var(--top-dock-text, #1A1A1A);
+  --right-dock-shadow: var(--top-dock-shadow, rgba(0, 0, 0, 0.15));
+  --right-dock-blur: var(--top-dock-blur, 16px);
+}
+
+/* Adaptations pour le thème clair - cohérent avec top-dock */
+[data-theme="light"] {
+  .right-dock .dock-button {
+    color: var(--right-dock-text);
+    
+    &:hover {
+      background: rgba(0, 0, 0, 0.1);
+    }
+  }
+}
+
+/* Container principal du Right Dock - même style que top-dock */
+.right-dock {
+  position: fixed;
+  top: var(--right-dock-top);
+  right: var(--right-dock-right);
+  z-index: var(--right-dock-z-index);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  
+  /* Apparence identique au top-dock */
+  background: var(--right-dock-bg);
+  backdrop-filter: blur(var(--right-dock-blur));
+  border: 1px solid var(--right-dock-border);
+  border-radius: var(--right-dock-radius);
+  box-shadow: 0 4px 16px var(--right-dock-shadow);
+  
+  /* Transition harmonisée */
+  transition: all var(--right-dock-transition);
+}
+
+/* Container des éléments */
+.right-dock-container {
+  display: flex;
+  align-items: center;
+  gap: var(--right-dock-gap);
+  padding: var(--right-dock-padding);
+  height: var(--right-dock-height);
+}
+
+/* Éléments du dock */
+.dock-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Boutons du dock - style harmonisé avec top-dock */
+.right-dock .dock-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--right-dock-button-size);
+  height: var(--right-dock-button-size);
+  border-radius: 50%;
+  background: transparent;
+  border: none;
+  color: var(--right-dock-text);
+  text-decoration: none;
+  cursor: pointer;
+  transition: 
+    transform var(--right-dock-transition),
+    background-color var(--right-dock-transition),
+    box-shadow var(--right-dock-transition);
+  
+  /* Focus et accessibilité */
+  &:focus {
+    outline: 2px solid var(--top-dock-accent, #4fd1c7);
+    outline-offset: 2px;
+  }
+  
+  &:focus:not(:focus-visible) {
+    outline: none;
+  }
+  
+  /* États hover et focus - identique au top-dock */
+  &:hover,
+  &:focus-visible {
+    transform: scale(1.25);
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* État actif */
+  &:active {
+    transform: scale(1.15);
+  }
+  
+  /* Tooltip via attribut title - apparaît en dessous */
+  &::after {
+    content: attr(title);
+    position: absolute;
+    top: calc(100% + 12px);
+    left: 50%;
+    transform: translateX(-50%) scale(0.9);
+    background: rgba(0, 0, 0, 0.85);
+    color: white;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: 
+      opacity var(--right-dock-transition),
+      visibility var(--right-dock-transition),
+      transform var(--right-dock-transition);
+    pointer-events: none;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Flèche du tooltip - pointe vers le haut */
+  &::before {
+    content: '';
+    position: absolute;
+    top: calc(100% + 7px);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 5px solid rgba(0, 0, 0, 0.85);
+    opacity: 0;
+    visibility: hidden;
+    transition: 
+      opacity var(--right-dock-transition),
+      visibility var(--right-dock-transition);
+    pointer-events: none;
+    z-index: 11;
+  }
+  
+  /* Affichage au hover */
+  &:hover::after,
+  &:hover::before,
+  &:focus-visible::after,
+  &:focus-visible::before {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  &:hover::after,
+  &:focus-visible::after {
+    transform: translateX(-50%) scale(1);
+  }
+}
+
+/* Icônes des boutons - harmonisées avec top-dock */
+.right-dock .dock-icon {
+  width: 24px;
+  height: 24px;
+  stroke: currentColor;
+  stroke-width: 1; /* Réduit la largeur du stroke pour moins d'épaisseur */
+  fill: currentColor;
+  transition: all var(--right-dock-transition);
+}
+
+/* Images PNG dans les icônes - coloration dynamique */
+.right-dock .dock-icon[src$=".png"] {
+  /* Utilise un filtre pour colorer l'image blanche selon la couleur du texte */
+  filter: brightness(0) saturate(100%) invert(92%) sepia(7%) saturate(191%) hue-rotate(192deg) brightness(103%) contrast(96%);
+  /* Pour mode sombre, on utilise la couleur du texte */
+}
+
+/* Adaptation pour le thème clair */
+[data-theme="light"] .right-dock .dock-icon[src$=".png"] {
+  filter: brightness(0) saturate(100%) invert(12%) sepia(0%) saturate(0%) hue-rotate(180deg) brightness(100%) contrast(100%);
+}
+
+/* Labels tooltip - style identique au top-dock */
+.right-dock .dock-label,
+/* ================================================================
+   BOUTON TROPHÉES SPÉCIFIQUE - VERSION CIRCULAIRE
+   Override des styles existants avec sélecteurs plus spécifiques
+   ================================================================ */
+
+.right-dock .trophies-btn {
+  position: relative;
+  /* Force la forme parfaitement ronde avec spécificité plus élevée */
+  width: var(--right-dock-button-size) !important;
+  height: var(--right-dock-button-size) !important;
+  min-width: var(--right-dock-button-size) !important;
+  flex-direction: column !important; /* Garde column pour centrer icône + texte */
+  padding: 0 !important; /* Remove custom padding */
+  gap: 1px !important; /* Petit gap entre icône et texte */
+  
+  /* Override des couleurs de fond */
+  background: transparent !important;
+  border: none !important;
+  
+  /* Conteneur pour l'icône et le compteur */
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.right-dock .trophies-btn:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: none !important;
+}
+
+/* Icône du trophée - spécificité plus élevée */
+.right-dock .trophies-btn .dock-icon {
+  width: 20px !important;
+  height: 20px !important;
+  margin-bottom: 1px !important;
+}
+
+/* Compteur de trophées - override complet */
+.right-dock .trophy-count {
+  font-size: 8px !important;
+  font-weight: 700 !important;
+  color: currentColor !important;
+  line-height: 1 !important;
+  letter-spacing: -0.5px !important;
+  text-shadow: none !important;
+  margin: 0 !important;
+  margin-top: 0 !important;
+}
+
+/* Barre de progression circulaire - override complet */
+.right-dock .trophy-progress {
+  position: absolute !important;
+  top: -3px !important;
+  left: -3px !important;
+  width: calc(100% + 6px) !important;
+  height: calc(100% + 6px) !important;
+  border-radius: 50% !important;
+  background: none !important;
+  pointer-events: none !important;
+  z-index: -1 !important;
+  overflow: visible !important;
+  box-shadow: none !important;
+}
+
+/* Force le conteneur à rester circulaire */
+.right-dock .trophy-button {
+  /* Override complet des styles de modal */
+  width: var(--dock-item-width) !important;
+  height: var(--dock-item-height) !important;
+  border-radius: 50% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+  box-shadow: var(--dock-item-shadow) !important;
+  background: var(--dock-item-bg) !important;
+  backdrop-filter: var(--dock-backdrop-filter) !important;
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  
+  /* Force la forme circulaire */
+  min-width: var(--dock-item-width) !important;
+  max-width: var(--dock-item-width) !important;
+  min-height: var(--dock-item-height) !important;
+  max-height: var(--dock-item-height) !important;
+  aspect-ratio: 1 !important;
+}
+
+.right-dock .trophy-button:hover {
+  transform: scale(1.1) !important;
+  background: var(--dock-item-bg-hover) !important;
+  box-shadow: var(--dock-item-shadow-hover) !important;
+}
+
+.right-dock .trophy-button .trophy-icon {
+  font-size: 1.2rem !important;
+  color: #ffd700 !important;
+  z-index: 2 !important;
+  position: relative !important;
+}
+
+/* Position absolue pour le SVG */
+.right-dock .trophy-progress-circle {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
+}
+.right-dock .trophy-progress-circle {
+  width: 100% !important;
+  height: 100% !important;
+  transform: rotate(-90deg) !important; /* Commence en haut */
+}
+
+.right-dock .trophy-progress-track {
+  fill: none !important;
+  stroke: rgba(255, 215, 0, 0.15) !important;
+  stroke-width: 2 !important;
+}
+
+.right-dock .trophy-progress-bar {
+  fill: none !important;
+  stroke-width: 2 !important;
+  stroke-linecap: round !important;
+  transition: stroke-dashoffset 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  filter: drop-shadow(0 0 3px rgba(255, 215, 0, 0.4)) !important;
+  /* Override des styles de largeur */
+  width: auto !important;
+  height: auto !important;
+  background: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Animation pour nouveau trophée - adaptée au design circulaire */
+.trophies-btn.new-trophy {
+  animation: newTrophyPulse 2s ease-in-out;
+}
+
+.trophies-btn.new-trophy .trophy-progress-bar {
+  animation: progressGlow 2s ease-in-out;
+}
+
+@keyframes newTrophyPulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+  25%, 75% {
+    transform: scale(1.1);
+    box-shadow: 
+      0 4px 16px rgba(255, 215, 0, 0.3),
+      0 0 0 2px rgba(255, 215, 0, 0.2);
+  }
+  50% {
+    transform: scale(1.15);
+    box-shadow: 
+      0 6px 20px rgba(255, 215, 0, 0.4),
+      0 0 0 4px rgba(255, 215, 0, 0.3);
+  }
+}
+
+@keyframes progressGlow {
+  0%, 100% {
+    filter: drop-shadow(0 0 3px rgba(255, 215, 0, 0.4));
+  }
+  50% {
+    filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.8));
+  }
+}
+
+/* ================================================================
+   BOUTON THEME TOGGLE SPÉCIFIQUE
+   ================================================================ */
+
+.theme-toggle {
+  position: relative;
+}
+
+.theme-icon {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.theme-icon-light {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+}
+
+[data-theme="dark"] .theme-icon-dark {
+  opacity: 0;
+}
+
+[data-theme="dark"] .theme-icon-light {
+  opacity: 1;
+}
+
+
+
+/* ================================================================
+   BOUTON LANGUE SPÉCIFIQUE
+   ================================================================ */
+
+.language-btn {
+  position: relative;
+}
+
+.language-item {
+  position: relative;
+}
+
+.language-flag {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  font-size: 12px;
+  line-height: 1;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+}
+
+/* Dropdown langue */
+.language-dropdown {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  min-width: 160px;
+  
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(25px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 16px;
+  
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.15),
+    0 4px 12px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-15px) scale(0.95);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  z-index: 1003;
+  padding: 8px 0;
+  
+  /* Petite flèche pointant vers le bouton */
+  &::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    right: 20px;
+    width: 12px;
+    height: 12px;
+    background: rgba(255, 255, 255, 0.98);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-bottom: none;
+    border-right: none;
+    transform: rotate(45deg);
+    backdrop-filter: blur(25px);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .language-dropdown {
+    background: rgba(25, 25, 25, 0.98);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 
+      0 12px 40px rgba(0, 0, 0, 0.4),
+      0 4px 12px rgba(0, 0, 0, 0.25),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      
+    &::before {
+      background: rgba(25, 25, 25, 0.98);
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+  }
+}
+
+/* Affichage via JavaScript, pas hover CSS */
+.language-dropdown.active {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateY(0) scale(1) !important;
+}
+
+.language-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  color: var(--text-primary);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.language-option:first-child {
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.language-option:last-child {
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+
+.language-option:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+@media (prefers-color-scheme: dark) {
+  .language-option:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+}
+
+.language-option.active {
+  background: rgba(0, 123, 255, 0.1);
+  color: var(--accent-color);
+}
+
+.language-option .flag {
+  font-size: 16px;
+}
+
+/* ================================================================
+   NEW TROPHY NOTIFICATIONS
+   Note: Styles are defined in modal/trophies/_notifications.scss
+   Toast notifications are now in toasts.scss
+   ================================================================ */
+
+/* ================================================================
+   RESPONSIVE DESIGN - harmonisé avec top-dock
+   ================================================================ */
+
+@media (max-width: 1024px) {
+  .right-dock {
+    top: 16px;
+    right: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --right-dock-button-size: var(--right-dock-button-size-mobile);
+    --right-dock-padding: 8px;
+    --right-dock-gap: 6px;
+    --right-dock-top: 12px;
+    --right-dock-right: 12px;
+  }
+  
+  /* Hide right dock visually on mobile - features moved to mobile menu */
+  /* Keep it in DOM for functionality but hide it */
+  .right-dock {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    visibility: hidden !important;
+  }
+  
+  .right-dock {
+    border-radius: 24px;
+  }
+  
+  .right-dock .dock-button {
+    width: 40px;
+    height: 40px;
+    
+    &:hover,
+    &:focus-visible {
+      transform: scale(1.15);
+    }
+  }
+  
+  .right-dock .dock-icon {
+    width: 20px;
+    height: 20px;
+  }
+  
+  /* Adaptation du bouton trophées sur mobile */
+  .trophies-btn {
+    width: 40px !important;
+    height: 40px !important;
+  }
+  
+  .trophies-btn .dock-icon {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .trophy-count {
+    font-size: 7px;
+  }
+  
+  .trophy-progress-track,
+  .trophy-progress-bar {
+    stroke-width: 1.5;
+  }
+  
+  .right-dock .dock-label,
+  .right-dock .dock-tooltip {
+    font-size: 0.75rem;
+    bottom: 110%;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --right-dock-top: 8px;
+    --right-dock-right: 8px;
+  }
+  
+  .right-dock .dock-button {
+    width: 36px;
+    height: 36px;
+  }
+  
+  /* Adaptation extrême pour le bouton trophées */
+  .trophies-btn {
+    width: 36px !important;
+    height: 36px !important;
+  }
+  
+  .trophies-btn .dock-icon {
+    width: 14px;
+    height: 14px;
+  }
+  
+  .trophy-count {
+    font-size: 6px;
+  }
+  
+  .right-dock .dock-icon {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* ================================================================
+   ADJUSTMENTS POUR ÉVITER LES CONFLITS
+   ================================================================ */
+
+/* Mise à jour du padding body pour accommoder le right dock */
+body {
+  padding-right: calc(var(--right-dock-width, 0px) + 40px);
+}
+
+@media (max-width: 768px) {
+  body {
+    padding-right: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding-right: 0;
+  }
+}
+
+/* Animations réduites pour l'accessibilité - cohérent avec les autres docks */
+@media (prefers-reduced-motion: reduce) {
+  .right-dock,
+  .right-dock .dock-button,
+  .right-dock .dock-icon,
+  .right-dock .dock-label {
+    transition-duration: 50ms;
+  }
+}
+
+@media (hover: none) {
+  .right-dock .dock-button:hover {
+    transform: none;
+    background: transparent;
+    box-shadow: none;
+  }
+  
+  .right-dock .dock-button:hover .dock-label {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-50%) translateY(8px) scale(0.9);
+  }
+}

@@ -1,0 +1,103 @@
+{{/*
+Shortcode YouTube avec options avancées
+Utilisation:
+{{< youtube id="dQw4w9WgXcQ" title="Titre de la vidéo" autoplay="false" start="30" >}}
+{{< youtube id="dQw4w9WgXcQ" title="Rick Roll" playlist="true" loop="true" >}}
+*/}}
+
+{{ $id := .Get "id" }}
+{{ $title := .Get "title" | default "Vidéo YouTube" }}
+{{ $autoplay := .Get "autoplay" | default "false" }}
+{{ $start := .Get "start" | default "" }}
+{{ $end := .Get "end" | default "" }}
+{{ $loop := .Get "loop" | default "false" }}
+{{ $playlist := .Get "playlist" | default "false" }}
+{{ $mute := .Get "mute" | default "false" }}
+{{ $controls := .Get "controls" | default "true" }}
+{{ $privacy := .Get "privacy" | default "true" }}
+
+{{ if $id }}
+<div class="youtube-embed-wrapper">
+  <div class="youtube-embed-container">
+    {{ $baseUrl := "https://www.youtube.com/embed/" }}
+    {{ if eq $privacy "true" }}
+      {{ $baseUrl = "https://www.youtube-nocookie.com/embed/" }}
+    {{ end }}
+    
+    {{ $url := printf "%s%s" $baseUrl $id }}
+    {{ $params := slice }}
+    
+    {{ if eq $autoplay "true" }}
+      {{ $params = $params | append "autoplay=1" }}
+    {{ end }}
+    
+    {{ if eq $mute "true" }}
+      {{ $params = $params | append "mute=1" }}
+    {{ end }}
+    
+    {{ if eq $controls "false" }}
+      {{ $params = $params | append "controls=0" }}
+    {{ end }}
+    
+    {{ if eq $loop "true" }}
+      {{ $params = $params | append "loop=1" }}
+      {{ if eq $playlist "true" }}
+        {{ $params = $params | append (printf "playlist=%s" $id) }}
+      {{ end }}
+    {{ end }}
+    
+    {{ if $start }}
+      {{ $params = $params | append (printf "start=%s" $start) }}
+    {{ end }}
+    
+    {{ if $end }}
+      {{ $params = $params | append (printf "end=%s" $end) }}
+    {{ end }}
+    
+    {{ if $params }}
+      {{ $url = printf "%s?%s" $url (delimit $params "&") }}
+    {{ end }}
+    
+    <iframe 
+      class="youtube-embed-iframe"
+      src="{{ $url }}" 
+      title="{{ $title }}"
+      frameborder="0" 
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+      allowfullscreen
+      loading="lazy">
+    </iframe>
+    
+    <div class="youtube-embed-overlay">
+      <div class="youtube-play-button">
+        <svg width="68" height="48" viewBox="0 0 68 48">
+          <path d="M66.52,7.74c-0.78-2.93-2.49-5.41-5.42-6.19C55.79,.13,34,0,34,0S12.21,.13,6.9,1.55 C3.97,2.33,2.27,4.81,1.48,7.74C0.06,13.05,0,24,0,24s0.06,10.95,1.48,16.26c0.78,2.93,2.49,5.41,5.42,6.19 C12.21,47.87,34,48,34,48s21.79-0.13,27.1-1.55c2.93-0.78,4.64-3.26,5.42-6.19C67.94,34.95,68,24,68,24S67.94,13.05,66.52,7.74z" fill="#f00"></path>
+          <path d="M 45,24 27,14 27,34" fill="#fff"></path>
+        </svg>
+      </div>
+      <div class="youtube-embed-title">{{ $title }}</div>
+    </div>
+  </div>
+  
+  <div class="youtube-embed-info">
+    <span class="youtube-embed-label">
+      <svg class="youtube-icon" width="16" height="16" viewBox="0 0 24 24" fill="#ff0000">
+        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+      </svg>
+      Vidéo YouTube
+    </span>
+    <a href="https://www.youtube.com/watch?v={{ $id }}" 
+       target="_blank" 
+       rel="noopener noreferrer" 
+       class="youtube-external-link"
+       title="Ouvrir sur YouTube">
+      Voir sur YouTube ↗
+    </a>
+  </div>
+</div>
+{{ else }}
+<div class="shortcode-error">
+  <p><strong>Erreur:</strong> L'ID de la vidéo YouTube est requis.</p>
+  <p>Utilisation: <code>{{ "{{< youtube id=\"VIDEO_ID\" title=\"Titre\" >}}" }}</code></p>
+</div>
+{{ end }}

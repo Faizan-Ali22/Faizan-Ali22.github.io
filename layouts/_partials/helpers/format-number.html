@@ -1,0 +1,49 @@
+{{/*
+  Helper: Formate un nombre selon la locale
+  Usage: {{ partial "helpers/format-number.html" 800000 }}
+  Retourne: "800 000" (FR) ou "800,000" (EN)
+*/}}
+
+{{- $number := . -}}
+{{- $result := "" -}}
+
+{{/* Validation d'entrée */}}
+{{- if $number -}}
+  {{- if reflect.IsMap $number -}}
+    {{- $result = "0" -}}
+  {{- else -}}
+    {{- $numericValue := 0 -}}
+    {{- if eq (printf "%T" $number) "string" -}}
+      {{- $numericValue = int $number -}}
+    {{- else -}}
+      {{- $numericValue = int $number -}}
+    {{- end -}}
+    
+    {{- $lang := site.Language.Lang | default "fr" -}}
+    {{- $separator := cond (eq $lang "fr") " " "," -}}
+    
+    {{/* Formatage simple mais efficace */}}
+    {{- if lt $numericValue 1000 -}}
+      {{- $result = string $numericValue -}}
+    {{- else if lt $numericValue 1000000 -}}
+      {{- $thousands := div $numericValue 1000 -}}
+      {{- $remainder := mod $numericValue 1000 -}}
+      {{- $result = printf "%d%s%03d" $thousands $separator $remainder -}}
+    {{- else if lt $numericValue 1000000000 -}}
+      {{- $millions := div $numericValue 1000000 -}}
+      {{- $thousands := div (mod $numericValue 1000000) 1000 -}}
+      {{- $remainder := mod $numericValue 1000 -}}
+      {{- $result = printf "%d%s%03d%s%03d" $millions $separator $thousands $separator $remainder -}}
+    {{- else -}}
+      {{- $billions := div $numericValue 1000000000 -}}
+      {{- $millions := div (mod $numericValue 1000000000) 1000000 -}}
+      {{- $thousands := div (mod $numericValue 1000000) 1000 -}}
+      {{- $remainder := mod $numericValue 1000 -}}
+      {{- $result = printf "%d%s%03d%s%03d%s%03d" $billions $separator $millions $separator $thousands $separator $remainder -}}
+    {{- end -}}
+  {{- end -}}
+{{- else -}}
+  {{- $result = "0" -}}
+{{- end -}}
+
+{{- $result -}}

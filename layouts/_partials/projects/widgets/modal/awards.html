@@ -1,0 +1,99 @@
+{{/*
+  Partial: Awards Modal Layout
+  Description: Structure HTML pour l'affichage des récompenses dans les modals de project widget
+  Context: 
+    - .awards (slice) - Liste des récompenses du projet
+    - .projectId (string) - ID du projet pour contextualiser les actions
+    - .profileData (dict) - Données du profil pour la section développeur
+*/}}
+
+{{- $awards := .awards -}}
+{{- $projectId := .projectId | default "" -}}
+{{- $profileData := .profileData -}}
+
+{{- $total := len $awards -}}
+
+{{- if gt $total 0 -}}
+  <div class="awards-modal">
+    {{/* Barre de statistiques */}}
+    <div class="awards-stats-bar">
+      <div class="widget-count">
+        <strong>{{ $total }}</strong> {{ if eq $total 1 }}{{ i18n "reward" | default "récompense" }}{{ else }}{{ i18n "rewards" | default "récompenses" }}{{ end }}
+      </div>
+      {{/* Années des récompenses */}}
+      {{- $years := slice -}}
+      {{- range $awards -}}
+        {{- if .date -}}
+          {{- $years = $years | append .date -}}
+        {{- end -}}
+      {{- end -}}
+      {{- $distinctYears := $years | uniq -}}
+      {{- if gt (len $distinctYears) 0 -}}
+        <div class="awards-years">
+          {{- range $distinctYears -}}
+            <div class="award-year-chip widget-badge widget-badge--sm">{{ . }}</div>
+          {{- end -}}
+        </div>
+      {{- end -}}
+    </div>
+    
+
+    
+    {{/* Grille des récompenses */}}
+    <div class="awards-grid">
+      {{- range $index, $award := $awards -}}
+        {{- $awardTitle := $award.title | default (i18n "reward" | default "Récompense") -}}
+        {{- $awardOrganization := $award.organization | default "" -}}
+        {{- $awardDate := $award.date | default "" -}}
+        {{- $awardDescription := $award.description | default "" -}}
+        
+        <div class="award-card widget-card widget-card--static" 
+             data-award="{{ $awardTitle }}">
+          
+          {{/* En-tête de la récompense */}}
+          <div class="award-header">
+            <div class="award-icon widget-icon widget-icon--lg" aria-hidden="true">🏆</div>
+            <div class="award-info">
+              <div class="award-title">{{ $awardTitle }}</div>
+              {{- if $awardOrganization -}}
+                <div class="award-organization">{{ $awardOrganization }}</div>
+              {{- end -}}
+            </div>
+          </div>
+          
+          {{/* Description si disponible */}}
+          {{- if $awardDescription -}}
+            <div class="award-description">{{ $awardDescription }}</div>
+          {{- end -}}
+          
+          {{/* Badge avec la date */}}
+          {{- if $awardDate -}}
+            <div class="award-badge widget-badge">
+              {{ $awardDate }}
+            </div>
+          {{- end -}}
+        </div>
+      {{- end -}}
+    </div>
+    
+
+  </div>
+{{- else -}}
+  <div class="awards-modal">
+    <div class="awards-stats-bar">
+      <div class="widget-count">
+        <strong>0</strong> {{ i18n "rewards" | default "récompenses" }}
+      </div>
+    </div>
+    
+    <div class="awards-empty-state widget-note">
+      <div class="widget-note-header">
+        <div class="widget-note-icon widget-icon widget-icon--md">🏆</div>
+        <div class="widget-note-title">{{ i18n "no_reward" | default "Aucune récompense" }}</div>
+      </div>
+      <div class="widget-note-content">
+        <p>{{ i18n "no_official_reward_yet" | default "Ce projet n'a pas encore reçu de récompenses officielles." }}</p>
+      </div>
+    </div>
+  </div>
+{{- end -}}

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.Language.Lang }}" dir="{{ cond (eq .Site.Language.LanguageDirection `rtl`) `rtl` `ltr` }}" data-theme="dark" data-page="{{ if .IsHome }}portfolio{{ else if eq .Section "posts" }}blog{{ else if eq .Section "projects" }}projects{{ else }}portfolio{{ end }}">
+<head>
+  {{ partial "head.html" . }}
+</head>
+<body>
+  <!-- Script d'initialisation du thème avant le rendu pour éviter le flash -->
+  <script>
+    (function() {
+      try {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark' || savedTheme === 'light') {
+          document.documentElement.setAttribute('data-theme', savedTheme);
+        } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+          document.documentElement.setAttribute('data-theme', 'light');
+        } else {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      } catch(e) {}
+    })();
+  </script>
+  <!-- Hero Background -->
+  <!-- Disable waves if project has a background image to optimize resources -->
+  {{ if not (and (eq .Section "projects") .Params.image) }}
+    {{ partial "hero-background.html" . }}
+  {{ end }}
+  
+  <!-- Mobile Menu -->
+  {{ partial "mobile-menu.html" . }}
+  
+  <!-- Profile Badge -->
+  {{ partial "profile-badge.html" . }}
+  
+  <!-- Right Dock -->
+  {{ partial "right-dock.html" . }}
+  <!-- Skill Modal -->
+  {{ partial "skill-modal.html" . }}
+  
+  <!-- Auto Person Modal -->
+  {{ partial "auto-person-modal.html" . }}
+  
+  <main>
+    {{ block "main" . }}{{ end }}
+  </main>
+  <footer>
+    {{ partial "footer.html" . }}
+  </footer>
+  
+  <!-- Dock de navigation -->
+  {{ partial "dock.html" . }}
+  
+  <!-- Scripts pour le menu mobile -->
+  {{ $mobileMenuJs := resources.Get "js/mobile-menu.js" }}
+  {{ if $mobileMenuJs }}
+    <script>{{ $mobileMenuJs.Content | safeJS }}</script>
+  {{ end }}
+  
+  <!-- Scripts pour la modal des compétences -->
+  {{ $skillModalJs := resources.Get "js/skill-modal.js" }}
+  {{ if $skillModalJs }}
+    <script>{{ $skillModalJs.Content | safeJS }}</script>
+  {{ end }}
+  
+  <!-- Scripts pour la modal des personnes -->
+  {{ $personModalLogic := resources.Get "js/person-modal-logic.js" }}
+  {{ if $personModalLogic }}
+    <script>{{ $personModalLogic.Content | safeJS }}</script>
+  {{ end }}
+
+  <!-- Unified Modal System (replaces legacy Discord modal and others) -->
+  {{ $unifiedModalJs := resources.Get "js/unified-modal-system.js" }}
+  {{ if $unifiedModalJs }}
+    <script>{{ $unifiedModalJs.Content | safeJS }}</script>
+  {{ end }}
+
+  <!-- Number Formatter Utility -->
+  {{ $numberFormatterJs := resources.Get "js/utils/number-formatter.js" }}
+  {{ if $numberFormatterJs }}
+    <script>{{ $numberFormatterJs.Content | safeJS }}</script>
+  {{ end }}
+
+  <!-- Widgets Formatter (pour ranking, downloads, etc.) -->
+  {{ $widgetsFormatterJs := resources.Get "js/widgets-formatter.js" }}
+  {{ if $widgetsFormatterJs }}
+    <script>{{ $widgetsFormatterJs.Content | safeJS }}</script>
+  {{ end }}
+  
+  <!-- Global portfolio data for skill modal and other components -->
+  {{ partial "portfolio-data.html" . }}
+  
+</body>
+</html>

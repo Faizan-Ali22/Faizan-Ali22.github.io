@@ -1,0 +1,45 @@
+{{/*
+  Index des partials modals pour project widgets
+  
+  Ce fichier liste tous les partials disponibles dans le dossier modal
+  et documente leur utilisation.
+  
+  Partials disponibles:
+  
+  1. contributors.html
+     - Layout avancé avec groupement par rôles et statistiques
+     - Context: { contributors: slice, projectId: string }
+     - IMPLÉMENTÉ dans projects/single.html
+     - Design amélioré avec stats, groupement par rôles, cartes interactives
+  
+  2. development-time.html
+     - Layout détaillé du temps de développement avec timeline des phases
+     - Context: { development_time: dict, projectId: string }
+     - IMPLÉMENTÉ dans projects/single.html
+     - Timeline interactive, statistiques, actions de partage
+     - Support phases, dates de début/fin, actions personnalisées
+  
+  3. specialties.html
+     - Affichage des spécialités techniques utilisées
+     - Context: { specialties: slice, projectId: string }
+  
+  4. tools.html
+     - Affichage des outils et technologies employés
+     - Context: { tools: slice, projectId: string }
+  
+  5. awards.html
+     - Affichage des récompenses et reconnaissances
+     - Context: { awards: slice, projectId: string }
+  
+  6. gallery.html
+     - Galerie d'images avec layout en grille 4x4
+     - Context: { gallery: slice, projectId: string }
+     - IMPLÉMENTÉ dans projects/single.html
+     - Grille responsive, intégration avec système openImageModal existant
+     - Support des captions, index des images, états vides
+  
+  PRINCIPE: HTML généré côté serveur par Hugo, JavaScript pour interactions uniquement
+  STATUS: ✅ COMPLÈTEMENT IMPLÉMENTÉ - plus de génération HTML côté client
+*/}}
+
+{{/* Ce fichier sert de documentation et d'index - pas d'implémentation */}}

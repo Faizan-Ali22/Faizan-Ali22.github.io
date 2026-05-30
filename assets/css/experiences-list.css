@@ -1,0 +1,30 @@
+/* ========================================
+   EXPERIENCES LIST PAGE - Styles spécifiques
+   ======================================== */
+
+/* Compensation pour le top dock (72px height + 20px top + marge) */
+.experiences-list {
+    padding-top: 120px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-bottom: 2rem;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.experiences-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+}
+
+@media (max-width: 768px) {
+    .experiences-grid {
+        grid-template-columns: 1fr;
+    }
+}

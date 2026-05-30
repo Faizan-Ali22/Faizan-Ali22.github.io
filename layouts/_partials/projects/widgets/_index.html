@@ -1,0 +1,92 @@
+{{/*
+  Index des partials widgets pour projects
+  
+  Ce fichier liste tous les partials disponibles dans le dossier widgets
+  et documente leur utilisation.
+  
+  Partials widgets disponibles:
+  
+  1. contributors.html
+     - Widget pour afficher les contributeurs d'un projet
+     - Context: Page du projet (.Params.contributors)
+     - IMPLÉMENTÉ - Utilise modal/contributors.html pour l'affichage détaillé
+  
+  2. development-time.html
+     - Widget pour afficher le temps de développement
+     - Context: Page du projet (.Params.development_time)
+     - IMPLÉMENTÉ - Utilise modal/development-time.html pour l'affichage détaillé
+  
+  3. gallery.html
+     - Widget pour afficher la galerie d'images du projet
+     - Context: Page du projet (.Params.gallery)
+     - IMPLÉMENTÉ - Utilise modal/gallery.html pour l'affichage détaillé
+  
+  4. technical-specs.html
+     - Widget pour afficher les spécifications techniques
+     - Context: Page du projet (.Params.programming_languages, .frameworks_engines, .technical_specs)
+     - IMPLÉMENTÉ - Traite les langages, frameworks et specs personnalisées
+  
+  5. specialties.html
+     - Widget pour afficher les spécialités utilisées
+     - Context: Page du projet (.Params.specialties)
+     - IMPLÉMENTÉ - Utilise modal/specialties.html pour l'affichage détaillé
+  
+  6. tools.html
+     - Widget pour afficher les outils utilisés
+     - Context: Page du projet (.Params.tools)
+     - IMPLÉMENTÉ - Utilise modal/tools.html pour l'affichage détaillé
+  
+  7. awards.html
+     - Widget pour afficher les récompenses
+     - Context: Page du projet (.Params.awards)
+     - IMPLÉMENTÉ - Utilise modal/awards.html pour l'affichage détaillé
+  
+  8. testimonials.html
+     - Widget pour afficher les témoignages
+     - Context: Page du projet (.Params.testimonials)
+     - IMPLÉMENTÉ - Utilise modal/testimonials.html pour l'affichage détaillé
+  
+  9. youtube-videos.html
+     - Widget pour afficher plusieurs vidéos YouTube
+     - Context: Page du projet (.Params.youtube_videos)
+     - IMPLÉMENTÉ - Interface de liste vidéos avec modal
+  
+  10. youtube-single.html
+      - Widget item YouTube autonome utilisable directement
+      - Context: Page du projet (.Params.youtube_single)
+      - IMPLÉMENTÉ - Widget item standalone sans boîte englobante
+
+  11. clients.html
+      - Widget pour afficher les clients du projet
+      - Context: Page du projet (.Params.clients)
+      - IMPLÉMENTÉ - Liste des entreprises/clients avec logos
+  
+  12. grade.html
+      - Widget pour afficher la note académique
+      - Context: Page du projet (.Params.grade)
+      - IMPLÉMENTÉ - Note, matière, professeur, commentaire
+  
+  13. downloads.html
+      - Widget pour afficher les statistiques de téléchargement
+      - Context: Page du projet (.Params.downloads)
+      - IMPLÉMENTÉ - Nombre total, plateformes, dernière mise à jour
+  
+  14. ranking.html
+      - Widget pour afficher le classement dans un concours
+      - Context: Page du projet (.Params.ranking)
+      - IMPLÉMENTÉ - Position, événement, total, détails
+  
+  PRINCIPE: HTML généré côté serveur par Hugo, JavaScript pour interactions uniquement
+  STATUS: ✅ COMPLÈTEMENT IMPLÉMENTÉ - Tous les widgets ont été extraits du single.html
+  
+  USAGE dans single.html:
+  {{ partial "projects/widgets/[nom-widget].html" . }}
+  
+  AVANTAGES:
+  - Maintenabilité: Code organisé en fichiers dédiés
+  - Réutilisabilité: Widgets peuvent être réutilisés ailleurs
+  - Lisibilité: Fichier single.html beaucoup plus concis
+  - Séparation des responsabilités: Chaque widget a sa propre logique
+*/}}
+
+{{/* Ce fichier sert de documentation et d'index - pas d'implémentation */}}

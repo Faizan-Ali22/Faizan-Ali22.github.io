@@ -1,0 +1,39 @@
+/**
+ * ========================================
+ * BLOG SECTION SCSS - MODULAR & CLEAN
+ * ========================================
+ * 
+ * Complete blog theme with glassmorphism design
+ * Modular architecture for better maintainability
+ * 
+ * Author: Portfolio Theme
+ * Version: 4.0 - Modular (SCSS)
+ * Last Updated: October 2025
+ */
+
+/* ========================================
+   CSS VARIABLES (désormais centralisées dans variables.blog.css)
+   ======================================== */
+:root {
+  /* Compat fallback si variables.blog.css non chargé */
+  --blog-primary-color: var(--accent, #4fd1c7);
+  --blog-primary-alpha: var(--blog-accent-20, rgba(79, 209, 199, 0.2));
+  --blog-glass-bg: var(--glass-bg, rgba(55, 65, 81, 0.3));
+  --blog-glass-border: var(--glass-border, rgba(255, 255, 255, 0.1));
+  --blog-text-primary: var(--text-primary, #ffffff);
+  --blog-text-secondary: var(--text-secondary, rgba(255, 255, 255, 0.8));
+  --blog-text-muted: var(--text-muted, rgba(255, 255, 255, 0.6));
+  --blog-border-radius: 20px;
+  --blog-transition: var(--transition-smooth, all 0.3s ease);
+}
+
+/* ========================================
+   MODULAR IMPORTS
+   ======================================== */
+@import "blog/layouts";
+@import "blog/filters";
+@import "blog/list-cards";
+@import "blog/article-content";
+
+/* Image Grid Component */
+@import "image-grid";

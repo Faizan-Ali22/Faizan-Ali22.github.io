@@ -1,0 +1,70 @@
+<!-- Section Formulaires & Inputs -->
+<section class="demo-section">
+    <h2>📝 Formulaires & Inputs</h2>
+    <p>Formulaire utilisant les vraies classes CSS du fichier forms.css du thème.</p>
+    
+    <div class="demo-element-wrapper">
+        <div class="css-class-info">
+            <strong>Container :</strong> <code>.contact-form-container</code><br>
+            <strong>Formulaire :</strong> <code>.contact-form</code><br>
+            <strong>Groupe de champs :</strong> <code>.form-group</code><br>
+            <strong>Champs :</strong> <code>.form-input</code>, <code>.form-select</code>, <code>.form-textarea</code><br>
+            <strong>Actions :</strong> <code>.form-actions</code><br>
+            <strong>Bouton soumission :</strong> <code>.btn-submit</code><br>
+            <strong>Éléments bouton :</strong> <code>.btn-text</code>, <code>.btn-icon</code>
+        </div>
+        <div class="contact-form-container">
+            <h3>Formulaire de Contact</h3>
+            <form class="contact-form">
+                <div class="form-group">
+                    <label for="demo-name">Nom complet *</label>
+                    <input type="text" id="demo-name" name="name" class="form-input" required placeholder="Votre nom complet">
+                </div>
+                
+                <div class="form-group">
+                    <label for="demo-email">Adresse e-mail *</label>
+                    <input type="email" id="demo-email" name="email" class="form-input" required placeholder="votre.email@exemple.com">
+                </div>
+                
+                <div class="form-group">
+                    <label for="demo-subject">Sujet</label>
+                    <select id="demo-subject" name="subject" class="form-select">
+                        <option value="">Sélectionnez un sujet...</option>
+                        <option value="collaboration">💼 Collaboration professionnelle</option>
+                        <option value="projet">🚀 Nouveau projet</option>
+                        <option value="question">❓ Question technique</option>
+                        <option value="autre">💬 Autre</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="demo-message">Votre message *</label>
+                    <textarea id="demo-message" name="message" class="form-textarea" required placeholder="Décrivez votre projet ou votre demande..." rows="5"></textarea>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn-submit">
+                        <span class="btn-text">Envoyer le message</span>
+                        <span class="btn-icon">📧</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- Section Education -->
+<section class="demo-section">
+    <h2>🎓 Education & Certifications</h2>
+    <p>Composant education existant du thème avec ses vraies classes CSS.</p>
+    
+    {{ partial "education.html" . }}
+</section>
+
+<!-- Section Testimonials -->
+<section class="demo-section">
+    <h2>💬 Testimonials & Slider</h2>
+    <p>Composant testimonials existant du thème avec ses vraies classes CSS.</p>
+    
+    {{ partial "testimonials.html" . }}
+</section>

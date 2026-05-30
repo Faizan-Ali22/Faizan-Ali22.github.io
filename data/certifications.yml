@@ -1,0 +1,52 @@
+# ============================================================
+# 📜 CERTIFICATIONS — Add your certifications
+# ============================================================
+# Fields:
+#   title:       Certification name
+#   issuer:      Issuing organization
+#   date:        Date obtained (e.g. "2025")
+#   icon:        Emoji icon
+#   color:       Badge color (hex)
+#   status:      "Obtained", "In progress", etc.
+#   description: Short description
+# ============================================================
+
+# Uncomment and customize:
+
+# - title: "AWS Cloud Practitioner"
+#   issuer: "Amazon Web Services"
+#   date: "2025"
+#   icon: "☁️"
+#   color: "#FF9900"
+#   status: "Obtained"
+#   description: "Foundational cloud computing certification"
+# - key: "cert_dummy"
+#   title: "Placeholder"
+#   institution: "Placeholder"
+#   date: "2024"
+#   displayedInPortfolio: false
+
+- title: "IBM Data Science Professional Certificate"
+  issuer: "IBM (Coursera)"
+  date: "Oct 1, 2023"
+  icon: "IBM"
+  color: "#00B3A4"
+  status: "Obtained"
+  description: "Completed Oct 17, 2023."
+
+
+- title: "Unreal Engine 5 - The Complete Beginner's Course"
+  issuer: "Packt (Coursera)"
+  date: "June 14, 2024"
+  icon: "UE5"
+  color: "#4E79FF"
+  status: "Obtained"
+  description: "Completed June 14, 2024."
+
+- title: "Foundations of Cybersecurity"
+  issuer: "Google (Coursera)"
+  date: "June 17, 2025"
+  icon: "CYB"
+  color: "#1A73E8"
+  status: "Obtained"
+  description: "Completed June 17, 2025."

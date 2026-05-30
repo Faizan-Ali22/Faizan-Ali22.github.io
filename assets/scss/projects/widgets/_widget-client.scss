@@ -1,0 +1,93 @@
+// =============================================================================
+// PROJECT WIDGET - CLIENTS
+// =============================================================================
+
+@import 'widget-base';
+
+.project-widget-clients-list {
+  @extend %widget-list-layout;
+}
+
+.project-widget-client-item {
+  @extend %widget-item-layout;
+  gap: $widget-gap-lg;
+  
+  @include widget-hover-transform($y: -2px);
+  
+  &:hover {
+    background: var(--clients-item-hover-bg);
+    border-color: var(--clients-item-hover-border-color);
+    box-shadow: var(--clients-item-hover-shadow);
+  }
+}
+
+.project-widget-client-logo {
+  @include widget-icon-circle(4rem, map-get($widget-gradients, 'client-logo'));
+  border-radius: var(--border-radius-sm);
+  border: var(--clients-logo-border-strong);
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  &.placeholder {
+    color: #fff;
+    font-weight: var(--font-weight-bold);
+    font-size: 1.4rem;
+  }
+}
+
+.project-widget-client-info {
+  @extend %widget-info-section;
+  
+  .project-widget-client-name {
+    @extend .name;
+    font-size: 1.1rem;
+    margin-bottom: 0.3rem;
+  }
+  
+  .project-widget-client-description {
+    @extend .description;
+  }
+  
+  .project-widget-client-role {
+    color: var(--primary-teal);
+    font-size: 0.85rem;
+    font-weight: var(--font-weight-semibold);
+  }
+}
+
+// Preview mode (for collapsed state)
+.project-widget-clients-preview {
+  @extend %widget-preview-item;
+  
+  .project-widget-clients-preview-logos {
+    display: flex;
+    gap: 0.4rem;
+  }
+  
+  .project-widget-client-logo-mini {
+    @include widget-icon-circle(24px, map-get($widget-gradients, 'client-logo'));
+    border-radius: 4px;
+    border: var(--clients-logo-mini-border);
+    
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    &.placeholder {
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.7rem;
+    }
+  }
+  
+  .project-widget-clients-preview-more {
+    @extend .preview-meta;
+    margin-left: 0.2rem;
+  }
+}

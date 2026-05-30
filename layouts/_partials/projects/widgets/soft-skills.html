@@ -1,0 +1,66 @@
+{{/*
+  Partial: Soft Skills Widget
+  Description: Widget compact pour afficher les soft skills utilisées dans un projet
+  Context: 
+    - .Params (dict) - Paramètres du projet avec .soft_skills
+    - soft_skills data (loaded from localized data files)
+    - .File.BaseFileName (string) - ID du projet
+*/}}
+
+{{- if .Params.soft_skills -}}
+  {{- $projectSoftSkills := .Params.soft_skills -}}
+  {{- $allSoftSkills := partial "get-localized-data.html" (dict "context" . "dataName" "soft_skills") -}}
+  {{- $usedSoftSkills := slice -}}
+  {{- range $projectSoftSkills -}}
+    {{- $softSkillKey := . -}}
+    {{- range $allSoftSkills -}}
+      {{- if eq .key $softSkillKey -}}
+        {{- $usedSoftSkills = $usedSoftSkills | append . -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+  
+  {{- if $usedSoftSkills -}}
+<div class="project-widget developer-soft-skills-box size-medium">
+  <div class="project-widget-header" onclick="toggleInfoBox(this)">
+    <div class="project-widget-icon soft-skills">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M16,11C17.66,11 18.99,9.66 18.99,8C18.99,6.34 17.66,5 16,5C14.34,5 13,6.34 13,8C13,9.66 14.34,11 16,11M8,11C9.66,11 10.99,9.66 10.99,8C10.99,6.34 9.66,5 8,5C6.34,5 5,6.34 5,8C5,9.66 6.34,11 8,11M8,13C5.67,13 1,14.17 1,16.5V19H15V16.5C15,14.17 10.33,13 8,13M16,13C15.71,13 15.38,13.02 15.03,13.05C16.19,13.89 17,15.02 17,16.5V19H23V16.5C23,14.17 18.33,13 16,13Z"/>
+      </svg>
+    </div>
+    <div class="project-widget-header-content">
+      <h3 class="project-widget-title">{{ i18n "soft_skills_cross" | default "Compétences transversales" }}</h3>
+      <div class="project-widget-summary">{{ len $usedSoftSkills }} {{ i18n "skills_mobilized" | default "compétences mobilisées" }}</div>
+      <!-- Aperçu des soft skills -->
+      <div class="soft-skills-preview">
+        <div class="soft-skill-badges-preview">
+          {{- range first 3 $usedSoftSkills -}}
+          {{- $softSkillName := i18n .key -}}
+          <div class="soft-skill-badge-mini clickable" onclick="openSkillModal('{{ $softSkillName }}', '{{ if .iconPath }}{{ .iconPath }}{{ else }}{{ .icon }}{{ end }}', 'Soft Skill', '', '{{ if .iconPath }}svg{{ else }}emoji{{ end }}', '{{ .key }}')" title="{{ i18n "click_to_see_details" | default "Cliquez pour voir les détails" }}">
+            <span class="soft-skill-icon">{{ .icon }}</span>
+            <span class="soft-skill-name">{{ $softSkillName }}</span>
+          </div>
+          {{- end -}}
+          {{- if gt (len $usedSoftSkills) 3 -}}
+          <div class="soft-skill-badge-mini more">
+            <span class="soft-skill-more">+{{ sub (len $usedSoftSkills) 3 }}</span>
+          </div>
+          {{- end -}}
+        </div>
+      </div>
+    </div>
+    <div class="project-widget-toggle">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/>
+      </svg>
+    </div>
+  </div>
+  <div class="project-widget-content">
+    {{/* Load localized profile data */}}
+    {{- $profileData := partial "get-localized-data.html" (dict "context" . "dataName" "profile") -}}
+    {{/* Utiliser le partial pour l'affichage modal */}}
+    {{ partial "projects/widgets/modal/soft-skills.html" (dict "softSkills" $usedSoftSkills "projectId" .File.BaseFileName "profileData" $profileData) }}
+  </div>
+</div>
+  {{- end -}}
+{{- end -}}

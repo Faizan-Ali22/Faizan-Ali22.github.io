@@ -1,0 +1,6 @@
+{{/* Display technology icon - SVG if available, otherwise emoji */}}
+{{ if .iconPath }}
+  <img src="{{ .iconPath | absURL }}" alt="{{ .name }}" class="tech-icon-svg" width="24" height="24">
+{{ else }}
+  <span class="tech-icon-emoji">{{ .icon }}</span>
+{{ end }}

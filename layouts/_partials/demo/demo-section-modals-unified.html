@@ -1,0 +1,889 @@
+<!-- UNIFIED MODAL - NEW MODULAR SYSTEM -->
+<section class="demo-section">
+    <h2>🎯 Modal Unifié - Nouveau Système</h2>
+    <p>
+      Modal basé sur skill-modal avec système de tabs et btn-action unifiés pour
+      remplacer tous les autres modals. <strong>Architecture modulaire</strong> avec fichiers séparés.
+    </p>
+
+    <!-- Modal types navigation -->
+    <div class="modal-types-navigation">
+        <h3>📁 Available modal types:</h3>
+        <div class="modal-types-list">
+            <div class="modal-type-item">
+                <span class="modal-type-icon">🛠️</span>
+                <strong>Skill/Technology</strong>
+                <span class="modal-type-file">modals-unified/demo-section-modals-unified-skill.html</span>
+            </div>
+            <div class="modal-type-item">
+                <span class="modal-type-icon">👤</span>
+                <strong>Person/Profile</strong>
+                <span class="modal-type-file">modals-unified/demo-section-modals-unified-person.html</span>
+            </div>
+            <div class="modal-type-item">
+                <span class="modal-type-icon">📬</span>
+                <strong>Contact</strong>
+                <span class="modal-type-file">modals-unified/demo-section-modals-unified-contact.html</span>
+            </div>
+            <div class="modal-type-item">
+                <span class="modal-type-icon">💬</span>
+                <strong>Discord</strong>
+                <span class="modal-type-file">modals-unified/demo-section-modals-unified-discord.html</span>
+            </div>
+            <div class="modal-type-item">
+                <span class="modal-type-icon">⚡</span>
+                <strong>Project Actions</strong>
+                <span class="modal-type-file">modals-unified/demo-section-modals-unified-actions.html</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Separate modal inclusions -->
+    {{ partial "demo/modals-unified/demo-section-modals-unified-skill.html" . }}
+    {{ partial "demo/modals-unified/demo-section-modals-unified-person.html" . }}
+    {{ partial "demo/modals-unified/demo-section-modals-unified-contact.html" . }}
+    {{ partial "demo/modals-unified/demo-section-modals-unified-discord.html" . }}
+    {{ partial "demo/modals-unified/demo-section-modals-unified-actions.html" . }}
+
+    <div class="demo-actions">
+      <h3>Actions de Test</h3>
+      <div class="demo-buttons">
+        <button onclick="openTestSkillModal()" class="demo-btn">
+          🛠️ Ouvrir Skill Modal (real)
+        </button>
+        <button onclick="openTestContactModal()" class="demo-btn">
+          📬 Ouvrir Contact Modal (real)
+        </button>
+        <button onclick="openTestPersonModal()" class="demo-btn">
+          👤 Ouvrir Person Modal (real)
+        </button>
+        <button onclick="openTestDiscordModal()" class="demo-btn">
+          💬 Ouvrir Discord Modal (real)
+        </button>
+        <button onclick="openTestActionsPopup()" class="demo-btn">
+          ⚡ Ouvrir Actions Popup (real)
+        </button>
+      </div>
+    </div>
+
+    <!-- Loading unified modal system -->
+    <script src="{{ "js/unified-modal-system.js" | relURL }}"></script>
+    
+    <!-- Script for modal test functions -->
+    <script>
+    // ================================
+    // TEST FUNCTIONS - MODULAR SYSTEM  
+    // ================================
+    
+    function openTestSkillModal() {
+        // Test du modal skill avec le nouveau système
+        UnifiedModal.create({
+            type: 'skill',
+            title: 'C#',
+            icon: '/images/technologies/CSharp.svg',
+            chips: [
+                { text: 'Avancé', type: 'primary' },
+                { text: '4 ans d\'expérience', type: 'secondary' }
+            ],
+            tabs: [
+                { key: 'projects', icon: '💼', label: 'Projets', count: 12, active: true },
+                { key: 'experiences', icon: '🏢', label: 'Expériences', count: 3 },
+                { key: 'formations', icon: '🎓', label: 'Formations', count: 2 }
+            ],
+            content: {
+                projects: `
+                    <div class="projects-grid">
+                        <div class="project-card">
+                            <h4>Nuketown Zombies Remastered</h4>
+                            <p>Projet de mod complet avec mécaniques avancées</p>
+                            <div class="card-actions">
+                                <button class="btn-action primary">Voir le projet</button>
+                            </div>
+                        </div>
+                        <div class="project-card">
+                            <h4>Studio La Moutarde - Tools</h4>
+                            <p>Outils internes de développement</p>
+                            <div class="card-actions">
+                                <button class="btn-action">Détails</button>
+                            </div>
+                        </div>
+                    </div>
+                `,
+                experiences: `
+                    <div class="experiences-list">
+                        <div class="experience-item">
+                            <h4>Développeur chez Studio La Moutarde</h4>
+                            <p>Alternance - Développement d'outils et applications</p>
+                            <div class="item-actions">
+                                <button class="btn-action accent">Voir l'expérience</button>
+                            </div>
+                        </div>
+                    </div>
+                `,
+                formations: `
+                    <div class="formations-list">
+                        <div class="formation-item">
+                            <h4>BUT IAMSI - IUT Montpellier</h4>
+                            <p>Intégration d'Application et Management des SI</p>
+                            <div class="item-actions">
+                                <button class="btn-action">Voir la formation</button>
+                            </div>
+                        </div>
+                    </div>
+                `
+            }
+        });
+    }
+
+    function openTestContactModal() {
+        UnifiedModal.create({
+            type: 'contact',
+            title: 'Contactez-moi',
+            icon: '📬',
+            chips: [
+                { text: 'Disponible pour projets', type: 'primary' },
+                { text: 'Réponse rapide', type: 'secondary' }
+            ]
+        });
+    }
+
+    function openTestPersonModal() {
+        // Test avec le nouveau système unifié
+        UnifiedModal.create({
+            type: 'person',
+            title: "Clément 'Clix' GARCIA",
+            icon: '/images/people/clement-garcia.jpg',
+            iconSize: 80,
+            chips: [
+                { text: 'Développeur Logiciel', type: 'primary' },
+                { text: 'Studio La Moutarde', type: 'secondary' }
+            ],
+            headerRight: `
+                <div class="contact-social-actions">
+                    <button class="btn-action-icon" title="Email" onclick="window.location.href='mailto:clement.g.developer@gmail.com'">📧</button>
+                    <button class="btn-action-icon" title="LinkedIn" onclick="window.open('https://linkedin.com/in/clixmods', '_blank')">💼</button>
+                    <button class="btn-action-icon" title="GitHub" onclick="window.open('https://github.com/clixmods', '_blank')">💻</button>
+                    <button class="btn-action-icon" title="Discord" onclick="UnifiedModal.create({type:'discord', title:'Mon Discord', icon:'/images/social/discord.svg', content:{discordId:'clixmods'}})">💬</button>
+                </div>
+            `,
+            tabs: [
+                { key: 'about', icon: '👤', label: 'À propos', active: true },
+                { key: 'skills', icon: '🛠️', label: 'Compétences' },
+                { key: 'projects', icon: '💼', label: 'Projets', count: 8 }
+            ],
+            content: {
+                about: `
+                    <div class="about-content">
+                        <p>Développeur polyvalent spécialisé dans les mécaniques de jeu, le design visuel et la production de jeux vidéo. Actuellement étudiant en 3ᵉ année à l'IUT de Montpellier-Sète en filière IAMSI et en alternance chez Studio La Moutarde.</p>
+                    </div>
+                `,
+                skills: `
+                    <div class="skills-content">
+                        <div class="skills-list">
+                            <span class="skill-tag">C#</span>
+                            <span class="skill-tag">Unity</span>
+                            <span class="skill-tag">Blazor</span>
+                            <span class="skill-tag">Game Design</span>
+                            <span class="skill-tag">JavaScript</span>
+                            <span class="skill-tag">Hugo</span>
+                        </div>
+                    </div>
+                `,
+                projects: `
+                    <div class="projects-grid">
+                        <div class="project-card">
+                            <h4>Nuketown Zombies</h4>
+                            <p>Directeur créatif</p>
+                            <div class="card-actions">
+                                <button class="btn-action primary">Voir le projet</button>
+                            </div>
+                        </div>
+                        <div class="project-card">
+                            <h4>Fish'n'Ship</h4>
+                            <p>Développeur principal</p>
+                            <div class="card-actions">
+                                <button class="btn-action primary">Voir le projet</button>
+                            </div>
+                        </div>
+                    </div>
+                `
+            }
+        });
+    }
+
+    function openTestDiscordModal() {
+        UnifiedModal.create({
+            type: 'discord',
+            title: 'Mon Discord',
+            icon: '/images/social/discord.svg',
+            content: {
+                discordId: 'clixmods'
+            }
+        });
+    }
+
+    function openTestActionsPopup() {
+        UnifiedModal.create({
+            type: 'actions',
+            title: 'Actions du projet',
+            icon: '🎮',
+            content: {
+                actions: [
+                    { 
+                        icon: '🎮', 
+                        title: 'Télécharger le projet', 
+                        desc: 'Version complète (2.5 GB)', 
+                        action: 'download',
+                        url: 'https://github.com/clixmods/nuketown-remastered/releases'
+                    },
+                    { 
+                        icon: '📂', 
+                        title: 'Voir les fichiers', 
+                        desc: 'Code source et assets', 
+                        action: 'github',
+                        url: 'https://github.com/clixmods/nuketown-remastered'
+                    },
+                    { 
+                        icon: '📖', 
+                        title: 'Documentation', 
+                        desc: 'Guide d\'installation et API', 
+                        action: 'docs',
+                        url: 'https://docs.nuketown-remastered.com'
+                    },
+                    { 
+                        icon: '🎥', 
+                        title: 'Vidéo démo', 
+                        desc: 'Aperçu du gameplay', 
+                        action: 'video',
+                        url: 'https://youtube.com/watch?v=demo'
+                    }
+                ]
+            }
+        });
+    }
+    </script>
+ 
+</section>
+
+    <div class="demo-actions">
+      <h3>Actions de Test</h3>
+      <div class="demo-buttons">
+        <button onclick="openTestSkillModal()" class="demo-btn">
+          Ouvrir Skill Modal (real)
+        </button>
+        <button onclick="openTestContactModal()" class="demo-btn">
+          Ouvrir Contact Modal (real)
+        </button>
+        <button onclick="openTestPersonModal()" class="demo-btn">
+          Ouvrir Person Modal (real)
+        </button>
+        <button onclick="openTestDiscordModal()" class="demo-btn">
+          Ouvrir Discord Modal (real)
+        </button>
+        <button onclick="openTestActionsPopup()" class="demo-btn">
+          Ouvrir Actions Popup (real)
+        </button>
+      </div>
+    </div>
+
+    <!-- Chargement du système de modals unifié -->
+    <script src="{{ "js/unified-modal-system.js" | relURL }}"></script>
+    
+    <!-- Script pour les fonctions de test des modals -->
+    <script>
+    // ================================
+    // UNIFIED MODAL SYSTEM - REFACTORED
+    // ================================
+    
+    /**
+     * Configuration des templates de modals
+     */
+    const MODAL_TEMPLATES = {
+        base: {
+            containerStyles: `
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.8);
+                z-index: 10000;
+                backdrop-filter: blur(10px);
+            `,
+            contentStyles: `
+                max-width: 90vw;
+                max-height: 90vh;
+                margin: 5vh auto;
+                background: white;
+                border-radius: 16px;
+                box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+                overflow: hidden;
+                position: relative;
+            `,
+            headerStyles: `
+                position: absolute;
+                top: 16px;
+                right: 16px;
+                z-index: 1;
+            `,
+            closeButtonStyles: `
+                background: rgba(0, 0, 0, 0.1);
+                border: none;
+                border-radius: 50%;
+                width: 32px;
+                height: 32px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                font-size: 18px;
+                font-weight: bold;
+            `,
+            bodyStyles: `padding: 32px;`,
+            contentHeaderStyles: `
+                display: flex;
+                align-items: center;
+                margin-bottom: 24px;
+            `,
+            contentHeaderLeftStyles: `
+                display: flex;
+                align-items: center;
+            `,
+            iconStyles: `margin-right: 16px;`,
+            titleStyles: `margin: 0; font-size: 24px; font-weight: 600;`,
+            chipsStyles: `margin-top: 8px;`
+        },
+        widths: {
+            contact: '800px',
+            default: '600px'
+        }
+    };
+
+    /**
+     * Templates de contenu spécifiques par type
+     */
+    const CONTENT_TEMPLATES = {
+        contact: (config) => `
+            <div class="unified-modal-two-columns">
+                <div class="contact-info-column">
+                    <h4>📋 Mes coordonnées</h4>
+                    <div class="contact-info">
+                        ${generateContactItems(config.content?.contacts || getDefaultContactData())}
+                    </div>
+                </div>
+                <div class="contact-form-column">
+                    <h4>✉️ Envoyez-moi un message</h4>
+                    <div class="contact-form-content">
+                        ${generateContactForm(config.content?.form)}
+                    </div>
+                </div>
+            </div>
+        `,
+        
+        discord: (config) => `
+            <div class="unified-modal-simple-content">
+                <p>Voici mon ID Discord :</p>
+                <div class="discord-id-display">
+                    <code class="discord-id">${config.content.discordId}</code>
+                    <button class="btn-action primary" onclick="copyToClipboard('${config.content.discordId}')">📋 Copier</button>
+                </div>
+                <div class="simple-actions">
+                    <button class="btn-action accent" onclick="openDiscordApp()">💬 Ouvrir Discord</button>
+                </div>
+            </div>
+        `,
+        
+        actions: (config) => `
+            <div class="unified-modal-simple-content">
+                <div class="actions-list">
+                    ${config.content.actions.map(generateActionItem).join('')}
+                </div>
+            </div>
+        `,
+        
+        skill: (config) => `
+            ${generateTabSystem(config.tabs)}
+            <div class="unified-modal-panels">
+                ${config.tabs.map(tab => generateTabPanel(tab, config.content[tab.key])).join('')}
+            </div>
+        `,
+        
+        person: (config) => `
+            ${config.tabs ? generateTabSystem(config.tabs) : ''}
+            <div class="unified-modal-panels">
+                ${config.tabs ? config.tabs.map(tab => generateTabPanel(tab, config.content[tab.key])).join('') : ''}
+            </div>
+        `
+    };
+
+    /**
+     * Générateurs de composants réutilisables
+     */
+    function generateIcon(icon, alt = '', size = 48) {
+        return icon.startsWith('/') ? 
+            `<img src="${icon}" alt="${alt}" width="${size}" height="${size}" />` :
+            `<span style="font-size: ${size}px">${icon}</span>`;
+    }
+
+    function generateChips(chips) {
+        return chips ? chips.map(chip => `<span class="chip">${chip}</span>`).join('') : '';
+    }
+
+    function generateTabSystem(tabs) {
+        return `
+            <div class="tabs unified-modal-tabs">
+                ${tabs.map((tab, index) => `
+                    <button class="tab-btn ${index === 0 ? 'active' : ''}" data-tab="${tab.key}">
+                        <span class="tab-icon">${tab.icon}</span>
+                        <span class="tab-label">${tab.label}</span>
+                        ${tab.count ? `<span class="count">${tab.count}</span>` : ''}
+                    </button>
+                `).join('')}
+            </div>
+        `;
+    }
+
+    function generateTabPanel(tab, content) {
+        return `
+            <div class="unified-modal-panel ${tab.active ? 'active' : ''}" data-panel="${tab.key}">
+                ${content || ''}
+            </div>
+        `;
+    }
+
+    function generateActionItem(action) {
+        const buttonClass = action.action === 'video' ? 'accent' : action.action === 'download' ? 'primary' : '';
+        return `
+            <div class="action-item">
+                <div class="action-icon">${action.icon}</div>
+                <div class="action-content">
+                    <div class="action-title">${action.title}</div>
+                    <div class="action-desc">${action.desc}</div>
+                </div>
+                <button class="btn-action ${buttonClass}" onclick="handleAction('${action.action}', '${action.url || ''}')">${action.title.split(' ')[0]}</button>
+            </div>
+        `;
+    }
+
+    function generateContactItems(contacts) {
+        return contacts.map(contact => `
+            <div class="contact-item">
+                <div class="contact-icon">${contact.icon}</div>
+                <div class="contact-details">
+                    <div class="contact-title">${contact.title}</div>
+                    <div class="contact-value">${contact.value}</div>
+                </div>
+                ${contact.link ? `<a href="${contact.link}" class="contact-link" ${contact.external ? 'target="_blank"' : ''}>→</a>` : ''}
+            </div>
+        `).join('');
+    }
+
+    function generateContactForm(formConfig = {}) {
+        return `
+            <form class="contact-form">
+                <div class="form-group">
+                    <label>Nom complet</label>
+                    <input type="text" placeholder="Votre nom" required />
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" placeholder="votre@email.com" required />
+                </div>
+                <div class="form-group">
+                    <label>Message</label>
+                    <textarea rows="4" placeholder="Votre message..." required></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-action primary">📤 Envoyer</button>
+                </div>
+            </form>
+        `;
+    }
+
+    /**
+     * Fonction principale pour créer un modal unifié - REFACTORISÉE
+     */
+    function createUnifiedModal(config) {
+        const modal = getOrCreateModalElement();
+        const content = generateModalContent(config);
+        
+        modal.innerHTML = content;
+        showModal(modal);
+        attachEventListeners(modal);
+    }
+
+    function getOrCreateModalElement() {
+        let modal = document.getElementById('unifiedModal');
+        if (!modal) {
+            modal = document.createElement('div');
+            modal.id = 'unifiedModal';
+            modal.className = 'unified-modal';
+            modal.style.cssText = MODAL_TEMPLATES.base.containerStyles;
+            document.body.appendChild(modal);
+        }
+        return modal;
+    }
+
+    function generateModalContent(config) {
+        const width = MODAL_TEMPLATES.widths[config.type] || MODAL_TEMPLATES.widths.default;
+        const contentTemplate = CONTENT_TEMPLATES[config.type];
+        
+        if (!contentTemplate) {
+            console.warn(`No template found for modal type: ${config.type}`);
+            return '';
+        }
+
+        return `
+            <div class="unified-modal-content" style="${MODAL_TEMPLATES.base.contentStyles} width: ${width};">
+                ${generateModalHeader()}
+                ${generateModalBody(config, contentTemplate)}
+            </div>
+        `;
+    }
+
+    function generateModalHeader() {
+        return `
+            <div class="unified-modal-header" style="${MODAL_TEMPLATES.base.headerStyles}">
+                <button class="unified-modal-close" style="${MODAL_TEMPLATES.base.closeButtonStyles}">&times;</button>
+            </div>
+        `;
+    }
+
+    function generateModalBody(config, contentTemplate) {
+        return `
+            <div class="unified-modal-body" style="${MODAL_TEMPLATES.base.bodyStyles}">
+                ${generateContentHeader(config)}
+                ${contentTemplate(config)}
+            </div>
+        `;
+    }
+
+    function generateContentHeader(config) {
+        const hasRightContent = config.headerRight;
+        
+        return `
+            <div class="unified-modal-content-header" style="${MODAL_TEMPLATES.base.contentHeaderStyles}">
+                <div class="unified-modal-content-header-left" style="${MODAL_TEMPLATES.base.contentHeaderLeftStyles}">
+                    <div class="unified-modal-icon-large" style="${MODAL_TEMPLATES.base.iconStyles}">
+                        ${generateIcon(config.icon, config.title, config.iconSize || 48)}
+                    </div>
+                    <div class="unified-modal-title-block">
+                        <h2 style="${MODAL_TEMPLATES.base.titleStyles}">${config.title}</h2>
+                        <div class="unified-modal-chips" style="${MODAL_TEMPLATES.base.chipsStyles}">
+                            ${generateChips(config.chips)}
+                        </div>
+                    </div>
+                </div>
+                ${hasRightContent ? `<div class="unified-modal-content-header-right">${config.headerRight}</div>` : ''}
+            </div>
+        `;
+    }
+
+    function showModal(modal) {
+        modal.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function hideModal(modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+
+    function attachEventListeners(modal) {
+        // Bouton de fermeture
+        const closeBtn = modal.querySelector('.unified-modal-close');
+        if (closeBtn) {
+            closeBtn.onclick = () => hideModal(modal);
+        }
+
+        // Fermeture en cliquant à l'extérieur
+        modal.onclick = (e) => {
+            if (e.target === modal) {
+                hideModal(modal);
+            }
+        };
+
+        // Gestion des tabs si présentes
+        const tabButtons = modal.querySelectorAll('.tab-btn');
+        const panels = modal.querySelectorAll('.unified-modal-panel');
+        
+        tabButtons.forEach(btn => {
+            btn.onclick = () => {
+                const targetTab = btn.dataset.tab;
+                
+                // Désactiver tous les tabs et panels
+                tabButtons.forEach(b => b.classList.remove('active'));
+                panels.forEach(p => p.classList.remove('active'));
+                
+                // Activer le tab et panel sélectionnés
+                btn.classList.add('active');
+                const targetPanel = modal.querySelector(`[data-panel="${targetTab}"]`);
+                if (targetPanel) {
+                    targetPanel.classList.add('active');
+                }
+            };
+        });
+    }
+
+    /**
+     * Utilitaires et données par défaut
+     */
+    function getDefaultContactData() {
+        return [
+            {
+                icon: '📧',
+                title: 'Email',
+                value: 'clement.g.developer@gmail.com',
+                link: 'mailto:clement.g.developer@gmail.com'
+            },
+            {
+                icon: '💼',
+                title: 'LinkedIn',
+                value: 'linkedin.com/in/clixmods',
+                link: 'https://linkedin.com/in/clixmods',
+                external: true
+            },
+            {
+                icon: '📍',
+                title: 'Localisation',
+                value: 'Montpellier'
+            }
+        ];
+    }
+
+    // Actions helpers
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text).then(() => {
+            console.log('Copied to clipboard:', text);
+        });
+    }
+
+    function openDiscordApp() {
+        window.open('discord://', '_blank');
+    }
+
+    function handleAction(actionType, url) {
+        switch(actionType) {
+            case 'download':
+                if (url) window.open(url, '_blank');
+                break;
+            case 'github':
+                if (url) window.open(url, '_blank');
+                break;
+            case 'docs':
+                if (url) window.open(url, '_blank');
+                break;
+            case 'video':
+                if (url) window.open(url, '_blank');
+                break;
+            default:
+                console.log('Action:', actionType);
+        }
+    }
+
+    // ================================
+    // FONCTIONS DE TEST - MISES À JOUR
+    // ================================
+    
+    function openTestSkillModal() {
+        if (typeof window.openSkillModal === 'function') {
+            window.openSkillModal('C#', '/images/technologies/CSharp.svg', 'Avancé', '4 ans', 'svg');
+        } else {
+            console.error('Skill modal function not available');
+            alert('Le système de modal de compétences n\'est pas disponible sur cette page.');
+        }
+    }
+
+    function openTestContactModal() {
+        UnifiedModal.create({
+            type: 'contact',
+            title: 'Contactez-moi',
+            icon: '📬',
+            chips: [
+                { text: 'Disponible pour projets', type: 'primary' },
+                { text: 'Réponse rapide', type: 'secondary' }
+            ]
+        });
+    }
+
+    function openTestPersonModal() {
+        // Test avec le nouveau système unifié
+        UnifiedModal.create({
+            type: 'person',
+            title: "Clément 'Clix' GARCIA",
+            icon: '/images/people/clement-garcia.jpg',
+            iconSize: 80,
+            chips: [
+                { text: 'Développeur Logiciel', type: 'primary' },
+                { text: 'Studio La Moutarde', type: 'secondary' }
+            ],
+            headerRight: `
+                <div class="contact-social-actions">
+                    <button class="btn-action-icon" title="Email" onclick="window.location.href='mailto:clement.g.developer@gmail.com'">📧</button>
+                    <button class="btn-action-icon" title="LinkedIn" onclick="window.open('https://linkedin.com/in/clixmods', '_blank')">💼</button>
+                    <button class="btn-action-icon" title="GitHub" onclick="window.open('https://github.com/clixmods', '_blank')">💻</button>
+                    <button class="btn-action-icon" title="Discord" onclick="UnifiedModal.create({type:'discord', title:'Mon Discord', icon:'/images/social/discord.svg', chips:['Actif quotidiennement'], content:{discordId:'clixmods'}})">💬</button>
+                </div>
+            `,
+            tabs: [
+                { key: 'about', icon: '👤', label: 'À propos', active: true },
+                { key: 'skills', icon: '🛠️', label: 'Compétences' },
+                { key: 'projects', icon: '💼', label: 'Projets', count: 8 }
+            ],
+            content: {
+                about: `
+                    <div class="about-content">
+                        <p>Développeur polyvalent spécialisé dans les mécaniques de jeu, le design visuel et la production de jeux vidéo. Actuellement étudiant en 3ᵉ année à l'IUT de Montpellier-Sète en filière IAMSI et en alternance chez Studio La Moutarde.</p>
+                    </div>
+                `,
+                skills: `
+                    <div class="skills-content">
+                        <div class="skills-list">
+                            <span class="skill-tag">C#</span>
+                            <span class="skill-tag">Unity</span>
+                            <span class="skill-tag">Blazor</span>
+                            <span class="skill-tag">Game Design</span>
+                            <span class="skill-tag">JavaScript</span>
+                            <span class="skill-tag">Hugo</span>
+                        </div>
+                    </div>
+                `,
+                projects: `
+                    <div class="projects-grid">
+                        <div class="project-card">
+                            <h4>Nuketown Zombies</h4>
+                            <p>Directeur créatif</p>
+                            <div class="card-actions">
+                                <button class="btn-action primary">Voir le projet</button>
+                            </div>
+                        </div>
+                        <div class="project-card">
+                            <h4>Fish'n'Ship</h4>
+                            <p>Développeur principal</p>
+                            <div class="card-actions">
+                                <button class="btn-action primary">Voir le projet</button>
+                            </div>
+                        </div>
+                    </div>
+                `
+            }
+        });
+    }
+
+    function openTestDiscordModal() {
+        UnifiedModal.create({
+            type: 'discord',
+            title: 'Mon Discord',
+            icon: '/images/social/discord.svg',
+            chips: [
+                { text: 'Actif quotidiennement', type: 'accent' }
+            ],
+            content: {
+                discordId: 'clixmods'
+            }
+        });
+    }
+
+    function openTestActionsPopup() {
+        UnifiedModal.create({
+            type: 'actions',
+            title: 'Actions du projet',
+            icon: '🎮',
+            content: {
+                actions: [
+                    { 
+                        icon: '🎮', 
+                        title: 'Télécharger le projet', 
+                        desc: 'Version complète (2.5 GB)', 
+                        action: 'download',
+                        url: 'https://github.com/clixmods/nuketown-remastered/releases'
+                    },
+                    { 
+                        icon: '📂', 
+                        title: 'Voir les fichiers', 
+                        desc: 'Code source et assets', 
+                        action: 'github',
+                        url: 'https://github.com/clixmods/nuketown-remastered'
+                    },
+                    { 
+                        icon: '📖', 
+                        title: 'Documentation', 
+                        desc: 'Guide d\'installation et API', 
+                        action: 'docs',
+                        url: 'https://docs.nuketown-remastered.com'
+                    },
+                    { 
+                        icon: '🎥', 
+                        title: 'Vidéo démo', 
+                        desc: 'Aperçu du gameplay', 
+                        action: 'video',
+                        url: 'https://youtube.com/watch?v=demo'
+                    }
+                ]
+            }
+        });
+    }
+
+    function openTestSkillModal() {
+        // Test du modal skill avec le nouveau système
+        UnifiedModal.create({
+            type: 'skill',
+            title: 'C#',
+            icon: '/images/technologies/CSharp.svg',
+            chips: [
+                { text: 'Avancé', type: 'primary' },
+                { text: '4 ans d\'expérience', type: 'secondary' }
+            ],
+            tabs: [
+                { key: 'projects', icon: '💼', label: 'Projets', count: 12, active: true },
+                { key: 'experiences', icon: '🏢', label: 'Expériences', count: 3 },
+                { key: 'formations', icon: '🎓', label: 'Formations', count: 2 }
+            ],
+            content: {
+                projects: `
+                    <div class="projects-grid">
+                        <div class="project-card">
+                            <h4>Nuketown Zombies Remastered</h4>
+                            <p>Projet de mod complet avec mécaniques avancées</p>
+                            <div class="card-actions">
+                                <button class="btn-action primary">Voir le projet</button>
+                            </div>
+                        </div>
+                        <div class="project-card">
+                            <h4>Studio La Moutarde - Tools</h4>
+                            <p>Outils internes de développement</p>
+                            <div class="card-actions">
+                                <button class="btn-action">Détails</button>
+                            </div>
+                        </div>
+                    </div>
+                `,
+                experiences: `
+                    <div class="experiences-list">
+                        <div class="experience-item">
+                            <h4>Développeur chez Studio La Moutarde</h4>
+                            <p>Alternance - Développement d'outils et applications</p>
+                            <div class="item-actions">
+                                <button class="btn-action accent">Voir l'expérience</button>
+                            </div>
+                        </div>
+                    </div>
+                `,
+                formations: `
+                    <div class="formations-list">
+                        <div class="formation-item">
+                            <h4>BUT IAMSI - IUT Montpellier</h4>
+                            <p>Intégration d'Application et Management des SI</p>
+                            <div class="item-actions">
+                                <button class="btn-action">Voir la formation</button>
+                            </div>
+                        </div>
+                    </div>
+                `
+            }
+        });
+    }
+    </script>
+ 
+</section>

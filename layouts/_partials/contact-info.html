@@ -1,0 +1,24 @@
+<div class="contact-info">
+    {{ with .Site.Data.profile.contact }}
+    {{ $contactItems := slice 
+        (dict "icon" "📧" "title" (i18n "email" | default "Email") "value" .email "link" (printf "mailto:%s" .email))
+        (dict "icon" "💼" "title" "LinkedIn" "value" .linkedin "link" .linkedin "target" "_blank")
+        (dict "icon" "📍" "title" (i18n "location" | default "Localisation") "value" .location)
+        (dict "icon" "🎓" "title" (i18n "status" | default "Statut") "value" .status)
+    }}
+    
+    {{ range $contactItems }}
+    <div class="contact-item aero-glass">
+        <div class="contact-icon">{{ .icon }}</div>
+        <div class="contact-details">
+            <h4>{{ .title }}</h4>
+            {{ if .link }}
+                <a href="{{ .link }}"{{ with .target }} target="{{ . }}"{{ end }}>{{ .value }}</a>
+            {{ else }}
+                <span>{{ .value }}</span>
+            {{ end }}
+        </div>
+    </div>
+    {{ end }}
+    {{ end }}
+</div>

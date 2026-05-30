@@ -1,0 +1,220 @@
+{{- define "main" -}}
+{{- $experienceData := partial "helpers/experience-data.html" . -}}
+
+<div class="experience-single">
+  <header class="experience-header">
+    <h1>{{ .Title }}</h1>
+    <div class="experience-meta">
+      <div class="company">
+        {{- if .Params.logo -}}
+          <img src="{{ .Params.logo }}" alt="Logo {{ .Params.company }}" class="company-logo">
+        {{- end -}}
+        <span class="company-name">{{ .Params.company }}</span>
+      </div>
+      
+      <div class="details">
+        <span class="period">📅 {{ $experienceData.period }}</span>
+        <span class="duration">⏱️ {{ $experienceData.duration }}</span>
+        <span class="status status-{{ $experienceData.status }}">
+          {{- if eq $experienceData.status "current" -}}
+            🟢 En cours
+          {{- else -}}
+            ✅ Terminé
+          {{- end -}}
+        </span>
+        <span class="type">💼 {{ .Params.type }}</span>
+        <span class="location">📍 {{ .Params.location }}</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="experience-content">
+    <div class="description">
+      <h2>Description</h2>
+      <p>{{ .Params.description }}</p>
+    </div>
+
+    {{- if .Params.projects -}}
+    <div class="projects">
+      <h2>Projets</h2>
+      <div class="projects-container">
+      {{- range .Params.projects -}}
+        {{- if .project_ref -}}
+          {{/* Get project page - handle both slug and path formats */}}
+          {{ $projectPage := "" }}
+          {{ if hasPrefix .project_ref "/" }}
+            {{ $projectPage = $.Site.GetPage .project_ref }}
+          {{ else }}
+            {{ $projectPage = $.Site.GetPage (printf "/projects/%s" .project_ref) }}
+          {{ end }}
+          {{ if $projectPage }}
+            {{ $allTechnologies := partial "get-all-technologies.html" $projectPage }}
+            {{ $projectImage := $projectPage.Params.image | default "images/placeholder-project.jpg" }}
+            
+            {{ partial "project-card-unified.html" (dict 
+              "title" $projectPage.Title
+              "subtitle" ($projectPage.Params.description | default $projectPage.Params.subtitle)
+              "description" (cond .role_description .role_description $projectPage.Params.description)
+              "image" $projectImage
+              "url" $projectPage.RelPermalink
+              "technologies" $allTechnologies
+              "maxTechnologies" 4
+            ) }}
+          {{ end }}
+        {{ end }}
+      {{- end -}}
+      </div>
+    </div>
+    {{- end -}}
+
+    <div class="technologies">
+      {{- if .Params.programming_languages -}}
+      <div class="tech-section">
+        <h3>Langages de programmation</h3>
+        <div class="tech-tags">
+          {{- range .Params.programming_languages -}}
+            <span class="tech-tag programming-language">{{ . }}</span>
+          {{- end -}}
+        </div>
+      </div>
+      {{- end -}}
+
+      {{- if .Params.frameworks_engines -}}
+      <div class="tech-section">
+        <h3>Frameworks & Moteurs</h3>
+        <div class="tech-tags">
+          {{- range .Params.frameworks_engines -}}
+            <span class="tech-tag framework">{{ . }}</span>
+          {{- end -}}
+        </div>
+      </div>
+      {{- end -}}
+
+      {{- if .Params.specialties -}}
+      <div class="tech-section">
+        <h3>Spécialités</h3>
+        <div class="tech-tags">
+          {{- range .Params.specialties -}}
+            <span class="tech-tag specialty">{{ . }}</span>
+          {{- end -}}
+        </div>
+      </div>
+      {{- end -}}
+    </div>
+
+    {{- if .Content -}}
+    <div class="additional-content">
+      {{ .Content }}
+    </div>
+    {{- end -}}
+  </main>
+
+  <aside class="experience-debug" style="margin-top: 2rem; padding: 1rem; background: #f5f5f5; border-radius: 8px; font-family: monospace; font-size: 0.9rem;">
+    <details>
+      <summary>🔍 Données calculées (debug)</summary>
+      <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
+        <li><strong>Période:</strong> {{ $experienceData.period }}</li>
+        <li><strong>Durée:</strong> {{ $experienceData.duration }}</li>
+        <li><strong>Statut:</strong> {{ $experienceData.status }}</li>
+        <li><strong>Date début:</strong> {{ $experienceData.start_date.Format "2006-01-02" }}</li>
+        {{- if $experienceData.end_date -}}
+          <li><strong>Date fin:</strong> {{ $experienceData.end_date.Format "2006-01-02" }}</li>
+        {{- else -}}
+          <li><strong>Date fin:</strong> <em>Non définie (en cours)</em></li>
+        {{- end -}}
+      </ul>
+    </details>
+  </aside>
+</div>
+
+<style>
+.experience-single {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.experience-header {
+  margin-bottom: 2rem;
+  border-bottom: 2px solid #e5e5e5;
+  padding-bottom: 1rem;
+}
+
+.experience-meta {
+  margin-top: 1rem;
+}
+
+.company {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.company-logo {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.details > span {
+  background: #f0f0f0;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.status-current {
+  background: #d4edda !important;
+  color: #155724;
+}
+
+.status-completed {
+  background: #cce5ff !important;
+  color: #004085;
+}
+
+.tech-section {
+  margin-bottom: 1rem;
+}
+
+.tech-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tech-tag {
+  background: #007bff;
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 16px;
+  font-size: 0.8rem;
+}
+
+.tech-tag.programming-language {
+  background: #28a745;
+}
+
+.tech-tag.framework {
+  background: #fd7e14;
+}
+
+.tech-tag.specialty {
+  background: #6f42c1;
+}
+
+/* Hide technology tags on mobile */
+@media (max-width: 768px) {
+  .technologies {
+    display: none !important;
+  }
+}
+</style>
+{{- end -}}

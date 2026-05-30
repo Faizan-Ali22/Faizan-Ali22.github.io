@@ -1,0 +1,42 @@
+{{/*
+  Partial: Gallery Widget
+  Description: Widget compact pour afficher la galerie d'un projet
+  Context: 
+    - .Params (dict) - Paramètres du projet avec .gallery
+    - .File.BaseFileName (string) - ID du projet
+*/}}
+
+{{- if .Params.gallery -}}
+<div class="project-widget gallery-box {{ .Params.gallery_size | default "size-large" }}{{ if eq .Params.gallery_aspect "16:9" }} gallery-16x9{{ end }}" onclick="toggleInfoBox(this)">
+  <!-- Gallery Preview Background pour l'état fermé -->
+  {{- $firstGalleryImg := partial "get-optimized-image.html" (dict "imagePath" (index .Params.gallery 0).url "width" 60 "quality" 85) -}}
+  <div class="project-widget-gallery-preview gallery-background"
+       style="--count: {{ len .Params.gallery }}; background-image: url('{{ $firstGalleryImg.src }}'); background-size: cover; background-position: center;">
+    <div class="project-widget-gallery-carousel">
+      {{- range $idx, $img := .Params.gallery -}}
+        {{- $optimizedGalleryImg := partial "get-optimized-image.html" (dict "imagePath" $img.url "width" 60 "quality" 85) -}}
+      <div class="project-widget-gallery-mini-item" style="--i: {{$idx}};">
+        <img src="{{ $optimizedGalleryImg.src }}" width="{{ $optimizedGalleryImg.width }}" height="{{ $optimizedGalleryImg.height }}" alt="{{ $img.caption }}" loading="lazy">
+      </div>
+      {{- end -}}
+    </div>
+  </div>
+  
+  <div class="project-widget-header">
+    <div class="project-widget-icon gallery">
+      {{- partial "icon.html" (dict "iconId" "image") -}}
+    </div>
+    <div class="project-widget-header-content">
+      <h3 class="project-widget-title">{{ i18n "project_gallery" | default "Galerie du projet" }}</h3>
+      <div class="project-widget-summary">{{ len .Params.gallery }} {{ if eq (len .Params.gallery) 1 }}{{ i18n "image" | default "image" }}{{ else }}{{ i18n "images" | default "images" }}{{ end }}</div>
+    </div>
+    <div class="project-widget-toggle">
+      {{- partial "icon.html" (dict "iconId" "chevron-down") -}}
+    </div>
+  </div>
+  <div class="project-widget-content">
+    {{/* Contenu modal enhanced - uniquement ce qui doit apparaître dans le modal */}}
+    {{ partial "projects/widgets/modal/gallery.html" (dict "gallery" .Params.gallery "projectId" .File.BaseFileName) }}
+  </div>
+</div>
+{{- end -}}

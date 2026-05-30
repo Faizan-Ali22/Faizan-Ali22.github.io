@@ -1,0 +1,28 @@
+{{/*
+  Partial: Downloads Widget
+  Description: Widget compact pour afficher les statistiques de téléchargement d'un projet
+  Context: 
+    - .Params (dict) - Paramètres du projet avec .downloads
+    - .File.BaseFileName (string) - ID du projet
+*/}}
+
+{{- if .Params.downloads -}}
+<div class="project-widget downloads-box {{ .Params.downloads_size | default "size-medium" }}" onclick="toggleInfoBox(this)">
+  <div class="project-widget-header">
+    <div class="project-widget-icon downloads">
+      {{- partial "icon.html" (dict "iconId" "download") -}}
+    </div>
+    <div class="project-widget-header-content">
+      {{- $total := default 0 .Params.downloads.total -}}
+      <h3 class="project-widget-title">{{ partial "helpers/format-number.html" $total }} {{ if eq $total 1 }}{{ i18n "download" | default "téléchargement" }}{{ else }}{{ i18n "downloads_plural" | default "téléchargements" }}{{ end }}</h3>
+    </div>
+    <div class="project-widget-toggle">
+      {{- partial "icon.html" (dict "iconId" "chevron-down") -}}
+    </div>
+  </div>
+  <div class="project-widget-content">
+    {{/* Contenu modal enhanced - uniquement ce qui doit apparaître dans le modal */}}
+    {{ partial "projects/widgets/modal/downloads.html" (dict "Project" . "Title" (i18n "downloads_plural" | default "Téléchargements")) }}
+  </div>
+</div>
+{{- end -}}

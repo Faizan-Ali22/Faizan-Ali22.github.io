@@ -1,0 +1,37 @@
+<section id="contact" class="contact-section">
+    <div class="contact-container">
+        <div class="contact-header">
+            <h2>{{ i18n "contact_me" | default "Contact Me" }}</h2>
+            <p>{{ i18n "contact_subtitle" | default "Feel free to contact me to discuss your projects or opportunities!" }}</p>
+        </div>
+        
+        <div class="contact-cta">
+            <button class="contact-open-modal-btn" id="contact-section-trigger" onclick="UnifiedModal.create({ type: 'contact', title: 'Contactez-moi', icon: '📬', content: { contacts: [
+                { icon: '📧', title: 'Email', value: '{{ with $.Site.Data.profile.contact.email }}{{ . }}{{ else }}your.email@example.com{{ end }}', link: 'mailto:{{ with $.Site.Data.profile.contact.email }}{{ . }}{{ else }}your.email@example.com{{ end }}' },
+                { icon: '/images/social/linkedin.svg', title: 'LinkedIn', value: '{{ with $.Site.Data.profile.contact.linkedin }}{{ . }}{{ else }}linkedin.com/in/yourprofile{{ end }}', link: 'https://{{ with $.Site.Data.profile.contact.linkedin }}{{ . }}{{ else }}linkedin.com/in/yourprofile{{ end }}', external: true },
+                { icon: '📍', title: 'Localisation', value: '{{ with $.Site.Data.profile.contact.location }}{{ . }}{{ else }}Your Location{{ end }}' }
+            ] } })">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                </svg>
+                <span>{{ i18n "open_contact_form" | default "Open contact form" }}</span>
+            </button>
+            
+            <!-- Quick access to contact information -->
+            <div class="contact-quick-info">
+                {{ with .Site.Data.profile.contact }}
+                <a href="mailto:{{ .email }}" class="contact-quick-item">
+                    <span class="contact-quick-icon">📧</span>
+                    <span>{{ .email }}</span>
+                </a>
+                <a href="{{ .linkedin }}" target="_blank" class="contact-quick-item">
+                    <span class="contact-quick-icon">💼</span>
+                    <span>LinkedIn</span>
+                </a>
+                {{ end }}
+            </div>
+        </div>
+        
+        {{ partial "social-links.html" . }}
+    </div>
+</section>

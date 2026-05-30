@@ -1,0 +1,71 @@
+﻿{{ define "main" }}
+{{ $unifiedModalCSS := resources.Get "scss/unified-modal.scss" | css.Sass | resources.Minify }}
+{{ $demoCSS := resources.Get "scss/demo.scss" | css.Sass | resources.Minify }}
+{{ $demoJS := resources.Get "js/demo.js" | resources.Minify }}
+<link rel="stylesheet" href="{{ $unifiedModalCSS.RelPermalink }}">
+<link rel="stylesheet" href="{{ $demoCSS.RelPermalink }}">
+<script src="{{ $demoJS.RelPermalink }}" defer></script>
+
+
+<!-- Les styles CSS sont maintenant dans demo.scss -->
+
+
+<div class="demo-page">
+    <header>
+        <h1>🎨 Demo - Modals du Site</h1>
+        <p>Cette page présente toutes les modals disponibles sur le site côte à côte pour faciliter la refactorisation.</p>
+    </header>
+
+
+    {{/* Classic modal demo removed: deprecated in favor of unified modal system */}}
+
+    {{ partial "/demo/demo-section-modals-unified.html" . }}
+
+    {{ partial "/demo/demo-section-headers.html" . }}
+  
+    {{ partial "/demo/demo-section-tabs.html" . }}
+
+    {{ partial "/demo/demo-section-clickable-element.html" . }}
+
+    {{ partial "/demo/demo-section-experience.html" . }}
+
+    {{ partial "/demo/demo-section-docks.html" . }}
+
+    {{ partial "/demo/demo-section-blog-nav.html" . }}
+
+    {{ partial "/demo/demo-section-skills.html" . }}
+
+    {{ partial "/demo/demo-section-skill-tags.html" . }}
+
+    {{ partial "/demo/demo-section-typography.html" . }}
+
+    {{ partial "/demo/demo-section-tech-badges.html" . }}
+
+    {{ partial "/demo/demo-section-cards.html" . }}
+
+    {{ partial "/demo/demo-section-colors.html" . }}
+
+    {{ partial "/demo/demo-section-interactive.html" . }}
+
+    {{ partial "/demo/demo-section-forms.html" . }}
+
+    {{ partial "/demo/demo-section-modals.html" . }}
+
+    {{ partial "/demo/demo-section-responsive.html" . }}
+
+</div>
+    </footer>
+</div>
+
+<!-- Inclure les VRAIS modals du thème -->
+{{ partial "skill-modal.html" . }}
+{{ partial "person-modal.html" . }}
+
+<!-- Les vrais JavaScripts du thème sont déjà chargés automatiquement -->
+
+<!-- Le JavaScript des modals est maintenant dans demo.js -->
+
+<!-- Auto-include person modal if needed -->
+{{ partial "auto-person-modal.html" . }}
+
+{{ end }}

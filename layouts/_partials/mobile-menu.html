@@ -1,0 +1,202 @@
+<!-- Mobile Menu Overlay -->
+<div class="mobile-menu-overlay" id="mobile-menu-overlay"></div>
+
+<!-- Mobile Menu Button (visible only on mobile) -->
+<button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="{{ i18n "open_menu" | default "Open menu" }}" aria-expanded="false">
+  <span class="hamburger-icon">
+    <span class="hamburger-line"></span>
+    <span class="hamburger-line"></span>
+    <span class="hamburger-line"></span>
+  </span>
+  <span class="mobile-menu-notification-badge" id="mobile-menu-notification-badge" style="display: none;">0</span>
+</button>
+
+<!-- Mobile Dropdown Menu -->
+<div class="mobile-menu-dropdown" id="mobile-menu-dropdown">
+    <!-- Main Menu View -->
+    <div class="mobile-menu-content" id="mobile-menu-main-view">
+      <!-- Profile Badge Header -->
+      <div class="mobile-menu-profile">
+        <div class="mobile-profile-avatar">
+          <img src="{{ with .Site.Data.profile }}{{ .media.profileImage }}{{ end }}" 
+               alt="{{ with .Site.Data.profile }}{{ .personal.fullName }}{{ end }}" 
+               class="mobile-avatar-image">
+        </div>
+        <div class="mobile-profile-info">
+          <span class="mobile-profile-name">{{ with .Site.Data.profile }}{{ .personal.firstName }} {{ .personal.lastName }}{{ end }}</span>
+          <span class="mobile-profile-role">{{ with .Site.Data.profile }}{{ .personal.title }}{{ end }}</span>
+        </div>
+      </div>
+      
+      <div class="mobile-menu-separator"></div>
+      
+      <div class="mobile-menu-section">
+        <div class="mobile-menu-actions">
+          <a href="/cv/" 
+             class="mobile-menu-item" 
+             title="{{ i18n "download_resume" | default "Download Resume" }}">
+            {{- partial "icon.html" (dict "iconId" "document-download" "size" "24" "class" "mobile-menu-icon") -}}
+            <span class="mobile-menu-label">{{ i18n "download_resume" | default "Download Resume" }}</span>
+          </a>
+          
+          <a href="mailto:{{ with $.Site.Data.profile.contact.email }}{{ . }}{{ else }}your.email@example.com{{ end }}"
+             class="mobile-menu-item" 
+             title="Email">
+            {{- partial "icon.html" (dict "iconId" "email" "size" "24" "class" "mobile-menu-icon") -}}
+            <span class="mobile-menu-label">Email</span>
+          </a>
+          
+          <a href="#"
+             class="mobile-menu-item"
+             title="{{ i18n "phone" | default "Phone" }}"
+             onclick="event.preventDefault(); document.getElementById(&quot;mobile-menu-toggle&quot;).click(); UnifiedModal.create({ type: &quot;phone&quot;, title: &quot;{{ i18n "my_phone" | default "My Phone" }}&quot;, icon: &quot;📱&quot;, content: { phoneNumber: &quot;{{ with $.Site.Data.profile.contact.phone }}{{ . }}{{ else }}+1 234 567 8900{{ end }}&quot; } });">
+            {{- partial "icon.html" (dict "iconId" "phone" "size" "24" "class" "mobile-menu-icon") -}}
+            <span class="mobile-menu-label">{{ i18n "phone" | default "Phone" }}</span>
+          </a>
+        </div>
+      </div>
+      
+      <div class="mobile-menu-separator"></div>
+      
+      <div class="mobile-menu-section">
+        <div class="mobile-menu-actions">
+          {{ range .Site.Data.config.social }}
+          {{ if and (ne .title "Email") (ne .title "Phone") }}
+          <a href="{{ .url }}" 
+             {{ if .external }}target="_blank" rel="noopener noreferrer"{{ end }} 
+             class="mobile-menu-item" 
+             title="{{ if eq .title "LinkedIn" }}LinkedIn{{ else if eq .title "GitHub" }}GitHub{{ else if eq .title "Discord" }}Discord{{ else if eq .title "ArtStation" }}ArtStation{{ else }}{{ .title }}{{ end }}"
+             {{ if eq .title "Discord" }}
+               onclick="event.preventDefault(); document.getElementById(&quot;mobile-menu-toggle&quot;).click(); UnifiedModal.create({ type: &quot;discord&quot;, title: &quot;{{ i18n "my_discord" | default "My Discord" }}&quot;, icon: &quot;/images/social/discord.svg&quot;, content: { discordId: &quot;{{ with $.Site.Data.profile.contact.discord }}{{ . }}{{ else }}yourdiscord{{ end }}&quot; } });"
+             {{ end }}>
+            {{ if eq .title "LinkedIn" }}
+            {{- partial "icon.html" (dict "iconId" "linkedin" "class" "mobile-menu-icon") -}}
+            {{ else if eq .title "GitHub" }}
+            {{- partial "icon.html" (dict "iconId" "github" "class" "mobile-menu-icon") -}}
+            {{ else if eq .title "Discord" }}
+            {{- partial "icon.html" (dict "iconId" "discord" "class" "mobile-menu-icon") -}}
+            {{ else if eq .title "ArtStation" }}
+            {{- partial "icon.html" (dict "iconId" "artstation" "size" "24" "class" "mobile-menu-icon") -}}
+            {{ else }}
+            <span class="mobile-menu-emoji">{{ .icon }}</span>
+            {{ end }}
+            <span class="mobile-menu-label">{{ if eq .title "LinkedIn" }}LinkedIn{{ else if eq .title "GitHub" }}GitHub{{ else if eq .title "Discord" }}Discord{{ else if eq .title "ArtStation" }}ArtStation{{ else }}{{ .title }}{{ end }}</span>
+          </a>
+          {{ end }}
+          {{ end }}
+        </div>
+      </div>
+      
+      <div class="mobile-menu-separator"></div>
+      
+      <div class="mobile-menu-section">
+        <div class="mobile-menu-actions">
+          {{ if .Site.Data.config.features.trophies }}
+          <!-- Trophies Button -->
+          <button class="mobile-menu-item mobile-menu-trophies" 
+                  onclick="document.getElementById(&quot;mobile-menu-toggle&quot;).click(); document.querySelector(&quot;.right-dock .trophies-btn&quot;).click();">
+            <div class="mobile-menu-item-content">
+              <img class="mobile-menu-icon" src="/images/trophy.png" alt="Trophies" width="20" height="20">
+              <span class="mobile-menu-label">{{ i18n "trophies" | default "Trophies" }}</span>
+            </div>
+            <span class="trophy-count-badge" id="mobile-trophy-count">0%</span>
+          </button>
+          {{ end }}
+          
+          <!-- Theme Toggle Button -->
+          <button class="mobile-menu-item mobile-menu-theme" 
+                  id="mobile-theme-toggle-btn">
+            <div class="mobile-menu-item-content">
+              <div class="mobile-menu-icon" style="position: relative; width: 20px; height: 20px;">
+                {{- partial "icon.html" (dict "iconId" "moon" "size" "20" "class" "theme-icon-dark" "style" "position: absolute; top:0; left:0;") -}}
+                {{- partial "icon.html" (dict "iconId" "sun" "size" "20" "class" "theme-icon-light" "style" "position: absolute; top:0; left:0;") -}}
+              </div>
+              <span class="mobile-menu-label">{{ i18n "change_theme" | default "Change theme" }}</span>
+            </div>
+          </button>
+          
+          <!-- Notifications Button -->
+          <button class="mobile-menu-item mobile-menu-notifications" 
+                  id="mobile-show-notifications-btn">
+            <div class="mobile-menu-item-content">
+              {{- partial "icon.html" (dict "iconId" "bell" "size" "20" "class" "mobile-menu-icon") -}}
+              <span class="mobile-menu-label">{{ i18n "notifications" | default "Notifications" }}</span>
+            </div>
+            <span class="notification-badge-mobile" id="mobile-notification-badge" style="display: none;">0</span>
+          </button>
+          
+          <!-- Language Selector -->
+          <div class="mobile-menu-language-section">
+            <div class="mobile-menu-language-header">
+              {{- partial "icon.html" (dict "iconId" "globe" "size" "20" "class" "mobile-menu-icon") -}}
+              <span class="mobile-menu-label">{{ i18n "select_language" | default "Language" }}</span>
+            </div>
+            <div class="mobile-menu-language-options">
+              {{/* Build a map of current page translations by lang */}}
+              {{ $current := . }}
+              {{ $translations := dict }}
+              {{ range .AllTranslations }}
+                {{ $translations = merge $translations (dict .Lang .) }}
+              {{ end }}
+              {{/* Build a map of Site objects by lang for home fallbacks */}}
+              {{ $sitesByLang := dict }}
+              {{ range $.Sites }}
+                {{ $sitesByLang = merge $sitesByLang (dict .Language.Lang .) }}
+              {{ end }}
+              {{/* Render options in configured language order */}}
+              {{ range $.Site.Languages }}
+                {{ $lang := .Lang }}
+                {{ $isCurrent := eq $lang $.Site.Language.Lang }}
+                {{ $target := index $translations $lang }}
+                {{ $siteForLang := index $sitesByLang $lang }}
+                <a href="{{ if $isCurrent }}{{ $current.RelPermalink }}{{ else if $target }}{{ $target.RelPermalink }}{{ else if $siteForLang }}{{ $siteForLang.Home.RelPermalink }}{{ else }}{{ "/" | relLangURL }}{{ end }}"
+                   class="mobile-menu-language-option {{ if $isCurrent }}active{{ end }}"
+                   data-lang="{{ $lang }}">
+                  <span class="language-flag">{{ cond (eq $lang "fr") "🇫🇷" "🇬🇧" }}</span>
+                  <span class="language-name">{{ .LanguageName }}</span>
+                  {{ if $isCurrent }}
+                  <span class="language-check">✓</span>
+                  {{ end }}
+                </a>
+              {{ end }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Notifications View (Hidden by default) -->
+    <div class="mobile-menu-notifications-view" id="mobile-menu-notifications-view" style="display: none;">
+      <div class="mobile-menu-notifications-header">
+        <button class="mobile-notifications-back-btn" id="mobile-notifications-back-btn">
+          <svg class="back-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+          <span>{{ i18n "back" | default "Back" }}</span>
+        </button>
+        <div class="mobile-notifications-title-row">
+          <h2 class="mobile-notifications-title">
+            {{- partial "icon.html" (dict "iconId" "bell" "size" "24" "class" "title-icon") -}}
+            <span>{{ i18n "notifications" | default "Notifications" }}</span>
+          </h2>
+          <button class="mobile-clear-all-btn" id="mobile-clear-all-btn" style="display: none;">
+            <svg class="clear-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="3 6 5 6 21 6"></polyline>
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+            </svg>
+            <span>{{ i18n "clear_all" | default "Clear all" }}</span>
+          </button>
+        </div>
+      </div>
+      
+      <div class="mobile-menu-notifications-content" id="mobile-notifications-content">
+        <!-- Notifications will be dynamically loaded here -->
+        <div class="mobile-notifications-empty">
+          <div class="empty-state-icon">🔔</div>
+          <p class="empty-state-text">{{ i18n "no_notifications_yet" | default "No notifications yet" }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

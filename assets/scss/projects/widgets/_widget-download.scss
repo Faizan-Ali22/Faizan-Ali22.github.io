@@ -1,0 +1,88 @@
+// =============================================================================
+// PROJECT WIDGET - DOWNLOADS
+// =============================================================================
+
+@import 'widget-base';
+
+.project-widget-downloads-content {
+  text-align: center;
+  padding: $widget-padding-lg;
+}
+
+.project-widget-downloads-display {
+  margin-bottom: $widget-padding-lg;
+}
+
+.project-widget-downloads-value {
+  @include widget-gradient-text('downloads-value');
+  font-size: 3rem;
+  font-weight: var(--font-weight-bold);
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  margin-bottom: 0.5rem;
+}
+
+.project-widget-downloads-label {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: var(--font-weight-medium);
+}
+
+.project-widget-downloads-details {
+  @extend %widget-list-layout;
+  gap: $widget-gap-sm;
+  margin-bottom: $widget-gap;
+}
+
+.project-widget-downloads-platform {
+  @extend %widget-item-layout;
+  @include widget-item-with-accent(var(--primary-blue));
+  padding: 0.6rem $widget-padding;
+  background: rgba(255,255,255,0.05);
+  border: var(--downloads-platform-border);
+}
+
+.project-widget-downloads-platform-name {
+  color: var(--text-primary);
+  font-weight: var(--font-weight-medium);
+  font-size: 0.9rem;
+}
+
+.project-widget-downloads-platform-count {
+  color: var(--primary-blue);
+  font-weight: var(--font-weight-semibold);
+  font-size: 0.9rem;
+}
+
+.project-widget-downloads-last-updated {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  margin-top: $widget-gap;
+  padding-top: $widget-gap;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+// Preview mode (for collapsed state)
+.project-widget-downloads-preview {
+  @extend %widget-preview-item;
+  
+  .project-widget-downloads-preview-value {
+    @extend .preview-value;
+    font-size: 1.5rem;
+    color: var(--primary-blue);
+    min-width: 60px;
+  }
+  
+  .project-widget-downloads-preview-info {
+    @extend .preview-info;
+  }
+  
+  .project-widget-downloads-preview-label {
+    @extend .preview-label;
+  }
+  
+  .project-widget-downloads-preview-date {
+    @extend .preview-meta;
+  }
+}

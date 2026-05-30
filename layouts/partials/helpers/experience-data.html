@@ -1,0 +1,92 @@
+{{/* 
+  Helper to automatically calculate experience data 
+  Usage: {{ partial "helpers/experience-data.html" . }}
+  
+  Input: Experience page with start_date and end_date
+  Output: Dict with calculated period, duration, status
+*/}}
+
+{{- $experience := . -}}
+{{- $startDate := time $experience.Params.start_date -}}
+{{- $endDate := "" -}}
+{{- $now := now -}}
+
+{{/* Handle end date */}}
+{{- if $experience.Params.end_date -}}
+  {{- $endDate = time $experience.Params.end_date -}}
+{{- end -}}
+
+{{/* Calculate period */}}
+{{- $startYear := $startDate.Year -}}
+{{- $period := "" -}}
+{{- if $endDate -}}
+  {{- $endYear := $endDate.Year -}}
+  {{- $period = printf "%d - %d" $startYear $endYear -}}
+{{- else -}}
+  {{- $period = printf "%d - %s" $startYear (i18n "present" | default "Présent") -}}
+{{- end -}}
+
+{{/* Calculate duration */}}
+{{- $targetDate := $now -}}
+{{- if $endDate -}}
+  {{- $targetDate = $endDate -}}
+{{- end -}}
+
+{{- $diffSeconds := $targetDate.Sub $startDate -}}
+{{- $diffDays := div $diffSeconds.Seconds 86400 -}}
+{{- $diffMonths := div $diffDays 30.44 -}}
+{{- $years := int (div $diffMonths 12) -}}
+{{- $months := int (mod $diffMonths 12) -}}
+
+{{/* Arrondi intelligent: si >= 10 mois, arrondir à l'année supérieure */}}
+{{- $duration := "" -}}
+{{- if eq $years 0 -}}
+  {{- if eq $months 1 -}}
+    {{- $duration = printf "1 %s" (i18n "month" | default "mois") -}}
+  {{- else -}}
+    {{- $duration = printf "%d %s" $months (i18n "months" | default "mois") -}}
+  {{- end -}}
+{{- else if or (eq $months 0) (ge $months 10) -}}
+  {{/* Si pas de mois ou >= 10 mois, afficher seulement les années (arrondies) */}}
+  {{- $finalYears := $years -}}
+  {{- if ge $months 10 -}}
+    {{- $finalYears = add $years 1 -}}
+  {{- end -}}
+  {{- if eq $finalYears 1 -}}
+    {{- $duration = printf "1 %s" (i18n "year" | default "an") -}}
+  {{- else -}}
+    {{- $duration = printf "%d %s" $finalYears (i18n "years" | default "ans") -}}
+  {{- end -}}
+{{- else -}}
+  {{- $yearText := "" -}}
+  {{- if eq $years 1 -}}
+    {{- $yearText = printf "1 %s" (i18n "year" | default "an") -}}
+  {{- else -}}
+    {{- $yearText = printf "%d %s" $years (i18n "years" | default "ans") -}}
+  {{- end -}}
+  {{- $monthText := "" -}}
+  {{- if eq $months 1 -}}
+    {{- $monthText = printf "1 %s" (i18n "month" | default "mois") -}}
+  {{- else -}}
+    {{- $monthText = printf "%d %s" $months (i18n "months" | default "mois") -}}
+  {{- end -}}
+  {{- $duration = printf "%s %s" $yearText $monthText -}}
+{{- end -}}
+
+{{/* Status calculation */}}
+{{- $status := "current" -}}
+{{- if $endDate -}}
+  {{- $currentDate := now -}}
+  {{- if lt $endDate.Unix $currentDate.Unix -}}
+    {{- $status = "completed" -}}
+  {{- end -}}
+{{- end -}}
+
+{{/* Return dictionary */}}
+{{- return dict 
+  "period" $period 
+  "duration" $duration 
+  "status" $status 
+  "start_date" $startDate
+  "end_date" $endDate
+-}}

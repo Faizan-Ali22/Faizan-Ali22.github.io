@@ -1,0 +1,21 @@
+# ============================================================
+# 💬 TESTIMONIALS — Add testimonials from colleagues/clients
+# ============================================================
+# Fields:
+#   personId:  ID of a person in content/people/ (or a placeholder name)
+#   text:      The testimonial quote
+#   position:  Their job title
+#   company:   Their company name
+# ============================================================
+
+# Uncomment and customize:
+
+# - personId: "john-doe"
+#   text: "An excellent developer who delivers high-quality work on time."
+#   position: "Project Manager"
+#   company: "Example Corp"
+
+# - personId: "jane-smith"
+#   text: "Creative problem solver with great communication skills."
+#   position: "Lead Developer"
+#   company: "Tech Startup Inc."

@@ -1,0 +1,1597 @@
+/* ========================================
+   CONTENU AMÃ‰LIORÃ‰ - COHÃ‰RENCE AVEC HÃ‰RO
+   ======================================== */
+
+/* Animation d'apparition séquentielle pour les éléments */
+.blog-content-wrapper > * {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInSequence 0.6s ease-out forwards;
+}
+
+.blog-content-wrapper > *:nth-child(1) { animation-delay: 0.1s; }
+.blog-content-wrapper > *:nth-child(2) { animation-delay: 0.2s; }
+.blog-content-wrapper > *:nth-child(3) { animation-delay: 0.3s; }
+.blog-content-wrapper > *:nth-child(4) { animation-delay: 0.4s; }
+.blog-content-wrapper > *:nth-child(5) { animation-delay: 0.5s; }
+.blog-content-wrapper > *:nth-child(n+6) { animation-delay: 0.6s; }
+
+@keyframes fadeInSequence {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Sections spÃ©cialisÃ©es */
+.project-content-section {
+    background: var(--glass-bg-lighter);
+    border-radius: var(--border-radius-sm);
+    padding: 1.5rem;
+    margin: 2rem 0;
+    border: 1px solid var(--glass-border-light);
+    position: relative;
+    overflow: hidden;
+}
+
+.project-content-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--gradient-blue);
+    opacity: 0.6;
+}
+
+/* Effet hover pour les éléments interactifs */
+.blog-content-wrapper h2:hover,
+.blog-content-wrapper h3:hover {
+    transform: translateX(5px);
+    transition: transform 0.3s ease;
+}
+
+/* Amélioration de la hiérarchie visuelle */
+.blog-content-wrapper > h2:first-of-type {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+/* ========================================
+   PROJECT NAVIGATION
+   ======================================== */
+
+.project-navigation {
+    margin-top: 4rem;
+    padding: 2rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--shadow-glass);
+    border-radius: var(--border-radius-md);
+    position: relative;
+    overflow: hidden;
+}
+
+.project-navigation::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--glass-bg-light);
+    border-radius: var(--border-radius-md);
+    z-index: -1;
+}
+
+.project-navigation::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: var(--gradient-blue);
+    box-shadow: 0 0 10px rgba(52, 152, 219, 0.3);
+}
+
+.nav-links {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.nav-link {
+    /* Utiliser le mÃªme style que les boutons d'action */
+    display: inline-flex;
+    align-items: center;
+    gap: var(--gap-sm);
+    padding: var(--padding-btn);
+    color: var(--text-primary);
+    text-decoration: none;
+    border-radius: var(--border-radius-lg);
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-base);
+    transition: var(--transition-smooth);
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    min-height: 44px;
+    /* Glass effect */
+    background: var(--glass-bg);
+    backdrop-filter: blur(5px);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--shadow-glass);
+    /* Layout specific */
+    justify-content: center;
+    flex-direction: column;
+    text-align: left;
+    padding: var(--padding-glass);
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--glass-bg-light);
+    border-radius: var(--border-radius-lg);
+    z-index: -1;
+}
+
+.nav-link:hover {
+    background: var(--primary-blue-bg);
+    border-color: var(--primary-blue-border);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+    color: var(--text-primary);
+}
+
+.nav-link.next {
+    text-align: right;
+}
+
+.nav-direction {
+    display: block;
+    color: var(--primary-blue);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--gap-sm);
+}
+
+.nav-title {
+    display: block;
+    color: var(--text-primary);
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+}
+
+.back-to-projects {
+    text-align: center;
+}
+
+.btn-secondary {
+    /* Utiliser le mÃªme style que les boutons d'action */
+    display: inline-flex;
+    align-items: center;
+    gap: var(--gap-sm);
+    padding: var(--padding-btn);
+    color: var(--text-primary);
+    text-decoration: none;
+    border-radius: var(--border-radius-lg);
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-base);
+    transition: var(--transition-smooth);
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    min-height: 44px;
+    /* Glass effect */
+    background: var(--glass-bg);
+    backdrop-filter: blur(5px);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--shadow-glass);
+    /* Layout specific */
+    justify-content: center;
+}
+
+.btn-secondary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--glass-bg-light);
+    border-radius: var(--border-radius-lg);
+    z-index: -1;
+}
+
+.btn-secondary:hover {
+    background: var(--primary-blue-bg);
+    border-color: var(--primary-blue-border);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+    color: var(--text-primary);
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+
+@media (max-width: 768px) {
+    .project-hero {
+        min-height: 80vh;
+        background-attachment: scroll;
+    }
+    
+    .project-hero-container,
+    .project-content-container {
+        padding: 0 1rem;
+    }
+    
+    .project-navigation,
+    .project-sidebar {
+        max-width: calc(100% - 2rem);
+        margin: 1rem auto;
+        padding: 0 1rem;
+    }
+    
+    .project-info-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 0;
+    }
+    
+    .project-notable-facts-hero {
+        order: -1;
+    }
+    
+    .project-sidebar {
+        position: static;
+        order: -1;
+    }
+    
+    .project-title {
+        font-size: 2.5rem;
+    }
+    
+    .project-description {
+        font-size: 1.1rem;
+    }
+    
+    .project-meta-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .tech-pills,
+    .tag-pills {
+        gap: 0.3rem;
+    }
+    
+    .tech-pill,
+    .tag-pill {
+        font-size: 0.7rem;
+        padding: 0.3rem 0.6rem;
+    }
+    
+    .nav-links {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .blog-content-wrapper {
+        padding: 1.5rem;
+    }
+    
+    .blog-content-wrapper h1 {
+        font-size: 2rem;
+    }
+    
+    .blog-content-wrapper h2 {
+        font-size: 1.5rem;
+        padding: 0.8rem 0 0.8rem 1.5rem;
+    }
+    
+    .blog-content-wrapper h3 {
+        font-size: 1.2rem;
+    }
+    
+    .blog-content-wrapper ul,
+    .blog-content-wrapper ol {
+        padding: 1rem;
+    }
+    
+    .blog-content-wrapper pre {
+        padding: 1.5rem;
+    }
+    
+    .blog-content-wrapper blockquote {
+        padding: 1.5rem;
+    }
+    
+    .fact-card {
+        padding: 1.2rem;
+    }
+    
+    .fact-value {
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Prevent horizontal scroll on mobile */
+    body {
+        overflow-x: hidden !important;
+        max-width: 100vw;
+    }
+    
+    html {
+        overflow-x: hidden !important;
+        max-width: 100vw;
+    }
+    
+    .project-hero {
+        min-height: 100vh;
+        overflow-x: hidden;
+    }
+    
+    /* Make hero content take full height and push content to bottom */
+    .project-hero-content {
+        min-height: 100vh;
+        padding-bottom: 0;
+    }
+    
+    /* Push logo and buttons to bottom, hide "Informations du projet" below viewport */
+    .project-hero-bottom {
+        /* Push content to bottom with top padding that fills the viewport minus content height */
+        padding-top: calc(100vh - 24rem);
+        padding-bottom: 2rem;
+    }
+    
+    .project-title {
+        font-size: 2rem;
+    }
+    
+    .project-description {
+        font-size: 1rem;
+    }
+    
+    .project-back-button {
+        padding-left: 1rem;
+        padding-top: 1rem;
+    }
+    
+    .btn-back-portfolio {
+        font-size: 0.8rem;
+        padding: 0.6rem 1.2rem;
+    }
+    
+    /* Hide notable facts cards on mobile - shown in hero section */
+    .project-notable-facts-hero {
+        display: none;
+    }
+    
+    .project-detail {
+        padding: 0 0 3rem 0;
+    }
+    
+    /* Full width content on mobile */
+    .project-content-layout {
+        padding: 0;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+    
+    .project-main-content,
+    .blog-article-content {
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+    }
+    
+    .blog-theme,
+    .blog-single-page {
+        overflow-x: hidden;
+        max-width: 100vw;
+    }
+    
+    .project-navigation,
+    .project-sidebar {
+        margin: 1rem;
+        padding: 0 0.5rem;
+        max-width: calc(100vw - 2rem);
+        overflow-x: hidden;
+    }
+    
+    .blog-content-wrapper {
+        padding: 1rem;
+        margin: 0 !important;
+        max-width: 100% !important;
+        overflow-x: hidden;
+    }
+    
+    .blog-content-wrapper h1 {
+        font-size: 1.8rem;
+    }
+    
+    .blog-content-wrapper h2 {
+        font-size: 1.3rem;
+        padding: 0.6rem 0 0.6rem 1rem;
+    }
+    
+    .blog-content-wrapper h3 {
+        font-size: 1.1rem;
+    }
+    
+    .blog-content-wrapper p {
+        font-size: 0.95rem;
+        text-align: left;
+    }
+    
+    .blog-content-wrapper p:first-of-type {
+        font-size: 1rem;
+        padding: 1rem;
+    }
+    
+    .blog-content-wrapper ul,
+    .blog-content-wrapper ol {
+        padding: 0.8rem;
+    }
+    
+    .blog-content-wrapper pre {
+        padding: 1rem;
+    }
+    
+    .blog-content-wrapper blockquote {
+        padding: 1rem;
+    }
+    
+    .project-content code {
+        padding: 0.2rem 0.4rem;
+        font-size: 0.85em;
+    }
+    
+    .project-navigation {
+        padding: 1.5rem;
+        margin-bottom: 8rem !important;
+    }
+    
+    /* Add padding at bottom of page to avoid content being hidden by dock */
+    .blog-theme.blog-single-page,
+    body.project-page {
+        padding-bottom: 8rem !important;
+    }
+    
+    .project-info-grid {
+        gap: 1.5rem;
+    }
+    
+    /* Notable facts - compact 2x2 grid on mobile */
+    .project-notable-facts-hero {
+        width: 100%;
+        padding: 0 1rem;
+    }
+    
+    .notable-facts-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.75rem;
+    }
+    
+    .fact-card-hero {
+        padding: 0.75rem;
+        margin-bottom: 0;
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+    }
+    
+    .fact-icon-hero {
+        width: 2rem;
+        height: 2rem;
+        font-size: 1rem;
+        margin: 0 auto 0.5rem auto;
+    }
+    
+    .fact-content-hero {
+        gap: 0.25rem;
+    }
+    
+    .fact-value-hero {
+        font-size: 1rem;
+        font-weight: 600;
+    }
+    
+    .fact-label-hero {
+        font-size: 0.7rem;
+    }
+    
+    .project-content {
+        padding-top: 1.5rem;
+    }
+    
+    .scroll-indicator {
+        bottom: 1rem;
+    }
+    
+    .project-logo-img {
+        max-height: 120px;
+    }
+    
+    .project-description-block {
+        padding: 0 1.5rem;
+        position: relative;
+    }
+    
+    /* Mobile sector badge - top right positioning */
+    .mobile-sector-badge {
+        display: block !important;
+        position: absolute;
+        top: 0;
+        right: 1.5rem;
+        z-index: 20;
+    }
+    
+    /* Hide sector badge in description on mobile */
+    .description-sector-badge {
+        display: none;
+    }
+    
+    .project-actions {
+        margin: 1.5rem 0 0 0;
+        gap: 0.5rem;
+        flex-direction: column;
+        /* Add large spacing after buttons to push "Informations du projet" off-screen */
+        margin-bottom: 15vh;
+    }
+    
+    .project-actions .btn-action {
+        flex: none;
+        max-width: none;
+    }
+    
+    .fact-card {
+        padding: 1rem;
+        margin-bottom: 0.8rem;
+    }
+    
+    .fact-icon {
+        width: 2rem;
+        height: 2rem;
+        font-size: 1rem;
+        margin-bottom: 0.8rem;
+    }
+    
+    .fact-value {
+        font-size: 1.2rem;
+    }
+    
+    .fact-label {
+        font-size: 0.8rem;
+    }
+    
+    .notable-facts-title {
+        font-size: 1rem;
+        margin-bottom: 1rem;
+    }
+}
+
+.project-title {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 1rem 0;
+    line-height: 1.2;
+}
+
+.project-subtitle {
+    font-size: 1.2rem;
+    color: #3498db;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.project-description {
+    font-size: 1.1rem;
+    color: #ccc;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+/* ========================================
+   PROJECT INFO SECTION
+   ======================================== */
+
+.project-info {
+    display: grid;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 0.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.info-label {
+    display: block;
+    font-weight: 600;
+    color: #3498db;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.5rem;
+}
+
+.project-date time {
+    color: #fff;
+    font-size: 1rem;
+}
+
+.tech-list, .tags-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.tech-chip {
+    background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-dark));
+    color: var(--text-primary);
+    padding: 0.3rem 0.8rem;
+    border-radius: 1rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.tag-chip {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    padding: 0.3rem 0.8rem;
+    border-radius: 1rem;
+    font-size: 0.8rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* ========================================
+   PROJECT INFO BOXES SECTION (BEFORE CONTENT)
+   ======================================== */
+
+.project-widgets-section {
+    background: transparent; /* Removed gradient background */
+    border-top: 1px solid var(--glass-border-light);
+    border-bottom: 1px solid var(--glass-border-light);
+    position: relative;
+    z-index: 6; /* Au-dessus des effets de transition */
+    overflow: hidden;
+    /* Effet de glassmorphisme maintenant possible */
+}
+
+.project-widgets-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%23ffffff" fill-opacity="0.02"><circle cx="30" cy="30" r="1"/></g></svg>');
+    z-index: -1;
+}
+
+.project-widgets-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+    position: relative;
+}
+
+.project-widgets {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr); /* Grid de 12 colonnes pour plus de flexibilité */
+    gap: 2rem;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.8s ease-out 0.4s forwards;
+    /* Utilisation d'un auto-flow row pour permettre aux éléments de se placer naturellement */
+    grid-auto-flow: row;
+    /* Hauteur des lignes adaptative */
+    grid-auto-rows: minmax(120px, auto);
+    /* Assurer un alignement propre */
+    position: relative;
+}
+
+
+.project-widget-icon.contributors::before {
+    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+}
+
+.project-widget-icon.time::before {
+    background: linear-gradient(135deg, var(--accent) 0%, #7be3db 100%);
+}
+
+.project-widget-icon.gallery::before {
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+}
+
+.project-widget-icon.technical::before {
+    background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+}
+
+.project-widget-icon.awards::before {
+    background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+}
+
+.project-widget-icon.testimonials::before {
+    background: linear-gradient(135deg, #16a085 0%, #1abc9c 100%);
+}
+
+.project-widget-icon.youtube::before {
+    background: linear-gradient(135deg, #ff0000 0%, #cc0000 100%);
+}
+
+.project-widget-icon.technical::before {
+    background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+}
+
+.project-widget-icon.awards::before {
+    background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+}
+
+
+/* Layout spÃ©cial pour les boÃ®tes expanded en pleine largeur */
+.project-widget.expanded .contributors-list,
+.project-widget.expanded .project-widget-contributors-list,
+.project-widget.expanded .development-time-content,
+.project-widget.expanded .project-widget-development-time-content,
+.project-widget.expanded .technical-specs-list,
+.project-widget.expanded .project-widget-technical-specs-list,
+.project-widget.expanded .awards-list,
+.project-widget.expanded .project-widget-awards-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.project-widget.expanded .gallery-grid,
+.project-widget.expanded .project-widget-gallery-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+/* ========================================
+   APERÃ‡US SPÃ‰CIAUX POUR BOÃŽTES FERMÃ‰ES
+   ======================================== */
+
+/* AperÃ§u des contributeurs : avatars horizontaux */
+.project-widget:not(.expanded) .contributors-preview {
+    display: flex;
+    align-items: center;
+    margin-top: 0.5rem;
+    overflow: hidden;
+}
+/* Cacher le nombre de contributeurs lorsque fermÃ© */
+.project-widget.contributors-box:not(.expanded) .project-widget-summary {
+    display: none;
+}
+
+.contributors-preview .contributor-avatars {
+    display: flex;
+    /* margin-left removed to prevent first avatar cutoff */
+}
+
+.contributors-preview .contributor-avatar-mini {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    margin-left: 0;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
+}
+/* Overlap avatars: only offset subsequent ones */
+.contributors-preview .contributor-avatar-mini + .contributor-avatar-mini {
+    margin-left: -0.75rem;
+}
+
+.contributors-preview .contributor-avatar-mini:hover {
+    transform: translateY(-2px) scale(1.1);
+    z-index: 2;
+    border-color: var(--primary-blue);
+}
+
+.contributors-preview .contributor-avatar-mini img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.contributors-preview .contributor-avatar-mini.placeholder {
+    background: linear-gradient(135deg, var(--primary-blue), var(--primary-teal));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: bold;
+    color: white;
+}
+
+/* ========================================
+   GALLERY BOX - PREVIEW EN PLEIN Ã‰CRAN QUAND FERMÃ‰E
+   ======================================== */
+
+/* Forcer un aspect ratio 16:9 pour la gallery box */
+.project-widget.gallery-box {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 16/9; /* Force un ratio 16:9 */
+    min-height: unset; /* Annule la min-height par dÃ©faut */
+}
+
+/* La gallery-preview background est visible seulement quand fermÃ©e */
+.project-widget.gallery-box .gallery-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+}
+
+.project-widget.gallery-box:not(.expanded) .gallery-background {
+    opacity: 1;
+}
+
+/* Header repositionnÃ© en haut Ã  gauche sans fond noir */
+.project-widget.gallery-box:not(.expanded) .project-widget-header {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    right: 1rem;
+    z-index: 2;
+    background: none; /* Supprime la box noire */
+    backdrop-filter: none;
+    border-radius: 0;
+    margin: 0;
+    padding: 1rem;
+    /* Pas de fond, on se base seulement sur text-shadow pour la lisibilitÃ© */
+    background: none;
+    width: auto;
+    max-width: 70%;
+}
+
+/* Titre mieux positionnÃ© */
+.project-widget.gallery-box:not(.expanded) .project-widget-title {
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+    color: #fff;
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+}
+
+.project-widget.gallery-box:not(.expanded) .project-widget-summary {
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.8rem;
+}
+
+/* Masquer l'icÃ´ne et toggle sur l'Ã©tat fermÃ© pour plus de propretÃ© */
+.project-widget.gallery-box:not(.expanded) .project-widget-icon,
+.project-widget.gallery-box:not(.expanded) .project-widget-toggle {
+    display: none;
+}
+
+/* Simplifier le header layout pour l'Ã©tat fermÃ© */
+.project-widget.gallery-box:not(.expanded) .project-widget-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+
+/* Animation des images - gÃ©rÃ©e par JavaScript pour un prÃ©chargement intelligent */
+.project-widget.gallery-box .gallery-background .gallery-mini-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+/* La premiÃ¨re image est visible par dÃ©faut */
+.project-widget.gallery-box:not(.expanded) .gallery-background .gallery-mini-item:first-child {
+    opacity: 1;
+}
+
+/* Supprimer les animations CSS automatiques qui causaient les flashs */
+.project-widget.gallery-box:not(.expanded) .gallery-background .gallery-mini-item:nth-child(1) { animation: none; }
+.project-widget.gallery-box:not(.expanded) .gallery-background .gallery-mini-item:nth-child(2) { animation: none; }
+.project-widget.gallery-box:not(.expanded) .gallery-background .gallery-mini-item:nth-child(3) { animation: none; }
+.project-widget.gallery-box:not(.expanded) .gallery-background .gallery-mini-item:nth-child(4) { animation: none; }
+.project-widget.gallery-box:not(.expanded) .gallery-background .gallery-mini-item:nth-child(5) { animation: none; }
+.project-widget.gallery-box:not(.expanded) .gallery-background .gallery-mini-item:nth-child(6) { animation: none; }
+
+.project-widget.gallery-box .gallery-background .gallery-mini-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--border-radius-lg);
+    transition: transform 0.4s ease;
+}
+
+/* Effet hover lÃ©ger */
+.project-widget.gallery-box:not(.expanded):hover .gallery-background .gallery-mini-item img {
+    transform: scale(1.02);
+}
+
+/* S'assurer que le content ne dÃ©passe pas quand expanded */
+.project-widget.gallery-box.expanded {
+    aspect-ratio: unset; /* Retire le ratio fixe quand ouvert */
+    min-height: 140px; /* Restaure une hauteur minimum */
+}
+
+.project-widget.gallery-box.expanded .gallery-background {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Les styles de gallery sont maintenant gÃ©rÃ©s par .gallery-background pour les boxes fermÃ©es
+   et par .gallery-grid pour les boxes ouvertes */
+
+/* Fade animation keyframes */
+@keyframes fade {
+    0%, 20% { opacity: 1; }
+    25%, 95% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+/* Animation pour le slideshow de la galerie */
+@keyframes gallerySlideshow {
+    0%, 15% { 
+        opacity: 1; 
+        transform: scale(1);
+    }
+    20%, 80% { 
+        opacity: 0; 
+        transform: scale(1.05);
+    }
+    85%, 100% { 
+        opacity: 1; 
+        transform: scale(1);
+    }
+}
+
+
+
+/* ========================================
+   YOUTUBE BOX STYLES
+   ======================================== */
+
+/* Liste des vidÃ©os YouTube */
+.youtube-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+
+/* Masquer la liste complÃ¨te quand la box est fermÃ©e */
+/* youtube-list toujours visible */
+.project-widget.youtube-box:not(.expanded) .youtube-list {
+    display: none;
+}
+.project-widget.youtube-box.expanded .youtube-list {
+    display: grid;
+}
+
+
+/* ========================================
+   RESPONSIVE DESIGN - INFO BOXES SECTION
+   ======================================== */
+
+@media (max-width: 1024px) {
+    .project-widgets-wrapper {
+        padding: 2.5rem 1.5rem;
+    }
+    
+    .project-widgets {
+        grid-template-columns: repeat(8, 1fr); /* 8 colonnes sur tablette */
+        gap: 1.5rem;
+    }
+    
+    /* Ajustement des tailles sur tablette */
+    .project-widget.size-xl {
+        grid-column: span 8; /* XL prend toute la largeur */
+    }
+    
+    .project-widget.size-large {
+        grid-column: span 6; /* Large reste Ã  6 */
+    }
+    
+    .project-widget.size-medium {
+        grid-column: span 4; /* Medium reste Ã  4 */
+    }
+    
+    .project-widget.size-small {
+        grid-column: span 3; /* Small reste Ã  3 */
+    }
+}
+
+@media (max-width: 768px) {
+    .project-widgets-section {
+        margin: 0 -1rem;
+    }
+    
+    .project-widgets-wrapper {
+        padding: 2rem 1rem;
+    }
+    
+    .project-widgets {
+        grid-template-columns: 1fr; /* Une seule colonne sur mobile */
+        gap: 1.2rem;
+        /* Simplifier le layout sur mobile */
+        grid-auto-flow: row;
+    }
+    
+    /* Toutes les boîtes prennent toute la largeur sur mobile */
+    .project-widget {
+        grid-column: 1 / -1 !important;
+        min-height: auto;
+        /* Simplifier les transitions sur mobile */
+        transition: all 0.3s ease;
+        /* Remove blur and transparency on mobile */
+        backdrop-filter: none !important;
+        background: rgb(20, 25, 35) !important;
+    }
+    
+    /* Comportement spécial pour les widgets expanded sur mobile */
+    .project-widget.expanded {
+        margin: 1rem 0;
+        padding: 0; /* Pas de padding sur le container */
+        /* Réduire l'élévation sur mobile */
+        transform: translateY(-2px);
+        box-shadow: 
+            0 15px 35px rgba(0, 0, 0, 0.4),
+            0 8px 20px rgba(0, 0, 0, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    }
+    
+    /* S'assurer que header et content prennent toute la largeur sur mobile */
+    .project-widget.expanded .project-widget-header,
+    .project-widget.expanded .project-widget-content {
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    /* Désactiver certaines animations complexes sur mobile */
+    .project-widget.expanding,
+    .project-widget.collapsing {
+        animation: none;
+    }
+    
+    .project-widget-header {
+        padding: 1.5rem;
+        gap: 1rem;
+    }
+    
+    .project-widget-icon {
+        width: 2.5rem;
+        height: 2.5rem;
+        font-size: 1.2rem;
+    }
+    
+    .project-widget-icon svg {
+        width: 1.2rem;
+        height: 1.2rem;
+    }
+    
+    .project-widget-title {
+        font-size: 1.1rem;
+    }
+    
+    .project-widget-content {
+        padding: 0 1.5rem;
+    }
+    
+    .project-widget.expanded .project-widget-content {
+        padding: 1rem 1.5rem 1.5rem 1.5rem;
+    }
+    
+    .project-widget.gallery-box .project-widget-content {
+        padding: 1rem 1.5rem 1.5rem 1.5rem;
+    }
+    
+    /* Responsive pour la gallery box */
+    .project-widget.gallery-box:not(.expanded) .project-widget-header {
+        top: 0.5rem;
+        left: 0.5rem;
+        right: 0.5rem;
+        padding: 0.75rem;
+        max-width: 80%; /* Plus large sur mobile */
+    }
+    
+    .project-widget.gallery-box:not(.expanded) .project-widget-title {
+        font-size: 1rem;
+    }
+    
+    .project-widget.gallery-box:not(.expanded) .project-widget-summary {
+        font-size: 0.75rem;
+    }
+    
+    /* AperÃ§us responsives pour la nouvelle structure */
+    .contributors-preview .contributor-avatar-mini {
+        width: 24px;
+        height: 24px;
+    }
+    
+    /* La gallery-background s'adapte automatiquement sur mobile */
+    .project-widget.gallery-box .gallery-background {
+        border-radius: var(--border-radius-md);
+    }
+    
+    .gallery-grid, .project-widget-gallery-grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 0.8rem;
+    }
+    
+    /* Styles responsives pour les testimonials en aperÃ§u */
+    .testimonials-preview {
+        height: 70px; /* Hauteur lÃ©gÃ¨rement rÃ©duite sur mobile */
+        margin-top: 0.6rem;
+    }
+    
+    .testimonial-preview-item {
+        padding: 0.6rem 0.8rem;
+    }
+    
+    .testimonial-preview-avatar {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .testimonial-preview-quote {
+        font-size: 0.8rem;
+        -webkit-line-clamp: 1; /* Une seule ligne sur mobile */
+        line-clamp: 1;
+    }
+    
+    .testimonial-preview-author {
+        font-size: 0.7rem;
+    }
+    
+    /* SupprimÃ©: styles pour les Ã©toiles */
+    
+    /* Styles responsives pour YouTube */
+    .youtube-list {
+        grid-template-columns: 1fr; /* Une seule colonne sur mobile */
+        gap: 1rem;
+    }
+    
+    .youtube-preview {
+        flex-direction: column;
+        gap: 0.8rem;
+        text-align: center;
+    }
+    
+    .youtube-preview-thumbnail {
+        width: 80px;
+        height: 45px;
+        align-self: center;
+    }
+    
+    .youtube-modal-content {
+        width: 95vw;
+        margin: 0 10px;
+    }
+    
+    .youtube-modal-close {
+        top: -45px;
+        width: 35px;
+        height: 35px;
+    }
+    
+    /* Styles responsives pour le widget vidÃ©o unique */
+    .youtube-single-play {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .youtube-single-play::before {
+        border-left: 18px solid white;
+        border-top: 12px solid transparent;
+        border-bottom: 12px solid transparent;
+        margin-left: 3px;
+    }
+    
+    .youtube-single-title {
+        font-size: 0.9rem;
+        bottom: 8px;
+        left: 8px;
+        right: 80px;
+        padding: 0.4rem 0.8rem;
+    }
+    
+    .youtube-single-duration {
+        bottom: 8px;
+        right: 8px;
+        padding: 0.3rem 0.6rem;
+        font-size: 0.8rem;
+    }
+    
+    .youtube-single-mini {
+        flex-direction: column;
+        gap: 0.6rem;
+        text-align: center;
+    }
+    
+    .youtube-single-mini-thumbnail {
+        align-self: center;
+        width: 100px;
+        height: 56px;
+    }
+}
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+
+/* Staggered animation for info boxes */
+/* Staggered animation for project widgets */
+.project-widget:nth-child(1) { animation-delay: 0.1s; }
+.project-widget:nth-child(2) { animation-delay: 0.2s; }
+.project-widget:nth-child(3) { animation-delay: 0.3s; }
+.project-widget:nth-child(4) { animation-delay: 0.4s; }
+.project-widget:nth-child(5) { animation-delay: 0.5s; }
+
+.project-widget {
+    animation: fadeInUp 0.6s ease-out forwards;
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+
+
+/* Technical Specifications Box Styles */
+.technical-specs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.spec-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem;
+    background: var(--glass-bg-lighter);
+    border-radius: var(--border-radius-sm);
+    border-left: 3px solid var(--primary-purple, #9b59b6);
+}
+
+.spec-label {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: var(--font-weight-medium);
+}
+
+.spec-value {
+    color: var(--text-primary);
+    font-weight: var(--font-weight-semibold);
+    font-size: 0.9rem;
+    text-align: right;
+}
+
+
+
+
+/* Responsive Design for Info Boxes */
+@media (max-width: 768px) {
+    .project-widgets {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+    
+    .gallery-grid, .project-widget-gallery-grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 0.75rem;
+    }
+    
+    .contributor-item,
+    .project-widget-contributor-item,
+    .award-item,
+    .project-widget-award-item {
+        padding: 0.75rem;
+    }
+    
+    .project-widget-header {
+        padding: 1.25rem;
+        gap: 0.75rem;
+    }
+    
+    .project-widget.expanded .project-widget-content {
+        padding: 0 1.25rem 1.25rem 1.25rem;
+    }
+    
+    .project-widget-content {
+        padding: 0 1.25rem;
+    }
+    
+    .project-widget-icon {
+        width: 2rem;
+        height: 2rem;
+    }
+    
+    .project-widget-title {
+        font-size: 1rem;
+    }
+    
+    .project-widget-summary {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .project-widgets {
+        gap: 0.75rem;
+    }
+    
+    .gallery-grid, .project-widget-gallery-grid {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 0.5rem;
+    }
+    
+    .contributor-item, .project-widget-contributor-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.75rem;
+    }
+    
+    .time-stat,
+    .project-widget-time-stat,
+    .spec-item,
+    .project-widget-spec-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .spec-value, .project-widget-spec-value {
+        text-align: left;
+    }
+    
+    .award-item, .project-widget-award-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.75rem;
+    }
+    
+    .project-widget-header {
+        padding: 1rem;
+        gap: 0.5rem;
+    }
+    
+    .project-widget.expanded .project-widget-content {
+        padding: 0 1rem 1rem 1rem;
+    }
+    
+    .project-widget-content {
+        padding: 0 1rem;
+    }
+    
+    .project-widget-icon {
+        width: 1.75rem;
+        height: 1.75rem;
+    }
+    
+    .project-widget-title {
+        font-size: 0.95rem;
+    }
+    
+    .project-widget-summary {
+        font-size: 0.75rem;
+    }
+}
+
+/* ========================================
+   PROJECT NAVIGATION
+   ======================================== */
+
+.project-navigation {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 3rem;
+    margin-top: 3rem;
+}
+
+.back-to-projects {
+    text-align: center;
+}
+
+
+/* ========================================
+   DYNAMIC BLUR EFFECTS
+   ======================================== */
+
+/* Animation pour l'intensitÃ© du flou basÃ©e sur le scroll */
+@keyframes blurFadeIn {
+    from {
+        backdrop-filter: blur(0px);
+    }
+    to {
+        backdrop-filter: blur(var(--blur-intensity));
+    }
+}
+
+
+
+@media (max-width: 768px) {
+    .image-modal-content {
+        max-width: 95%;
+        max-height: 95%;
+    }
+    
+    .image-modal img {
+        max-width: 90vw;
+        max-height: 70vh;
+        width: auto;
+        height: auto;
+    }
+    
+    .image-modal-close {
+        top: -35px;
+        font-size: 1.5rem;
+        width: 35px;
+        height: 35px;
+    }
+    
+    .image-modal-caption {
+        font-size: 0.9rem;
+        padding: 0.75rem;
+    }
+}
+
+/* ========================================
+   HORIZONTAL MOSAIC OVERRIDE FOR INFO BOXES (DESKTOP/TABLET)
+   - 3-row horizontal grid with horizontal scroll
+   - Base unit variable (--ibox-unit) controls tile height (default 170px)
+   - Default tile: 3x1; Gallery/YouTube: 3x2
+   - Mobile remains vertical (existing rules)
+   ======================================== */
+
+/* Base unit for tile sizing */
+.project-widgets-section {
+    --ibox-unit: 170px; /* Adjust here if needed */
+}
+
+@media (min-width: 769px) {
+    /* Full-bleed section so the mosaic spans the entire viewport width */
+    .project-widgets-section {
+        margin-left: calc(50% - 50vw);
+        margin-right: calc(50% - 50vw);
+    }
+
+    /* Scroll container setup with snap behavior */
+    .project-widgets-wrapper {
+        max-width: none;
+        width: 100vw;
+        margin: 0;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scroll-snap-type: x proximity;
+        scrollbar-gutter: stable both-inline;
+        /* Align snap positions with existing horizontal padding */
+        scroll-padding-inline: 2rem;
+    }
+
+    /* 3-row horizontal grid; columns flow to the right */
+    .project-widgets {
+        /* Disable the fixed 12/8 column templates for this view */
+        grid-template-columns: none;
+        /* Three fixed-height rows */
+        grid-template-rows: repeat(3, var(--ibox-unit));
+        grid-auto-rows: var(--ibox-unit);
+        /* Flow items by columns to create horizontal mosaic */
+        grid-auto-flow: column;
+        /* Each auto column is 3 units wide (3x1 default width) */
+        grid-auto-columns: calc(var(--ibox-unit) * 3);
+        align-content: start;
+        justify-content: start;
+        /* Let the grid expand to its content width so scrolling reveals all tiles */
+        width: max-content;
+    }
+
+    /* Normalize box placement and enable snapping */
+    .project-widgets > .project-widget {
+        /* Neutralize size-based column spans inside the mosaic */
+        grid-column: auto !important;
+        /* Stretch to fill its grid area (1 row high by default) */
+        align-self: stretch;
+        box-sizing: border-box;
+        margin: 0; /* prevent extra vertical spacing */
+        overflow: hidden; /* keep previews tidy when closed */
+        min-height: 0; /* allow shrinking to track size */
+        scroll-snap-align: start;
+    }
+
+    /* Default row span for items (3x1) */
+    .project-widgets > .project-widget,
+    .project-widgets > .project-widget.tile-3x1 {
+        grid-row: span 1;
+    }
+
+    /* Taller tiles (3x2) for media-rich boxes */
+    .project-widgets > .project-widget.tile-3x2,
+    .project-widgets > .project-widget.gallery-box,
+    .project-widgets > .project-widget.youtube-single-box {
+        grid-row: span 2; /* occupy exactly 2 row tracks */
+        align-self: stretch; /* fill the spanned area including row gap */
+    }
+
+    /* Expanded boxes are free from height caps */
+    .project-widgets > .project-widget.expanded {
+        height: auto !important;
+        max-height: none !important;
+        overflow: visible;
+    }
+
+    /* In mosaic view, remove forced aspect ratio for gallery so it fits 3x1 or 3x2 exactly */
+    .project-widgets > .project-widget.gallery-box {
+        aspect-ratio: auto;
+    }
+
+    /* Optional 16:9 variant: apply class .gallery-16x9 on .gallery-box (closed state only) */
+    .project-widgets > .project-widget.gallery-box.gallery-16x9:not(.expanded) {
+        /* Maintain 16:9 while fitting inside its allocated row span height */
+        display: flex;
+        flex-direction: column;
+        padding: 0; /* Let background define visuals */
+    }
+
+    /* Force the visual background or first image region to honor 16:9 */
+    .project-widgets > .project-widget.gallery-box.gallery-16x9:not(.expanded) .gallery-background {
+        position: relative;
+        aspect-ratio: 16 / 9;
+        height: auto;
+        width: 100%;
+        flex: 0 0 auto;
+    }
+
+    /* If the tile spans 1 row (3x1), cap height to the unit while preserving letterboxing */
+    .project-widgets > .project-widget.gallery-box.gallery-16x9:not(.expanded)[style*="grid-row: span 1"],
+    .project-widgets > .project-widget.gallery-box.gallery-16x9:not(.expanded):not(.tile-3x2) {
+        max-height: var(--ibox-unit);
+    }
+
+    /* If the gallery spans 2 rows (3x2), allow up to 2 units (340px) */
+    .project-widgets > .project-widget.gallery-box.gallery-16x9:not(.expanded).tile-3x2,
+    .project-widgets > .project-widget.gallery-box.gallery-16x9:not(.expanded)[style*="grid-row: span 2"],
+    .project-widgets > .project-widget.gallery-box.gallery-16x9:not(.expanded).gallery-box.tile-3x2 {
+        max-height: calc(var(--ibox-unit) * 2);
+    }
+
+    /* Center header overlay within 16:9 region */
+    .project-widgets > .project-widget.gallery-box.gallery-16x9:not(.expanded) .project-widget-header {
+        position: absolute;
+        top: 0.75rem;
+        left: 0.75rem;
+        right: 0.75rem;
+        bottom: auto;
+        max-width: 70%;
+        z-index: 2;
+    }
+
+    /* Ensure images fill 16:9 nicely */
+    .project-widgets > .project-widget.gallery-box.gallery-16x9:not(.expanded) .gallery-background .gallery-mini-item img {
+        object-fit: cover;
+    }
+}

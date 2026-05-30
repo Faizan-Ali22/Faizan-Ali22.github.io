@@ -1,0 +1,170 @@
+<!-- Section Cards d'Expérience -->
+<section class="demo-section">
+    <h2>💼 Cards d'Expérience</h2>
+    
+    <div class="demo-element-wrapper">
+        <div class="css-class-info">
+            <strong>Timeline :</strong> <code>.experience-timeline</code><br>
+            <strong>Carte :</strong> <code>.experience-card</code><br>
+            <strong>État actuel :</strong> <code>.current</code><br>
+            <strong>En-tête :</strong> <code>.experience-header-card</code><br>
+            <strong>Info entreprise :</strong> <code>.company-info</code>, <code>.company-logo</code>, <code>.company-details</code><br>
+            <strong>Détails poste :</strong> <code>.job-title</code>, <code>.company-name</code>, <code>.job-meta</code><br>
+            <strong>Période :</strong> <code>.job-period</code>, <code>.job-duration</code><br>
+            <strong>Infos :</strong> <code>.job-info</code>, <code>.job-type</code>, <code>.job-location</code>
+        </div>
+        <div class="experience-timeline">
+            <div class="experience-card current">
+                <div class="experience-header-card">
+                    <div class="company-info">
+                        <div class="company-logo">
+                            <img src="/images/placeholder-company.jpg" alt="Entreprise Demo">
+                        </div>
+                        <div class="company-details">
+                            <h3 class="job-title">Développeur Unity</h3>
+                            <h4 class="company-name">Studio La Moutarde</h4>
+                            <div class="job-meta">
+                                <span class="job-period">Sept 2024 - Présent</span>
+                                <span class="job-duration">3 mois</span>
+                        </div>
+                        <div class="job-info">
+                            <span class="job-type">Alternance</span>
+                            <span class="job-location">Lyon, France</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h3>Cards de projets dans les skill modals (utilise project-card-unified)</h3>
+    <div class="demo-element-wrapper">
+        <div class="css-class-info">
+            <strong>Grid :</strong> <code>.skill-modal-projects-grid</code><br>
+            <strong>Note :</strong> Les cards utilisent maintenant le composant <code>project-card-unified</code> (voir section dédiée ci-dessous)<br>
+            <strong>JavaScript :</strong> Les cards sont générées dynamiquement par <code>skill-modal.js</code> avec les classes <code>.project-card-unified-*</code>
+        </div>
+        <div class="skill-modal-projects-grid" style="max-height: 300px;">
+            {{ partial "project-card-unified.html" (dict 
+                "title" "Jeu Unity" 
+                "subtitle" "Projet de jeu utilisant Unity" 
+                "description" "Détails du projet qui apparaissent au survol avec effet glassmorphisme"
+                "image" "/images/placeholder-project.jpg"
+                "url" "/projects/unity-game"
+                "technologies" (slice "Unity" "C#" "Blender")
+            ) }}
+            {{ partial "project-card-unified.html" (dict 
+                "title" "Application C#" 
+                "subtitle" "Application desktop en C#" 
+                "description" "Application complète développée avec WPF et .NET"
+                "image" "/images/placeholder-project.jpg"
+                "url" "/projects/csharp-app"
+                "technologies" (slice "C#" ".NET" "WPF" "XAML")
+            ) }}
+            {{ partial "project-card-unified.html" (dict 
+                "title" "Outil JavaScript" 
+                "subtitle" "Outil web en JavaScript" 
+                "description" "Outil de développement utilisant Node.js et des frameworks modernes"
+                "image" "/images/placeholder-project.jpg"
+                "technologies" (slice "JavaScript" "Node.js" "React" "Express" "MongoDB")
+            ) }}
+        </div>
+    </div>
+
+    <h3>Cards de projets unifiées (project-card-unified)</h3>
+    <div class="demo-element-wrapper">
+        <div class="css-class-info">
+            <strong>Partial :</strong> <code>{{ "{{" }} partial "project-card-unified.html" (dict ...) {{ "}}" }}</code><br>
+            <strong>Card :</strong> <code>.project-card-unified</code><br>
+            <strong>Header :</strong> <code>.project-card-unified-header</code><br>
+            <strong>Image :</strong> <code>.project-card-unified-image</code> (optimisée automatiquement)<br>
+            <strong>Contenu de base :</strong> <code>.project-card-unified-content</code><br>
+            <strong>Contenu détaillé (hover) :</strong> <code>.project-card-unified-detailed-info</code> avec effet glassmorphisme<br>
+            <strong>Titre :</strong> <code>.project-card-unified-title</code><br>
+            <strong>Sous-titre :</strong> <code>.project-card-unified-subtitle</code><br>
+            <strong>Technologies :</strong> <code>.project-card-unified-technologies</code>, <code>.project-card-unified-tech-item</code> (optionnel)<br>
+            <strong>Meta :</strong> <code>.project-card-unified-meta</code>, <code>.project-card-unified-role</code>, <code>.project-card-unified-status</code><br>
+            <strong>Lien :</strong> <code>.project-card-unified-link</code>
+        </div>
+        <p><strong>Exemple sans technologies :</strong></p>
+        <div class="person-modal-projects-grid">
+            {{ partial "project-card-unified.html" (dict 
+                "title" "Projet Collaboratif"
+                "subtitle" "Jeu développé en équipe"
+                "description" "Développement d'un jeu de puzzle en équipe de 4 développeurs pendant 6 mois."
+                "image" "/images/placeholder-project.jpg"
+                "url" "#"
+                "role" "Lead Developer"
+                "status" "Terminé"
+            ) }}
+            
+            {{ partial "project-card-unified.html" (dict 
+                "title" "Game Jam Project"
+                "subtitle" "Jeu réalisé en 48h"
+                "description" "Jeu de plateforme développé durant une Game Jam de 48 heures avec Unity."
+                "image" "/images/placeholder-project.jpg"
+                "url" "#"
+                "role" "Contributor"
+                "status" "Game Jam"
+            ) }}
+        </div>
+        
+        <p><strong>Exemple avec technologies :</strong></p>
+        <div class="person-modal-projects-grid">
+            {{ partial "project-card-unified.html" (dict 
+                "title" "Projet Unity 3D"
+                "subtitle" "Jeu d'aventure en 3D"
+                "description" "Développement complet d'un jeu d'aventure en 3D avec Unity, incluant la gestion de l'inventaire, des quêtes et un système de combat."
+                "image" "/images/placeholder-project.jpg"
+                "url" "#"
+                "technologies" (slice "Unity" "C#" "Blender" "Git" "Photoshop")
+                "maxTechnologies" 4
+            ) }}
+            
+            {{ partial "project-card-unified.html" (dict 
+                "title" "Application Web Full-Stack"
+                "subtitle" "Plateforme de gestion"
+                "description" "Application web moderne avec backend Node.js et frontend React, déployée sur Azure avec CI/CD."
+                "image" "/images/placeholder-project.jpg"
+                "url" "#"
+                "technologies" (slice "React" "Node.js" "TypeScript" "PostgreSQL" "Docker" "Azure")
+                "maxTechnologies" 4
+                "role" "Full-Stack Developer"
+            ) }}
+        </div>
+    </div>
+
+    <h3>Cards d'expérience (comme sur le CV)</h3>
+    <div class="demo-element-wrapper">
+        <div class="css-class-info">
+            <strong>Item principal :</strong> <code>.cv-experience-item</code><br>
+            <strong>En-tête :</strong> <code>.cv-experience-header</code><br>
+            <strong>Contenu principal :</strong> <code>.cv-experience-main</code><br>
+            <strong>Titre :</strong> <code>.cv-experience-title</code><br>
+            <strong>Entreprise :</strong> <code>.cv-experience-company</code><br>
+            <strong>Localisation :</strong> <code>.cv-experience-location</code><br>
+            <strong>Période :</strong> <code>.cv-experience-period</code>
+        </div>
+        <div class="cv-experience-item">
+            <div class="cv-experience-header">
+                <div class="cv-experience-main">
+                    <h3 class="cv-experience-title">Développeur Unity</h3>
+                    <p class="cv-experience-company">Studio La Moutarde</p>
+                    <p class="cv-experience-location">Lyon, France</p>
+                </div>
+                <div class="cv-experience-period">
+                    Sept 2024 - Présent<br>
+                    <small>3 mois</small>
+                </div>
+            </div>
+            <div class="cv-card-item-content">
+                <p>Développement de jeux Unity en alternance avec l'équipe de développement.</p>
+                <div class="skills-tags">
+                    <span class="skill-tag clickable">Unity</span>
+                    <span class="skill-tag clickable">C#</span>
+                    <span class="skill-tag clickable">Git</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

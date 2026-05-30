@@ -1,0 +1,228 @@
+﻿{{ define "main" }}
+<div class="blog-theme posts-list-page">
+    <!-- Blog Header -->
+    <header class="blog-header section-header-unified">
+    <h1 class="section-title-unified">{{ .Title | default (i18n "blog" | default "Blog") }}</h1>
+        <p class="blog-subtitle section-subtitle-unified">
+            {{ .Params.description | default (i18n "blog_list_subtitle" | default "Découvrez tous mes articles et réflexions sur le développement, les technologies et l'innovation") }}
+        </p>
+    </header>
+
+    <!-- Blog Navigation Tabs -->
+    <div class="tabs" data-can-collapse="true" data-collapse-id="posts">
+        <button class="tab-btn active" data-category="all" data-tab="all">
+            <span class="icon">📚</span>
+            <span class="tab-label">{{ i18n "all" | default "Tous" }}</span>
+        </button>
+        {{/* Générer les tabs dynamiquement basé sur les catégories des posts publiés */}}
+        {{ $publishedPages := where .Pages "Draft" false }}
+        {{ $categories := slice }}
+        {{ range $publishedPages }}
+            {{ if .Params.category }}
+                {{ $categories = $categories | append .Params.category }}
+            {{ end }}
+        {{ end }}
+        {{ $uniqueCategories := $categories | uniq | sort }}
+        
+        {{/* Définir les icônes et labels pour chaque catégorie */}}
+        {{ $categoryConfig := dict 
+            "tech" (dict "icon" "💻" "label" (i18n "category_tech" | default "Tech"))
+            "parcours" (dict "icon" "🚀" "label" (i18n "category_parcours" | default "Parcours")) 
+            "culture" (dict "icon" "🎭" "label" (i18n "category_culture" | default "Culture"))
+            "demo" (dict "icon" "🔬" "label" (i18n "category_demo" | default "Demo"))
+            "dev" (dict "icon" "⚡" "label" (i18n "category_dev" | default "Développement"))
+            "design" (dict "icon" "🎨" "label" (i18n "category_design" | default "Design"))
+            "opinion" (dict "icon" "💭" "label" (i18n "category_opinion" | default "Opinion"))
+        }}
+        
+        {{ range $uniqueCategories }}
+            {{ $config := index $categoryConfig . }}
+            {{ if $config }}
+            <button class="tab-btn" data-category="{{ . }}" data-tab="{{ . }}">
+                <span class="icon">{{ $config.icon }}</span>
+                <span class="tab-label">{{ $config.label }}</span>
+            </button>
+            {{ else }}
+            {{/* Fallback pour les catégories non définies */}}
+            <button class="tab-btn" data-category="{{ . }}" data-tab="{{ . }}">
+                <span class="icon">📄</span>
+                <span class="tab-label">{{ . | title }}</span>
+            </button>
+            {{ end }}
+        {{ end }}
+    </div>
+
+    <!-- Blog Sort Controls - Temporairement caché -->
+    <div class="blog-sort-controls" style="display: none;">
+        <label for="blog-sort" class="blog-filter-label">{{ i18n "sort_by" | default "Trier par :" }}</label>
+        <select id="blog-sort" class="blog-sort-select">
+            <option value="date-desc">{{ i18n "newest" | default "Plus récent" }}</option>
+            <option value="date-asc">{{ i18n "oldest" | default "Plus ancien" }}</option>
+            <option value="title-asc">{{ i18n "title_az" | default "Titre A-Z" }}</option>
+            <option value="title-desc">{{ i18n "title_za" | default "Titre Z-A" }}</option>
+        </select>
+    </div>
+
+    <!-- Blog Search - Temporairement caché -->
+    <div class="blog-search" style="display: none;">
+        <input type="text" 
+               class="blog-search-input" 
+               placeholder="{{ i18n "search_posts" | default "Rechercher un article..." }}" 
+               id="blog-search-input">
+    </div>
+
+    <!-- Blog Grid -->
+    <main class="blog-grid" id="blog-posts-grid">
+        {{ range where .Pages "Draft" false }}
+        <article class="blog-card {{ if not .Params.image }}blog-card--no-image{{ end }}" 
+                 data-category="{{ .Params.category | default "tech" | lower }}"
+                 data-tags="{{ if .Params.tags }}{{ delimit .Params.tags "," }}{{ end }}"
+                 data-date="{{ .Date.Format "2006-01-02" }}"
+                 data-title="{{ .Title | lower }}">
+            
+            <!-- Blog Category (top left) -->
+            {{ if .Params.category }}
+            <span class="post-category">{{ .Params.category | title }}</span>
+            {{ end }}
+            
+            <!-- Reading Time (top right) -->
+            {{ if .ReadingTime }}
+            <div class="blog-reading-time">{{ .ReadingTime }} {{ i18n "reading_minutes" | default "min de lecture" }}</div>
+            {{ end }}
+
+            {{ if .Params.image }}
+            <!-- Blog Image -->
+            {{- $blogImg := partial "get-optimized-image.html" (dict "imagePath" .Params.image "width" 800 "quality" 85) -}}
+            <div class="blog-image">
+                <img src="{{ $blogImg.src }}" 
+                     width="{{ $blogImg.width }}" 
+                     height="{{ $blogImg.height }}" 
+                     alt="{{ .Title }}" 
+                     loading="lazy">
+            </div>
+            {{ end }}
+
+            <!-- Blog Content -->
+            <div class="blog-content">
+                <!-- Blog Title -->
+                <h2 class="blog-title">
+                    <a href="{{ .Permalink }}" class="blog-title-link">{{ .Title }}</a>
+                </h2>
+
+                <!-- Blog Description -->
+                <p class="blog-description">
+                    {{ if .Params.description }}
+                        {{ .Params.description | truncate 150 "..." }}
+                    {{ else }}
+                        {{ .Summary | truncate 150 "..." }}
+                    {{ end }}
+                </p>
+            </div>
+
+            <!-- Blog Footer -->
+            <div class="blog-card-footer">
+                <!-- Date (bottom left) -->
+                <time class="post-date" datetime="{{ .Date.Format "2006-01-02" }}">
+                    {{ if eq .Site.Language.Lang "fr" }}
+                        {{ .Date.Day }} {{ index (slice "janvier" "février" "mars" "avril" "mai" "juin" "juillet" "août" "septembre" "octobre" "novembre" "décembre") (sub .Date.Month 1) }} {{ .Date.Year }}
+                    {{ else }}
+                        {{ .Date.Format (.Site.Data.config.blog.dateFormat | default "Jan 02, 2006") }}
+                    {{ end }}
+                </time>
+                
+                <!-- Read Article Button (bottom right) -->
+                <a href="{{ .Permalink }}" class="read-more-btn">
+                    {{ i18n "read_article" | default "Lire l'article" }}
+                </a>
+            </div>
+        </article>
+        {{ end }}
+    </main>
+
+    <!-- Blog Footer -->
+    <footer class="blog-footer">
+        <div class="blog-stats">
+            <p>{{ len .Pages }} {{ i18n "posts_published" | default "articles publiés" }}</p>
+        </div>
+    </footer>
+</div>
+
+<!-- Blog JavaScript for filtering and search -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const grid = document.getElementById('blog-posts-grid');
+    const cards = grid.querySelectorAll('.blog-card');
+    const sortSelect = document.getElementById('blog-sort');
+    const searchInput = document.getElementById('blog-search-input');
+    
+    let searchTerm = '';
+
+    // Initialize TabController for blog tabs
+    const blogTabs = new TabController('.posts-list-page .tab-btn', {
+        contentSelector: '.blog-card',
+        contentAttribute: 'data-category',
+        animationType: 'cards',
+        cardSelector: '.blog-card',
+        cardAnimationDelay: 90,
+        allCategoryValue: 'all'  // Support for "show all" category
+    });
+
+    // Search
+    if (searchInput) {
+        searchInput.addEventListener('input', function() {
+            searchTerm = this.value.toLowerCase();
+            applySearchFilter();
+        });
+    }
+
+    // Sort
+    if (sortSelect) {
+        sortSelect.addEventListener('change', function() {
+            sortPosts(this.value);
+        });
+    }
+
+    function applySearchFilter() {
+        cards.forEach(card => {
+            const title = card.dataset.title;
+            const matchesSearch = !searchTerm || title.includes(searchTerm);
+            
+            // Only hide/show based on search, let TabController handle category filtering
+            if (matchesSearch) {
+                // Only show if not already hidden by TabController
+                if (card.style.display !== 'none') {
+                    card.style.display = 'flex';
+                }
+                card.classList.add('search-match');
+                card.classList.remove('search-no-match');
+            } else {
+                card.style.display = 'none';
+                card.classList.add('search-no-match');
+                card.classList.remove('search-match');
+            }
+        });
+    }
+
+    function sortPosts(sortBy) {
+        const cardsArray = Array.from(cards);
+        
+        cardsArray.sort((a, b) => {
+            switch (sortBy) {
+                case 'date-desc':
+                    return new Date(b.dataset.date) - new Date(a.dataset.date);
+                case 'date-asc':
+                    return new Date(a.dataset.date) - new Date(b.dataset.date);
+                case 'title-asc':
+                    return a.dataset.title.localeCompare(b.dataset.title);
+                case 'title-desc':
+                    return b.dataset.title.localeCompare(a.dataset.title);
+                default:
+                    return 0;
+            }
+        });
+        
+        cardsArray.forEach(card => grid.appendChild(card));
+    }
+});
+</script>
+{{ end }}

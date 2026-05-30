@@ -1,0 +1,27 @@
+# ============================================================
+# 🤝 SOFT SKILLS
+# ============================================================
+
+- key: "skill_teamwork"
+  icon: "🤝"
+  displayedInPortfolio: true
+
+- key: "skill_communication"
+  icon: "💬"
+  displayedInPortfolio: true
+
+- key: "skill_problem_solving"  # Fixed key (was "Problem Solving")
+  icon: "🧩"
+  displayedInPortfolio: true
+
+- key: "skill_leadership"
+  icon: "👑"
+  displayedInPortfolio: true
+
+- key: "skill_creativity"
+  icon: "💡"
+  displayedInPortfolio: true
+
+- key: "skill_project_management"
+  icon: "📋"
+  displayedInPortfolio: true

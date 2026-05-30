@@ -1,0 +1,67 @@
+// =============================================================================
+// PROJECT WIDGET - DEVELOPMENT TIME
+// =============================================================================
+
+@import 'widget-base';
+
+.project-widget-development-time-content {
+  @extend %widget-list-layout;
+}
+
+.project-widget-time-stat {
+  @extend %widget-item-layout;
+  @include widget-item-with-accent(var(--primary-blue));
+  
+  &:hover {
+    transform: translateX(4px);
+    background: var(--devtime-stat-hover-bg);
+    box-shadow: var(--devtime-stat-hover-shadow);
+    border-left-color: var(--primary-blue);
+  }
+}
+
+.project-widget-time-value {
+  color: var(--text-primary);
+  font-weight: var(--font-weight-bold);
+  font-size: 1.1rem;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.project-widget-time-label {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.project-widget-time-phases {
+  margin-top: $widget-gap-lg;
+  padding-top: $widget-gap-lg;
+  border-top: var(--devtime-separator-border);
+}
+
+.project-widget-phase-item {
+  @extend %widget-item-layout;
+  padding: $widget-padding-sm;
+  margin-bottom: 0.5rem;
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+  
+  &:hover {
+    background: var(--devtime-phase-hover-bg);
+    border-color: var(--devtime-phase-hover-border);
+    transform: translateX(2px);
+  }
+}
+
+.project-widget-phase-name {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.project-widget-phase-duration {
+  @include widget-gradient-text('primary');
+  font-weight: var(--font-weight-semibold);
+  font-size: 0.85rem;
+}

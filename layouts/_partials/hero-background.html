@@ -1,0 +1,714 @@
+﻿<!-- Hero Background - Deep Space Aesthetic with Luminous Ribbon -->
+<div id="hero-background" class="hero-background">
+  <!-- Canvas for particles -->
+  <canvas id="particles-canvas"></canvas>
+  
+  <!-- SVG masks for organic shapes -->
+  <svg style="position: absolute; width: 0; height: 0;" aria-hidden="true">
+    <defs>
+      <mask id="organic-mask-1">
+        <path d="M 0,0 L 100,0 Q 90,15 100,30 Q 85,45 100,60 Q 95,75 100,90 L 100,100 L 0,100 Q 15,85 0,70 Q 25,55 0,40 Q 10,25 0,10 Z" fill="white" transform="scale(5,0.8)"/>
+      </mask>
+      <mask id="organic-mask-2">
+        <path d="M 0,0 L 100,0 Q 95,20 100,35 Q 80,50 100,65 Q 92,80 100,95 L 100,100 L 0,100 Q 20,80 0,65 Q 30,50 0,35 Q 8,20 0,5 Z" fill="white" transform="scale(5,0.8)"/>
+      </mask>
+      <mask id="organic-mask-3">
+        <path d="M 0,0 L 100,0 Q 88,25 100,40 Q 78,55 100,70 Q 90,85 100,100 L 0,100 Q 22,75 0,60 Q 35,45 0,30 Q 12,15 0,0 Z" fill="white" transform="scale(5,0.8)"/>
+      </mask>
+    </defs>
+  </svg>
+
+  <!-- Canvas for fluid waves Paper.js -->
+  <canvas id="waves-canvas"></canvas>
+</div>
+
+<!-- Script for fluid waves Paper.js and particles -->
+{{- $paperjs := resources.Get "js/paper-minimal.js" -}}
+<script src="{{ $paperjs.RelPermalink }}"></script>
+<script>
+// Check if animations are allowed
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+if (!prefersReducedMotion) {
+  document.addEventListener('DOMContentLoaded', function() {
+    
+    /**
+     * Seeded Random Generator for consistent animations
+     */
+    class SeededRandom {
+      constructor(seed = 12345) {
+        this.seed = seed;
+        this.originalSeed = seed;
+      }
+      
+      reset() {
+        this.seed = this.originalSeed;
+      }
+      
+      next() {
+        // Linear Congruential Generator
+        this.seed = (this.seed * 1664525 + 1013904223) % (2**32);
+        return this.seed / (2**32);
+      }
+    }
+    
+    /**
+     * Fluid waves system inspired by Paper.js
+     * Now synchronized with system clock and deterministic across window resizes
+     */
+    class FluidWaves {
+      constructor() {
+        this.canvas = document.getElementById('waves-canvas');
+        if (!this.canvas) {
+          console.warn('Canvas waves-canvas not found');
+          return;
+        }
+        
+        // Initialize Paper.js
+        paper.setup(this.canvas);
+        
+        // Seeded random generator for consistent animations
+        this.rng = new SeededRandom(42); // Fixed seed for consistency
+        
+        // Detect if mobile device
+        this.isMobile = window.innerWidth <= 768 || 
+                       ('ontouchstart' in window) || 
+                       (navigator.maxTouchPoints > 0);
+        
+        // Waves configuration - adaptive based on device
+        this.h = window.innerHeight;
+        this.w = window.innerWidth;
+        this.halfH = this.h * 0.5;
+        
+        // Mobile optimized settings
+        if (this.isMobile) {
+          this.speed = 0.15; // Slower animation on mobile
+          this.strokeWidth = 70; // Thinner strokes
+          this.frequency = 2.5; // Less frequency
+          this.pathCount = 5; // Fewer waves (7 -> 5)
+          this.pathPoints = 10; // Fewer points (24 -> 16)
+          this.magnitude = 0.07; // Smaller amplitude
+        } else {
+          // Desktop settings
+          this.speed = 0.22;
+          this.strokeWidth = 70;
+          this.frequency = 3;
+          this.pathCount = 7;
+          this.pathPoints = 24;
+          this.magnitude = 0.15;
+        }
+        
+        this.paths = [];
+        this.offsetRandom = 3;
+        this.randomOffsets = [];
+        this.maxDistRandom = 1.2;
+        this.randomDistances = [];
+        this.randomHeights = [];
+        this.magnitudeValue = this.magnitude; // Store for later use
+        
+        // Initialize deterministic random values
+        this.initializeRandomValues();
+        
+        this.readColors();
+        
+        this.init();
+        this.observeTheme();
+      }
+      
+      initializeRandomValues() {
+        // Reset RNG to ensure consistency
+        this.rng.reset();
+        
+        // Generate consistent random values for waves
+        for (let i = 0; i < this.pathCount; i++) {
+          this.randomOffsets[i] = this.rng.next() * this.offsetRandom;
+          this.randomDistances[i] = Math.max(this.rng.next() * this.maxDistRandom, 0.3);
+          this.randomHeights[i] = Math.max(this.rng.next() + 0.5, 0.3);
+        }
+      }
+      
+      readColors() {
+        const cs = getComputedStyle(document.documentElement);
+        const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+        this.colors = [1,2,3,4,5,6,7].map(i => {
+          let c = cs.getPropertyValue(`--hero-wave-color-${i}`).trim();
+          if (isLight) {
+            // If color provided without explicit alpha (rgb), add a higher alpha
+            if (/^rgb\(\s*\d+/.test(c) && !/rgba/.test(c)) {
+              c = c.replace(/^rgb\((.*)\)$/,'rgba($1,0.85)');
+            } else if (/rgba\(/.test(c)) {
+              // slightly increase existing alpha
+              c = c.replace(/rgba\((\s*\d+\s*,\s*\d+\s*,\s*\d+\s*,)([^)]+)\)/, (m,prefix,a)=> {
+                let val=parseFloat(a); if(isNaN(val)) return m; return `rgba(${prefix}${Math.min(1,val+0.25)})`; });
+            }
+          }
+          return c;
+        }).filter(Boolean);
+      }
+      
+      observeTheme() {
+        const observer = new MutationObserver(muts => {
+          for (const m of muts) {
+            if (m.attributeName === 'data-theme') {
+              this.readColors();
+              
+              // Recolor existing paths
+              this.paths.forEach((p, idx) => { p.strokeColor = this.colors[idx % this.colors.length]; });
+            }
+          }
+        });
+        observer.observe(document.documentElement, { attributes: true });
+        this.themeObserver = observer;
+      }
+      
+      init() {
+        this.createWaves();
+        this.setupEvents();
+        this.animate();
+      }
+      
+      createWaves() {
+        // Clean up old waves
+        if (this.paths.length > 0) {
+          this.paths.forEach(path => path.remove());
+          this.paths = [];
+        }
+        
+        // Store base Y positions and amplitudes to maintain them across resizes
+        if (!this.baseYPositions) {
+          this.baseYPositions = [];
+        }
+        if (!this.waveAmplitudes) {
+          this.waveAmplitudes = [];
+        }
+        
+        // Create new waves using pre-calculated random values
+        for (let i = 0; i < this.pathCount; i++) {
+          // Use deterministic values instead of generating new ones
+          
+          // Create Paper.js path
+          const path = new paper.Path();
+          path.strokeCap = 'round';
+          path.strokeColor = this.colors[i % this.colors.length];
+          path.strokeWidth = this.strokeWidth * this.randomDistances[i];
+          
+          // Vertical position offset for each wave
+          // Store this permanently so it doesn't change on resize
+          if (!this.baseYPositions[i]) {
+            this.baseYPositions[i] = this.halfH + (i - this.pathCount/2) * 40;
+          }
+          const baseY = this.baseYPositions[i];
+          
+          // Store wave amplitude permanently so it doesn't change on resize
+          if (!this.waveAmplitudes[i]) {
+            this.waveAmplitudes[i] = this.h * this.magnitudeValue * this.randomHeights[i];
+          }
+          
+          // Add wave points
+          for (let v = 0; v < this.pathPoints; v++) {
+            const x = this.w * (v / (this.pathPoints - 1));
+            path.add(new paper.Point(x, baseY));
+          }
+          
+          // Smooth the path
+          path.smooth();
+          this.paths[i] = path;
+        }
+      }
+      
+      animate() {
+        // Track frame count for occasional smoothing
+        let frameCount = 0;
+        
+        // Adaptive smoothing based on device
+        const smoothInterval = this.isMobile ? 15 : 10; // Less frequent smoothing on mobile
+        const initialSmoothFrames = this.isMobile ? 20 : 30; // Shorter initial smooth period on mobile
+        
+        paper.view.onFrame = (event) => {
+          // Use system time for synchronized animation across windows
+          const systemTime = Date.now() / 1000; // Convert to seconds
+          const timeOffset = systemTime * this.speed;
+          frameCount++;
+          
+          // Smooth every frame during initial load, then at intervals
+          const shouldSmooth = frameCount <= initialSmoothFrames || frameCount % smoothInterval === 0;
+          
+          for (let p = 0; p < this.paths.length; p++) {
+            const path = this.paths[p];
+            const randomHeight = this.randomHeights[p];
+            const randomOffset = this.randomOffsets[p];
+            
+            // Use stored base Y position and amplitude instead of recalculating
+            const baseY = this.baseYPositions[p];
+            const waveAmplitude = this.waveAmplitudes[p];
+            
+            // Loop through path segments
+            for (let i = 0; i < this.pathPoints; i++) {
+              const segment = path.segments[i];
+              
+              // Cyclic value between -1 and 1, synchronized with system clock
+              const positionOffset = (i / this.pathPoints) * this.frequency * randomHeight;
+              
+              // Reverse horizontal wave direction: use sin(t - kx) instead of sin(t + kx)
+              const sinus = Math.sin(timeOffset - positionOffset + randomOffset);
+              
+              // Change segment Y position
+              segment.point.y = baseY + sinus * waveAmplitude;
+            }
+            
+            // Smooth the path only occasionally for performance
+            if (shouldSmooth) {
+              path.smooth();
+            }
+          }
+        };
+      }
+      
+      resize() {
+        const wasMobile = this.isMobile;
+        this.isMobile = window.innerWidth <= 768 || 
+                       ('ontouchstart' in window) || 
+                       (navigator.maxTouchPoints > 0);
+        
+        // Store old width for repositioning wave points
+        const oldW = this.w;
+        
+        this.h = window.innerHeight;
+        this.w = window.innerWidth;
+        this.halfH = this.h * 0.5;
+        
+        // If device type changed (mobile <-> desktop), recreate waves with new config
+        if (wasMobile !== this.isMobile) {
+          // Update configuration based on new device type
+          if (this.isMobile) {
+            this.speed = 0.15;
+            this.strokeWidth = 50;
+            this.frequency = 2.5;
+            this.pathCount = 5;
+            this.pathPoints = 16;
+            this.magnitudeValue = 0.12;
+          } else {
+            this.speed = 0.22;
+            this.strokeWidth = 70;
+            this.frequency = 3;
+            this.pathCount = 7;
+            this.pathPoints = 24;
+            this.magnitudeValue = 0.15;
+          }
+          
+          // Re-initialize random values for new wave count
+          this.initializeRandomValues();
+          
+          // Recreate waves with new configuration
+          this.createWaves();
+          return;
+        }
+        
+        // Resize Paper.js canvas
+        paper.view.viewSize = new paper.Size(this.w, this.h);
+        
+        // Stretch wave points horizontally to fill new width
+        // This maintains their relative horizontal position while covering the full viewport
+        for (let i = 0; i < this.paths.length; i++) {
+          if (this.paths[i]) {
+            // Update stroke width based on new dimensions
+            this.paths[i].strokeWidth = this.strokeWidth * this.randomDistances[i];
+            
+            // Redistribute points across new width while maintaining wave phase
+            for (let v = 0; v < this.paths[i].segments.length; v++) {
+              // Keep the same horizontal distribution ratio
+              const segment = this.paths[i].segments[v];
+              const xRatio = segment.point.x / oldW;
+              segment.point.x = this.w * xRatio;
+              // Y position will be updated by the animation loop
+            }
+            
+            // Smooth the updated path
+            this.paths[i].smooth();
+          }
+        }
+        
+        // Only recreate waves if paths don't exist (first time or error)
+        if (this.paths.length === 0) {
+          this.createWaves();
+        }
+      }
+      
+      setupEvents() {
+        window.addEventListener('resize', () => {
+          this.resize();
+        });
+        
+        document.addEventListener('visibilitychange', () => {
+          if (document.hidden) {
+            paper.view.pause();
+          } else if (!document.hidden) {
+            paper.view.play();
+          }
+        });
+      }
+    }
+    
+    /**
+     * Particle system as per exact specifications
+     * Now with deterministic positioning and properties
+     */
+    class HeroParticles {
+      constructor() {
+        this.canvas = document.getElementById('particles-canvas');
+        if (!this.canvas) {
+          console.warn('Canvas particles-canvas not found');
+          return;
+        }
+        
+        this.ctx = this.canvas.getContext('2d');
+        this.particles = [];
+        this.animationId = null;
+        
+        // Seeded random generator for consistent particle generation
+        this.particleRng = new SeededRandom(123); // Different seed from waves
+        
+        // Detect if mobile device
+        this.isMobile = window.innerWidth <= 768 || 
+                       ('ontouchstart' in window) || 
+                       (navigator.maxTouchPoints > 0);
+        
+        // Window movement detection for particle impulse
+        this.lastWindowPosition = { x: window.screenX, y: window.screenY };
+        this.windowVelocity = { x: 0, y: 0 };
+        this.impulse = { x: 0, y: 0 };
+        this.impulseDecay = 0.95; // How fast the impulse fades
+        this.impulseMultiplier = 0.02; // How strong the impulse effect is
+        
+        // Mouse interaction for particle repulsion
+        this.mousePosition = { x: -1000, y: -1000 }; // Start offscreen
+        this.mouseActive = false;
+        this.mouseRepulsionRadius = 120; // Pixels radius of mouse effect
+        this.mouseRepulsionStrength = 1.2; // How strong the mouse repulsion is (more subtle)
+        
+        // Configuration as per specifications - adaptive for mobile
+        this.config = {
+          count: this.getParticleCount(),
+          colors: ['#FFFFFF', '#B0D2FF', '#D8ECFF'], // Exact colors
+          sizes: this.isMobile ? [1, 1.5, 2] : [1, 1.5, 2, 2.5, 3], // Smaller sizes on mobile
+          opacities: this.isMobile ? [0.3, 0.4, 0.5, 0.6] : [0.4, 0.5, 0.6, 0.7, 0.8], // Lower opacity on mobile
+          bokehChance: this.isMobile ? 0.02 : 0.05 // Less blur on mobile (performance)
+        };
+        
+        this.init();
+      }
+      
+      getParticleCount() {
+        // Reduced particle count for better performance
+        const baseCount = this.isMobile ? 80 : 150; // 80 on mobile, 150 on desktop
+        const screenRatio = (window.innerWidth * window.innerHeight) / (1920 * 1080);
+        return Math.floor(baseCount * Math.min(screenRatio, 1.2));
+      }
+      
+      init() {
+        this.resizeCanvas();
+        this.createParticles();
+        this.setupEvents();
+        this.animate();
+      }
+      
+      resizeCanvas() {
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+      }
+      
+      createParticle(index = null) {
+        // Use deterministic random generator for consistent particles
+        // Reset RNG to specific position based on particle index for consistency
+        if (index !== null) {
+          this.particleRng.seed = this.particleRng.originalSeed + index * 17; // Use index offset for variety
+        }
+        
+        const isNearWaves = this.particleRng.next() < 0.4; // 40% near waves
+        let x, y;
+        
+        if (isNearWaves) {
+          // Distribution concentrated around central waves
+          x = this.particleRng.next() * this.canvas.width;
+          y = this.canvas.height * 0.4 + (this.particleRng.next() - 0.5) * 200; // Central area with variation
+        } else {
+          // Global distribution in space
+          x = this.particleRng.next() * this.canvas.width;
+          y = this.particleRng.next() * (this.canvas.height * 0.8);
+          
+          // Higher density in top right
+          if (this.particleRng.next() < 0.6) {
+            x = this.canvas.width * 0.3 + this.particleRng.next() * this.canvas.width * 0.7;
+            y = this.particleRng.next() * this.canvas.height * 0.5;
+          }
+        }
+        
+        return {
+          x, y,
+          size: this.config.sizes[Math.floor(this.particleRng.next() * this.config.sizes.length)],
+          color: this.config.colors[Math.floor(this.particleRng.next() * this.config.colors.length)],
+          baseOpacity: this.config.opacities[Math.floor(this.particleRng.next() * this.config.opacities.length)],
+          opacity: 0,
+          bokeh: this.particleRng.next() < this.config.bokehChance,
+          drift: {
+            x: (this.particleRng.next() - 0.5) * 0.2,
+            y: (this.particleRng.next() - 0.5) * 0.2
+          },
+          // Add velocity for inertia system
+          velocity: {
+            x: 0,
+            y: 0
+          },
+          pulse: this.particleRng.next() * Math.PI * 2,
+          age: 0,
+          maxAge: 1000 + this.particleRng.next() * 2000,
+          shape: this.particleRng.next() < 0.3 ? 'hexagon' : 'circle',
+          index: index !== null ? index : -1 // Store particle index for consistency
+        };
+      }
+      
+      createParticles() {
+        this.particles = [];
+        for (let i = 0; i < this.config.count; i++) {
+          this.particles.push(this.createParticle(i));
+        }
+      }
+      
+      updateParticle(particle) {
+        particle.age++;
+        
+        // Apply window movement impulse to particle movement
+        // Smaller particles react more (lighter), larger particles react less (heavier)
+        const sizeInfluence = Math.max(0.1, (4 - particle.size) / 3); // Inverted size effect
+        const impulseEffect = {
+          x: this.impulse.x * sizeInfluence,
+          y: this.impulse.y * sizeInfluence
+        };
+        
+        // Apply mouse repulsion to velocity
+        this.applyMouseRepulsion(particle);
+        
+        // Apply velocity damping for smooth deceleration
+        const velocityDamping = 0.95; // How fast velocity decays (95% retention per frame)
+        particle.velocity.x *= velocityDamping;
+        particle.velocity.y *= velocityDamping;
+        
+        // Apply all forces: drift + window impulse + velocity (from mouse repulsion)
+        particle.x += particle.drift.x + impulseEffect.x + particle.velocity.x;
+        particle.y += particle.drift.y + impulseEffect.y + particle.velocity.y;
+        
+        // Pulsation synchronized with system time for consistency
+        const systemTime = Date.now() / 1000;
+        const pulseOffset = Math.sin(systemTime * 2 + particle.pulse) * 0.1;
+        particle.opacity = Math.max(0.1, Math.min(1, particle.baseOpacity + pulseOffset));
+        
+        // Add slight impulse effect to opacity (particles "flash" when window moves)
+        // Smaller particles flash more intensely (more reactive to movement)
+        const impulseIntensity = Math.abs(this.impulse.x) + Math.abs(this.impulse.y);
+        if (impulseIntensity > 0.5) {
+          const flashIntensity = sizeInfluence * 0.15; // Use same size influence for consistency
+          particle.opacity *= 1 + (impulseIntensity * flashIntensity);
+        }
+        
+        // Fade in/out
+        const ageRatio = particle.age / particle.maxAge;
+        if (ageRatio < 0.1) {
+          particle.opacity *= ageRatio / 0.1;
+        } else if (ageRatio > 0.9) {
+          particle.opacity *= (1 - ageRatio) / 0.1;
+        }
+        
+        // Recycling with deterministic properties
+        if (particle.age >= particle.maxAge || 
+            particle.x < -50 || particle.x > this.canvas.width + 50 || 
+            particle.y < -50 || particle.y > this.canvas.height + 50) {
+          // Recycle particle with same index to maintain consistency
+          Object.assign(particle, this.createParticle(particle.index));
+        }
+      }
+      
+      drawParticle(particle) {
+        this.ctx.save();
+        this.ctx.globalAlpha = particle.opacity;
+        
+        // Bokeh effect (sigma=2px as per specifications)
+        if (particle.bokeh) {
+          this.ctx.filter = 'blur(2px)';
+        }
+        
+        this.ctx.fillStyle = particle.color;
+        this.ctx.beginPath();
+        
+        if (particle.shape === 'hexagon') {
+          // Soft hexagonal shape
+          const sides = 6;
+          const angle = Math.PI * 2 / sides;
+          this.ctx.moveTo(
+            particle.x + particle.size * Math.cos(0),
+            particle.y + particle.size * Math.sin(0)
+          );
+          for (let i = 1; i <= sides; i++) {
+            this.ctx.lineTo(
+              particle.x + particle.size * Math.cos(i * angle),
+              particle.y + particle.size * Math.sin(i * angle)
+            );
+          }
+        } else {
+          this.ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+        }
+        
+        this.ctx.fill();
+        this.ctx.restore();
+      }
+      
+      animate() {
+        // Update window movement detection
+        this.updateWindowMovement();
+        
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        
+        this.particles.forEach(particle => {
+          this.updateParticle(particle);
+          this.drawParticle(particle);
+        });
+        
+        this.animationId = requestAnimationFrame(this.animate.bind(this));
+      }
+      
+      setupEvents() {
+        window.addEventListener('resize', () => {
+          this.resizeCanvas();
+          this.adjustParticlesForResize();
+        });
+        
+        // Mouse interaction events - use document instead of canvas for better coverage
+        document.addEventListener('mousemove', (e) => {
+          const rect = this.canvas.getBoundingClientRect();
+          this.mousePosition.x = e.clientX - rect.left;
+          this.mousePosition.y = e.clientY - rect.top;
+          this.mouseActive = true;
+        });
+        
+        this.canvas.addEventListener('mouseenter', () => {
+          this.mouseActive = true;
+        });
+        
+        this.canvas.addEventListener('mouseleave', () => {
+          this.mouseActive = false;
+          this.mousePosition.x = -1000;
+          this.mousePosition.y = -1000;
+        });
+        
+        document.addEventListener('visibilitychange', () => {
+          if (document.hidden && this.animationId) {
+            cancelAnimationFrame(this.animationId);
+            this.animationId = null;
+          } else if (!document.hidden && !this.animationId) {
+            this.animate();
+          }
+        });
+      }
+      
+      applyMouseRepulsion(particle) {
+        // No repulsion if mouse is not active
+        if (!this.mouseActive) {
+          return;
+        }
+        
+        // Calculate distance between particle and mouse
+        const dx = particle.x - this.mousePosition.x;
+        const dy = particle.y - this.mousePosition.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        
+        // No repulsion if particle is outside the repulsion radius
+        if (distance > this.mouseRepulsionRadius || distance === 0) {
+          return;
+        }
+        
+        // Calculate repulsion strength (stronger when closer) with exponential falloff for more dramatic effect
+        const normalizedDistance = distance / this.mouseRepulsionRadius;
+        const repulsionIntensity = Math.pow(1 - normalizedDistance, 2); // Quadratic falloff for stronger effect
+        
+        // Calculate direction of repulsion (normalized)
+        const directionX = dx / distance;
+        const directionY = dy / distance;
+        
+        // Apply size influence - smaller particles are pushed more easily, but increase the effect
+        const sizeInfluence = Math.max(0.3, (4 - particle.size) / 2); // Increased minimum and scaling
+        
+        // Calculate final repulsion force with extra boost
+        const repulsionForce = this.mouseRepulsionStrength * repulsionIntensity * sizeInfluence;
+        
+        // Add to velocity instead of direct position change for inertia effect
+        particle.velocity.x += directionX * repulsionForce * 0.15; // Further reduced for subtler effect
+        particle.velocity.y += directionY * repulsionForce * 0.15;
+      }
+      
+      adjustParticlesForResize() {
+        const newCount = this.getParticleCount();
+        
+        // If we need more particles, add them with consistent indices
+        if (newCount > this.particles.length) {
+          for (let i = this.particles.length; i < newCount; i++) {
+            this.particles.push(this.createParticle(i));
+          }
+        }
+        // If we need fewer particles, remove excess ones
+        else if (newCount < this.particles.length) {
+          this.particles.splice(newCount);
+        }
+        
+        // Update existing particles positions to fit new canvas dimensions
+        this.particles.forEach((particle, index) => {
+          // Recalculate position ratios and apply them to new dimensions
+          if (particle.x > this.canvas.width) {
+            particle.x = this.canvas.width * 0.9; // Keep within bounds
+          }
+          if (particle.y > this.canvas.height) {
+            particle.y = this.canvas.height * 0.9; // Keep within bounds
+          }
+        });
+        
+        this.config.count = newCount;
+      }
+      
+      updateWindowMovement() {
+        // Detect window movement and calculate velocity
+        const currentPosition = { x: window.screenX, y: window.screenY };
+        
+        // Calculate velocity (difference from last position)
+        this.windowVelocity.x = currentPosition.x - this.lastWindowPosition.x;
+        this.windowVelocity.y = currentPosition.y - this.lastWindowPosition.y;
+        
+        // Apply impulse based on movement velocity
+        if (Math.abs(this.windowVelocity.x) > 1 || Math.abs(this.windowVelocity.y) > 1) {
+          this.impulse.x += this.windowVelocity.x * this.impulseMultiplier;
+          this.impulse.y += this.windowVelocity.y * this.impulseMultiplier;
+          
+          // Limit impulse magnitude to prevent extreme effects
+          const maxImpulse = 5;
+          this.impulse.x = Math.max(-maxImpulse, Math.min(maxImpulse, this.impulse.x));
+          this.impulse.y = Math.max(-maxImpulse, Math.min(maxImpulse, this.impulse.y));
+        }
+        
+        // Update last position
+        this.lastWindowPosition = currentPosition;
+        
+        // Apply decay to impulse
+        this.impulse.x *= this.impulseDecay;
+        this.impulse.y *= this.impulseDecay;
+      }
+    }
+    
+    // Initialization
+    try {
+      window.fluidWaves = new FluidWaves();
+      window.heroParticles = new HeroParticles();
+    } catch (error) {
+      console.warn('⚠️ Error during Hero Background initialization:', error);
+    }
+  });
+} else {
+  // Animations disabled due to user preference
+}
+</script>

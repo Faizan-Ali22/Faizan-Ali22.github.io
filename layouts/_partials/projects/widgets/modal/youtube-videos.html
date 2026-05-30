@@ -1,0 +1,95 @@
+{{/*
+  Partial: YouTube Videos Modal Enhanced Layout
+  Description: Structure HTML pour l'affichage des vidéos YouTube dans les modals de project widget
+  Context: 
+    - .videos (slice) - Liste des vidéos avec leurs données (video_id, title, description, duration, date)
+    - .projectId (string) - ID du projet pour contextualiser les actions
+*/}}
+
+{{- $videos := .videos -}}
+{{- $projectId := .projectId | default "" -}}
+
+{{- if $videos -}}
+  {{- $total := len $videos -}}
+  
+  <div class="youtube-videos-modal-enhanced">
+    <div class="youtube-stats-bar">
+      <div class="youtube-count">
+        <strong>{{ $total }}</strong> {{ if eq $total 1 }}{{ i18n "video" | default "vidéo" }}{{ else }}{{ i18n "videos" | default "vidéos" }}{{ end }} YouTube
+      </div>
+      <div class="youtube-info">
+        <span class="youtube-info-chip">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="#ff0000">
+            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+          </svg>
+          {{ i18n "click_video_watch" | default "Cliquez sur une vidéo pour la regarder" }}
+        </span>
+      </div>
+    </div>
+    
+    <div class="youtube-videos-modal-grid">
+      {{- range $index, $video := $videos -}}
+        <div class="youtube-video-modal-item" 
+             data-video-id="{{ .video_id }}"
+             data-video-title="{{ .title }}"
+             onclick="openYouTubeModal('{{ .video_id }}', '{{ .title }}')">
+          
+          <div class="youtube-video-container">
+            <div class="youtube-video-thumbnail">
+              <img src="https://img.youtube.com/vi/{{ .video_id }}/maxresdefault.jpg" 
+                   alt="{{ .title }}" 
+                   loading="lazy">
+              
+              <div class="youtube-video-overlay">
+                <div class="youtube-video-play-button">
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8,5.14V19.14L19,12.14L8,5.14Z"/>
+                  </svg>
+                </div>
+                
+                {{- if .duration -}}
+                <div class="youtube-video-duration">{{ .duration }}</div>
+                {{- end -}}
+              </div>
+            </div>
+            
+            <div class="youtube-video-info">
+              <h4 class="youtube-video-title">{{ .title }}</h4>
+              
+              {{- if .description -}}
+              <p class="youtube-video-description">{{ .description }}</p>
+              {{- end -}}
+              
+              <div class="youtube-video-meta">
+                {{- if .date -}}
+                <span class="youtube-video-date">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19,3H18V1H16V3H8V1H6V3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V8H19V19Z"/>
+                  </svg>
+                  {{ .date }}
+                </span>
+                {{- end -}}
+                
+                <span class="youtube-video-platform">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="#ff0000">
+                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                  </svg>
+                  YouTube
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      {{- end -}}
+    </div>
+  </div>
+{{- else -}}
+  <div class="youtube-videos-modal-empty">
+    <div class="empty-state">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor" opacity="0.5">
+        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+      </svg>
+      <p>{{ i18n "no_youtube_videos" | default "Aucune vidéo YouTube disponible" }}</p>
+    </div>
+  </div>
+{{- end -}}

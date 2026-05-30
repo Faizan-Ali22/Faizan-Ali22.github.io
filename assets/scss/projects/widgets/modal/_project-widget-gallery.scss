@@ -1,0 +1,243 @@
+// =============================================================================
+// PROJECT WIDGETS - GALLERY MODAL STYLES
+// =============================================================================
+// Modal-specific styles for gallery project widgets
+
+// Gallery modal container
+.gallery-modal-enhanced {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  min-height: 0; // Allow flexbox to control height
+  
+  .gallery-stats-bar {
+    @extend .widget-stats-bar;
+    
+    .gallery-count {
+      font-weight: 600;
+      color: var(--text-primary);
+      
+      strong {
+        color: var(--accent-primary);
+        font-size: 1.1em;
+      }
+    }
+    
+    .gallery-info {
+      display: flex;
+      gap: 0.5rem;
+      
+      .gallery-info-chip {
+        @extend .widget-badge;
+        background: var(--bg-tertiary);
+        color: var(--text-secondary);
+        border: 1px solid var(--border-color);
+      }
+    }
+  }
+}
+
+// Main gallery grid - 4x4 layout as requested
+.gallery-modal-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  // No max-height or overflow - let the modal content handle scrolling
+  
+  // Responsive breakpoints
+  @media (max-width: 900px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  @media (max-width: 600px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+  
+  @media (max-width: 400px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// Individual gallery items in modal
+.gallery-modal-item {
+  position: relative;
+  aspect-ratio: 1; // Square format for 4x4 grid
+  border-radius: var(--border-radius-md);
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  // Force 16:9 aspect ratio on mobile
+  @media (max-width: 768px) {
+    aspect-ratio: 16 / 9;
+  }
+  
+  &:hover {
+    transform: scale(1.05);
+    z-index: 2; // Bring to front when hovering
+    
+    .gallery-item-overlay {
+      opacity: 1;
+    }
+    
+    .gallery-zoom-icon {
+      transform: scale(1) rotate(0deg);
+    }
+    
+    .gallery-item-caption {
+      transform: translateY(0);
+    }
+    
+    img {
+      filter: brightness(1.1) saturate(1.2);
+    }
+  }
+  
+  // Focus state for accessibility
+  &:focus-within {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 2px;
+  }
+}
+
+.gallery-item-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.3s ease;
+  }
+}
+
+// Overlay for hover effects
+.gallery-item-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.4) 0%,
+    rgba(0, 0, 0, 0.2) 50%,
+    rgba(0, 0, 0, 0.6) 100%
+  );
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+// Zoom icon in overlay
+.gallery-zoom-icon {
+  @extend .widget-icon, .widget-icon--md;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  transform: scale(0.8) rotate(-10deg);
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  
+  svg {
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+}
+
+// Image index indicator
+.gallery-item-index {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: var(--border-radius-sm);
+  backdrop-filter: blur(4px);
+}
+
+// Image caption
+.gallery-item-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0.75rem;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.8) 0%,
+    rgba(0, 0, 0, 0.4) 70%,
+    transparent 100%
+  );
+  color: white;
+  font-size: 0.8rem;
+  line-height: 1.3;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+  backdrop-filter: blur(4px);
+}
+
+// Footer note removed - no longer needed since modal handles scrolling
+
+// Empty state for galleries without images
+.gallery-modal-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  text-align: center;
+  color: var(--text-secondary);
+  
+  .empty-state-icon {
+    margin-bottom: 1rem;
+    
+    svg {
+      width: 3rem;
+      height: 3rem;
+      color: var(--text-tertiary);
+    }
+  }
+  
+  p {
+    margin: 0;
+    font-size: 1rem;
+    color: var(--text-secondary);
+  }
+}
+
+// Scrollbar styling is handled by the modal container, not the grid
+
+// Mobile optimizations
+@media (max-width: 480px) {
+  .gallery-modal-enhanced {
+    gap: 1rem;
+    
+    .gallery-stats-bar {
+      padding: 0.75rem;
+      
+      .gallery-info {
+        flex-direction: column;
+        gap: 0.25rem;
+      }
+    }
+  }
+  
+  // Grid height managed by modal container
+  
+  .gallery-item-caption {
+    padding: 0.5rem;
+    font-size: 0.75rem;
+  }
+  
+  // Footer note styles removed
+}

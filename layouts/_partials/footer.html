@@ -1,0 +1,49 @@
+{{- $profile := partial "get-localized-data.html" (dict "context" . "dataName" "profile") -}}
+{{- $config := .Site.Data.config -}}
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-main">
+            <div class="footer-cards">
+                <div class="footer-card aero-glass">
+                    <span class="footer-label">{{ i18n "powered_by" | default "Powered by" }}</span>
+                    <a href="https://gohugo.io" target="_blank" rel="noopener noreferrer" class="footer-value">Hugo.io</a>
+                </div>
+                <div class="footer-card aero-glass">
+                    <span class="footer-label">{{ i18n "designed_by" | default "Designed by" }}</span>
+                    <span class="footer-value">{{ with $profile }}{{ with .personal }}{{ .fullName | default "Your Name" }}{{ end }}{{ else }}Your Name{{ end }}</span>
+                </div>
+                <!-- <div class="footer-card aero-glass">
+                    <span class="footer-label">{{ i18n "theme" | default "Theme" }}</span>
+                    <span class="footer-value">WaveGlass</span>
+                </div>
+                <div class="footer-card aero-glass">
+                    <span class="footer-label">{{ i18n "open_source" | default "Open Source" }}</span>
+                    <a href="#" class="footer-value">Coming Soon</a>
+                </div> -->
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="footer-copyright">
+                <p>&copy; {{ now.Year }} {{ with $profile }}{{ with .personal }}{{ .fullName | default "Your Name" }}{{ end }}{{ else }}Your Name{{ end }}</p>
+            </div>
+            <div class="footer-social">
+                {{ range $config.social }}
+                <a href="{{ .url }}"
+                   {{ if .external }}target="_blank" rel="noopener noreferrer"{{ end }}
+                   class="footer-social-link"
+                   title="{{ .title }}">
+                    {{ if .iconPath }}
+  <img src="{{ .icon }}" alt="{{ .title }}">
+{{ else }}
+  {{ .icon }}
+{{ end }}
+                </a>
+                {{ end }}
+            </div>
+            <div class="footer-info">
+                <p class="footer-role">{{ with $profile }}{{ with .personal }}{{ .title | default "Developer" }}{{ end }}{{ with .contact }} • {{ .location | default "" }}{{ end }}{{ end }}</p>
+            </div>
+        </div>
+    </div>
+</footer>

@@ -1,0 +1,206 @@
+{{- /* Load localized data files */ -}}
+{{- $programmingLanguages := partial "get-localized-data.html" (dict "context" . "dataName" "programming_languages") -}}
+{{- $frameworksEngines := partial "get-localized-data.html" (dict "context" . "dataName" "frameworks_engines") -}}
+{{- $tools := partial "get-localized-data.html" (dict "context" . "dataName" "tools") -}}
+{{- $specialties := partial "get-localized-data.html" (dict "context" . "dataName" "specialties") -}}
+{{- $softSkills := partial "get-localized-data.html" (dict "context" . "dataName" "soft_skills") -}}
+
+<section class="skills-section">
+    <!-- Skills Header -->
+    <header class="skills-header section-header-unified">
+        <h2 class="section-title-unified">{{ i18n "technical_skills" | default "Compétences Techniques" }}</h2>
+        <p class="skills-subtitle section-subtitle-unified">{{ i18n "skills_subtitle" | default "Maîtrise des technologies modernes pour créer des expériences utilisateur exceptionnelles et des solutions techniques robustes. 💻" }}</p>
+    </header>
+
+    <!-- Info Box -->
+    <div class="skills-info-box">
+        <span class="info-icon">�</span>
+        <p class="info-text">
+            {{ i18n "skills_clickable_info" | default "Cliquez sur une compétence pour découvrir les projets, formations et expériences où elle a été utilisée !" }}
+        </p>
+    </div>
+
+    <!-- Skills Grid Container -->
+    <div class="skills-full-categories-grid">
+        
+        {{/* Programming Languages */}}
+        <div class="skills-category" data-category="programming-languages">
+            <h4>{{ i18n "programming_languages" | default "Langages de programmation" }}</h4>
+            <div class="skills-grid">
+                {{ range $programmingLanguages }}
+                    {{ partial "helpers/skill-block.html" (dict "skill" . "skillType" "programming-language" "skillCategory" "programming-languages" "context" $ "useRelURL" true) }}
+                {{ end }}
+            </div>
+        </div>
+
+        {{/* Frameworks */}}
+        <div class="skills-category" data-category="frameworks">
+            <h4>{{ i18n "frameworks" | default "Frameworks" }}</h4>
+            <div class="skills-grid">
+                {{ range $frameworksEngines }}
+                    {{ if not (or (eq .key "fw_unity") (eq .key "fw_unreal_engine") (eq .key "fw_black_ops_iii_engine")) }}
+                    {{ partial "helpers/skill-block.html" (dict "skill" . "skillType" "framework" "skillCategory" "frameworks" "context" $ "useRelURL" true) }}
+                    {{ end }}
+                {{ end }}
+            </div>
+        </div>
+
+        {{/* Game Engines */}}
+        <div class="skills-category" data-category="engines">
+            <h4>{{ i18n "game_engines" | default "Moteurs de jeu" }}</h4>
+            <div class="skills-grid">
+                {{ range $frameworksEngines }}
+                    {{ if or (eq .key "fw_unity") (eq .key "fw_unreal_engine") (eq .key "fw_black_ops_iii_engine") }}
+                    {{ partial "helpers/skill-block.html" (dict "skill" . "skillType" "engine" "skillCategory" "engines" "context" $ "useRelURL" true) }}
+                    {{ end }}
+                {{ end }}
+            </div>
+        </div>
+
+        {{/* Environments */}}
+        <div class="skills-category" data-category="environments">
+            <h4>{{ i18n "environments" | default "Environnements de développement" }}</h4>
+            <div class="skills-grid">
+                {{ range sort $tools "experience" "desc" }}
+                    {{ if eq .category "ide" }}
+                    {{ partial "helpers/skill-block.html" (dict "skill" . "skillType" "environment" "skillCategory" "environments" "context" $ "useRelURL" true) }}
+                    {{ end }}
+                {{ end }}
+            </div>
+        </div>
+
+        {{/* Tools */}}
+        <div class="skills-category" data-category="tools">
+            <h4>{{ i18n "tools" | default "Outils" }}</h4>
+            <div class="skills-grid">
+                {{ range sort $tools "experience" "desc" }}
+                    {{ if ne .category "ide" }}
+                    {{ partial "helpers/skill-block.html" (dict "skill" . "skillType" "tool" "skillCategory" "tools" "context" $ "useRelURL" true) }}
+                    {{ end }}
+                {{ end }}
+            </div>
+        </div>
+
+        {{/* Specialties */}}
+        <div class="skills-category" data-category="specialties">
+            <h4>{{ i18n "specialties" | default "Spécialités" }}</h4>
+            <div class="skills-grid">
+                {{ range $specialties }}
+                {{ partial "helpers/skill-block.html" (dict "skill" . "skillType" "specialty" "skillCategory" "specialties" "context" $ "useRelURL" true "showExperience" false) }}
+                {{ end }}
+            </div>
+        </div>
+
+        {{/* Soft Skills */}}
+        <div class="skills-category" data-category="soft-skills">
+            <h4>{{ i18n "soft_skills" | default "Soft Skills" }}</h4>
+            <div class="skills-grid">
+                {{ range $softSkills }}
+                {{- $skillName := i18n .key -}}
+                {{- $skillSubtitle := i18n (printf "%s_subtitle" .key) -}}
+                <div class="skill-block clickable" 
+                     onclick="openSkillModal('{{ $skillName }}', '{{ if .iconPath }}{{ .iconPath | absURL }}{{ else }}{{ .icon }}{{ end }}', '', '{{ .experience }}', '{{ if .iconPath }}svg{{ else }}emoji{{ end }}', '{{ .key }}')"
+                     data-skill-name="{{ $skillName }}"
+                     data-skill-type="soft-skill"
+                     data-skill-category="soft-skills">
+                    <span class="skill-icon">
+                        {{ if .iconPath }}
+                          <img src="{{ .iconPath | absURL }}" alt="{{ $skillName }}" class="tech-icon-svg" width="28" height="28">
+                        {{ else }}
+                          <span class="tech-icon-emoji">{{ .icon }}</span>
+                        {{ end }}
+                    </span>
+                    <span class="skill-name">{{ $skillName }}</span>
+                    {{ if $skillSubtitle }}
+                    <span class="skill-level">{{ $skillSubtitle }}</span>
+                    {{ end }}
+                </div>
+                {{ end }}
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<style>
+/* Ajustement pour le dock en haut */
+.skills-section {
+    padding-top: 120px !important;
+    margin-top: 0 !important;
+}
+
+/* Remove border from subtitle */
+.skills-section .skills-subtitle {
+    border-bottom: none !important;
+    padding-bottom: 0 !important;
+}
+
+/* Skills Info Box */
+.skills-info-box {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 0 auto 2.5rem;
+    padding: 0.875rem 1.5rem;
+    background: rgba(30, 136, 229, 0.08);
+    border: 1px solid rgba(30, 136, 229, 0.25);
+    border-radius: 50px;
+    backdrop-filter: blur(10px);
+    width: fit-content;
+    display: flex;
+    justify-content: center;
+}
+
+.skills-info-box .info-icon {
+    font-size: 1.4rem;
+    flex-shrink: 0;
+    line-height: 1;
+}
+
+.skills-info-box .info-text {
+    margin: 0;
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.4;
+    font-weight: 500;
+}
+
+/* Grid 2x2 for categories */
+.skills-full-categories-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem;
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+/* Force responsive grid for skills in full page */
+.skills-full-categories-grid .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(90px, 110px)) !important;
+    gap: 0.75rem;
+}
+
+@media (max-width: 1024px) {
+    .skills-full-categories-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .skills-info-box {
+        flex-direction: column;
+        padding: 1rem 1.5rem;
+        margin: 0 1rem 2rem;
+    }
+    
+    .skills-info-box .info-text {
+        font-size: 0.95rem;
+    }
+    
+    .skills-full-categories-grid .skills-grid {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 100px)) !important;
+    }
+}
+</style>

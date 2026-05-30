@@ -1,0 +1,45 @@
+{{/*
+  Generic partial for displaying a project tile - Now uses project-card-unified
+  
+  Expected parameters:
+  - .project : the project page
+  - .category : category for data-category (games, apps-web, mods-tools)
+  - .icon : icon to display (🎮, 🛒, 🔧)
+  - .displayStyle : CSS display style (ex: "display:none;" to hide by default)
+*/}}
+
+{{ $project := .project }}
+{{ $category := .category }}
+{{ $icon := .icon }}
+{{ $displayStyle := .displayStyle | default "" }}
+
+{{/* Get all technologies for this project */}}
+{{ $allTechnologies := slice }}
+{{ with $project.Params.programming_languages }}
+    {{ $allTechnologies = $allTechnologies | append . }}
+{{ end }}
+{{ with $project.Params.frameworks_engines }}
+    {{ $allTechnologies = $allTechnologies | append . }}
+{{ end }}
+{{ $allTechnologies = $allTechnologies | uniq }}
+
+{{/* Call the unified component */}}
+<div data-project-id="{{ $project.File.BaseFileName }}"
+     data-background-image="{{ $project.Params.background_image | default $project.Params.image }}"
+     data-sector="{{ $project.Params.sector }}"
+     data-category="{{ $category }}"
+     data-technologies='{{ partial "combined-technologies.html" $project }}'
+     {{ with $displayStyle }}style="{{ . }}"{{ end }}>
+    
+    {{ partial "project-card-unified.html" (dict 
+        "title" $project.Title
+        "subtitle" $project.Params.subtitle
+        "description" $project.Params.description
+        "image" ($project.Params.image | default "images/placeholder-project.jpg")
+        "url" $project.Permalink
+        "role" $icon
+        "status" (cond (eq $project.Params.status "completed") "Completed" (cond (eq $project.Params.status "in-progress") "In Progress" ""))
+        "technologies" $allTechnologies
+        "maxTechnologies" 4
+    ) }}
+</div>

@@ -1,0 +1,832 @@
+/* ===================================
+   EDUCATION & TIMELINE STYLES
+   ===================================
+   Styles for education/formation section 
+   with timeline and animations
+   =================================== */
+
+/* Animation for education section */
+#formation { 
+    animation-delay: 0.5s; 
+}
+
+/* Education & Timeline Section */
+.education-section {
+    margin: 4rem 0;
+    width: 100%;
+}
+
+/* Education header styles are now handled by section-headers.css */
+
+
+/* Timeline Container */
+.timeline-container {
+    position: relative;
+    max-width: 1200px;
+    margin:  auto;
+    padding: 3.5rem 0 2rem 0;
+}
+
+/* Specific spacing for education tabs to prevent visual overlap 
+   with timeline content below */
+.education-section .tabs {
+    margin-bottom: 10rem;
+}
+
+.timeline-line {
+    position: absolute;
+    left: 50%;
+    top: -110px;
+    bottom: 0;
+    width: 4px;
+    background: var(--edu-timeline-line-gradient, linear-gradient(180deg, rgba(79,209,199,0.8) 0%, rgba(79,209,199,0.4) 50%, rgba(79,209,199,0.8) 100%));
+    border-radius: 2px;
+    box-shadow: var(--edu-timeline-line-glow, 0 0 20px rgba(79,209,199,0.3));
+    transform: translateX(-50%);
+}
+
+/* Timeline Items */
+.timeline-item {
+    position: relative;
+    margin-top: -9rem;
+    display: flex;
+    align-items: center;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: timelineSlideUp 0.6s ease forwards;
+    z-index: 1;
+    /* Permettre aux éléments enfants de recevoir les événements de pointeur */
+    pointer-events: none;
+}
+
+.timeline-item:nth-child(even) {
+    flex-direction: row-reverse;
+}
+
+.timeline-item:nth-child(1) { animation-delay: 0.1s; }
+.timeline-item:nth-child(2) { animation-delay: 0.2s; }
+.timeline-item:nth-child(3) { animation-delay: 0.3s; }
+.timeline-item:nth-child(4) { animation-delay: 0.4s; }
+.timeline-item:nth-child(5) { animation-delay: 0.5s; }
+
+@keyframes timelineSlideUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Timeline Marker */
+.timeline-marker {
+    position: absolute;
+    left: 50%;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translateX(-50%);
+    z-index: 10;
+    border: var(--edu-marker-border, 4px solid rgba(26,26,26,0.8));
+    box-shadow: var(--edu-marker-glow, 0 0 20px rgba(79,209,199,0.4), inset 0 0 20px rgba(255,255,255,0.1));
+    backdrop-filter: blur(10px);
+}
+
+.timeline-icon {
+    font-size: 1.5rem;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.timeline-school-logo {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    border-radius: 8px;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+    padding: 4px;
+}
+
+/* Timeline Content */
+.timeline-content {
+    width: calc(50% - 40px);
+    padding: 0 2rem;
+    /* Permettre aux événements de passer aux enfants */
+    pointer-events: none;
+}
+
+.timeline-item:nth-child(even) .timeline-content {
+    text-align: left;
+}
+
+/* Timeline Card */
+.timeline-card {
+    background: var(--edu-card-bg, rgba(55,65,81,0.7));
+    backdrop-filter: blur(20px) saturate(180%);
+    border: var(--edu-card-border, 1px solid rgba(79,209,199,0.3));
+    border-radius: 20px;
+    padding: 2rem;
+    position: relative;
+    box-shadow: var(--edu-card-shadow, 0 8px 32px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.1));
+    transition: all 0.3s ease;
+    z-index: 5;
+    /* Ne pas créer un nouveau contexte de superposition pour les enfants */
+    isolation: auto;
+    /* Permettre les événements mais ne pas se déplacer au-dessus des étiquettes */
+    pointer-events: none;
+}
+
+.timeline-card:hover,
+.timeline-item:hover .timeline-card {
+    transform: scale(1.02);
+    box-shadow: var(--edu-card-shadow-hover, 0 12px 40px rgba(79,209,199,0.15), 0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2));
+    border-color: var(--edu-card-border-hover, rgba(79,209,199,0.5));
+}
+
+/* Timeline Card Arrow */
+.timeline-card::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border: 15px solid transparent;
+    /* Les flèches ne doivent pas intercepter les événements de clic */
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Les éléments impairs sont à gauche, la flèche pointe vers la droite */
+.timeline-item:nth-child(odd) .timeline-card::before {
+    right: -30px;
+    border-left-color: var(--edu-arrow-bg, rgba(55,65,81,0.9));
+}
+
+/* Les éléments pairs sont à droite, la flèche pointe vers la gauche */
+.timeline-item:nth-child(even) .timeline-card::before {
+    left: -30px;
+    border-right-color: var(--edu-arrow-bg, rgba(55,65,81,0.9));
+}
+
+/* Timeline Header */
+.timeline-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.timeline-period {
+    background: var(--edu-period-gradient, linear-gradient(135deg, rgba(79,209,199,0.2), rgba(79,209,199,0.1)));
+    color: var(--edu-period-text, #4fd1c7);
+    padding: 0.4rem 0.8rem;
+    border-radius: 15px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border: var(--edu-period-border, 1px solid rgba(79,209,199,0.3));
+    pointer-events: auto;
+}
+
+.timeline-status {
+    padding: 0.3rem 0.8rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    pointer-events: auto;
+}
+
+/* Success status: validated, obtained, completed */
+.status-success {
+    background: var(--edu-status-success-bg, rgba(34,197,94,0.2));
+    color: var(--edu-status-success-text, #22c55e);
+    border: var(--edu-status-success-border, 1px solid rgba(34,197,94,0.3));
+}
+
+/* Warning status: in progress, in preparation */
+.status-warning {
+    background: var(--edu-status-warning-bg, rgba(251,191,36,0.2));
+    color: var(--edu-status-warning-text, #fbbf24);
+    border: var(--edu-status-warning-border, 1px solid rgba(251,191,36,0.3));
+}
+
+/* Info status: career change, not taken, skipped */
+.status-info {
+    background: var(--edu-status-info-bg, rgba(59,130,246,0.2));
+    color: var(--edu-status-info-text, #3b82f6);
+    border: var(--edu-status-info-border, 1px solid rgba(59,130,246,0.3));
+}
+
+/* Timeline Content Elements */
+.timeline-title {
+    color: var(--edu-title-text,#fff);
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+    pointer-events: auto;
+}
+
+.timeline-institution {
+    color: var(--edu-institution-text,#4fd1c7);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    pointer-events: auto;
+}
+
+.timeline-location {
+    color: var(--edu-muted-text,#a0a0a0);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.timeline-description {
+    color: var(--edu-desc-text,#d1d5db);
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    pointer-events: auto;
+}
+
+.timeline-details {
+    border-top: var(--edu-divider-border, 1px solid rgba(79,209,199,0.2));
+    padding-top: 1rem;
+    pointer-events: auto;
+}
+
+.timeline-grade {
+    color: var(--edu-grade-text,#d1d5db);
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+    pointer-events: auto;
+}
+
+.timeline-grade strong {
+    color: #4fd1c7;
+}
+
+/* Timeline Results with detailed badges */
+.timeline-results {
+    margin-bottom: 1rem;
+}
+
+.timeline-results strong {
+    color: #4fd1c7;
+    display: block;
+    margin-bottom: 0.8rem;
+    font-size: 0.95rem;
+}
+
+.results-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.result-badge {
+    background: var(--edu-badge-bg, rgba(75, 85, 99, 0.6));
+    backdrop-filter: blur(8px) saturate(150%);
+    border-radius: 12px;
+    padding: 0.5rem 0.8rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    pointer-events: auto;
+}
+
+.result-badge.validated,
+.result-badge.skipped {
+    background: rgba(34, 197, 94, 0.2);
+    border-color: rgba(34, 197, 94, 0.3);
+    color: #22c55e;
+}
+
+.result-badge.completed {
+    background: rgba(79, 209, 199, 0.2);
+    border-color: rgba(79, 209, 199, 0.3);
+    color: #4fd1c7;
+}
+
+.result-badge.in-progress {
+    background: rgba(251, 191, 36, 0.2);
+    border-color: rgba(251, 191, 36, 0.3);
+    color: #fbbf24;
+}
+
+.result-badge.not-taken {
+    background: rgba(107, 114, 128, 0.2);
+    border-color: rgba(107, 114, 128, 0.3);
+    color: #9ca3af;
+}
+
+.result-badge.general {
+    background: rgba(139, 92, 246, 0.2);
+    border-color: rgba(139, 92, 246, 0.3);
+    color: #8b5cf6;
+}
+
+.result-badge:hover {
+    transform: translateY(-1px) scale(1.02);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.badge-icon {
+    font-size: 1rem;
+    line-height: 1;
+}
+
+.badge-text {
+    font-weight: 600;
+}
+
+.badge-status {
+    font-weight: 500;
+    opacity: 0.9;
+}
+
+.timeline-skills strong {
+    color: #4fd1c7;
+    display: block;
+    margin-bottom: 0.8rem;
+    font-size: 0.95rem;
+    pointer-events: auto;
+}
+
+.skills-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    position: relative;
+    z-index: 10001;
+}
+
+.skill-tag {
+    background: var(--edu-skill-tag-bg, rgba(79,209,199,0.2));
+    color: var(--edu-skill-tag-text,#4fd1c7);
+    padding: 0.3rem 0.8rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    border: var(--edu-skill-tag-border, 1px solid rgba(79,209,199,0.3));
+}
+
+/**
+ * Clickable skill tags in education section
+ * Styled like mini skill-blocks with glassmorphism effect and teal accent
+ */
+.skill-tag.clickable {
+    background: rgba(75, 85, 99, 0.85);
+    border: 1px solid rgba(var(--accent-rgb), 0.3);
+    border-radius: 8px;
+    padding: 0.4rem 0.8rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 10002;
+    overflow: visible;
+    /* S'assurer que les clics sont bien reçus */
+    pointer-events: auto;
+}
+
+.skill-tag.clickable:hover {
+    background: rgba(var(--accent-rgb), 0.3);
+    border-color: rgba(var(--accent-rgb), 0.8);
+    transform: translateY(-1px) scale(1.02);
+    box-shadow: 
+        0 4px 15px rgba(var(--accent-rgb), 0.3),
+        0 0 15px rgba(var(--accent-rgb), 0.2);
+    z-index: 10003;
+}
+
+.skill-tag.clickable:active {
+    transform: translateY(0) scale(1);
+    z-index: 10003;
+}
+
+/* Skill icon styles within clickable tags in education */
+.skill-tag.clickable .tech-icon-svg {
+    width: 16px;
+    height: 16px;
+    filter: brightness(1.1);
+}
+
+.skill-tag.clickable .tech-icon-emoji {
+    font-size: 14px;
+    line-height: 1;
+}
+
+/* DEBUG: S'assurer que rien ne recouvre les étiquettes cliquables */
+.skill-tag.clickable {
+    isolation: isolate;
+}
+
+/* Force le z-index pour toutes les étiquettes en cas de conflit de contexte */
+.timeline-details .skills-tags .skill-tag.clickable {
+    z-index: 10002 !important;
+    position: relative !important;
+    pointer-events: auto !important;
+}
+
+/* S'assurer que les étiquettes sont toujours au premier plan */
+.skill-tag.clickable {
+    isolation: isolate !important;
+}
+
+/* ===================================
+   RESPONSIVE DESIGN
+   =================================== */
+
+/* Responsive Timeline - Mobile Version without timeline */
+@media (max-width: 768px) {
+    /* Hide timeline line completely on mobile */
+    .timeline-line {
+        display: none;
+    }
+    
+    /* Remove timeline layout - stack cards vertically */
+    .timeline-item {
+        flex-direction: column !important;
+        align-items: stretch;
+        padding: 0;
+        margin-top: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    /* Ensure even items follow same layout */
+    .timeline-item:nth-child(even) {
+        flex-direction: column !important;
+    }
+    
+    /* First item has normal margin */
+    .timeline-item:first-child {
+        margin-top: 0;
+    }
+    
+    /* Reposition marker inside the card at top right */
+    .timeline-marker {
+        position: absolute;
+        top: 0.75rem;
+        right: 0.75rem;
+        left: auto;
+        transform: none;
+        width: 40px;
+        height: 40px;
+        margin: 0;
+        z-index: 10;
+    }
+    
+    .timeline-icon {
+        font-size: 1rem;
+    }
+    
+    .timeline-school-logo {
+        width: 24px;
+        height: 24px;
+        padding: 2px;
+    }
+    
+    /* Content takes full width */
+    .timeline-content {
+        width: 100%;
+        padding: 0;
+        text-align: left !important;
+        position: relative;
+    }
+    
+    /* Remove arrow decorations on mobile */
+    .timeline-card::before {
+        display: none;
+    }
+    
+    /* Card styling adjustments for mobile */
+    .timeline-card {
+        padding: 1.25rem;
+        padding-right: 3.5rem; /* Reduced space for smaller icon */
+    }
+    
+    /* Disable hover effects on mobile */
+    .timeline-card:hover,
+    .timeline-item:hover .timeline-card {
+        transform: none;
+        box-shadow: var(--edu-card-shadow, 0 8px 32px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.1));
+        border-color: var(--edu-card-border, rgba(79,209,199,0.3));
+    }
+    
+    .timeline-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .timeline-title {
+        font-size: 1.2rem;
+    }
+    
+    .timeline-institution {
+        font-size: 1rem;
+    }
+    
+    .timeline-description {
+        font-size: 0.95rem;
+    }
+    
+    /* Adjust badges for mobile */
+    .results-badges {
+        gap: 0.4rem;
+    }
+    
+    .result-badge {
+        font-size: 0.75rem;
+        padding: 0.4rem 0.6rem;
+    }
+    
+    /* Disable hover effect on badges on mobile */
+    .result-badge:hover {
+        transform: none;
+    }
+    
+    /* Adjust skill tags for mobile */
+    .skills-tags {
+        gap: 0.4rem;
+    }
+    
+    /* Disable hover effect on skill tags on mobile */
+    .skill-tag.clickable:hover {
+        transform: none;
+        box-shadow: 0 2px 8px rgba(79,209,199,0.2);
+    }
+    
+    .skill-tag.clickable {
+        font-size: 0.7rem;
+        padding: 0.35rem 0.6rem;
+    }
+    
+    .skill-tag.clickable .tech-icon-svg {
+        width: 14px;
+        height: 14px;
+    }
+    
+    .skill-tag.clickable .tech-icon-emoji {
+        font-size: 12px;
+    }
+    
+    /* Adjust spacing for education section tabs on mobile */
+    .education-section .tabs {
+        margin-bottom: 2rem;
+    }
+    
+    /* Adjust timeline container padding */
+    .timeline-container {
+        padding: 1.5rem 0;
+    }
+    
+    /* Education header responsive styles are now handled by section-headers.css */
+    
+}
+
+/* ===================================
+   EDUCATION SINGLE PAGE - RESULTS SECTION
+   ===================================
+   Styles for results section in education detail page
+   =================================== */
+
+.results-section {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: var(--edu-results-bg, rgba(55,65,81,0.4));
+    border-radius: 16px;
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--edu-results-border, rgba(79,209,199,0.2));
+    box-shadow: var(--edu-results-shadow, 0 8px 32px rgba(0,0,0,0.2));
+}
+
+.results-section h2 {
+    color: var(--edu-title-text, #fff);
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.results-section h2::before {
+    content: '📊';
+    font-size: 1.5rem;
+}
+
+.results-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Grade Display */
+.grade-display {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--edu-grade-bg, rgba(79,209,199,0.1));
+    border-radius: 12px;
+    border: 1px solid var(--edu-grade-border, rgba(79,209,199,0.3));
+}
+
+.grade-icon {
+    font-size: 2rem;
+    opacity: 0.8;
+}
+
+.grade-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    flex: 1;
+}
+
+.grade-label {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.grade-value {
+    font-size: 1.4rem;
+    font-weight: 700;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    display: inline-block;
+    min-width: 120px;
+    text-align: center;
+}
+
+.grade-value.status-completed {
+    background-color: #22c55e;
+    color: #ffffff;
+    border: 2px solid #16a34a;
+}
+
+.grade-value.status-current {
+    background-color: #f59e0b;
+    color: #ffffff;
+    border: 2px solid #d97706;
+}
+
+.grade-value.status-unknown {
+    background-color: #6b7280;
+    color: #ffffff;
+    border: 2px solid #4b5563;
+}
+
+/* Years Progress */
+.years-progress {
+    margin-top: 1rem;
+}
+
+.years-progress h3 {
+    color: var(--edu-title-text, #fff);
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.years-progress h3::before {
+    content: '📈';
+    font-size: 1rem;
+}
+
+.years-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.year-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
+    border-radius: 10px;
+    border: 1px solid var(--edu-year-border, rgba(55,65,81,0.5));
+    background: var(--edu-year-bg, rgba(31,41,55,0.6));
+    transition: all 0.3s ease;
+}
+
+.year-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(79,209,199,0.1);
+    border-color: var(--accent, #4fd1c7);
+}
+
+.year-number {
+    color: var(--edu-title-text, #fff);
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.year-status {
+    color: var(--edu-muted-text, #a0a0a0);
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Year Status Colors */
+.year-item.status-validated {
+    border-color: var(--edu-success-border, rgba(16,185,129,0.4));
+    background: var(--edu-success-bg, rgba(16,185,129,0.05));
+}
+
+.year-item.status-validated .year-status {
+    color: var(--edu-success-text, #10b981);
+}
+
+.year-item.status-in_progress {
+    border-color: var(--edu-current-border, rgba(245,158,11,0.4));
+    background: var(--edu-current-bg, rgba(245,158,11,0.05));
+}
+
+.year-item.status-in_progress .year-status {
+    color: var(--edu-current-text, #f59e0b);
+}
+
+.year-item.status-skipped {
+    border-color: var(--edu-info-border, rgba(59,130,246,0.4));
+    background: var(--edu-info-bg, rgba(59,130,246,0.05));
+}
+
+.year-item.status-skipped .year-status {
+    color: var(--edu-info-text, #3b82f6);
+}
+
+/* Responsive Design for Results Section */
+@media (max-width: 768px) {
+    .results-section {
+        margin: 1.5rem 0;
+        padding: 1rem;
+    }
+    
+    .grade-display {
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: center;
+    }
+    
+    .years-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .results-section h2 {
+        font-size: 1.5rem;
+    }
+    
+    .grade-value {
+        font-size: 1.2rem;
+    }
+}
+
+/* ===================================
+   BOUTON VOIR TOUTES LES FORMATIONS
+   =================================== */
+
+.education-footer {
+    text-align: center;
+    margin-top: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.education-footer .btn-action {
+    display: inline-flex;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .education-footer {
+        margin-top: 2rem;
+        padding-bottom: 1.5rem;
+    }
+}

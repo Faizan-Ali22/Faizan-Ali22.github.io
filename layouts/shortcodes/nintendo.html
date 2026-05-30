@@ -1,0 +1,83 @@
+{{/*
+Shortcode Nintendo Switch pour liens vers jeux, eShop, profils, etc.
+Utilisation:
+{{< nintendo game="mario-kart-8-deluxe" title="Mario Kart 8 Deluxe" >}}
+{{< nintendo eshop="70010000012332" >}}
+{{< nintendo profile="SW-1234-5678-9012" >}}
+*/}}
+
+{{ $game := .Get "game" }}
+{{ $eshop := .Get "eshop" }}
+{{ $profile := .Get "profile" }}
+{{ $title := .Get "title" }}
+{{ $description := .Get "description" }}
+{{ $region := .Get "region" | default "us" }}
+
+{{ $url := "" }}
+{{ $displayTitle := $title }}
+{{ $iconType := "game" }}
+
+{{ if $game }}
+  {{ $url = printf "https://www.nintendo.com/%s/games/detail/%s-switch" $region $game }}
+  {{ if not $displayTitle }}
+    {{ $displayTitle = "Jeu Nintendo Switch" }}
+  {{ end }}
+  
+{{ else if $eshop }}
+  {{ $url = printf "https://www.nintendo.com/%s/games/detail/%s" $region $eshop }}
+  {{ if not $displayTitle }}
+    {{ $displayTitle = "Nintendo eShop" }}
+  {{ end }}
+  {{ $iconType = "store" }}
+  
+{{ else if $profile }}
+  {{ $url = printf "https://accounts.nintendo.com/profile/%s" $profile }}
+  {{ if not $displayTitle }}
+    {{ $displayTitle = printf "Profil Nintendo: %s" $profile }}
+  {{ end }}
+  {{ $iconType = "profile" }}
+{{ end }}
+
+{{ if $url }}
+<div class="platform-link nintendo-link">
+  <a href="{{ $url }}" target="_blank" rel="noopener noreferrer" class="platform-link-content">
+    <div class="platform-icon nintendo-icon">
+      {{ if eq $iconType "profile" }}
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+      </svg>
+      {{ else if eq $iconType "store" }}
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M7 18c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12L8.1 13h7.45c.75 0 1.41-.41 1.75-1.03L21.7 4H5.21l-.94-2H1zm16 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+      </svg>
+      {{ else }}
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <rect x="3" y="6" width="18" height="12" rx="2"/>
+        <path d="M7 10h2v4H7zM15 10h2v4h-2z"/>
+        <circle cx="17" cy="8" r="1"/>
+        <circle cx="15" cy="10" r="1"/>
+      </svg>
+      {{ end }}
+    </div>
+    
+    <div class="platform-content">
+      <div class="platform-title">{{ $displayTitle }}</div>
+      {{ if $description }}
+      <div class="platform-description">{{ $description }}</div>
+      {{ end }}
+      <div class="platform-badge nintendo-badge">Nintendo Switch</div>
+    </div>
+    
+    <div class="platform-arrow">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M7 7h8.586L5.293 17.293l1.414 1.414L17 8.414V17h2V5H7v2z"/>
+      </svg>
+    </div>
+  </a>
+</div>
+{{ else }}
+<div class="shortcode-error">
+  <p><strong>Erreur:</strong> Un slug de jeu, ID eShop ou profil est requis.</p>
+  <p>Utilisation: <code>{{ "{{< nintendo game=\"mario-kart-8-deluxe\" title=\"Mario Kart 8\" >}}" }}</code> ou <code>{{ "{{< nintendo profile=\"CODE\" >}}" }}</code></p>
+</div>
+{{ end }}

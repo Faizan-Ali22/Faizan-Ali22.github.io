@@ -1,0 +1,241 @@
+{{/* Global portfolio data - loaded once per page */}}
+<script>
+window.portfolioProjects = [
+    {{- range where (where .Site.RegularPages "Section" "projects") "Draft" false -}}
+        {{- $allTechnologies := partial "get-all-technologies.html" . -}}
+        {{- $projectImage := .Params.image | default "/images/placeholder-project.jpg" -}}
+        {{- $optimizedProjectImage := partial "get-optimized-image.html" (dict "imagePath" $projectImage "width" 600 "quality" 85) -}}
+        
+        {
+            title: {{ .Title | jsonify }},
+            subtitle: {{ (.Params.subtitle | default .Params.description) | jsonify }},
+            description: {{ .Params.description | jsonify }},
+            url: {{ .RelPermalink | jsonify }},
+            image: "{{ $optimizedProjectImage.src }}",
+            imageWidth: {{ $optimizedProjectImage.width }},
+            imageHeight: {{ $optimizedProjectImage.height }},
+            background_image: "{{ $optimizedProjectImage.src }}",
+            year: {{ (.Params.year | default (.Date.Format "2006")) | jsonify }},
+            technologies: {{ $allTechnologies | jsonify }},
+            sector: {{ .Params.sector | jsonify }},
+            featured: {{ .Params.featured | default false }},
+            status: {{ .Params.status | jsonify }},
+            github: {{ .Params.github | jsonify }},
+            demo: {{ .Params.demo | jsonify }},
+            website: {{ .Params.website | jsonify }},
+            {{- if .Params.contributors -}}
+            contributors: [
+                {{- range .Params.contributors -}}
+                {
+                    person: "{{ .person }}",
+                    {{- if .roles -}}
+                    roles: {{ .roles | jsonify }},
+                    role: "{{ delimit .roles ", " }}"
+                    {{- else if .role -}}
+                    role: "{{ .role }}",
+                    roles: ["{{ .role }}"]
+                    {{- else -}}
+                    role: "Contributeur",
+                    roles: ["Contributeur"]
+                    {{- end -}}
+                },
+                {{- end -}}
+            ],
+            {{- else -}}
+            contributors: [],
+            {{- end -}}
+            programming_languages: {{ .Params.programming_languages | jsonify }},
+            frameworks_engines: {{ .Params.frameworks_engines | jsonify }},
+            specialties: {{ .Params.specialties | jsonify }},
+            soft_skills: {{ .Params.soft_skills | jsonify }},
+            tools: {{ .Params.tools | jsonify }}
+        },
+    {{- end -}}
+];
+
+window.portfolioExperiences = [
+    {{- range where .Site.RegularPages "Section" "experiences" -}}
+        {{- $allTechnologies := slice -}}
+        {{- if .Params.programming_languages -}}
+            {{- range .Params.programming_languages -}}
+                {{- if reflect.IsMap . -}}
+                    {{- $allTechnologies = $allTechnologies | append .language -}}
+                {{- else -}}
+                    {{- $allTechnologies = $allTechnologies | append . -}}
+                {{- end -}}
+            {{- end -}}
+        {{- end -}}
+        {{- if .Params.frameworks_engines -}}
+            {{- range .Params.frameworks_engines -}}
+                {{- if reflect.IsMap . -}}
+                    {{- $allTechnologies = $allTechnologies | append .framework -}}
+                {{- else -}}
+                    {{- $allTechnologies = $allTechnologies | append . -}}
+                {{- end -}}
+            {{- end -}}
+        {{- end -}}
+        {{- if .Params.specialties -}}
+            {{- range .Params.specialties -}}
+                {{- if reflect.IsMap . -}}
+                    {{- $allTechnologies = $allTechnologies | append .specialty -}}
+                {{- else -}}
+                    {{- $allTechnologies = $allTechnologies | append . -}}
+                {{- end -}}
+            {{- end -}}
+        {{- end -}}
+        {{- if .Params.soft_skills -}}
+            {{- range .Params.soft_skills -}}
+                {{- if reflect.IsMap . -}}
+                    {{- $allTechnologies = $allTechnologies | append .skill -}}
+                {{- else -}}
+                    {{- $allTechnologies = $allTechnologies | append . -}}
+                {{- end -}}
+            {{- end -}}
+        {{- end -}}
+        {{- if .Params.tools -}}
+            {{- range .Params.tools -}}
+                {{- if reflect.IsMap . -}}
+                    {{- $allTechnologies = $allTechnologies | append .tool -}}
+                {{- else -}}
+                    {{- $allTechnologies = $allTechnologies | append . -}}
+                {{- end -}}
+            {{- end -}}
+        {{- end -}}
+        {{- $allTechnologies = $allTechnologies | uniq -}}
+        
+        {
+            title: {{ .Title | jsonify }},
+            company: {{ .Params.company | jsonify }},
+            logo: {{ .Params.logo | jsonify }},
+            start_date: {{ .Params.start_date | jsonify }},
+            end_date: {{ .Params.end_date | jsonify }},
+            type: {{ .Params.type | jsonify }},
+            location: {{ .Params.location | jsonify }},
+            description: {{ .Params.description | jsonify }},
+            url: {{ .RelPermalink | jsonify }},
+            technologies: {{ $allTechnologies | jsonify }},
+            programming_languages: {{ .Params.programming_languages | jsonify }},
+            frameworks_engines: {{ .Params.frameworks_engines | jsonify }},
+            specialties: {{ .Params.specialties | jsonify }},
+            soft_skills: {{ .Params.soft_skills | jsonify }},
+            tools: {{ .Params.tools | jsonify }}
+        },
+    {{- end -}}
+];
+
+window.portfolioEducations = [
+    {{- range where (where .Site.RegularPages "Section" "educations") ".Params.displayedInPortfolio" "!=" false -}}
+        {{- $allTechnologies := slice -}}
+        {{- if .Params.programming_languages -}}
+            {{- range .Params.programming_languages -}}
+                {{- if reflect.IsMap . -}}
+                    {{- $allTechnologies = $allTechnologies | append .language -}}
+                {{- else -}}
+                    {{- $allTechnologies = $allTechnologies | append . -}}
+                {{- end -}}
+            {{- end -}}
+        {{- end -}}
+        {{- if .Params.frameworks_engines -}}
+            {{- range .Params.frameworks_engines -}}
+                {{- if reflect.IsMap . -}}
+                    {{- $allTechnologies = $allTechnologies | append .framework -}}
+                {{- else -}}
+                    {{- $allTechnologies = $allTechnologies | append . -}}
+                {{- end -}}
+            {{- end -}}
+        {{- end -}}
+        {{- if .Params.specialties -}}
+            {{- range .Params.specialties -}}
+                {{- if reflect.IsMap . -}}
+                    {{- $allTechnologies = $allTechnologies | append .specialty -}}
+                {{- else -}}
+                    {{- $allTechnologies = $allTechnologies | append . -}}
+                {{- end -}}
+            {{- end -}}
+        {{- end -}}
+        {{- if .Params.soft_skills -}}
+            {{- range .Params.soft_skills -}}
+                {{- if reflect.IsMap . -}}
+                    {{- $allTechnologies = $allTechnologies | append .skill -}}
+                {{- else -}}
+                    {{- $allTechnologies = $allTechnologies | append . -}}
+                {{- end -}}
+            {{- end -}}
+        {{- end -}}
+        {{- if .Params.tools -}}
+            {{- range .Params.tools -}}
+                {{- if reflect.IsMap . -}}
+                    {{- $allTechnologies = $allTechnologies | append .tool -}}
+                {{- else -}}
+                    {{- $allTechnologies = $allTechnologies | append . -}}
+                {{- end -}}
+            {{- end -}}
+        {{- end -}}
+        {{- $allTechnologies = $allTechnologies | uniq -}}
+        
+        {
+            title: {{ .Title | jsonify }},
+            institution: {{ .Params.institution | jsonify }},
+            city: {{ .Params.city | jsonify }},
+            start_date: {{ .Params.start_date | jsonify }},
+            end_date: {{ .Params.end_date | jsonify }},
+            status: {{ .Params.status | jsonify }},
+            grade: {{ .Params.grade | jsonify }},
+            description: {{ .Params.description | jsonify }},
+            url: {{ .RelPermalink | jsonify }},
+            logo: {{ (.Params.logo | default .Params.school_logo) | jsonify }},
+            icon: {{ .Params.icon | jsonify }},
+            color: {{ .Params.color | jsonify }},
+            technologies: {{ $allTechnologies | jsonify }},
+            programming_languages: {{ .Params.programming_languages | jsonify }},
+            frameworks_engines: {{ .Params.frameworks_engines | jsonify }},
+            specialties: {{ .Params.specialties | jsonify }},
+            soft_skills: {{ .Params.soft_skills | jsonify }},
+            tools: {{ .Params.tools | jsonify }}
+        },
+    {{- end -}}
+];
+
+{{/* Get people from default language site (French) - people are NOT localized */}}
+{{- $defaultSite := index .Sites 0 -}}
+window.portfolioPeople = [
+    {{- range where $defaultSite.RegularPages "Section" "people" -}}
+        {{- $avatarPath := .Params.avatar | default "" -}}
+        {{- $optimizedAvatar := dict "src" $avatarPath "width" 0 "height" 0 -}}
+        {{- if $avatarPath -}}
+            {{- $optimizedAvatar = partial "get-optimized-image.html" (dict "imagePath" $avatarPath "width" 300 "quality" 90) -}}
+        {{- end -}}
+        {
+            id: "{{ .Params.id }}",
+            name: "{{ .Title }}",
+            avatar: "{{ $optimizedAvatar.src }}",
+            avatarWidth: {{ $optimizedAvatar.width }},
+            avatarHeight: {{ $optimizedAvatar.height }},
+            position: "{{ .Params.position }}",
+            company: "{{ .Params.company }}",
+            bio: "{{ .Params.bio }}",
+            email: "{{ .Params.email }}",
+            linkedin: "{{ .Params.linkedin }}",
+            github: "{{ .Params.github }}",
+            discord: "{{ .Params.discord }}",
+            website: "{{ .Params.website }}",
+            url: "{{ .RelPermalink }}",
+            content: {{ with .Content }}{{ . | jsonify }}{{ else }}""{{ end }}
+        },
+    {{- end -}}
+];
+
+{{- /* Load localized testimonials data */ -}}
+{{- $testimonials := partial "get-localized-data.html" (dict "context" . "dataName" "testimonials") -}}
+
+window.portfolioTestimonials = [
+    {{- range $testimonials -}}
+    {
+        personId: "{{ .personId }}",
+        company: "{{ .company }}",
+        position: "{{ .position }}",
+        text: {{ .text | jsonify }}
+    },
+    {{- end -}}
+];
+</script>

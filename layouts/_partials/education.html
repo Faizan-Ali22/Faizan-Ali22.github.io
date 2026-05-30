@@ -1,0 +1,216 @@
+<section class="education-section">
+    <div class="education-header section-header-unified">
+    <h2 class="section-title-unified">{{ i18n "education_title" | default "Education & Certifications" }}</h2>
+    <p class="education-subtitle section-subtitle-unified">{{ i18n "education_subtitle" | default "My academic and professional journey, building the foundation of my technical expertise" }}</p>
+    </div>
+
+    <!-- Navigation Tabs -->
+    {{- $certificationsData := partial "get-localized-data.html" (dict "context" . "dataName" "certifications") -}}
+    {{ $hasCertifications := and $certificationsData (gt (len $certificationsData) 0) }}
+    <div class="tabs" data-can-collapse="true" data-collapse-id="education">
+        <button class="tab-btn active" data-tab="education">
+            <span class="icon">🎓</span>
+            <span class="tab-label">{{ i18n "education" | default "Education" }}</span>
+        </button>
+        {{ if $hasCertifications }}
+        <button class="tab-btn" data-tab="certifications">
+            <span class="icon">📜</span>
+            <span class="tab-label">{{ i18n "certifications" | default "Certifications" }}</span>
+        </button>
+        {{ end }}
+    </div>
+
+    <!-- Education Timeline -->
+    <div class="timeline-container" id="education-timeline" data-tab="education">
+        <div class="timeline-line"></div>
+        
+        {{ range ((where (where .Site.RegularPages "Section" "educations") ".Params.displayedInPortfolio" "!=" false).ByParam "end_date").Reverse }}
+        {{ if ne .File.BaseFileName "_index" }}
+        <div class="timeline-item education-item" data-category="education">
+            <div class="timeline-marker" style="background-color: {{ .Params.color }};">
+                {{ if .Params.school_logo }}
+                    {{- $logo := partial "get-optimized-image.html" (dict "imagePath" .Params.school_logo "width" 150 "quality" 90) -}}
+                    <img src="{{ $logo.src }}" 
+                         alt="{{ .Params.institution }}" 
+                         class="timeline-school-logo"
+                         {{- if and $logo.isResource (gt $logo.width 0) }} width="{{ $logo.width }}"{{ end -}}
+                         {{- if and $logo.isResource (gt $logo.height 0) }} height="{{ $logo.height }}"{{ end -}}
+                         loading="lazy">
+                {{ else }}
+                    <span class="timeline-icon">{{ .Params.icon }}</span>
+                {{ end }}
+            </div>
+            
+            <div class="timeline-content">
+                <div class="timeline-card">
+                    <div class="timeline-header">
+                        <div class="timeline-period">
+                            {{ if .Params.start_date }}
+                                {{ dateFormat "2006" .Params.start_date }} - 
+                                {{ if .Params.end_date }}
+                                    {{ dateFormat "2006" .Params.end_date }}
+                                {{ else }}
+                                    {{ i18n "present" | default "Present" }}
+                                {{ end }}
+                            {{ end }}
+                        </div>
+                        {{/* Map status to generic CSS class */}}
+                        {{- $status := lower .Params.status -}}
+                        {{- $cssClass := "info" -}}
+                        {{- if or (eq $status "validé") (eq $status "obtenu") (eq $status "obtained") (eq $status "validée") -}}
+                            {{- $cssClass = "success" -}}
+                        {{- else if or (eq $status "en cours") (eq $status "in progress") (eq $status "en préparation") (eq $status "in preparation") -}}
+                            {{- $cssClass = "warning" -}}
+                        {{- end -}}
+                        <div class="timeline-status status-{{ $cssClass }}">{{ .Params.status }}</div>
+                    </div>
+                    
+                    <h3 class="timeline-title">{{ .Title }}</h3>
+                    <h4 class="timeline-institution">{{ .Params.institution }}{{ if .Params.city }} - {{ .Params.city }}{{ end }}</h4>
+                    
+                    <p class="timeline-description">{{ .Params.description }}</p>
+                    
+                    <div class="timeline-details">
+                        <div class="timeline-results">
+                            <strong>{{ i18n "results" | default "Results:" }}</strong>
+                            <div class="results-badges">
+                                {{ if .Params.years_detail }}
+                                    {{/* Use custom year details */}}
+                                    {{ range .Params.years_detail }}
+                                        {{ if eq .status "validated" }}
+                                            <div class="result-badge validated">
+                                                <span class="badge-text">{{ i18n "year" | default "Ann�e" }} {{ .year }}</span>
+                                                <span class="badge-status">{{ i18n "validated" | default "Validée" }}</span>
+                                            </div>
+                                        {{ else if eq .status "in_progress" }}
+                                            <div class="result-badge in-progress">
+                                                <span class="badge-icon">⏳</span>
+                                                <span class="badge-text">{{ i18n "year" | default "Ann�e" }} {{ .year }}</span>
+                                                <span class="badge-status">{{ i18n "in_progress" | default "En cours" }}</span>
+                                            </div>
+                                        {{ else if eq .status "not_taken" }}\n                                            <div class="result-badge not-taken">
+                                                <span class="badge-icon">🚫</span>
+                                                <span class="badge-text">{{ i18n "year" | default "Ann�e" }} {{ .year }}</span>
+                                                <span class="badge-status">{{ i18n "not_taken" | default "Non suivie" }}</span>
+                                            </div>
+                                        {{ else if eq .status "skipped" }}
+                                            <div class="result-badge skipped">
+                                                <span class="badge-text">{{ i18n "year" | default "Ann�e" }} {{ .year }}</span>
+                                                <span class="badge-status">{{ i18n "skipped" | default "Admis directement" }}</span>
+                                            </div>
+                                        {{ else if eq .status "completed" }}
+                                            <div class="result-badge completed">
+                                                <span class="badge-icon">🎓</span>
+                                                <span class="badge-text">{{ i18n "year" | default "Ann�e" }} {{ .year }}</span>
+                                                <span class="badge-status">{{ i18n "completed" | default "Terminé" }}</span>
+                                            </div>
+                                        {{ end }}
+                                    {{ end }}
+                                    {{/* Final badge removed - no need for additional "Training" badge */}}
+                                {{ else }}
+                                    {{/* Classic automatic logic */}}
+                                    {{ if or (eq .Params.status "Obtenu") (eq .Params.status "Obtained") }}
+                                        {{ $startYear := dateFormat "2006" .Params.start_date }}
+                                        {{ $endYear := dateFormat "2006" .Params.end_date }}
+                                        {{ $duration := sub (int $endYear) (int $startYear) }}
+                                        {{ range seq $duration }}
+                                            <div class="result-badge validated">
+                                                <span class="badge-text">{{ i18n "year" | default "Ann�e" }} {{ . }}</span>
+                                                <span class="badge-status">{{ i18n "validated" | default "Validée" }}</span>
+                                            </div>
+                                        {{ end }}
+                                        {{/* Final badge removed - no need for additional "Training" badge */}}
+                                    {{ else if or (eq .Params.status "En cours") (eq .Params.status "In progress") }}
+                                        {{ $startYear := dateFormat "2006" .Params.start_date }}
+                                        {{ $currentYear := now.Format "2006" }}
+                                        {{ $yearsCompleted := sub (int $currentYear) (int $startYear) }}
+                                        {{ if gt $yearsCompleted 0 }}
+                                            {{ range seq $yearsCompleted }}
+                                                <div class="result-badge validated">
+                                                    <span class="badge-text">{{ i18n "year" | default "Ann�e" }} {{ . }}</span>
+                                                    <span class="badge-status">{{ i18n "validated" | default "Validée" }}</span>
+                                                </div>
+                                            {{ end }}
+                                        {{ end }}
+                                        <div class="result-badge in-progress">
+                                            <span class="badge-icon">⏳</span>
+                                            <span class="badge-text">{{ i18n "year_badge" (add $yearsCompleted 1) | default (printf "%d an" (add $yearsCompleted 1)) }}</span>
+                                            <span class="badge-status">{{ i18n "in_progress" | default "En cours" }}</span>
+                                        </div>
+                                    {{ else }}
+                                        <div class="result-badge general">
+                                            <span class="badge-icon">📚</span>
+                                            <span class="badge-text">{{ i18n "education" | default "Formation" }}</span>
+                                            <span class="badge-status">{{ .Params.grade }}</span>
+                                        </div>
+                                    {{ end }}
+                                {{ end }}
+                            </div>
+                        </div>
+                        
+                        {{ if or .Params.programming_languages .Params.frameworks_engines .Params.tools }}
+                        <div class="timeline-skills">
+                            <strong>{{ i18n "technical_skills_label" | default "Technical skills:" }}</strong>
+                            <div class="skills-tags">
+                                {{ partial "helpers/skill-tags.html" (dict "skillNames" .Params.programming_languages "dataSource" "programming_languages" "skillType" "programming-language" "tagClass" "programming" "context" $ "usePartialTechIcon" true) }}
+                                {{ partial "helpers/skill-tags.html" (dict "skillNames" .Params.frameworks_engines "dataSource" "frameworks_engines" "skillType" "framework-engine" "tagClass" "framework" "context" $ "usePartialTechIcon" true) }}
+                                {{ partial "helpers/skill-tags.html" (dict "skillNames" .Params.tools "dataSource" "tools" "skillType" "tool" "tagClass" "tool" "context" $ "usePartialTechIcon" true) }}
+                            </div>
+                        </div>
+                        {{ end }}
+                        
+                        {{ if or .Params.specialties .Params.soft_skills }}
+                        <div class="timeline-skills">
+                            <strong>{{ i18n "cross_skills_label" | default "Cross-functional skills:" }}</strong>
+                            <div class="skills-tags">
+                                {{ partial "helpers/skill-tags.html" (dict "skillNames" .Params.specialties "dataSource" "specialties" "skillType" "specialty" "tagClass" "specialty" "context" $ "usePartialTechIcon" true) }}
+                                {{ partial "helpers/skill-tags.html" (dict "skillNames" .Params.soft_skills "dataSource" "soft_skills" "skillType" "soft-skill" "tagClass" "soft" "context" $ "usePartialTechIcon" true) }}
+                            </div>
+                        </div>
+                        {{ end }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{ end }}
+        {{ end }}
+    </div>
+
+    <!-- Certifications Timeline -->
+    {{ if $hasCertifications }}
+    <div class="timeline-container" id="certifications-timeline" data-tab="certifications" style="display: none;">
+        <div class="timeline-line"></div>
+        
+        {{- $certificationsData := partial "get-localized-data.html" (dict "context" . "dataName" "certifications") -}}
+        {{ range $index, $cert := $certificationsData }}
+        <div class="timeline-item certification-item" data-category="certifications">
+            <div class="timeline-marker" style="background-color: {{ $cert.color }};">
+                <span class="timeline-icon">{{ $cert.icon }}</span>
+            </div>
+            
+            <div class="timeline-content">
+                <div class="timeline-card">
+                    <div class="timeline-header">
+                        <div class="timeline-period">{{ $cert.date }}</div>
+                        <div class="timeline-status status-{{ lower $cert.status }}">{{ $cert.status }}</div>
+                    </div>
+                    
+                    <h3 class="timeline-title">{{ $cert.title }}</h3>
+                    <h4 class="timeline-institution">{{ $cert.issuer }}</h4>
+                    
+                    <p class="timeline-description">{{ $cert.description }}</p>
+                </div>
+            </div>
+        </div>
+        {{ end }}
+    </div>
+    {{ end }}
+
+    <!-- Bouton voir toutes les formations -->
+    <div class="education-footer">
+        <a href="{{ "/educations/" | relLangURL }}" class="btn-action">
+            <span>{{ i18n "view_all_educations" | default "View all education" }}</span>
+            {{- partial "icon.html" (dict "iconId" "arrow-right" "size" "18") -}}
+        </a>
+    </div>
+</section>

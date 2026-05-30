@@ -1,0 +1,20 @@
+{{/*
+  Helper to load CSS file with automatic dev/prod, minify and fingerprint handling
+  
+  Usage: {{ partial "helpers/load-css.html" "css/main.css" }}
+  
+  Params:
+  - . (string): Path to CSS file in assets/
+*/}}
+{{- $resource := resources.Get . }}
+{{- if $resource }}
+  {{- if hugo.IsDevelopment }}
+    <link rel="stylesheet" href="{{ $resource.RelPermalink }}">
+  {{- else }}
+    {{- with $resource | minify | fingerprint }}
+      <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
+    {{- end }}
+  {{- end }}
+{{- else }}
+  {{- errorf "CSS file not found: %s (check assets/ directory)" . }}
+{{- end }}

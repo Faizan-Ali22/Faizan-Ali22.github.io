@@ -1,0 +1,83 @@
+{{/*
+  Unified Project Card Component
+  
+  Parameters:
+  - .title: Project title (string)
+  - .subtitle: Project subtitle (string, optional)
+  - .description: Project description (string, optional)
+  - .image: Project image path (string, optional)
+  - .url: Project URL (string)
+  - .role: Contributor role (string, optional)
+  - .status: Project status (string, optional)
+  - .technologies: Array of technology names (optional)
+  - .maxTechnologies: Maximum number of technologies to display (default: 4)
+*/}}
+
+<div class="project-card-unified">
+    <div class="project-card-unified-header">
+        {{ if .image }}
+        <div class="project-card-unified-image">
+            {{- $optimizedImg := partial "get-optimized-image.html" (dict "imagePath" .image "width" 600 "quality" 85) -}}
+            <img src="{{ $optimizedImg.src }}" 
+                 alt="{{ .title }}"
+                 {{- if and $optimizedImg.isResource (gt $optimizedImg.width 0) }} width="{{ $optimizedImg.width }}"{{ end -}}
+                 {{- if and $optimizedImg.isResource (gt $optimizedImg.height 0) }} height="{{ $optimizedImg.height }}"{{ end -}}
+                 loading="lazy">
+        </div>
+        {{ end }}
+        
+        <!-- Default content (visible by default) -->
+        <div class="project-card-unified-content">
+            <h3 class="project-card-unified-title">{{ .title }}</h3>
+            {{ if .subtitle }}
+            <p class="project-card-unified-subtitle">{{ .subtitle }}</p>
+            {{ end }}
+            {{ if .role }}
+            <div class="project-card-unified-meta">
+                <span class="project-card-unified-role">{{ .role }}</span>
+            </div>
+            {{ end }}
+        </div>
+        
+        <!-- Detailed info (shown on hover) -->
+        <div class="project-card-unified-detailed-info">
+            <div>
+                <h3 class="project-card-unified-title">{{ .title }}</h3>
+                {{ if .description }}
+                <p class="project-card-unified-detailed-description">{{ .description }}</p>
+                {{ end }}
+                
+                {{ if .technologies }}
+                {{ $maxTech := .maxTechnologies | default 4 }}
+                <div class="project-card-unified-technologies">
+                    {{ range first $maxTech .technologies }}
+                    <span class="project-card-unified-tech-item">{{ i18n . | default . }}</span>
+                    {{ end }}
+                    {{ if gt (len .technologies) $maxTech }}
+                    <span class="project-card-unified-tech-item">+{{ sub (len .technologies) $maxTech }}</span>
+                    {{ end }}
+                </div>
+                {{ end }}
+                
+                {{ if or .role .status }}
+                <div class="project-card-unified-meta">
+                    {{ if .role }}
+                    <span class="project-card-unified-role">{{ .role }}</span>
+                    {{ end }}
+                    {{ if .status }}
+                    <span class="project-card-unified-status status-{{ .status | lower }}">{{ .status }}</span>
+                    {{ end }}
+                </div>
+                {{ end }}
+            </div>
+            {{ if .url }}
+            <a href="{{ .url }}" class="btn-action">
+                {{ i18n "see_project" | default "Voir le projet" }}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M7 17L17 7M17 7H7M17 7V17"/>
+                </svg>
+            </a>
+            {{ end }}
+        </div>
+    </div>
+</div>

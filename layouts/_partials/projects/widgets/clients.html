@@ -1,0 +1,51 @@
+{{/*
+  Partial: Clients Widget
+  Description: Widget compact pour afficher les clients d'un projet
+  Context: 
+    - .Params (dict) - Paramètres du projet avec .clients
+    - .File.BaseFileName (string) - ID du projet
+*/}}
+
+{{- if .Params.clients -}}
+<div class="project-widget clients-box {{ .Params.clients_size | default "size-medium" }}" onclick="toggleInfoBox(this)">
+  <div class="project-widget-header">
+    <div class="project-widget-icon clients">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12,7V3H2V21H22V7H12M6,19H4V17H6V19M6,15H4V13H6V15M6,11H4V9H6V11M6,7H4V5H6V7M10,19H8V17H10V19M10,15H8V13H10V15M10,11H8V9H10V11M10,7H8V5H10V7M20,19H12V17H20V19M20,15H12V13H20V15M20,11H12V9H20V11Z"/>
+      </svg>
+    </div>
+    <div class="project-widget-header-content">
+      <h3 class="project-widget-title">{{ i18n "clients" | default "Clients" }}</h3>
+      <div class="project-widget-summary">{{ len .Params.clients }} {{ if eq (len .Params.clients) 1 }}{{ i18n "company" | default "entreprise" }}{{ else }}{{ i18n "companies" | default "entreprises" }}{{ end }}</div>
+      <!-- Aperçu des logos -->
+      {{- if .Params.clients -}}
+      <div class="project-widget-clients-preview">
+        <div class="project-widget-clients-preview-logos">
+          {{- range first 4 .Params.clients -}}
+          <div class="project-widget-client-logo-mini {{ if not .logo }}placeholder{{ end }}">
+            {{- if .logo -}}
+            <img src="{{ .logo }}" alt="{{ .name }}">
+            {{- else -}}
+            <span>{{ substr .name 0 1 | upper }}</span>
+            {{- end -}}
+          </div>
+          {{- end -}}
+        </div>
+        {{- if gt (len .Params.clients) 4 -}}
+        <div class="project-widget-clients-preview-more">+{{ sub (len .Params.clients) 4 }} {{ i18n "others" | default "autres" }}</div>
+        {{- end -}}
+      </div>
+      {{- end -}}
+    </div>
+    <div class="project-widget-toggle">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/>
+      </svg>
+    </div>
+  </div>
+  <div class="project-widget-content">
+    {{/* Contenu modal enhanced - uniquement ce qui doit apparaître dans le modal */}}
+    {{ partial "projects/widgets/modal/clients.html" (dict "Project" . "Title" "Clients") }}
+  </div>
+</div>
+{{- end -}}

@@ -1,0 +1,45 @@
+{{- /*
+  Get Localized Data Utility
+  
+  Usage:
+    {{ $profile := partial "get-localized-data.html" (dict "context" . "dataName" "profile") }}
+    {{ $config := partial "get-localized-data.html" (dict "context" . "dataName" "config") }}
+  
+  Parameters:
+    - context: The page context (usually .)
+    - dataName: The name of the data file (without extension)
+  
+  Returns:
+    The appropriate data file based on current language
+    - For FR (default): data/{dataName}.json
+    - For EN: data/en/{dataName}.json (accessed via .Site.Data.en.{dataName})
+*/ -}}
+
+{{- $context := .context -}}
+{{- $dataName := .dataName -}}
+{{- $currentLang := $context.Language.Lang -}}
+
+{{- /* Start with default language data */ -}}
+{{- $data := index $context.Site.Data $dataName -}}
+
+{{- /* If current language is not French (default), try to load localized version */ -}}
+{{- if ne $currentLang "fr" -}}
+    {{- /* Try method 1: Hugo stores data/en/{dataName}.json as .Site.Data.en.{dataName} */ -}}
+    {{- $foundData := false -}}
+    {{- with index $context.Site.Data $currentLang -}}
+        {{- with index . $dataName -}}
+            {{- $data = . -}}
+            {{- $foundData = true -}}
+        {{- end -}}
+    {{- end -}}
+    
+    {{- /* Try method 2: Hugo stores data/{dataName}.en.json as .Site.Data.{dataName}_en (replaces . with _) */ -}}
+    {{- if not $foundData -}}
+        {{- $dataNameWithLang := printf "%s_%s" $dataName $currentLang -}}
+        {{- with index $context.Site.Data $dataNameWithLang -}}
+            {{- $data = . -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}
+
+{{- return $data -}}

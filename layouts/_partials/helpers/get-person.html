@@ -1,0 +1,33 @@
+{{/* 
+Helper partial to get a person by their ID.
+People profiles are NOT localized - there's only ONE file per person (French version).
+This helper always returns the default language (French) version.
+Usage: {{ $person := partial "helpers/get-person.html" (dict "context" $ "personId" "john-doe") }}
+*/}}
+
+{{ $context := .context }}
+{{ $personId := .personId }}
+{{ $person := "" }}
+
+{{/* Get the default language site (French) to avoid looking for EN versions */}}
+{{ $defaultSite := index .context.Sites 0 }}
+
+{{/* Try to find the person page in the default language site */}}
+{{ $personPage := $defaultSite.GetPage (printf "/people/%s" $personId) }}
+
+{{ if $personPage }}
+    {{ $person = $personPage }}
+{{ else }}
+    {{/* If not found, search in all people pages by ID in the default language site */}}
+    {{ $peopleSection := $defaultSite.GetPage "/people" }}
+    {{ if $peopleSection }}
+        {{ range $peopleSection.Pages }}
+            {{ if eq .Params.id $personId }}
+                {{ $person = . }}
+                {{ break }}
+            {{ end }}
+        {{ end }}
+    {{ end }}
+{{ end }}
+
+{{ return $person }}

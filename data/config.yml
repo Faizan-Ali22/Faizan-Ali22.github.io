@@ -1,0 +1,73 @@
+# ============================================================
+# 🌐 SITE CONFIGURATION — Edit to customize your portfolio
+# ============================================================
+
+site:
+  title: "My Portfolio"
+  # googleAnalyticsId: "G-XXXXXXXXXX"  # Uncomment and add your GA ID to enable tracking
+
+# Feature toggles — enable/disable sections
+features:
+  trophies: false        # Set to true to enable the gamification trophy system
+  notifications: false   # Show notification bell in sidebar
+  languageSwitcher: false # Show language switcher
+
+# Navigation links shown in the sidebar/menu
+navigation:
+  - anchor: "profile"
+    label: "Profile"
+    icon: "👤"
+    active: true
+  - anchor: "competences"
+    label: "Skills"
+    icon: "⚡"
+  - anchor: "blog"
+    label: "Blog"
+    icon: "📝"
+  - anchor: "projects"
+    label: "Projects"
+    icon: "💼"
+  - anchor: "formation"
+    label: "Education"
+    icon: "🎓"
+  - anchor: "experiences"
+    label: "Experiences"
+    icon: "🏆"
+  - anchor: "contact"
+    label: "Contact"
+    icon: "📧"
+
+# Blog settings
+blog:
+  homeLimit: 3
+  dateFormat: "Jan 22, 2002"
+
+# Contact form subject options
+contact:
+  subjects:
+    - value: "job"
+      label: "Job Opportunity"
+    - value: "project"
+      label: "Project Collaboration"
+    - value: "freelance"
+      label: "Freelance Mission"
+    - value: "other"
+      label: "Other"
+
+# Social media links — shown in contact section & footer
+# icon: use any emoji, or later replace with SVG icons
+social:
+  - title: "LinkedIn"
+    url: "https://linkedin.com/in/faizan-ali-378562346"
+    icon: "💼"
+    external: true
+  - title: "GitHub"
+    url: "https://github.com/Faizan-Ali22"
+    icon: "🐙"
+    external: true
+  - title: "Email"
+    url: "mailto:faizanali95466@gmail.com"
+    icon: "📧"
+  - title: "Discord"
+    url: "#aquasenpai3351"
+    icon: "🎮"

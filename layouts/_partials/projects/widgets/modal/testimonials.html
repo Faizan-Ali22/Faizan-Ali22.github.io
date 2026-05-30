@@ -1,0 +1,135 @@
+{{/*
+  Partial: Testimonials Modal Layout
+  Description: Structure HTML pour l'affichage des témoignages dans les modals de project widget
+  Context: 
+    - .testimonials (slice) - Liste des témoignages du projet (.Params.testimonials)
+    - .projectId (string) - ID du projet pour contextualiser les actions
+    - .context (page context) - Contexte de la page pour l'accès aux helpers
+*/}}
+
+{{- $testimonials := .testimonials -}}
+{{- $projectId := .projectId | default "" -}}
+{{- $context := .context -}}
+
+{{- $total := len $testimonials -}}
+
+{{- if gt $total 0 -}}
+  <div class="testimonials-modal">
+    {{/* Barre de statistiques */}}
+    <div class="testimonials-stats-bar">
+      <div class="widget-count">
+        <strong>{{ $total }}</strong> {{ if eq $total 1 }}{{ i18n "testimonial" | default "témoignage" }}{{ else }}{{ i18n "testimonials" | default "témoignages" }}{{ end }}
+      </div>
+      
+      {{/* Rôles représentés */}}
+      {{- $roles := slice -}}
+      {{- range $testimonials -}}
+        {{- if .role -}}
+          {{- $roles = $roles | append .role -}}
+        {{- end -}}
+      {{- end -}}
+      {{- $distinctRoles := $roles | uniq -}}
+      {{- if gt (len $distinctRoles) 0 -}}
+        <div class="testimonials-roles">
+          {{- range $distinctRoles -}}
+            <div class="role-chip widget-badge widget-badge--sm">{{ . }}</div>
+          {{- end -}}
+        </div>
+      {{- end -}}
+    </div>
+
+    {{/* Liste des témoignages */}}
+    <div class="testimonials-grid">
+      {{- range $index, $testimonial := $testimonials -}}
+        {{- $person := partial "helpers/get-person.html" (dict "context" $context "personId" $testimonial.person) -}}
+        
+        <div class="testimonial-item{{ if and $person (ne $person "") }} clickable-person{{ end }}" data-testimonial-index="{{ $index }}"{{ if and $person (ne $person "") }} data-person-id="{{ $testimonial.person }}" title="Voir le profil de {{ $person.Params.title }}"{{ end }} tabindex="0">
+          <div class="testimonial-header">
+            {{/* Photo et informations de la personne */}}
+            <div class="testimonial-author">
+              <div class="author-avatar {{ if or (not $person) (not $person.Params.avatar) }}author-avatar--placeholder{{ end }}">
+                {{- if and $person (ne $person "") -}}
+                  {{- if $person.Params.avatar -}}
+                    {{- $testimonialAvatar := partial "get-optimized-image.html" (dict "imagePath" $person.Params.avatar "width" 80 "quality" 90) -}}
+                    <img src="{{ $testimonialAvatar.src }}" 
+                         width="{{ $testimonialAvatar.width }}" 
+                         height="{{ $testimonialAvatar.height }}"
+                         alt="Photo de {{ $person.Params.title }}"
+                         loading="lazy">
+                  {{- else -}}
+                    <span>{{ substr $person.Params.title 0 1 | upper }}</span>
+                  {{- end -}}
+                {{- else -}}
+                  <span>{{ substr $testimonial.person 0 1 | upper }}</span>
+                {{- end -}}
+              </div>
+              
+              <div class="author-info">
+                <h4 class="author-name">{{ if and $person (ne $person "") }}{{ $person.Params.title }}{{ else }}{{ $testimonial.person | humanize | title }}{{ end }}</h4>
+                {{- if $testimonial.role -}}
+                  <div class="author-position">{{ $testimonial.role }}</div>
+                {{- end -}}
+                {{- if $person -}}
+                  {{- if $person.Params.company -}}
+                    <div class="author-company">{{ $person.Params.company }}</div>
+                  {{- end -}}
+                {{- end -}}
+              </div>
+            </div>
+
+            {{/* Actions du témoignage */}}
+            <div class="testimonial-actions">
+              {{- if $person -}}
+                {{- if $person.Params.socialMedia -}}
+                  {{- if $person.Params.socialMedia.linkedin -}}
+                    <a href="{{ $person.Params.socialMedia.linkedin }}" 
+                       class="testimonial-action testimonial-action--linkedin"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       onclick="event.stopPropagation()"
+                       title="Profil LinkedIn de {{ $person.Params.title }}">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                      </svg>
+                    </a>
+                  {{- end -}}
+                  {{- if $person.Params.website -}}
+                    <a href="{{ $person.Params.website }}" 
+                       class="testimonial-action testimonial-action--website"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       onclick="event.stopPropagation()"
+                       title="Site web de {{ $person.Params.title }}">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                      </svg>
+                    </a>
+                  {{- end -}}
+                {{- end -}}
+              {{- end -}}
+            </div>
+          </div>
+
+          {{/* Contenu du témoignage */}}
+          <div class="testimonial-content">
+            <blockquote class="testimonial-text">
+              "{{ $testimonial.quote }}"
+            </blockquote>
+          </div>
+
+
+        </div>
+      {{- end -}}
+    </div>
+
+
+  </div>
+{{- else -}}
+  <div class="testimonials-modal testimonials-modal--empty">
+    <div class="empty-state">
+      <div class="empty-icon">💬</div>
+      <h3>{{ i18n "no_testimonials" | default "Aucun témoignage disponible" }}</h3>
+      <p>{{ i18n "no_testimonials_yet" | default "Ce projet n'a pas encore de témoignages associés." }}</p>
+    </div>
+  </div>
+{{- end -}}

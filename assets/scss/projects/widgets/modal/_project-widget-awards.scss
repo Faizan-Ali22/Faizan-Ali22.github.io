@@ -1,0 +1,149 @@
+// Awards Widget Modal Styles
+// Uses base components from _project-widget-base.scss
+
+.awards-modal {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  // Uses .widget-stats-bar from base
+  .awards-stats-bar {
+    @extend .widget-stats-bar;
+    
+    .awards-years {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+    }
+  }
+
+  .awards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+  }
+
+  // Uses .widget-card from base
+  .award-card {
+    @extend .widget-card;
+
+    .award-header {
+      display: flex;
+      align-items: flex-start;
+      gap: .9rem;
+      margin-bottom: 1rem;
+
+      .award-info {
+        display: flex;
+        flex-direction: column;
+        gap: .3rem;
+        flex: 1;
+      }
+
+      .award-title {
+        font-size: 1rem;
+        font-weight: 600;
+        letter-spacing: .3px;
+        margin: 0;
+        line-height: 1.3;
+      }
+
+      .award-organization {
+        color: rgba(255,255,255,0.7);
+        font-size: .85rem;
+        font-weight: 500;
+        letter-spacing: .2px;
+      }
+    }
+
+    .award-description {
+      color: rgba(255,255,255,0.7);
+      line-height: 1.5;
+      margin-bottom: 1rem;
+      font-size: .9rem;
+    }
+
+    // Variant pour award avec description longue
+    &.award-card--detailed {
+      grid-column: span 2;
+      
+      .award-description {
+        font-size: .95rem;
+        margin-bottom: 1.2rem;
+      }
+    }
+  }
+
+  // Uses .widget-note from base
+  .awards-empty-state {
+    @extend .widget-note;
+  }
+
+
+
+  // Special styling for prestigious awards
+  .award-card--prestigious {
+    background: linear-gradient(160deg, rgba(255,215,0,0.1), rgba(255,255,255,0.02));
+    border-color: rgba(255,215,0,0.3);
+
+    &:hover {
+      border-color: rgba(255,215,0,0.5);
+      box-shadow: 0 8px 24px -6px rgba(255,215,0,.2), 0 0 0 1px rgba(255,215,0,0.1) inset;
+    }
+
+    .award-icon {
+      background: linear-gradient(145deg, rgba(255,215,0,0.2), rgba(255,215,0,0.1));
+      border-color: rgba(255,215,0,0.3);
+      color: rgba(255,215,0,0.9);
+    }
+  }
+}
+
+
+
+@media (max-width: 768px) {
+  .awards-modal {
+    gap: 1rem;
+
+    .awards-stats-bar {
+      padding: .6rem .8rem;
+      gap: .5rem;
+      
+      .awards-years {
+        gap: .4rem;
+      }
+    }
+
+    .awards-grid {
+      grid-template-columns: 1fr;
+      gap: .8rem;
+    }
+
+    .award-card {
+      padding: 1rem;
+      
+      .award-header {
+        gap: .7rem;
+        
+        .award-title {
+          font-size: .95rem;
+        }
+        
+        .award-organization {
+          font-size: .8rem;
+        }
+      }
+      
+      .award-description {
+        font-size: .85rem;
+      }
+
+      // Reset grid span on mobile
+      &.award-card--detailed {
+        grid-column: span 1;
+      }
+    }
+
+
+  }
+}

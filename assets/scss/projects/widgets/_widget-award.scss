@@ -1,0 +1,49 @@
+// =============================================================================
+// PROJECT WIDGET - AWARDS
+// =============================================================================
+
+@import 'widget-base';
+
+.project-widget-awards-list {
+  @extend %widget-list-layout;
+}
+
+.project-widget-award-item {
+  @extend %widget-item-layout;
+  gap: $widget-gap;
+  
+  @include widget-hover-transform($y: -2px);
+  
+  &:hover {
+    background: linear-gradient(135deg, rgba(243,156,18,0.1) 0%, rgba(255,255,255,0.05) 100%);
+    border-color: rgba(243,156,18,0.3);
+    box-shadow: 0 4px 15px rgba(243,156,18,0.2);
+  }
+}
+
+.project-widget-award-icon {
+  @include widget-icon-circle(2.5rem, map-get($widget-gradients, 'gold'));
+  font-size: 1.5rem;
+  box-shadow: 0 4px 15px rgba(243,156,18,0.3);
+  
+  .project-widget-award-item:hover & {
+    transform: scale(1.1) rotate(5deg);
+  }
+}
+
+.project-widget-award-info {
+  @extend %widget-info-section;
+  
+  .project-widget-award-title {
+    @extend .name;
+  }
+  
+  .project-widget-award-organization {
+    @extend .description;
+  }
+  
+  .project-widget-award-date {
+    @extend .meta;
+    font-style: italic;
+  }
+}

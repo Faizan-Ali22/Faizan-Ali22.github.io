@@ -1,0 +1,184 @@
+/* Skills Section - Inspired by PS5 Projects style */
+
+.skills-section {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem 0 6rem;
+}
+
+.skills-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.skills-header h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--ps5-white);
+    margin-bottom: 1rem;
+    /* Gradient disabled to keep consistent white color with other sections */
+    /* background: linear-gradient(135deg, var(--ps5-white), var(--ps5-blue-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text; */
+}
+
+.skills-subtitle {
+    font-size: 1.2rem;
+    color: var(--ps5-text-muted);
+    max-width: 800px;
+    margin: 0 auto 2rem;
+    line-height: 1.6;
+}
+
+/* Navigation Tabs - Same style as projects-tabs */
+.skills-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    padding: 0 1rem;
+}
+
+.skills-tabs .tab-btn {
+    padding: 0.75rem 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 25px;
+    color: var(--ps5-text-muted);
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+}
+
+.skills-tabs .tab-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.6s ease;
+}
+
+.skills-tabs .tab-btn:hover::before {
+    left: 100%;
+}
+
+.skills-tabs .tab-btn:hover {
+    background: rgba(30, 136, 229, 0.15);
+    border-color: rgba(30, 136, 229, 0.4);
+    color: var(--ps5-white);
+    transform: translateY(-2px);
+}
+
+.skills-tabs .tab-btn.active {
+    background: linear-gradient(135deg, var(--ps5-blue-light), var(--ps5-blue));
+    border-color: var(--ps5-blue-light);
+    color: var(--ps5-white);
+    box-shadow: 0 8px 25px rgba(30, 136, 229, 0.4);
+}
+
+/* Description */
+.skills-description {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.skills-description p {
+    font-size: 1.1rem;
+    color: var(--ps5-text-muted);
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* Skills Grid - Same structure as projects-grid */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 0 1rem;
+}
+
+/* Experience bar */
+.skill-experience-bar {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+}
+
+.skill-experience-fill {
+    height: 100%;
+    background: var(--ps5-blue);
+    border-radius: 3px;
+    transition: width 0.8s ease;
+    box-shadow: 0 0 10px currentColor;
+}
+
+/* Old PS5 tile meta classes removed - no longer used */
+
+/* Responsive */
+@media (max-width: 768px) {
+    .skills-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding: 0 0.5rem;
+    }
+    
+    .skills-tabs {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .skills-tabs .tab-btn {
+        min-width: 200px;
+        text-align: center;
+    }
+    
+    .skills-header h2 {
+        font-size: 2rem;
+    }
+    
+    .skills-subtitle {
+        font-size: 1rem;
+        padding: 0 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+
+    
+    .skills-section {
+        padding: 1rem 0 4rem;
+    }
+    
+    .skills-header {
+        margin-bottom: 2rem;
+    }
+    
+    .skills-description {
+        margin-bottom: 2rem;
+    }
+
+}
+
+#competences {
+    scroll-margin-top: 150px; /* Pushes the start of the section down */
+}
+#competences .section-title-unified {
+    color: var(--ps5-white, #ffffff); /* Fallback to white if variable fails */
+    opacity: 1;
+    visibility: visible;
+}

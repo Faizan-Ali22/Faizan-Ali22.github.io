@@ -1,0 +1,102 @@
+{{/*
+  Partial: Ranking Modal Widget
+  Description: Modal version of the competition ranking widget for detailed view
+  Context: 
+    - .Project (Page) - Project page context
+    - .Title (string) - Modal title
+*/}}
+
+{{- if .Project.Params.ranking -}}
+<div class="ranking-modal-enhanced">
+  <div class="ranking-stats-bar">
+    <div class="event-info">
+      <span class="event-type-chip">{{ .Project.Params.ranking.event_type | default (i18n "ranking" | default "Classement") }}</span>
+      {{- if .Project.Params.ranking.event -}}
+      <span class="event-name-chip"> {{ .Project.Params.ranking.event }}</span>
+      {{- end -}}
+    </div>
+    {{- if .Project.Params.ranking.total_participants -}}
+    <div class="participants-info">
+      {{ partial "helpers/format-number.html" .Project.Params.ranking.total_participants }} {{ i18n "participants" | default "participants" }}
+    </div>
+    {{- end -}}
+  </div>
+  
+  <div class="ranking-modal-display">
+    <div class="ranking-position-large">
+      <div class="position-number position-{{ .Project.Params.ranking.position }}">
+        {{ .Project.Params.ranking.position }}
+        <span class="position-suffix">{{ if eq .Project.Params.ranking.position 1 }}er{{ else }}e{{ end }}</span>
+      </div>
+      {{- if .Project.Params.ranking.event -}}
+      <div class="event-name">{{ .Project.Params.ranking.event }}</div>
+      {{- end -}}
+    </div>
+    
+    {{- if .Project.Params.ranking.competitors -}}
+    <div class="competitors-podium">
+      <div class="podium-title">{{ i18n "general_ranking" | default "Classement général" }}</div>
+      <div class="podium-grid">
+        {{- range .Project.Params.ranking.competitors -}}
+        <div class="competitor-card">
+          <div class="competitor-position pos-{{ .position }}">{{ .position }}</div>
+          
+          {{- if .avatar -}}
+          <div class="competitor-avatar">
+            <img src="{{ .avatar }}" alt="{{ .name }}" loading="lazy">
+          </div>
+          {{- end -}}
+          
+          <div class="competitor-name">{{ .name }}</div>
+          
+          <div class="competitor-details">
+            {{- if .score -}}
+            <div class="detail-item">
+              <span class="detail-label">{{ i18n "score" | default "Score" }}:</span>
+              <span class="detail-value">{{ .score }}</span>
+            </div>
+            {{- end -}}
+            
+            {{- if .team -}}
+            <div class="detail-item">
+              <span class="detail-label">{{ i18n "team" | default "Équipe" }}:</span>
+              <span class="detail-value">{{ .team }}</span>
+            </div>
+            {{- end -}}
+          </div>
+        </div>
+        {{- end -}}
+      </div>
+    </div>
+    {{- end -}}
+    
+    {{- if or .Project.Params.ranking.total_participants .Project.Params.ranking.date .Project.Params.ranking.category -}}
+    <div class="ranking-details">
+      <div class="details-title">{{ i18n "event_details" | default "Détails de l'événement" }}</div>
+      <div class="details-grid">
+        {{- if .Project.Params.ranking.total_participants -}}
+        <div class="detail-card">
+          <div class="detail-label">{{ i18n "participants" | default "Participants" }}</div>
+          <div class="detail-value">{{ partial "helpers/format-number.html" .Project.Params.ranking.total_participants }}</div>
+        </div>
+        {{- end -}}
+        
+        {{- if .Project.Params.ranking.date -}}
+        <div class="detail-card">
+          <div class="detail-label">{{ i18n "event_date" | default "Date" }}</div>
+          <div class="detail-value">{{ .Project.Params.ranking.date | dateFormat "January 2006" }}</div>
+        </div>
+        {{- end -}}
+        
+        {{- if .Project.Params.ranking.category -}}
+        <div class="detail-card">
+          <div class="detail-label">{{ i18n "event_category" | default "Catégorie" }}</div>
+          <div class="detail-value">{{ .Project.Params.ranking.category }}</div>
+        </div>
+        {{- end -}}
+      </div>
+    </div>
+    {{- end -}}
+  </div>
+</div>
+{{- end -}}

@@ -1,0 +1,539 @@
+{{ define "main" }}
+<!-- Project Hero Section -->
+{{ if .Params.image }}
+{{- $heroImg := partial "get-optimized-image.html" (dict "imagePath" .Params.image "width" 1920 "quality" 100) -}}
+<style>
+    body {
+        --hero-bg-image: url('{{ $heroImg.src }}');
+    }
+</style>
+{{ end }}
+
+<!-- Include Sector Badge Styles -->
+{{ $sectorBadgeStyles := resources.Get "scss/sector-badge.scss" | css.Sass }}
+<link rel="stylesheet" href="{{ $sectorBadgeStyles.RelPermalink }}">
+
+<!-- Include Image Modal Styles -->
+{{ $imageModalStyles := resources.Get "scss/image-modal.scss" | css.Sass }}
+<link rel="stylesheet" href="{{ $imageModalStyles.RelPermalink }}">
+
+{{ if not .Params.image }}
+<script>
+    // Ajouter la classe project-page au body pour gérer les z-index des canvas
+    document.body.classList.add('project-page');
+</script>
+{{ end }}
+<!-- Fixed Background Overlay -->
+<div class="project-hero-overlay"></div>
+<section class="project-hero">
+    <div class="project-hero-content no-top">
+        <!-- Project Info Block centré -->
+        <div class="project-hero-bottom">
+            <div class="project-info-grid">
+                <!-- Left: Project Description Block -->
+                <div class="project-description-block">
+                    <!-- Sector Badge - Mobile Top Right -->
+                    {{ if .Params.sector }}
+                    <div class="mobile-sector-badge">
+                        {{ partial "projects/sector-badge.html" .Params.sector }}
+                    </div>
+                    {{ end }}
+                    
+                    {{ if .Params.logo }}
+                    <div class="project-logo-bottom">
+                        <img src="{{ .Params.logo }}" alt="{{ .Title }}" class="project-logo-img">
+                    </div>
+                    {{ else }}
+                    <h2 class="project-name-bottom">{{ .Title }}</h2>
+                    {{ end }}
+                    
+                    <!-- Project Action Buttons -->
+                    {{ if .Params.actions }}
+                    <div class="project-actions">
+                        {{ $actionsCount := len .Params.actions }}
+                        {{ if le $actionsCount 2 }}
+                            <!-- Afficher toutes les actions si 2 ou moins -->
+                            {{ range .Params.actions }}
+                            {{ if eq .type "youtube" }}
+                            {{ $videoId := "" }}
+                            {{ if findRE "youtu\\.be/([^&\\n?#]+)" .url }}
+                                {{ $videoId = replaceRE ".*youtu\\.be/([^&\\n?#]+).*" "$1" .url }}
+                            {{ else if findRE "youtube\\.com/watch\\?.*v=([^&\\n?#]+)" .url }}
+                                {{ $videoId = replaceRE ".*[?&]v=([^&\\n?#]+).*" "$1" .url }}
+                            {{ else if findRE "youtube\\.com/embed/([^&\\n?#]+)" .url }}
+                                {{ $videoId = replaceRE ".*youtube\\.com/embed/([^&\\n?#]+).*" "$1" .url }}
+                            {{ end }}
+                            <button class="btn-action {{ if .primary }}primary{{ end }}" onclick="openYouTubeModal('{{ $videoId }}', '{{ .label }}');">
+                                {{ partial "icon.html" (dict "iconId" .type "size" "18") }}
+                                {{ .label }}
+                            </button>
+                            {{ else }}
+                            <a href="{{ .url }}" {{ if ne .url "#" }}target="_blank"{{ end }} class="btn-action {{ if .primary }}primary{{ end }}">
+                                {{ partial "icon.html" (dict "iconId" .type "size" "18") }}
+                                {{ .label }}
+                            </a>
+                            {{ end }}
+                            {{ end }}
+                        {{ else }}
+                            <!-- Afficher les 2 premières actions + bouton ... -->
+                            {{ range first 2 .Params.actions }}
+                            {{ if eq .type "youtube" }}
+                            {{ $videoId := "" }}
+                            {{ if findRE "youtu\\.be/([^&\\n?#]+)" .url }}
+                                {{ $videoId = replaceRE ".*youtu\\.be/([^&\\n?#]+).*" "$1" .url }}
+                            {{ else if findRE "youtube\\.com/watch\\?.*v=([^&\\n?#]+)" .url }}
+                                {{ $videoId = replaceRE ".*[?&]v=([^&\\n?#]+).*" "$1" .url }}
+                            {{ else if findRE "youtube\\.com/embed/([^&\\n?#]+)" .url }}
+                                {{ $videoId = replaceRE ".*youtube\\.com/embed/([^&\\n?#]+).*" "$1" .url }}
+                            {{ end }}
+                            <button class="btn-action {{ if .primary }}primary{{ end }}" onclick="openYouTubeModal('{{ $videoId }}', '{{ .label }}');">
+                                {{ partial "icon.html" (dict "iconId" .type "size" "18") }}
+                                {{ .label }}
+                            </button>
+                            {{ else }}
+                            <a href="{{ .url }}" {{ if ne .url "#" }}target="_blank"{{ end }} class="btn-action {{ if .primary }}primary{{ end }}">
+                                {{ partial "icon.html" (dict "iconId" .type "size" "18") }}
+                                {{ .label }}
+                            </a>
+                            {{ end }}
+                            {{ end }}
+                            <!-- Bouton ... for more options using unified modal -->
+                            <button class="btn-action-icon" onclick="openProjectActionsModal();">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <circle cx="5" cy="12" r="2"/>
+                                    <circle cx="12" cy="12" r="2"/>
+                                    <circle cx="19" cy="12" r="2"/>
+                                </svg>
+                            </button>
+                        {{ end }}
+                    </div>
+                    {{ end }}
+                    
+                    <div class="description-content">
+                        <h3 class="description-title">{{ i18n "project_information" | default "Informations du projet" }}</h3>
+                        
+                        <!-- Sector Badge in Description -->
+                        {{ if .Params.sector }}
+                        <div class="description-sector-badge">
+                            {{ partial "projects/sector-badge.html" .Params.sector }}
+                        </div>
+                        {{ end }}
+                        
+                        <!-- Meta Information -->
+                        <div class="project-meta-bottom">
+                            <div class="meta-item-bottom">
+                                <span class="meta-label-bottom">{{ i18n "date" | default "Date" }}</span>
+                                <span class="meta-value-bottom">{{ .Date | time.Format ":date_long" }}</span>
+                            </div>
+                            
+                            {{ if .Params.status }}
+                            <div class="meta-item-bottom">
+                                <span class="meta-label-bottom">{{ i18n "status" | default "Statut" }}</span>
+                                <span class="meta-value-bottom status-{{ .Params.status | lower }}">{{ .Params.status }}</span>
+                            </div>
+                            {{ end }}
+                            
+                            {{ if .Params.link }}
+                            <div class="meta-item-bottom">
+                                <a href="{{ .Params.link }}" target="_blank" class="project-link-bottom">
+                                    {{ i18n "see_project" | default "Voir le projet" }} <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z" />
+                                    </svg>
+                                </a>
+                            </div>
+                            {{ end }}
+                        </div>
+                        
+                        <!-- Technologies Pills -->
+                        {{ partial "project-technologies-detailed.html" . }}
+                    </div>
+                </div>
+                
+                <!-- Right: Notable Facts -->
+                {{ if .Params.notable_facts }}
+                <div class="project-notable-facts-hero">
+                    <div class="notable-facts-content">
+                        <h3 class="notable-facts-title-hero">{{ i18n "notable_facts" | default "Faits notables" }}</h3>
+                        {{ range .Params.notable_facts }}
+                        <div class="fact-card-hero">
+                            <div class="fact-icon-hero {{ .type }}">{{ .icon }}</div>
+                            <div class="fact-content-hero">
+                                <div class="fact-value-hero">{{ .value | safeHTML }}</div>
+                                <div class="fact-label-hero">{{ .label }}</div>
+                            </div>
+                        </div>
+                        {{ end }}
+                    </div>
+                </div>
+                {{ end }}
+            </div>
+        </div>
+        </div>
+    </div>
+    
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator">
+        <div class="scroll-arrow"></div>
+    </div>
+</section>
+
+<!-- Project Info Boxes Section - Section distincte avant le contenu -->
+{{ $showPortfolioWidgets := true }}
+{{ if or .Params.contributors .Params.development_time .Params.gallery .Params.galleries .Params.youtube_videos .Params.youtube_galleries .Params.youtube_singles .Params.programming_languages .Params.frameworks_engines .Params.technical_specs .Params.awards $showPortfolioWidgets }}
+<section class="project-widgets-section">
+    <div class="project-widgets-wrapper">
+    <div class="project-widgets">
+        {{/* Utiliser le nouveau système de tri des widgets */}}
+        {{ partial "projects/widgets/widget-sorter.html" . }}
+    </div>
+</section>
+
+<!-- Modal pour les vidéos YouTube -->
+<div id="youtubeModal" class="youtube-modal" onclick="closeYouTubeModal()">
+    <div class="youtube-modal-content" onclick="event.stopPropagation()">
+        <button class="youtube-modal-close" onclick="closeYouTubeModal()" title="Fermer la vidéo">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" />
+            </svg>
+        </button>
+        <div class="youtube-modal-loading">Chargement...</div>
+        <iframe id="youtubeIframe" src="" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+        </iframe>
+    </div>
+</div>
+
+{{ end }}
+
+<!-- Project Content (seulement si le projet a du contenu markdown) -->
+{{ if .Content }}
+{{ $trimmedContent := trim .Content " \n\r\t" }}
+{{ if $trimmedContent }}
+<div class="blog-theme blog-single-page">
+    <!-- Conteneur principal avec layout 2 colonnes -->
+    <div class="project-content-layout">
+        <!-- Colonne principale : Article -->
+        <main class="blog-article-content project-main-content">
+            <div class="blog-content-wrapper">
+                {{ .Content }}
+            </div>
+        </main>
+        
+        <!-- Colonne droite : Sidebar avec faits notables -->
+        {{ if .Params.notable_facts }}
+        <aside class="project-sidebar">
+            <div class="notable-facts">
+                <h3 class="notable-facts-title">{{ i18n "notable_facts" | default "Faits notables" }}</h3>
+                {{ range .Params.notable_facts }}
+                <div class="fact-card">
+                    <div class="fact-icon {{ .type }}">{{ .icon }}</div>
+                    <div class="fact-value">{{ .value | safeHTML }}</div>
+                    <div class="fact-label">{{ .label }}</div>
+                </div>
+                {{ end }}
+            </div>
+        </aside>
+        {{ end }}
+    </div>
+    
+    </div>
+{{ end }}
+{{ end }}
+
+<!-- Navigation entre projets (toujours visible) -->
+<nav class="blog-post-navigation">
+    {{ with .PrevInSection }}
+    <div class="blog-nav-item blog-nav-prev">
+        <span class="blog-nav-label">{{ i18n "previous_project" | default "Projet précédent" }}</span>
+        <a href="{{ .Permalink }}" class="blog-nav-link">
+            <h4>{{ .Title }}</h4>
+            {{ if .Params.period_start }}
+            <time>{{ .Params.period_start }}</time>
+            {{ else if .Date }}
+            <time>{{ .Date.Format "02 Jan 2006" }}</time>
+            {{ end }}
+        </a>
+    </div>
+    {{ end }}
+
+    {{ with .NextInSection }}
+    <div class="blog-nav-item blog-nav-next">
+        <span class="blog-nav-label">{{ i18n "next_project" | default "Projet suivant" }}</span>
+        <a href="{{ .Permalink }}" class="blog-nav-link">
+            <h4>{{ .Title }}</h4>
+            {{ if .Params.period_start }}
+            <time>{{ .Params.period_start }}</time>
+            {{ else if .Date }}
+            <time>{{ .Date.Format "02 Jan 2006" }}</time>
+            {{ end }}
+        </a>
+    </div>
+    {{ end }}
+</nav>
+
+<!-- Image Modal for Gallery -->
+<div id="imageModal" class="image-modal" onclick="closeImageModal()" style="z-index: 999999 !important;">
+    <div class="image-modal-content">
+        <span class="image-modal-close" onclick="closeImageModal()" style="z-index: 1000000 !important;">&times;</span>
+        <button class="image-modal-download" onclick="event.stopPropagation(); downloadImage();" title="Download source image">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z"/>
+            </svg>
+        </button>
+        <img id="modalImage" src="" alt="">
+        <div id="modalCaption" class="image-modal-caption"></div>
+    </div>
+</div>
+
+<script>
+// Project actions data for unified modal
+{{ if .Params.actions }}
+{{ if gt (len .Params.actions) 2 }}
+const projectActionsData = [
+    {{ range after 2 .Params.actions }}
+    {
+        icon: `{{ partial "icon.html" (dict "iconId" .type "size" "32") | safeJS }}`,
+        title: '{{ .label | safeJS }}',
+        desc: '{{ .type | title }}',
+        action: '{{ .type }}',
+        url: '{{ .url }}',
+        {{ if eq .type "youtube" }}
+        {{ $videoId := "" }}
+        {{ if findRE "youtu\\.be/([^&\\n?#]+)" .url }}
+            {{ $videoId = replaceRE ".*youtu\\.be/([^&\\n?#]+).*" "$1" .url }}
+        {{ else if findRE "youtube\\.com/watch\\?.*v=([^&\\n?#]+)" .url }}
+            {{ $videoId = replaceRE ".*[?&]v=([^&\\n?#]+).*" "$1" .url }}
+        {{ else if findRE "youtube\\.com/embed/([^&\\n?#]+)" .url }}
+            {{ $videoId = replaceRE ".*youtube\\.com/embed/([^&\\n?#]+).*" "$1" .url }}
+        {{ end }}
+        videoId: '{{ $videoId }}',
+        {{ end }}
+        buttonText: '{{ .label | safeJS }}'
+    },
+    {{ end }}
+];
+
+function openProjectActionsModal() {
+    UnifiedModal.create({
+        type: 'actions',
+        title: '{{ i18n "more_options" | default "Plus d'options" | safeJS }}',
+        icon: '•••',
+        content: {
+            actions: projectActionsData
+        }
+    });
+}
+{{ else }}
+// No additional actions to show in modal
+function openProjectActionsModal() {
+    console.warn('No additional actions to display');
+}
+{{ end }}
+{{ else }}
+// No actions defined for this project
+function openProjectActionsModal() {
+    console.warn('No actions defined for this project');
+}
+{{ end }}
+
+function initializeInfoBoxSystem() {
+    const infoBoxes = document.querySelectorAll('.project-widget');
+    
+    infoBoxes.forEach(function(infoBox) {
+        // Stocker la taille originale de chaque widget
+        const computedStyle = window.getComputedStyle(infoBox);
+        const gridColumn = computedStyle.gridColumn;
+        
+        infoBox.setAttribute('data-original-span', gridColumn);
+        infoBox.style.setProperty('--original-span', gridColumn);
+        
+        // Ajouter des gestionnaires d'événements pour les transitions
+        infoBox.addEventListener('transitionstart', function(e) {
+            if (e.propertyName === 'grid-column') {
+                // Marquer le début de la transition de grille
+                infoBox.classList.add('transitioning');
+            }
+        });
+        
+        infoBox.addEventListener('transitionend', function(e) {
+            if (e.propertyName === 'grid-column') {
+                // Marquer la fin de la transition de grille
+                infoBox.classList.remove('transitioning');
+            }
+        });
+        
+        // Optimisation pour les performances : observer les changements de taille
+        if (window.ResizeObserver) {
+            const resizeObserver = new ResizeObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    // Assurer que le widget maintient ses proportions
+                    if (entry.target.classList.contains('expanded')) {
+                        entry.target.style.minHeight = 'auto';
+                    }
+                });
+            });
+            
+            resizeObserver.observe(infoBox);
+        }
+    });
+    
+    // Gestionnaire global pour éviter les conflits entre widgets
+    let currentlyExpanding = null;
+    
+    window.addEventListener('click', function(e) {
+    const header = e.target.closest('.project-widget-header');
+        if (header && currentlyExpanding === null) {
+            const infoBox = header.closest('.project-widget');
+            if (infoBox.classList.contains('expanding') || infoBox.classList.contains('collapsing')) {
+                return; // Ignorer si déjà en cours d'animation
+            }
+            
+            currentlyExpanding = infoBox;
+            setTimeout(() => {
+                currentlyExpanding = null;
+            }, 500); // Délai de sécurité pour éviter les clics rapides
+        }
+    });
+}
+
+function toggleInfoBox(header) {
+    const infoBox = header.closest('.project-widget');
+    if (!infoBox) return;
+
+    // Nouvel objectif : ouvrir en modal plein écran si UnifiedModal disponible
+    if (window.UnifiedModal && typeof window.UnifiedModal.openProjectWidget === 'function') {
+        window.UnifiedModal.openProjectWidget(infoBox);
+        return;
+    }
+
+    // Fallback legacy (ancien comportement expand/collapse) si le système unifié n'est pas chargé
+    const isExpanded = infoBox.classList.contains('expanded');
+    infoBox.classList.toggle('expanded', !isExpanded);
+}
+
+function openImageModal(imageUrl, caption) {
+    const modal = document.getElementById('imageModal');
+    const modalImage = document.getElementById('modalImage');
+    const modalCaption = document.getElementById('modalCaption');
+    
+    // Pause all testimonials before showing modal
+    if (typeof window.pauseAllTestimonials === 'function') {
+        window.pauseAllTestimonials();
+    }
+    
+    modalImage.src = imageUrl;
+    modalCaption.textContent = caption || '';
+    modal.style.display = 'flex';
+    
+    // Store image URL for download
+    modal.dataset.currentImageUrl = imageUrl;
+    
+    // Prevent body scroll
+    document.body.style.overflow = 'hidden';
+    
+    // Add animation
+    setTimeout(() => modal.classList.add('active'), 10);
+}
+
+function downloadImage() {
+    const modal = document.getElementById('imageModal');
+    const imageUrl = modal.dataset.currentImageUrl;
+    
+    if (!imageUrl) return;
+    
+    // Extract filename from URL or create a default one
+    const urlParts = imageUrl.split('/');
+    const filename = urlParts[urlParts.length - 1] || 'image.jpg';
+    
+    // Create a temporary link and trigger download
+    const link = document.createElement('a');
+    link.href = imageUrl;
+    link.download = filename;
+    link.style.display = 'none';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+function closeImageModal() {
+    const modal = document.getElementById('imageModal');
+    modal.classList.remove('active');
+    
+    // Resume all testimonials when closing modal
+    if (typeof window.resumeAllTestimonials === 'function') {
+        window.resumeAllTestimonials();
+    }
+    
+    setTimeout(() => {
+        modal.style.display = 'none';
+        
+        // Check if other modals are still open before restoring body scroll
+        try {
+            const modalIds = ['unifiedModal', 'skillModal', 'personModal'];
+            const anyModalOpen = modalIds.some(id => {
+                const el = document.getElementById(id);
+                if (!el) return false;
+                const display = (el.style && el.style.display) ? el.style.display : window.getComputedStyle(el).display;
+                return display && display !== 'none';
+            });
+            
+            // Only restore scroll if no other modals are open
+            document.body.style.overflow = anyModalOpen ? 'hidden' : 'auto';
+        } catch(e) {
+            // Fallback: restore scroll if there's an error
+            document.body.style.overflow = 'auto';
+        }
+    }, 300);
+}
+
+// Close modal with Escape key
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        closeImageModal();
+    }
+});
+
+// Enhanced blur transition effect
+document.addEventListener('DOMContentLoaded', function() {
+    const body = document.body;
+    
+    // Initialisation du système de widgets amélioré
+    initializeInfoBoxSystem();
+    
+    // Smart gallery slideshow with reusable class
+    const galleryBoxes = document.querySelectorAll('.gallery-box:not(.expanded)');
+    
+    galleryBoxes.forEach(function(galleryBox, index) {
+        // Add unique temporary ID for selector
+        const uniqueId = `gallery-slideshow-${index}`;
+        galleryBox.id = uniqueId;
+        
+        // Initialize slideshow with our centralized class
+        const slideshow = new GallerySlideshow(`#${uniqueId}`, {
+            interval: 4000,
+            transitionDuration: 1000,
+            preloadAll: true,
+            pauseWhenExpanded: true
+        });
+    });
+    
+    // Trigger blur animation after page load
+    setTimeout(() => {
+        body.classList.add('blur-animated');
+    }, 300);
+});
+</script>
+
+<!-- Technical Specifications Enhancement Script -->
+{{ $techSpecsJs := resources.Get "js/technical-specs.js" }}
+{{ if $techSpecsJs }}
+<script>{{ $techSpecsJs.Content | safeJS }}</script>
+{{ end }}
+
+<!-- Auto-include person modal if needed -->
+{{ partial "auto-person-modal.html" . }}
+
+<!-- Include skill modal for specialties and tools -->
+{{ partial "skill-modal.html" . }}
+{{ end }}

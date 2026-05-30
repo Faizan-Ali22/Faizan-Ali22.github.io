@@ -1,0 +1,39 @@
+# ============================================================
+# 👤 PROFILE DATA — Your personal information
+# ============================================================
+# This file controls your name, title, contact info, and
+# hero section across the entire portfolio.
+# ============================================================
+
+personal:
+  firstName: "Faizan Ali"          # Shown in hero section & navigation
+  lastName: "Ali"            # Shown in mobile menu
+  fullName: "Muhammad Faizan Ali"            # Shown in footer & copyright
+  title: "Game Developer"         # Job title shown in mobile menu
+
+  # The animated hero heading text — each item becomes a line
+  heroTitle:
+    - "Game"
+    - "Developer"
+    - "&"
+    - "3D Artist"
+
+  yearsExperience: "4+"                 # Stat shown on homepage (e.g. "3+", "5")
+
+# Profile photo — place the file in static/images/
+media:
+  profileImage: "/images/perofile.jpg"
+
+# Availability badge on your profile
+availability:
+  available: true                       # true = green badge, false = red
+  status: "job_seeking"                 # i18n key or plain text
+
+# Contact details — used across the entire site
+contact:
+  email: "faizanali95466@gmail.com"
+  phone: "+92 323 10 95466"
+  discord: "aquasenpai3351"
+  linkedin: "https://linkedin.com/in/faizan-ali-378562346"
+  location: "Islamabad, Pakistan"
+  status: "Open to opportunities"

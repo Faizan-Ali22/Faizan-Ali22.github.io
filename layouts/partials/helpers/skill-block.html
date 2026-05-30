@@ -1,0 +1,36 @@
+{{- /* 
+    Partial: helpers/skill-block.html
+    Description: Renders a skill card with click handler for modal
+*/ -}}
+{{- $skill := .skill -}}
+{{- $showExperience := .showExperience | default true -}}
+
+{{- /* Data Resolution */ -}}
+{{- $name := i18n $skill.key | default $skill.key -}}
+{{- $icon := $skill.iconPath | default "" -}}
+{{- $experience := $skill.experience | default 0 -}}
+{{- $color := $skill.color | default "var(--text-primary)" -}}
+
+<div class="skill-card" 
+     onclick="openSkillModal('{{ $name | safeJS }}', '{{ $icon | safeJS }}', '', '{{ $experience }}', 'svg', '{{ $skill.key | safeJS }}')"
+     style="--skill-color: {{ $color }}; cursor: pointer;"
+     role="button"
+     tabindex="0">
+    
+    <div class="skill-icon-wrapper">
+        {{ if $icon }}
+            <img src="{{ $icon }}" alt="{{ $name }}" class="skill-icon" width="550" height="40" loading="lazy">
+        {{ else if $skill.icon }}
+            <span class="skill-icon" style="font-size: 2.2rem; display: flex; align-items: center; justify-content: center;">{{ $skill.icon }}</span>
+        {{ else }}
+            <span class="skill-placeholder" style="font-size: 2.2rem; display: flex; align-items: center; justify-content: center;">🔹</span>
+        {{ end }}
+    </div>
+    
+    <div class="skill-info">
+        <span class="skill-name">{{ $name }}</span>
+        {{ if and $showExperience (gt $experience 0) }}
+            <span class="skill-experience">{{ $experience }} {{ i18n "years_short" | default "ans" }}</span>
+        {{ end }}
+    </div>
+</div>

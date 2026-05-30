@@ -1,0 +1,83 @@
+{{/*
+  Partial: Contributors Widget
+  Description: Widget compact pour afficher les contributeurs d'un projet
+  Context: 
+    - .Params (dict) - Paramètres du projet avec .contributors
+    - partial "helpers/get-person.html" - Helper pour récupérer les données des personnes
+    - .File.BaseFileName (string) - ID du projet
+*/}}
+
+{{- if .Params.contributors -}}
+<div class="project-widget contributors-box {{ .Params.contributors_size | default "size-medium" }}">
+  <div class="project-widget-header" onclick="toggleInfoBox(this)">
+    <div class="project-widget-icon contributors">
+      {{- partial "icon.html" (dict "iconId" "users") -}}
+    </div>
+    <div class="project-widget-header-content">
+      <h3 class="project-widget-title">{{ i18n "contributors" | default "Contributeurs" }}</h3>
+      <div class="project-widget-summary">{{ len .Params.contributors }} {{ if eq (len .Params.contributors) 1 }}{{ i18n "contributor" | default "contributeur" }}{{ else }}{{ i18n "contributors_plural" | default "contributeurs" }}{{ end }}</div>
+      <!-- Aperçu des avatars -->
+      <div class="contributors-preview">
+        <div class="contributor-avatars">
+          {{- range first 4 .Params.contributors -}}
+            {{- $person := partial "helpers/get-person.html" (dict "context" $ "personId" .person) -}}
+            {{- if $person -}}
+              {{- $avatarImg := dict "src" "" "width" 0 "height" 0 -}}
+              {{- if $person.Params.avatar -}}
+                {{- $avatarImg = partial "get-optimized-image.html" (dict "imagePath" $person.Params.avatar "width" 80 "quality" 90) -}}
+              {{- end -}}
+          <div class="contributor-avatar-mini {{ if not $person.Params.avatar }}placeholder{{ end }}{{ if $person }} clickable-person{{ end }}"{{ if $person }} data-person-id="{{ .person }}" title="{{ i18n "view_profile_of" | default "Voir le profil de" }} {{ $person.Params.title }}"{{ end }}>
+            {{- if $person.Params.avatar -}}
+            <img src="{{ $avatarImg.src }}" width="{{ $avatarImg.width }}" height="{{ $avatarImg.height }}" alt="{{ $person.Params.title }}">
+            {{- else -}}
+            <span>{{ substr $person.Params.title 0 1 | upper }}</span>
+            {{- end -}}
+          </div>
+            {{- end -}}
+          {{- end -}}
+          {{- if gt (len .Params.contributors) 4 -}}
+          <div class="contributor-avatar-mini placeholder">
+            <span>+{{ sub (len .Params.contributors) 4 }}</span>
+          </div>
+          {{- end -}}
+        </div>
+      </div>
+    </div>
+    <div class="project-widget-toggle">
+      {{- partial "icon.html" (dict "iconId" "chevron-down") -}}
+    </div>
+  </div>
+  <div class="project-widget-content">
+    {{/* Préparer les données pour le partial contributors-enhanced */}}
+    {{- $contributorsData := slice -}}
+    {{- range .Params.contributors -}}
+      {{- $person := partial "helpers/get-person.html" (dict "context" $ "personId" .person) -}}
+      {{- if $person -}}
+        {{/* Contributor with profile */}}
+        {{- $contributorsData = $contributorsData | append (dict 
+            "id" .person
+            "name" $person.Params.title
+            "role" (.role | default "")
+            "roles" (.roles | default slice)
+            "hasAvatar" (ne $person.Params.avatar nil)
+            "avatarPath" ($person.Params.avatar | default "")
+        ) -}}
+      {{- else -}}
+        {{/* Contributor without profile - use person ID as display name */}}
+        {{- $displayName := .person | humanize | title -}}
+        {{- $contributorsData = $contributorsData | append (dict 
+            "id" .person
+            "name" $displayName
+            "role" (.role | default "")
+            "roles" (.roles | default slice)
+            "hasAvatar" false
+            "avatarPath" ""
+        ) -}}
+      {{- end -}}
+    {{- end -}}
+    
+    {{/* Utiliser le partial enhanced pour l'affichage modal */}}
+    {{ partial "projects/widgets/modal/contributors.html" (dict "contributors" $contributorsData "projectId" .File.BaseFileName) }}
+  </div>
+</div>
+{{- end -}}

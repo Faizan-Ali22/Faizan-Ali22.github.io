@@ -1,0 +1,290 @@
+/* ========================================
+   VARIABLES GLOBALES (par défaut)
+   Centralisation des variables communes à tout le site
+   ======================================== */
+:root {
+  /* Palette principale */
+  --primary-blue: #3498db;
+  --primary-blue-dark: #2980b9;
+  --primary-blue-bg: rgba(52, 152, 219, 0.35);
+  --primary-blue-bg-hover: rgba(52, 152, 219, 0.5);
+  --primary-blue-border: rgba(52, 152, 219, 0.7);
+  --primary-blue-border-hover: rgba(52, 152, 219, 0.8);
+  --primary-teal: var(--accent, #4fd1c7);
+  --primary-teal-light: #7be3db;
+  --primary-bg: #1a1a1a;
+
+  /* Verre / Glass */
+  --glass-bg: rgba(20, 24, 32, 0.5);
+  --glass-bg-strong: rgba(20, 24, 32, 0.6);
+  --glass-bg-light: rgba(20, 24, 32, 0.18);
+  --glass-bg-lighter: rgba(20, 24, 32, 0.15);
+  --glass-bg-hover: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --glass-border-light: rgba(255, 255, 255, 0.1);
+  --glass-border-lighter: rgba(255, 255, 255, 0.2);
+
+  /* Typographie */
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.8);
+  --text-muted: rgba(255, 255, 255, 0.7);
+
+  /* Couleurs primaires génériques */
+  --primary-color: var(--primary-blue);
+  --primary-color-dark: var(--primary-blue-dark);
+  --primary-color-rgb: 52, 152, 219;
+
+  /* Ombres */
+  --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(52, 152, 219, 0.2);
+  --shadow-primary: 0 8px 32px rgba(52, 152, 219, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  --shadow-primary-hover: 0 15px 45px rgba(52, 152, 219, 0.4), 0 0 25px rgba(52, 152, 219, 0.3);
+  --shadow-tech: 0 2px 8px rgba(52, 152, 219, 0.3);
+
+  /* Gradients */
+  --gradient-blue: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-dark));
+  --gradient-teal: linear-gradient(135deg, var(--primary-teal), var(--primary-teal-light));
+
+  /* Rayons / Border radius */
+  --border-radius-sm: 12px;
+  --border-radius-md: 16px;
+  --border-radius-lg: 20px;
+  --border-radius-pill: 15px;
+  --border-radius-circle: 50%;
+
+  /* Transitions */
+  --transition-smooth: all 0.3s ease;
+  --transition-transform: transform 0.3s ease;
+
+  /* Espacements */
+  --padding-glass: 1.5rem;
+  --padding-btn: 0.75rem 1.25rem;
+  --padding-pill: 0.3rem 0.7rem;
+  --gap-sm: 0.5rem;
+  --gap-md: 1rem;
+  --gap-lg: 1.5rem;
+
+  /* Typo sizes */
+  --font-size-sm: 0.75rem;
+  --font-size-base: 0.9rem;
+  --font-size-lg: 1.1rem;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Boutons réseaux / services */
+  --steam-primary: #1b2838;
+  --steam-secondary: #2a475e;
+  --steam-accent: #66c0f4;
+  --github-primary: #24292e;
+  --github-secondary: #161b22;
+  --github-accent: #f0f6fc;
+  --youtube-primary: #ff0000;
+  --youtube-secondary: #cc0000;
+  --xbox-primary: #107c10;
+  --xbox-secondary: #0e6b0e;
+  --xbox-accent: #92c353;
+  --gamepad-primary: #0e7490;
+  --gamepad-secondary: #0891b2;
+  --gamepad-accent: #22c55e;
+  --external-primary: #6366f1;
+  --external-secondary: #4f46e5;
+  --external-accent: #a78bfa;
+
+  /* === Accent (ajouté pour compat rétro & usage global) === */
+  --accent: #4fd1c7;
+  --accent-secondary: #7be3db;
+  --accent-rgb: 79, 209, 199;
+  --accent-soft: rgba(var(--accent-rgb), 0.15);
+  --accent-border: rgba(var(--accent-rgb), 0.3);
+  --accent-glow: 0 0 30px rgba(var(--accent-rgb), 0.35);
+
+  /* === Legacy / Compatibilité (issu de l'ancien variables.css) === */
+  /* Échelle background neutre */
+  --color-bg-900: #0a0e13;
+  --color-bg-850: #0f1419;
+  --color-bg-800: #151b23;
+  --color-bg-750: #1a212a;
+  --color-bg-700: #1f2937;
+  --color-bg-600: #374151;
+  --color-bg-500: #6b7280;
+  --color-bg-400: #9ca3af;
+  --color-bg-300: #d1d5db;
+
+  /* Statuts */
+  --status-success: #22c55e;
+  --status-success-rgb: 34, 197, 94;
+  --status-warning: #fbbf24;
+  --status-warning-rgb: 251, 191, 36;
+
+  /* Typographie complémentaire */
+  --font-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-black: 900;
+
+  /* Rayons legacy (synonymes) */
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 15px;
+  --radius-lg: 20px;
+  --radius-xl: 30px;
+
+  /* Ombres legacy */
+  --shadow-sm: 0 2px 6px rgba(0,0,0,0.25);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.35);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.45);
+
+  /* Transitions legacy */
+  --transition-base: all .3s cubic-bezier(.4,0,.2,1);
+  --transition-fast: all .15s cubic-bezier(.4,0,.2,1);
+
+  /* Gradient accent */
+  --gradient-accent: linear-gradient(135deg, rgba(var(--accent-rgb),0.8), rgba(var(--accent-rgb),0.6));
+
+  /* Namespace PS5 (centralisé) */
+  --ps5-blue: #0070f3;
+  --ps5-blue-dark: #003d82;
+  --ps5-blue-light: #1e88e5;
+  --ps5-white: #ffffff;
+  --ps5-black: #000000;
+  --ps5-gray-900: var(--color-bg-900);
+  --ps5-gray-850: var(--color-bg-850);
+  --ps5-gray-800: var(--color-bg-800);
+  --ps5-gray-750: var(--color-bg-750);
+  --ps5-gray-700: var(--color-bg-700);
+  --ps5-gray-600: var(--color-bg-600);
+  --ps5-gray-500: var(--color-bg-500);
+  --ps5-gray-400: var(--color-bg-400);
+  --ps5-gray-300: var(--color-bg-300);
+  --ps5-games: #00d4ff;
+  --ps5-apps: #ff6b35;
+  --ps5-mods: #8e44ad;
+  --ps5-shadow: rgba(0, 0, 0, 0.8);
+  --ps5-shadow-light: rgba(0, 0, 0, 0.3);
+  --ps5-border-radius: 20px;
+  --ps5-border-radius-small: 12px;
+  --ps5-transition: var(--transition-base);
+  --ps5-transition-fast: var(--transition-fast);
+  --ps5-glow: 0 0 20px rgba(30, 136, 229, 0.3);
+
+  /* === Hero Background (Espace profond) === */
+  --hero-space-1: #0A1E54; /* Centre / haut */
+  --hero-space-2: #102965;
+  --hero-space-3: #14337A;
+  --hero-space-4: #1B4690;
+  --hero-space-5: #2449B2; /* Bas extrême */
+  --hero-overlay-mobile: rgba(10, 30, 84, 0.1);
+  --hero-radial-gradient: radial-gradient(ellipse 280% 280% at 50% 25%, 
+    rgba(10, 30, 84, 0.8) 0%,
+    rgba(16, 41, 101, 0.6) 25%,
+    rgba(20, 51, 122, 0.4) 50%,
+    rgba(27, 70, 144, 0.2) 75%,
+    transparent 100%
+  );
+  --hero-linear-gradient: linear-gradient(to bottom,
+    var(--hero-space-1) 0%,
+    var(--hero-space-2) 25%,
+    var(--hero-space-3) 50%,
+    var(--hero-space-4) 75%,
+    var(--hero-space-5) 100%
+  );
+
+  /* Couleurs vagues hero (mode sombre) */
+  --hero-wave-color-1: rgba(255,255,255,0.4);
+  --hero-wave-color-2: rgba(200,240,255,0.3);
+  --hero-wave-color-3: rgba(180,230,255,0.35);
+  --hero-wave-color-4: rgba(150,220,255,0.25);
+  --hero-wave-color-5: rgba(120,200,255,0.2);
+  --hero-wave-color-6: rgba(100,180,255,0.15);
+  --hero-wave-color-7: rgba(80,160,255,0.1);
+}
+
+[data-theme="light"] {
+  --primary-bg: #f5f7fa;
+  --text-primary: #1a1f29;
+  --text-secondary: rgba(26, 31, 41, 0.85);
+  --text-muted: rgba(26, 31, 41, 0.6);
+  --glass-bg: rgba(255, 255, 255, 0.65);
+  --glass-bg-strong: rgba(255, 255, 255, 0.8);
+  --glass-bg-light: rgba(255, 255, 255, 0.35);
+  --glass-bg-lighter: rgba(255, 255, 255, 0.25);
+  --glass-border: rgba(0, 0, 0, 0.08);
+  --glass-border-light: rgba(0, 0, 0, 0.06);
+  --glass-border-lighter: rgba(0, 0, 0, 0.12);
+
+  /* Overrides surfaces + accents dérivées */
+  --surface-strong: rgba(255,255,255,0.85);
+  --surface-medium: rgba(255,255,255,0.75);
+  --surface-alt: rgba(240,243,247,0.85);
+  --surface-nav-start: rgba(230,235,240,0.9);
+  --surface-nav-end: rgba(245,247,250,0.9);
+  --surface-nav-active-end: rgba(240,244,248,0.95);
+  --accent-alt: #30c9c0;
+  --shimmer-gradient: linear-gradient(90deg, transparent, rgba(0,0,0,0.08), transparent);
+  --progress-bg: var(--surface-strong);
+  --progress-fill: linear-gradient(90deg, var(--accent), var(--accent-80));
+
+  /* === Footer (extraction footer.css) === */
+  --footer-bg: rgba(255,255,255,0.65);
+  --footer-card-bg: rgba(255,255,255,0.5);
+  --footer-card-bg-hover: rgba(255,255,255,0.65);
+  --footer-card-border-color: rgba(var(--accent-rgb),0.25);
+  --footer-card-border-hover-color: rgba(var(--accent-rgb),0.45);
+  --footer-separator-dots-bg: rgba(255,255,255,0.6);
+  --footer-label-color: rgba(26,31,41,0.5);
+  --footer-text-secondary: rgba(26,31,41,0.75);
+  --footer-text-tertiary: rgba(26,31,41,0.55);
+  --footer-rights-color: rgba(26,31,41,0.4);
+  --footer-link-hover-color: var(--accent);
+  --footer-tech-bg: rgba(var(--accent-rgb),0.12);
+  --footer-tech-bg-hover: rgba(var(--accent-rgb),0.18);
+  --footer-tech-border: rgba(var(--accent-rgb),0.25);
+  --footer-tech-border-hover: rgba(var(--accent-rgb),0.45);
+  /* === Hero Background (override light) === */
+  --hero-radial-gradient: radial-gradient(ellipse 280% 280% at 50% 25%,
+    rgba(255,255,255,0.95) 0%,
+    rgba(255,255,255,0.85) 25%,
+    rgba(247,249,252,0.65) 50%,
+    rgba(238,242,246,0.4) 75%,
+    transparent 100%
+  );
+  --hero-linear-gradient: linear-gradient(to bottom,
+    #0400ff 0%,
+    #0066ff 25%,
+    #0080ff 50%,
+    #0077ff 75%,
+    #0077ff 100%
+  );
+
+  /* Couleurs vagues hero (mode clair – bleus plus prononcés) */
+  --hero-wave-color-1: rgb(0, 119, 255); /* base plus vive */
+  --hero-wave-color-2: rgb(0, 132, 255);
+  --hero-wave-color-3: rgb(0, 149, 255);
+  --hero-wave-color-4: rgb(30, 161, 255);
+  --hero-wave-color-5: rgb(80, 179, 255);
+  --hero-wave-color-6: rgb(120, 194, 255);
+  --hero-wave-color-7: rgb(160, 211, 255);
+
+  /* === Accent Light (remplacement teal -> bleu vagues hero) === */
+  --accent: #0077ff; /* Base (ex hero wave mid) */
+  --accent-secondary: #3fa5ff; /* Lumière */
+  --accent-rgb: 0,119,255;
+  --accent-soft: rgba(var(--accent-rgb),0.14);
+  --accent-border: rgba(var(--accent-rgb),0.35);
+  --accent-glow: 0 0 32px rgba(var(--accent-rgb),0.45);
+  /* Nuances dérivées utiles */
+  --accent-05: rgba(var(--accent-rgb),0.05);
+  --accent-10: rgba(var(--accent-rgb),0.10);
+  --accent-15: rgba(var(--accent-rgb),0.15);
+  --accent-20: rgba(var(--accent-rgb),0.20);
+  --accent-25: rgba(var(--accent-rgb),0.25);
+  --accent-30: rgba(var(--accent-rgb),0.30);
+  --accent-40: rgba(var(--accent-rgb),0.40);
+  --accent-50: rgba(var(--accent-rgb),0.50);
+  --accent-60: rgba(var(--accent-rgb),0.60);
+  --accent-70: rgba(var(--accent-rgb),0.70);
+  --accent-80: rgba(var(--accent-rgb),0.80);
+  --accent-90: rgba(var(--accent-rgb),0.90);
+  /* Gradient cohérent avec les vagues */
+  --gradient-accent: linear-gradient(135deg, rgba(var(--accent-rgb),0.85), rgba(var(--accent-rgb),0.55));
+}

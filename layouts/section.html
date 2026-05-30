@@ -1,0 +1,14 @@
+{{ define "main" }}
+{{ if eq .Section "posts" }}
+  <!-- Use posts/list.html template for posts section -->
+  {{ partial "posts-list.html" . }}
+{{ else }}
+  <!-- Default section template -->
+  <h1>{{ .Title }}</h1>
+  {{ .Content }}
+  {{ range .Pages }}
+    <h2><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h2>
+    {{ .Summary }}
+  {{ end }}
+{{ end }}
+{{ end }}

@@ -1,0 +1,70 @@
+{{- /* Load localized data files */ -}}
+{{- $programmingLanguages := partial "get-localized-data.html" (dict "context" . "dataName" "programming_languages") -}}
+{{- $frameworksEngines := partial "get-localized-data.html" (dict "context" . "dataName" "frameworks_engines") -}}
+{{- $specialties := partial "get-localized-data.html" (dict "context" . "dataName" "specialties") -}}
+{{- $softSkills := partial "get-localized-data.html" (dict "context" . "dataName" "soft_skills") -}}
+
+<section id="competences" class="skills-section">
+    <div class="skills-header section-header-unified">
+        <h2 class="section-title-unified">{{ i18n "technical_skills" | default "Technical Skills" }}</h2>
+        <p class="skills-subtitle section-subtitle-unified">{{ i18n "skills_subtitle" | default "Mastering modern technologies." }}</p>
+    </div>
+    
+    <div class="skills-categories-grid">
+        <div class="skills-category">
+            <h4>{{ i18n "programming_languages" | default "Programming Languages" }}</h4>
+            <div class="skills-grid">
+                {{ with $programmingLanguages }}
+                {{ range . }}
+                    {{ if .displayedInPortfolio }}
+                    {{ partial "helpers/skill-block.html" (dict "skill" . "skillType" "programming-language" "context" $) }}
+                    {{ end }}
+                {{ end }}
+                {{ end }}
+            </div>
+        </div>
+
+        <div class="skills-category">
+            <h4>{{ i18n "frameworks_engines" | default "Frameworks & Engines" }}</h4>
+            <div class="skills-grid">
+                {{ with $frameworksEngines }}
+                {{ range . }}
+                    {{ if .displayedInPortfolio }}
+                    {{ partial "helpers/skill-block.html" (dict "skill" . "skillType" "framework-engine" "context" $) }}
+                    {{ end }}
+                {{ end }}
+                {{ end }}
+            </div>
+        </div>
+        
+        <div class="skills-category">
+            <h4>{{ i18n "specialties" | default "Specialties" }}</h4>
+            <div class="skills-grid">
+                {{ with $specialties }}
+                {{ range . }}
+                    {{ if .displayedInPortfolio }}
+                    {{ partial "helpers/skill-block.html" (dict "skill" . "skillType" "specialty" "context" $ "showExperience" false) }}
+                    {{ end }}
+                {{ end }}
+                {{ end }}
+            </div>
+        </div>
+
+        <div class="skills-category">
+            <h4>{{ i18n "soft_skills" | default "Soft Skills" }}</h4>
+            <div class="skills-grid">
+                {{ with $softSkills }}
+                {{ range . }}
+                {{ partial "helpers/skill-block.html" (dict "skill" . "skillType" "soft-skill" "context" $ "showExperience" false) }}
+                {{ end }}
+                {{ end }}
+            </div>
+        </div>
+    </div>
+    
+   <div class="skills-footer">
+        <a href="{{ "/skills" | relLangURL }}" class="btn-action">
+            <span>{{ i18n "see_all_skills" | default "See all skills" }}</span>
+        </a>
+    </div>
+</section>

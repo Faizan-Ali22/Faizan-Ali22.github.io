@@ -1,0 +1,413 @@
+// =============================================================================
+// PROJECT WIDGETS - BASE VARIABLES, MIXINS & PLACEHOLDERS
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// VARIABLES
+// -----------------------------------------------------------------------------
+
+// Widget spacing
+$widget-padding: 1rem;
+$widget-padding-lg: 1.5rem;
+$widget-padding-sm: 0.8rem;
+$widget-gap: 1rem;
+$widget-gap-lg: 1.2rem;
+$widget-gap-sm: 0.8rem;
+
+// Widget gradients
+$widget-gradients: (
+  'primary': linear-gradient(135deg, var(--primary-teal), var(--primary-blue)),
+  'gold': linear-gradient(135deg, #f39c12, #e67e22),
+  'award': linear-gradient(135deg, var(--primary-teal), var(--primary-blue)),
+  'client-logo': linear-gradient(135deg, var(--primary-blue), var(--primary-teal)),
+  'contributor-avatar': linear-gradient(135deg, var(--primary-teal), var(--primary-blue)),
+  'downloads-value': linear-gradient(135deg, var(--primary-blue), var(--primary-teal)),
+  'grade-value': linear-gradient(135deg, var(--primary-green), var(--primary-teal)),
+  'ranking-position': linear-gradient(135deg, var(--primary-gold), #f39c12),
+  'youtube-play': radial-gradient(circle, rgba(204,0,0,0.9) 0%, rgba(204,0,0,0.7) 100%)
+);
+
+// Widget backgrounds & borders
+$widget-item-bg: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+$widget-item-border: 1px solid rgba(255,255,255,0.08);
+$widget-item-hover-bg: linear-gradient(135deg, rgba(52,152,219,0.1) 0%, rgba(255,255,255,0.05) 100%);
+$widget-item-hover-border: rgba(52,152,219,0.3);
+
+// Widget shadows
+$widget-shadows: (
+  'default': 0 4px 15px rgba(0,0,0,0.2),
+  'hover': 0 8px 25px rgba(0,0,0,0.3),
+  'icon': 0 4px 15px rgba(0,0,0,0.3),
+  'icon-hover': 0 6px 20px rgba(0,0,0,0.4)
+);
+
+// Widget transitions
+$widget-transition: all 0.3s ease;
+$widget-transition-smooth: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+
+// -----------------------------------------------------------------------------
+// MIXINS
+// -----------------------------------------------------------------------------
+
+// Widget item base styling
+@mixin widget-item-base {
+  background: $widget-item-bg;
+  border: $widget-item-border;
+  border-radius: var(--border-radius-sm);
+  transition: $widget-transition;
+  backdrop-filter: none;
+}
+
+// Widget item hover effect
+@mixin widget-item-hover($transform: translateY(-2px)) {
+  &:hover {
+    transform: $transform;
+    background: $widget-item-hover-bg;
+    border-color: $widget-item-hover-border;
+    box-shadow: map-get($widget-shadows, 'hover');
+  }
+}
+
+// Widget item with left border accent
+@mixin widget-item-with-accent($color: var(--primary-blue), $width: 3px) {
+  border-left: $width solid $color;
+  
+  &:hover {
+    border-left-color: $color;
+  }
+}
+
+// Widget list container
+@mixin widget-list-container($gap: $widget-gap-lg) {
+  display: flex;
+  flex-direction: column;
+  gap: $gap;
+}
+
+// Widget flex item (for two-column layouts)
+@mixin widget-flex-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $widget-padding;
+}
+
+// Widget icon circle
+@mixin widget-icon-circle($size: 2.5rem, $bg: null) {
+  width: $size;
+  height: $size;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+  
+  @if $bg {
+    background: $bg;
+  }
+  
+  box-shadow: map-get($widget-shadows, 'icon');
+  
+  .project-widget:hover & {
+    transform: scale(1.1);
+    box-shadow: map-get($widget-shadows, 'icon-hover');
+  }
+}
+
+// Widget gradient text
+@mixin widget-gradient-text($gradient-key: 'primary') {
+  background: map-get($widget-gradients, $gradient-key);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+// Widget hover transform
+@mixin widget-hover-transform($x: 0, $y: -2px, $scale: 1) {
+  &:hover {
+    transform: translateX($x) translateY($y) scale($scale);
+  }
+}
+
+// Widget preview vs expanded content
+@mixin widget-content-states {
+  .project-widget-content {
+    transition: $widget-transition;
+  }
+  
+  // Closed state: content completely hidden
+  &:not(.expanded) {
+    .project-widget-content {
+      display: none;
+    }
+    
+    .project-widget-header {
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
+  }
+  
+  // Expanded state: content visible
+  &.expanded .project-widget-content {
+    display: block;
+    max-height: none;
+    overflow-y: auto;
+  }
+}
+
+// Widget custom scrollbar
+@mixin widget-scrollbar {
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: rgba(255,255,255,0.1);
+    border-radius: 3px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: map-get($widget-gradients, 'primary');
+    border-radius: 3px;
+    
+    &:hover {
+      background: linear-gradient(135deg, var(--primary-blue), var(--primary-teal));
+    }
+  }
+}
+
+// -----------------------------------------------------------------------------
+// PLACEHOLDERS
+// -----------------------------------------------------------------------------
+
+// Common item layout
+%widget-item-layout {
+  @include widget-item-base;
+  @include widget-flex-item;
+  @include widget-item-hover;
+}
+
+// Common list layout
+%widget-list-layout {
+  @include widget-list-container;
+}
+
+// Common info section (name + description + meta)
+%widget-info-section {
+  flex: 1;
+  min-width: 0;
+  
+  .name {
+    color: var(--text-primary);
+    font-weight: var(--font-weight-semibold);
+    font-size: 1rem;
+    margin-bottom: 0.2rem;
+  }
+  
+  .description {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.4;
+    margin-bottom: 0.2rem;
+  }
+  
+  .meta {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+  }
+}
+
+// Common avatar/logo styling
+%widget-avatar {
+  @include widget-icon-circle(2.5rem);
+  overflow: hidden;
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  &.placeholder {
+    background: map-get($widget-gradients, 'contributor-avatar');
+    color: #fff;
+    font-weight: var(--font-weight-bold);
+    font-size: 1rem;
+  }
+}
+
+// Common preview item (for collapsed state)
+%widget-preview-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  
+  .preview-value {
+    font-weight: var(--font-weight-bold);
+    min-width: 40px;
+  }
+  
+  .preview-info {
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .preview-label {
+    color: var(--text-primary);
+    font-size: 0.8rem;
+    font-weight: var(--font-weight-medium);
+    line-height: 1.2;
+    margin-bottom: 0.1rem;
+  }
+  
+  .preview-meta {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// MOBILE OPTIMIZATIONS
+// -----------------------------------------------------------------------------
+
+// Disable expensive visual effects on mobile for better performance
+@media (max-width: 768px) {
+  // Disable all backdrop-filter (blur effects)
+  .widget-card,
+  .widget-stats-bar,
+  .widget-note,
+  .widget-icon,
+  .widget-badge,
+  .project-widget,
+  .project-widget-header,
+  .project-widget-content {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  
+  // Remove all box-shadows
+  .widget-card,
+  .widget-stats-bar,
+  .widget-note,
+  .widget-icon,
+  .widget-badge,
+  .project-widget,
+  .project-widget-header,
+  .project-widget-item,
+  .project-widget-gallery-item,
+  .project-widget-award-item,
+  .project-widget-client-item,
+  .project-widget-contributor-item {
+    box-shadow: none;
+  }
+  
+  // Disable hover effects (transforms, background changes, border changes)
+  .widget-card:hover,
+  .project-widget-gallery-item:hover,
+  .project-widget-award-item:hover,
+  .project-widget-client-item:hover,
+  .project-widget-contributor-item:hover,
+  .project-widget-time-stat:hover,
+  .project-widget-spec-item:hover,
+  .project-widget-phase-item:hover,
+  .tool-card:hover,
+  .specialty-card:hover,
+  .soft-skill-card:hover,
+  .award-card:hover,
+  .contrib-card:hover,
+  .client-card:hover,
+  .platform-card:hover,
+  .testimonial-item:hover,
+  .project-widget:hover,
+  .project-widget-header:hover {
+    transform: none;
+    box-shadow: none;
+    background: inherit;
+    border-color: inherit;
+    
+    &::before,
+    &::after {
+      opacity: 0;
+    }
+  }
+  
+  // Disable icon hover transforms
+  .project-widget-icon:hover,
+  .widget-icon:hover,
+  .project-widget-award-icon:hover,
+  .project-widget-contributor-avatar:hover,
+  .project-widget-gallery-zoom-icon:hover,
+  .project-widget-toggle:hover,
+  .project-widget-client-logo:hover,
+  .contrib-avatar:hover,
+  .client-logo:hover,
+  .platform-icon:hover,
+  .award-icon:hover {
+    transform: none;
+    box-shadow: none;
+    background: inherit;
+  }
+  
+  // Simplify backgrounds - remove gradients for solid colors
+  .widget-card,
+  .project-widget-award-item,
+  .project-widget-client-item,
+  .project-widget-contributor-item,
+  .project-widget-time-stat,
+  .project-widget-spec-item {
+    background: rgba(255,255,255,0.04);
+  }
+  
+  // Disable text-shadow effects
+  .project-widget-downloads-value,
+  .project-widget-grade-value,
+  .project-widget-ranking-position,
+  .project-widget-time-value,
+  .project-widget-contributor-name {
+    text-shadow: none;
+  }
+  
+  // Disable gallery overlay effects
+  .project-widget-gallery-item:hover {
+    .project-widget-gallery-overlay,
+    .gallery-item-overlay {
+      opacity: 0;
+    }
+    
+    .project-widget-gallery-zoom-icon {
+      display: none;
+    }
+    
+    img {
+      transform: none;
+      filter: none;
+    }
+  }
+  
+  // Disable caption animation
+  .project-widget-gallery-caption,
+  .gallery-item-caption {
+    transform: none;
+    position: static;
+  }
+  
+  // Remove cursor pointer (not relevant on touch devices)
+  .project-widget,
+  .widget-card,
+  .project-widget-gallery-item,
+  .project-widget-award-item,
+  .project-widget-client-item,
+  .project-widget-contributor-item,
+  .contrib-card,
+  .client-card,
+  .platform-card,
+  .award-card,
+  .specialty-card,
+  .soft-skill-card,
+  .tool-card {
+    cursor: default;
+  }
+}

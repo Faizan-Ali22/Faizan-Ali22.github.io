@@ -1,0 +1,132 @@
+﻿// Specialties Widget Modal Styles
+// Uses base components from _project-widget-base.scss
+
+.specialties-modal {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  // Uses .widget-stats-bar from base
+  .specialties-stats-bar {
+    @extend .widget-stats-bar;
+  }
+
+  .specialties-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+
+  // Uses .widget-card from base
+  .specialty-card {
+    @extend .widget-card;
+
+    .specialty-header {
+      display: flex;
+      align-items: center;
+      gap: .9rem;
+      margin-bottom: 1rem;
+
+      .specialty-title {
+        font-size: 1rem;
+        font-weight: 600;
+        letter-spacing: .3px;
+        margin: 0;
+      }
+    }
+
+    .specialty-description {
+      color: rgba(255,255,255,0.7);
+      line-height: 1.5;
+      margin-bottom: 1rem;
+      font-size: .9rem;
+    }
+  }
+
+  // Uses .widget-note from base
+  .developer-note {
+    @extend .widget-note;
+  }
+
+  // Specific elements not covered by base components
+  .specialty-description {
+    color: rgba(255,255,255,0.7);
+    line-height: 1.5;
+    margin-bottom: 1rem;
+    font-size: .9rem;
+  }
+
+  .specialty-header {
+    .specialty-info {
+      display: flex;
+      flex-direction: column;
+      gap: .2rem;
+    }
+
+    .specialty-subtitle {
+      font-size: .8rem;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: .2px;
+    }
+  }
+
+  .specialties-interaction-note {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    padding: .8rem 1rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    font-size: .8rem;
+    color: rgba(255,255,255,0.7);
+    
+    svg {
+      flex-shrink: 0;
+      opacity: .8;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .specialties-modal {
+    gap: 1rem;
+
+    .specialties-stats-bar {
+      padding: .6rem .8rem;
+      gap: .5rem;
+    }
+
+    .specialties-grid {
+      grid-template-columns: 1fr;
+      gap: .8rem;
+    }
+
+    .specialty-card {
+      padding: 1rem;
+      
+      .specialty-header {
+        gap: .7rem;
+        
+        .specialty-title {
+          font-size: .95rem;
+        }
+      }
+      
+      .specialty-description {
+        font-size: .85rem;
+        margin-bottom: .8rem;
+      }
+    }
+
+    // Base responsive styles are handled in _project-widget-base.scss
+    .developer-note {
+      padding: 1rem;
+    }
+
+    .specialties-interaction-note {
+      padding: .6rem .8rem;
+      font-size: .75rem;
+    }
+  }
+}

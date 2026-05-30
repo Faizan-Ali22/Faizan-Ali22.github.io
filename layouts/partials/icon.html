@@ -1,0 +1,47 @@
+{{- /* 
+    Partial: icon.html
+    Description: Renders an icon from the centralized icons data file (inline SVG for CSS styling)
+    Usage: {{ partial "icon.html" (dict "iconId" "profile" "size" "24" "class" "custom-class") }}
+    
+    Parameters:
+    - iconId: ID of the icon to display (required)
+    - size: Width and height in pixels (default: "24")
+    - class: Additional CSS classes (default: "")
+*/ -}}
+
+{{- $iconId := .iconId | default .id -}}
+
+{{- /* Map common aliases to actual icon IDs */ -}}
+{{- if eq $iconId "switch" -}}
+  {{- $iconId = "nintendo-switch" -}}
+{{- else if eq $iconId "epic" -}}
+  {{- $iconId = "epic-games" -}}
+{{- else if eq $iconId "itch" -}}
+  {{- $iconId = "itch-io" -}}
+{{- end -}}
+
+{{- $class := .class | default "" -}}
+{{- $size := .size | default "24" -}}
+{{- $found := false -}}
+
+{{- range site.Data.icons -}}
+  {{- if eq .id $iconId -}}
+    {{- $found = true -}}
+    {{- $iconPath := printf "static/%s" .path -}}
+    {{- $iconFile := readFile $iconPath -}}
+    {{- if $iconFile -}}
+      {{- $iconFile | replaceRE `<svg` (printf `<svg class="icon %s" width="%s" height="%s" style="color: inherit;"` $class $size $size) | safeHTML -}}
+    {{- else -}}
+      <img src="/{{ .path }}" 
+           alt="{{ $iconId }}" 
+           class="icon {{ $class }}" 
+           width="{{ $size }}" 
+           height="{{ $size }}"
+           loading="lazy">
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- if not $found -}}
+  <!-- Icon not found: {{ $iconId }} -->
+{{- end -}}

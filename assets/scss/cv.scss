@@ -1,0 +1,1262 @@
+/* CV Page Styles - Professional Dark Theme with Canva-inspired Design
+ * 
+ * This stylesheet provides printable and screen styles for the CV page
+ * featuring a two-column layout with dark theme and orange accent colors.
+ * All styles use CSS custom properties for easy theming and maintenance.
+ */
+
+/* CSS Custom Properties - Design System Variables */
+:root {
+  /* Colors */
+  --cv-primary-bg: #0f172a;
+  --cv-accent: #f97316;
+  --cv-accent-hover: #ea580c;
+  --cv-accent-light: rgba(249, 115, 22, .2);
+  --cv-accent-border: rgba(249, 115, 22, .4);
+  --cv-accent-muted: rgba(249, 115, 22, .6);
+  --cv-accent-subtle: rgba(249, 115, 22, .08);
+  
+  --cv-white: #fff;
+  --cv-black: #111;
+  --cv-text-primary: #e5e7eb;
+  --cv-text-secondary: #cbd5e1;
+  --cv-text-muted: #6b7280;
+  --cv-text-dark: #374151;
+  --cv-text-darker: #111827;
+  --cv-text-light: #f8fafc;
+  
+  --cv-border-light: rgba(255, 255, 255, 0.2);
+  --cv-border-subtle: rgba(255, 255, 255, 0.12);
+  --cv-border-muted: rgba(255, 255, 255, 0.6);
+  --cv-border-gray: #e5e7eb;
+  
+  --cv-bg-overlay: rgba(255, 255, 255, 0.02);
+  --cv-bg-overlay-light: rgba(255, 255, 255, 0.04);
+  --cv-bg-overlay-medium: rgba(255, 255, 255, 0.06);
+  --cv-bg-overlay-strong: rgba(255, 255, 255, 0.08);
+  --cv-bg-section: rgba(15, 23, 42, 0.05);
+  
+  /* Shadows */
+  --cv-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  
+  /* Spacing */
+  --cv-spacing-xs: 0.1rem;
+  --cv-spacing-sm: 0.2rem;
+  --cv-spacing-md: 0.3rem;
+  --cv-spacing-lg: 0.4rem;
+  --cv-spacing-xl: 0.5rem;
+  --cv-spacing-2xl: 0.6rem;
+  --cv-spacing-3xl: 0.8rem;
+  
+  --cv-padding-xs: 0.15rem;
+  --cv-padding-sm: 0.25rem;
+  --cv-padding-md: 0.35rem;
+  --cv-padding-lg: 0.45rem;
+  --cv-padding-xl: 0.55rem;
+  --cv-padding-2xl: 0.6rem;
+  --cv-padding-3xl: 0.75rem;
+  --cv-padding-4xl: 1rem;
+  
+  --cv-margin-xs: 0.1rem;
+  --cv-margin-sm: 0.2rem;
+  --cv-margin-md: 0.3rem;
+  --cv-margin-lg: 0.35rem;
+  --cv-margin-xl: 0.4rem;
+  --cv-margin-2xl: 0.5rem;
+  --cv-margin-3xl: 0.6rem;
+  --cv-margin-4xl: 0.8rem;
+  --cv-margin-5xl: 5rem;
+  
+  /* Borders */
+  --cv-border-width: 1px;
+  --cv-border-width-thick: 2px;
+  --cv-border-width-thicker: 3px;
+  --cv-border-radius-sm: 3px;
+  --cv-border-radius-md: 6px;
+  --cv-border-radius-lg: 8px;
+  --cv-border-radius-pill: 999px;
+  
+  /* Typography */
+  --cv-font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+  
+  --cv-font-size-xs: 0.7rem;
+  --cv-font-size-sm: 0.75rem;
+  --cv-font-size-md: 0.8rem;
+  --cv-font-size-base: 0.82rem;
+  --cv-font-size-lg: 0.85rem;
+  --cv-font-size-xl: 0.9rem;
+  --cv-font-size-2xl: 0.95rem;
+  --cv-font-size-3xl: 1.4rem;
+  
+  --cv-line-height-tight: 1.2;
+  --cv-line-height-normal: 1.3;
+  --cv-line-height-relaxed: 1.4;
+  
+  --cv-font-weight-normal: 400;
+  --cv-font-weight-medium: 500;
+  --cv-font-weight-semibold: 600;
+  --cv-font-weight-bold: 700;
+  
+  --cv-letter-spacing: 0.3px;
+  
+  /* Layout */
+  --cv-max-width: 860px;
+  --cv-gap-xs: 0.2rem;
+  --cv-gap-sm: 0.25rem;
+  --cv-gap-md: 0.35rem;
+  --cv-gap-lg: 0.4rem;
+  --cv-gap-xl: 0.5rem;
+  --cv-gap-2xl: 0.6rem;
+  --cv-gap-3xl: 0.8rem;
+  --cv-gap-4xl: 1rem;
+  --cv-gap-5xl: 2rem;
+  
+  /* Avatar sizes */
+  --cv-avatar-sm: 40px;
+  --cv-avatar-md: 90px;
+  --cv-avatar-lg: 100px;
+  
+  /* Project group image sizes */
+  --cv-project-image-width: 50px;
+  --cv-project-image-height: 30px;
+  --cv-project-image-width-mobile: 60px;
+  --cv-project-image-height-mobile: 36px;
+  
+  /* Tag colors */
+  --cv-tag-specialty-bg: rgba(59, 130, 246, .2);
+  --cv-tag-specialty-text: #93c5fd;
+  --cv-tag-specialty-border: rgba(59, 130, 246, .3);
+  
+  --cv-tag-lang-bg: var(--cv-accent-light);
+  --cv-tag-lang-text: var(--cv-accent);
+  --cv-tag-lang-border: var(--cv-accent-border);
+  
+  --cv-tag-framework-bg: rgba(34, 197, 94, .2);
+  --cv-tag-framework-text: #86efac;
+  --cv-tag-framework-border: rgba(34, 197, 94, .3);
+  
+  --cv-tag-soft-bg: rgba(168, 85, 247, .2);
+  --cv-tag-soft-text: #c4b5fd;
+  --cv-tag-soft-border: rgba(168, 85, 247, .3);
+  
+  --cv-tag-formation-bg: rgba(34, 197, 94, .2);
+  --cv-tag-formation-text: #86efac;
+  --cv-tag-formation-border: rgba(34, 197, 94, .3);
+  
+  /* Transitions */
+  --cv-transition-fast: 0.2s;
+}
+
+.cv-page { 
+  max-width: var(--cv-max-width); 
+  margin: 0 auto; 
+  padding: 0; 
+  background: transparent; 
+  color: var(--cv-black); 
+  box-shadow: none;
+  font-family: var(--cv-font-family);
+}
+
+/* ================================
+ * VERSION NAVIGATION - Links between CV versions
+ * ================================ */
+
+.cv-version-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--cv-padding-md) var(--cv-padding-lg);
+  background: var(--cv-bg-overlay);
+  border-bottom: var(--cv-border-width) solid rgba(255, 255, 255, 0.1);
+  margin-bottom: var(--cv-margin-lg);
+}
+
+.cv-nav-link {
+  color: var(--cv-accent);
+  text-decoration: none;
+  padding: var(--cv-padding-xs) var(--cv-padding-md);
+  border: var(--cv-border-width) solid var(--cv-accent-border);
+  border-radius: var(--cv-border-radius-md);
+  font-size: var(--cv-font-size-sm);
+  transition: all var(--cv-transition-fast);
+  background: rgba(249, 115, 22, 0.1);
+}
+
+.cv-nav-link:hover {
+  background: var(--cv-accent);
+  color: var(--cv-white);
+  transform: translateY(-1px);
+}
+
+.cv-nav-current {
+  color: var(--cv-text-primary);
+  font-size: var(--cv-font-size-sm);
+  font-weight: var(--cv-font-weight-medium);
+  padding: var(--cv-padding-xs) var(--cv-padding-md);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--cv-border-radius-md);
+}
+
+/* ================================
+ * LAYOUT - Grid System & Columns
+ * ================================ */
+
+/* Two-column responsive grid layout */
+.cv-grid { 
+  display: grid; 
+  grid-template-columns: 1fr 2fr; 
+  gap: 0; 
+}
+
+.cv-col { 
+  min-width: 0; 
+}
+
+/* Base column styles - shared properties */
+.cv-col-left,
+.cv-col-right {
+  background: var(--cv-primary-bg); 
+  color: var(--cv-text-primary); 
+  padding: var(--cv-spacing-md) var(--cv-spacing-xl) var(--cv-spacing-2xl) var(--cv-spacing-xl);
+}
+
+/* Right column specific styling */
+.cv-col-right { 
+  border-left: var(--cv-border-width-thick) solid var(--cv-accent);
+}
+
+/* Shared nested element styles for both columns */
+.cv-col-left,
+.cv-col-right {
+  .cv-section h2 { 
+    color: var(--cv-white); 
+    border-left-color: var(--cv-border-muted); 
+  }
+  
+  .cv-tags li { 
+    border-color: var(--cv-border-light); 
+    color: var(--cv-text-primary); 
+  }
+  
+  .cv-item-header span { 
+    color: var(--cv-text-secondary); 
+  }
+  
+  .cv-item-desc { 
+    color: var(--cv-text-primary); 
+  }
+  
+  a { 
+    color: var(--cv-accent); 
+  }
+}
+
+/* ================================
+ * HEADER - CV Header Section
+ * ================================ */
+
+.cv-header { 
+  display: flex; 
+  justify-content: space-between; 
+  gap: var(--cv-gap-5xl); 
+  align-items: flex-start; 
+  border-bottom: var(--cv-border-width-thick) solid var(--cv-accent); 
+  padding: var(--cv-padding-3xl) var(--cv-padding-xl) var(--cv-spacing-xs) var(--cv-padding-xl); 
+  margin: 0; 
+  background: var(--cv-primary-bg); 
+  color: var(--cv-white);
+
+  h1 { 
+    margin: 0; 
+    font-size: var(--cv-font-size-3xl); 
+    line-height: var(--cv-line-height-tight); 
+  }
+}
+
+/* Header identity section */
+.cv-id-row { 
+  display: flex; 
+  align-items: flex-start; 
+  gap: var(--cv-gap-2xl); 
+}
+
+/* Avatar styles - reusable component */
+.cv-avatar,
+.cv-avatar--header { 
+  border-radius: var(--cv-border-radius-lg); 
+  object-fit: cover; 
+  border: var(--cv-border-width-thick) solid var(--cv-accent); 
+}
+
+.cv-avatar--header { 
+  width: var(--cv-avatar-md); 
+  height: var(--cv-avatar-md); 
+}
+
+.cv-avatar { 
+  width: var(--cv-avatar-lg); 
+  height: var(--cv-avatar-lg); 
+}
+
+/* Typography utilities */
+.cv-title { 
+  font-weight: var(--cv-font-weight-semibold); 
+  color: var(--cv-text-primary); 
+  margin: var(--cv-margin-xs) 0; 
+}
+
+.cv-subtitle,
+.cv-subtag { 
+  color: var(--cv-text-primary); 
+  opacity: .9; 
+}
+
+.cv-subtag { 
+  font-style: italic; 
+  margin-top: var(--cv-margin-xs); 
+  font-size: var(--cv-font-size-xl); 
+}
+
+/* Contact information */
+.cv-coordonnees {
+  ul { 
+    list-style: none; 
+    padding: 0; 
+    margin: 0 0 var(--cv-margin-2xl) 0; 
+  }
+  
+  li { 
+    line-height: var(--cv-line-height-relaxed); 
+  }
+}
+
+.cv-contact-inline { 
+  display: flex; 
+  flex-wrap: wrap; 
+  gap: var(--cv-gap-md); 
+
+  li { 
+    background: var(--cv-text-darker); 
+    border: var(--cv-border-width) solid var(--cv-border-subtle); 
+    color: var(--cv-text-primary); 
+    border-radius: var(--cv-border-radius-pill); 
+    padding: var(--cv-padding-xs) var(--cv-padding-xl); 
+    font-size: var(--cv-font-size-lg); 
+  }
+}
+/* Alternative contact list layout */
+.cv-contact-list { 
+  margin: 0; 
+  padding: 0; 
+  list-style: none; 
+  text-align: right; 
+
+  li { 
+    color: var(--cv-text-primary); 
+  }
+  
+  a { 
+    color: var(--cv-accent); 
+    text-decoration: none; 
+  }
+}
+
+/* Portfolio link */
+.cv-portfolio-link {
+  margin-top: var(--cv-margin-lg);
+  text-align: right;
+  font-size: var(--cv-font-size-lg);
+  
+  a {
+    color: var(--cv-accent);
+    text-decoration: none;
+    font-weight: var(--cv-font-weight-medium);
+    transition: color var(--cv-transition-fast);
+    
+    &:hover {
+      color: var(--cv-accent-hover);
+      text-decoration: underline;
+    }
+  }
+}
+
+/* ================================
+ * EXPORT CONTROLS - Action Buttons
+ * ================================ */
+
+.cv-export-buttons { 
+  display: flex; 
+  gap: var(--cv-gap-xl); 
+  flex-wrap: wrap; 
+  justify-content: flex-end; 
+  margin-top: var(--cv-margin-2xl); 
+}
+
+/* Base export button styles */
+.cv-export { 
+  background: var(--cv-black); 
+  color: var(--cv-white); 
+  border: none; 
+  padding: var(--cv-padding-xl) var(--cv-padding-3xl); 
+  border-radius: var(--cv-border-radius-lg); 
+  cursor: pointer; 
+  font-size: var(--cv-font-size-lg);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--cv-gap-sm);
+  transition: background-color var(--cv-transition-fast);
+
+  &:hover {
+    background: var(--cv-text-dark);
+    color: var(--cv-white);
+  }
+
+  /* Download button variant */
+  &.cv-export-download {
+    background: var(--cv-accent);
+
+    &:hover {
+      background: var(--cv-accent-hover);
+    }
+  }
+
+  /* Black and white version button */
+  &.cv-export-bw {
+    background: var(--cv-text-darker);
+    color: var(--cv-white);
+    border-color: var(--cv-text-darker);
+
+    &:hover {
+      background: var(--cv-black);
+      border-color: var(--cv-black);
+    }
+  }
+}
+
+/* External controls container */
+.cv-external-controls {
+  display: flex;
+  justify-content: center;
+  gap: var(--cv-gap-4xl);
+  margin: var(--cv-gap-5xl) auto;
+  max-width: var(--cv-max-width);
+  padding: var(--cv-padding-4xl);
+  background: var(--cv-bg-section);
+  border-radius: var(--cv-border-radius-lg);
+}
+
+/* ================================
+ * CONTENT SECTIONS - Reusable Components
+ * ================================ */
+
+/* Base section styling */
+.cv-section { 
+  margin: var(--cv-margin-md) 0; 
+
+  &:first-child { 
+    margin-top: 0; 
+  }
+
+  h2 { 
+    font-size: var(--cv-font-size-2xl); 
+    margin: 0 0 var(--cv-margin-md) 0; 
+    border-left: 0; 
+    padding-left: 0; 
+    text-transform: uppercase; 
+    letter-spacing: var(--cv-letter-spacing); 
+    text-align: center; 
+
+    &::before { content: "- "; }
+    &::after { content: " -"; }
+  }
+}
+
+/* Base list and item components */
+.cv-list { 
+  list-style: none; 
+  padding: 0; 
+  margin: 0; 
+}
+
+.cv-item { 
+  margin: var(--cv-margin-lg) 0; 
+}
+
+/* Item header - shared component for experiences, projects, formations */
+.cv-item-header { 
+  display: flex; 
+  flex-wrap: wrap; 
+  gap: var(--cv-gap-lg) var(--cv-gap-3xl); 
+  align-items: baseline; 
+
+  strong { 
+    font-weight: var(--cv-font-weight-bold); 
+  }
+  
+  span { 
+    color: var(--cv-text-dark); 
+  }
+}
+
+.cv-item-period { 
+  margin-left: auto; 
+  color: var(--cv-text-muted); 
+}
+
+/* Column-specific overrides for accent colors */
+.cv-col-left,
+.cv-col-right {
+  .cv-item-header strong { 
+    color: var(--cv-accent); 
+  }
+  
+  .cv-item-period { 
+    color: var(--cv-accent); 
+  }
+}
+
+.cv-item-desc { 
+  margin: var(--cv-margin-xs) 0 0 0; 
+  color: var(--cv-text-dark); 
+  font-size: var(--cv-font-size-sm); 
+}
+
+/* Tag system - reusable component */
+.cv-tags { 
+  display: flex; 
+  flex-wrap: wrap; 
+  gap: var(--cv-gap-md); 
+  padding: 0; 
+  margin: var(--cv-margin-lg) 0 0 0; 
+  list-style: none; 
+
+  li { 
+    border: var(--cv-border-width) solid var(--cv-border-gray); 
+    padding: var(--cv-padding-xs) var(--cv-padding-lg); 
+    border-radius: var(--cv-border-radius-pill); 
+    font-size: var(--cv-font-size-lg); 
+    color: var(--cv-black); 
+  }
+}
+/* ================================
+ * SUMMARY SECTION
+ * ================================ */
+
+.cv-summary-top { 
+  display: flex; 
+  align-items: center; 
+  gap: var(--cv-gap-2xl); 
+}
+
+.cv-summary-text p { 
+  margin: 0; 
+  font-size: var(--cv-font-size-md);
+}
+
+/* Introduction bullet points */
+.cv-summary-bullets { 
+  margin: var(--cv-margin-md) 0 0 0; 
+  padding-left: var(--cv-gap-5xl); 
+  font-size: var(--cv-font-size-md); 
+
+  ul { 
+    margin: var(--cv-margin-sm) 0 0 0; 
+    padding-left: var(--cv-gap-4xl); 
+  }
+
+  li { 
+    margin-bottom: var(--cv-margin-xs); 
+  }
+}
+
+/* ================================
+ * SKILLS SECTION
+ * ================================ */
+
+.cv-skills { 
+  display: grid; 
+  grid-template-columns: 1fr 1fr; 
+  gap: var(--cv-gap-xl) var(--cv-gap-3xl); 
+}
+
+.cv-skill-cat { 
+  padding: 0; 
+
+  h3 { 
+    font-size: var(--cv-font-size-xl); 
+    margin: 0 0 var(--cv-margin-sm) 0; 
+    color: var(--cv-black); 
+  }
+}
+
+.cv-skill-chips { 
+  margin-top: 0; 
+
+  li { 
+    padding: var(--cv-padding-xs) var(--cv-padding-lg); 
+    font-size: var(--cv-font-size-md); 
+  }
+}
+
+/* Skills split layout for technical vs soft skills */
+.cv-skill-split { 
+  display: grid; 
+  grid-template-columns: 1fr 1fr; 
+  gap: var(--cv-gap-xl) var(--cv-gap-4xl); 
+}
+
+.cv-skill-col h3 { 
+  font-size: var(--cv-font-size-xl); 
+  margin: 0 0 var(--cv-margin-sm) 0; 
+  color: var(--cv-black); 
+}
+
+/* Column-specific skill header colors */
+.cv-col-left .cv-skill-col h3, 
+.cv-col-right .cv-skill-col h3 { 
+  color: var(--cv-white); 
+}
+/* ================================
+ * MEDIA ELEMENTS - Thumbnails & Images
+ * ================================ */
+
+/* Thumbnail images for experiences/projects */
+.cv-thumb { 
+  max-width: 40%; 
+  height: auto; 
+  border-radius: var(--cv-border-radius-md); 
+  border: var(--cv-border-width-thick) solid var(--cv-accent); 
+  display: block; 
+  margin-left: auto; 
+}
+
+/* Thumbnail wrapper with caption */
+.cv-thumb-wrap { 
+  display: block; 
+  float: right; 
+  margin: var(--cv-margin-md) 0 var(--cv-margin-sm) var(--cv-margin-2xl); 
+  text-align: center; 
+}
+
+.cv-thumb-caption { 
+  font-size: var(--cv-font-size-sm); 
+  color: var(--cv-text-primary); 
+  margin-top: var(--cv-margin-sm); 
+  letter-spacing: var(--cv-letter-spacing); 
+  text-transform: uppercase; 
+}
+
+/* ================================
+ * PROJECTS SECTION - Compact List
+ * ================================ */
+
+.cv-projects { 
+  margin-top: var(--cv-margin-xl); 
+}
+
+.cv-project {
+  .cv-item-header { 
+    gap: var(--cv-gap-md) var(--cv-gap-2xl); 
+  }
+  
+  .cv-item-desc { 
+    margin-top: var(--cv-margin-xs); 
+  }
+}
+
+.cv-project-techs { 
+  margin-top: var(--cv-margin-sm); 
+
+  li { 
+    background: var(--cv-accent-subtle); 
+    border-color: var(--cv-accent-border); 
+    color: var(--cv-text-light); 
+  }
+}
+
+/* ================================
+ * RESPONSIVE DESIGN - Mobile Adaptations
+ * ================================ */
+
+@media (max-width: 800px) {
+  .cv-skills { 
+    grid-template-columns: 1fr; 
+  }
+  
+  .cv-grid { 
+    grid-template-columns: 1fr; 
+  }
+  
+  .cv-skill-split { 
+    grid-template-columns: 1fr; 
+  }
+}
+
+/* ================================
+ * CARD COMPONENTS - Shared Layout for Formations, Experiences, Projects
+ * ================================ */
+
+/* Base card styling - shared by formations, experiences, projects */
+.cv-card-item {
+  margin: var(--cv-margin-xl) 0;
+  padding: var(--cv-padding-2xl);
+  background: var(--cv-bg-overlay);
+  border-radius: var(--cv-border-radius-md);
+  border-left: var(--cv-border-width-thick) solid var(--cv-accent-muted);
+  position: relative;
+
+  /* Card header layout */
+  &-header {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: var(--cv-gap-3xl);
+    align-items: flex-start;
+    margin-bottom: var(--cv-margin-xl);
+  }
+
+  /* Main content area */
+  &-main {
+    flex: 1;
+  }
+
+  /* Card title styling */
+  &-title {
+    font-size: var(--cv-font-size-xl);
+    font-weight: var(--cv-font-weight-bold);
+    color: var(--cv-accent);
+    margin: 0 0 var(--cv-margin-xs) 0;
+    line-height: var(--cv-line-height-normal);
+  }
+
+  /* Card subtitle styling */
+  &-subtitle {
+    font-size: var(--cv-font-size-md);
+    color: var(--cv-text-secondary);
+    font-style: italic;
+  }
+
+  /* Period/date styling */
+  &-period {
+    font-size: var(--cv-font-size-md);
+    color: var(--cv-accent);
+    font-weight: var(--cv-font-weight-semibold);
+    white-space: nowrap;
+    text-align: right;
+    justify-self: end;
+  }
+
+  /* Description text */
+  &-description {
+    color: var(--cv-text-primary);
+    font-size: var(--cv-font-size-base);
+    line-height: var(--cv-line-height-relaxed);
+    margin: 0 0 var(--cv-margin-xl) 0;
+  }
+}
+
+/* Formations - inherits from card base */
+.cv-formations-list {
+  gap: var(--cv-gap-xs);
+}
+
+.cv-formation-item {
+  @extend .cv-card-item;
+}
+
+.cv-formation-header {
+  @extend .cv-card-item-header;
+}
+
+.cv-formation-main {
+  @extend .cv-card-item-main;
+}
+
+.cv-formation-title {
+  @extend .cv-card-item-title;
+}
+
+.cv-formation-subtitle {
+  @extend .cv-card-item-subtitle;
+}
+
+.cv-formation-period {
+  @extend .cv-card-item-period;
+}
+
+.cv-formation-description {
+  @extend .cv-card-item-description;
+}
+
+/* ================================
+ * TAG SYSTEM - Unified Tag Components
+ * ================================ */
+
+/* Base tag styling */
+.cv-tag-base {
+  font-size: var(--cv-font-size-xs);
+  padding: var(--cv-padding-xs) var(--cv-padding-md);
+  border-radius: var(--cv-border-radius-md);
+  font-weight: var(--cv-font-weight-medium);
+  line-height: 1;
+  border: var(--cv-border-width) solid;
+}
+
+/* Tag container */
+.cv-tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--cv-gap-sm);
+  margin-top: var(--cv-margin-xl);
+}
+
+/* Formation-specific tags */
+.cv-formation-tags {
+  @extend .cv-tags-container;
+}
+
+.cv-formation-status-tag {
+  @extend .cv-tag-base;
+  background: var(--cv-tag-formation-bg);
+  color: var(--cv-tag-formation-text);
+  border-color: var(--cv-tag-formation-border);
+}
+
+/* Project technology tags */
+.cv-project-tags {
+  @extend .cv-tags-container;
+}
+
+.cv-project-tag {
+  @extend .cv-tag-base;
+  border-radius: var(--cv-border-radius-sm); /* Slightly smaller for project tags */
+}
+
+/* Tag variants */
+.cv-tag-specialty {
+  @extend .cv-tag-base;
+  background: var(--cv-tag-specialty-bg);
+  color: var(--cv-tag-specialty-text);
+  border-color: var(--cv-tag-specialty-border);
+}
+
+.cv-tag-lang {
+  @extend .cv-tag-base;
+  background: var(--cv-tag-lang-bg);
+  color: var(--cv-tag-lang-text);
+  border-color: var(--cv-tag-lang-border);
+}
+
+.cv-tag-framework {
+  @extend .cv-tag-base;
+  background: var(--cv-tag-framework-bg);
+  color: var(--cv-tag-framework-text);
+  border-color: var(--cv-tag-framework-border);
+}
+
+.cv-tag-soft {
+  @extend .cv-tag-base;
+  background: var(--cv-tag-soft-bg);
+  color: var(--cv-tag-soft-text);
+  border-color: var(--cv-tag-soft-border);
+}
+
+/* Mobile adjustments for formations */
+@media (max-width: 768px) {
+  .cv-formation-content {
+    flex-direction: column;
+    gap: var(--cv-gap-md);
+  }
+  
+  .cv-formation-period {
+    text-align: left;
+    align-self: flex-start;
+  }
+  
+  /* Hide technology tags on mobile */
+  .cv-project-techs,
+  .cv-project-tags {
+    display: none !important;
+  }
+}
+
+/* ================================
+ * SPECIALIZED COMPONENTS
+ * ================================ */
+
+/* Language tags with proficiency levels */
+.cv-languages .cv-tags {
+  gap: var(--cv-gap-lg);
+}
+
+.cv-language-tag {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--cv-gap-xl);
+  background: var(--cv-bg-overlay-strong) !important;
+  border: var(--cv-border-width) solid var(--cv-border-light) !important;
+  padding: var(--cv-padding-sm) var(--cv-padding-2xl) !important;
+  border-radius: var(--cv-border-radius-md) !important;
+  min-width: fit-content;
+}
+
+.cv-lang-name {
+  font-weight: var(--cv-font-weight-semibold);
+  color: var(--cv-accent);
+}
+
+.cv-lang-exp {
+  font-size: var(--cv-font-size-sm);
+  color: var(--cv-text-secondary);
+  font-weight: var(--cv-font-weight-medium);
+}
+
+/* Interest tags */
+.cv-interest-tag {
+  border-radius: var(--cv-border-radius-md) !important;
+}
+
+/* ================================
+ * EXPERIENCES SECTION - Enhanced Layout
+ * ================================ */
+
+.cv-experiences-section {
+  margin-top: var(--cv-gap-4xl);
+}
+
+/* Experience card - extends base card but with flex header */
+.cv-experience-item {
+  @extend .cv-card-item;
+  /* Override for more prominent experience cards */
+  padding: var(--cv-padding-3xl);
+  background: var(--cv-bg-overlay);
+  border-radius: var(--cv-border-radius-lg);
+  border-left: var(--cv-border-width-thicker) solid var(--cv-accent);
+  margin: var(--cv-margin-lg) 0; /* Small margins for spacing between experiences */
+}
+
+.cv-experience-header {
+  display: flex; /* Override grid with flex for experience layout */
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--cv-gap-4xl);
+  margin-bottom: var(--cv-margin-2xl);
+}
+
+.cv-experience-main {
+  @extend .cv-card-item-main;
+}
+
+.cv-experience-title {
+  @extend .cv-card-item-title;
+}
+
+/* Experience-specific subtitle styling */
+.cv-experience-company,
+.cv-experience-location {
+  font-size: var(--cv-font-size-md);
+  color: var(--cv-text-secondary);
+  font-style: italic;
+}
+
+.cv-experience-company {
+  margin-bottom: var(--cv-margin-xs);
+}
+
+/* Experience period with duration */
+.cv-experience-period {
+  font-size: var(--cv-font-size-md);
+  color: var(--cv-accent);
+  font-weight: var(--cv-font-weight-semibold);
+  text-align: right;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.cv-experience-duration {
+  font-size: var(--cv-font-size-sm);
+  color: var(--cv-text-secondary);
+  font-weight: var(--cv-font-weight-normal);
+}
+
+.cv-experience-description {
+  color: var(--cv-text-primary);
+  font-size: var(--cv-font-size-base);
+  line-height: var(--cv-line-height-relaxed);
+  margin: 0 0 var(--cv-margin-sm) 0; /* Reduced bottom margin */
+}
+
+/* Experience tags - hidden for cleaner layout */
+.cv-experience-tags {
+  display: none !important; /* Hide professional experience tags */
+  margin: 0 !important; /* Remove any residual margin */
+}
+
+.cv-experience-tag {
+  @extend .cv-tag-base;
+}
+
+.cv-tag-soft {
+  background: var(--cv-tag-soft-bg);
+  color: var(--cv-tag-soft-text);
+  border: var(--cv-border-width) solid var(--cv-tag-soft-border);
+}
+
+/* ================================
+ * PROJECTS SECTION - Individual & Grouped
+ * ================================ */
+
+.cv-projects-section {
+  margin-top: var(--cv-margin-sm);
+}
+
+/* Individual project cards */
+.cv-project-individual {
+  @extend .cv-card-item;
+
+  /* Project with background image overlay */
+  &.cv-project-with-bg {
+    background-size: cover;
+    background-position: center right;
+    background-repeat: no-repeat;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, 
+        rgba(15, 23, 42, 0.95) 0%, 
+        rgba(15, 23, 42, 0.85) 60%, 
+        rgba(15, 23, 42, 0.3) 100%);
+      border-radius: var(--cv-border-radius-md);
+      z-index: 1;
+    }
+
+    > * {
+      position: relative;
+      z-index: 2;
+    }
+  }
+}
+
+.cv-project-header {
+  @extend .cv-card-item-header;
+}
+
+.cv-project-main {
+  @extend .cv-card-item-main;
+}
+
+.cv-project-title {
+  @extend .cv-card-item-title;
+}
+
+.cv-project-subtitle {
+  @extend .cv-card-item-subtitle;
+}
+
+.cv-project-period {
+  @extend .cv-card-item-period;
+}
+
+.cv-project-description {
+  @extend .cv-card-item-description;
+}
+
+/* Project tags already defined in TAG SYSTEM section above */
+
+.cv-project-group {
+  margin: var(--cv-margin-4xl) 0;
+  padding: var(--cv-padding-3xl);
+  background: var(--cv-bg-overlay-light);
+  border-radius: var(--cv-border-radius-lg);
+  border-left: var(--cv-border-width-thicker) solid var(--cv-accent);
+}
+
+.cv-project-group-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--cv-margin-2xl);
+  gap: var(--cv-gap-3xl);
+}
+
+.cv-project-group-title {
+  font-size: var(--cv-font-size-2xl);
+  font-weight: var(--cv-font-weight-bold);
+  color: var(--cv-accent);
+  margin: 0;
+  line-height: var(--cv-line-height-normal);
+}
+
+.cv-project-group-image {
+  width: var(--cv-project-image-width);
+  height: var(--cv-project-image-height);
+  border-radius: var(--cv-border-radius-sm);
+  overflow: hidden;
+  border: var(--cv-border-width-thick) solid var(--cv-accent);
+  flex-shrink: 0;
+}
+
+.cv-project-group-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cv-project-group-content {
+  margin-left: var(--cv-margin-sm);
+}
+
+.cv-project-group-description {
+  color: var(--cv-text-primary);
+  font-size: var(--cv-font-size-lg);
+  line-height: var(--cv-line-height-relaxed);
+  margin: 0 0 var(--cv-margin-2xl) 0;
+}
+
+.cv-project-group-description strong {
+  color: var(--cv-accent);
+}
+
+.cv-project-group-skills {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--cv-gap-xs);
+}
+
+.cv-project-group-skills li {
+  position: relative;
+  padding-left: var(--cv-padding-3xl);
+  font-size: var(--cv-font-size-md);
+  color: var(--cv-text-primary);
+  line-height: var(--cv-line-height-relaxed);
+}
+
+.cv-project-group-skills li:before {
+  content: "•";
+  color: var(--cv-accent);
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+}
+
+/* Mobile adjustments for grouped projects */
+@media (max-width: 768px) {
+  .cv-project-group-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--cv-gap-lg);
+  }
+  
+  .cv-project-group-image {
+    width: var(--cv-project-image-width-mobile);
+    height: var(--cv-project-image-height-mobile);
+  }
+  
+  .cv-project-group-skills {
+    flex-direction: column;
+    gap: var(--cv-gap-xs);
+  }
+}
+
+/* ================================
+ * FULL PAGE CV - NO MARGINS
+ * ================================ */
+
+
+
+/* ================================
+ * PRINT OPTIMIZATION
+ * ================================ */
+
+@media print {
+  /* A4 Page Configuration - Standard European/International format */
+  @page {
+    size: A4 portrait;
+    margin: 8mm;
+  }
+
+  /* Force color printing - preserve ALL colors and backgrounds exactly as on screen */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Preserve two-column layout for print */
+  .cv-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 2fr !important;
+    gap: 0 !important;
+  }
+
+  /* Optimize page layout */
+  html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .cv-page {
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Hide navigation elements and site chrome */
+  .cv-version-nav,
+  .cv-external-controls,
+  #dock, #top-dock, #left-dock, #right-dock, #hero-background, 
+  footer, .toast-container, .trophies-modal, 
+  .right-dock, .top-dock, .left-dock, .dock, .dock-top, .dock-left, .dock-right,
+  nav, header:not(.cv-header), .navigation, .menu, .navbar,
+  .floating-dock, .dock-container, .top-bar, .topbar,
+  .profile-badge, #profile-badge, .badge, .user-badge,
+  .cv-export, .cv-external-controls {
+    display: none !important;
+  }
+
+  /* Set page background */
+  body, main {
+    background: var(--cv-primary-bg) !important;
+  }
+}
+
+/* ================================
+ * END OF CV STYLES
+ * ================================
+ * 
+ * This refactored stylesheet provides:
+ * 
+ * 1. CSS Custom Properties - Complete design system with semantic naming
+ * 2. Reusable Components:
+ *    - .cv-card-item - Base card layout for formations/experiences/projects
+ *    - .cv-tag-base - Unified tag system with variants
+ *    - .cv-avatar - Consistent avatar styling
+ * 3. Organized Sections:
+ *    - Layout & Grid System
+ *    - Header Components  
+ *    - Export Controls
+ *    - Content Sections (reusable)
+ *    - Tag System (unified)
+ *    - Specialized Components
+ *    - Card Components (shared layout)
+ *    - Media Elements
+ *    - Individual Sections (Formations, Experiences, Projects)
+ *    - Responsive Design
+ *    - Print Optimization
+ * 
+ * Benefits:
+ * - Reduced file size through @extend usage
+ * - Consistent styling across similar components
+ * - Easy theming via CSS custom properties
+ * - Better maintainability with semantic class names
+ * - Comprehensive documentation in English
+ */

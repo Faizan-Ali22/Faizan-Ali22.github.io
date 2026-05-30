@@ -1,0 +1,205 @@
+{{/* 
+  Person Link Partial
+  Generates a clickable person link that opens the person modal
+  
+  Parameters:
+  - .personId (required): The ID of the person
+  - .personName (optional): Display name (if different from ID)
+  - .role (optional): Role to display
+  - .showAvatar (optional): Whether to show avatar (default: false)
+  - .size (optional): Size of the link (small, medium, large)
+  - .style (optional): Style variant (badge, link, card)
+  
+  Usage:
+  {{ partial "person-link.html" (dict "personId" "clement-garcia" "role" "Développeur") }}
+*/}}
+
+{{- $personId := .personId -}}
+{{- $role := .role | default "" -}}
+{{- $showAvatar := .showAvatar | default false -}}
+{{- $size := .size | default "medium" -}}
+{{- $style := .style | default "badge" -}}
+
+{{/* Find the person data */}}
+{{- $person := "" -}}
+{{- range where $.Site.RegularPages "Section" "people" -}}
+    {{- if eq .Params.id $personId -}}
+        {{- $person = . -}}
+    {{- end -}}
+{{- end -}}
+
+{{- if $person -}}
+    {{- $displayName := .personName | default $person.Title -}}
+    
+    {{- if eq $style "badge" -}}
+        <span class="person-link person-link-badge person-link-{{ $size }}" 
+              data-person-id="{{ $personId }}" 
+              title="Voir le profil de {{ $displayName }}">
+            {{- if $showAvatar and $person.Params.avatar -}}
+                <img src="{{ $person.Params.avatar }}" alt="{{ $displayName }}" class="person-link-avatar">
+            {{- else -}}
+                <span class="person-link-icon">👤</span>
+            {{- end -}}
+            <span class="person-link-name">{{ $displayName }}</span>
+            {{- if $role -}}
+                <span class="person-link-role">({{ $role }})</span>
+            {{- end -}}
+        </span>
+    
+    {{- else if eq $style "link" -}}
+        <a class="person-link person-link-text person-link-{{ $size }}" 
+           data-person-id="{{ $personId }}" 
+           href="#" 
+           title="Voir le profil de {{ $displayName }}">
+            {{ $displayName }}{{- if $role }} ({{ $role }}){{ end -}}
+        </a>
+    
+    {{- else if eq $style "card" -}}
+        <div class="person-link person-link-card person-link-{{ $size }}" 
+             data-person-id="{{ $personId }}" 
+             title="Voir le profil de {{ $displayName }}">
+            {{- if $showAvatar and $person.Params.avatar -}}
+                <div class="person-link-avatar-container">
+                    <img src="{{ $person.Params.avatar }}" alt="{{ $displayName }}" class="person-link-avatar">
+                </div>
+            {{- end -}}
+            <div class="person-link-info">
+                <div class="person-link-name">{{ $displayName }}</div>
+                {{- if $role -}}
+                    <div class="person-link-role">{{ $role }}</div>
+                {{- end -}}
+                {{- if $person.Params.position -}}
+                    <div class="person-link-position">{{ $person.Params.position }}</div>
+                {{- end -}}
+            </div>
+        </div>
+    {{- end -}}
+    
+{{- else -}}
+    {{/* Fallback if person not found */}}
+    <span class="person-link person-link-unknown" title="Personne non trouvée: {{ $personId }}">
+        <span class="person-link-icon">❓</span>
+        <span class="person-link-name">{{ .personName | default $personId }}</span>
+        {{- if $role -}}
+            <span class="person-link-role">({{ $role }})</span>
+        {{- end -}}
+    </span>
+{{- end -}}
+
+{{/* Include CSS if not already included */}}
+{{- if not (.Site.Params.personLinksCSS | default false) -}}
+<style>
+/* Person Link Styles */
+.person-link {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    user-select: none;
+}
+
+.person-link-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(79, 209, 197, 0.1);
+    border: 1px solid rgba(79, 209, 197, 0.3);
+    border-radius: 20px;
+    padding: 4px 12px;
+    color: var(--accent-color);
+    font-size: 12px;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.person-link-badge:hover {
+    background: rgba(79, 209, 197, 0.2);
+    transform: translateY(-1px);
+}
+
+.person-link-text {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: 500;
+    border-bottom: 1px solid transparent;
+}
+
+.person-link-text:hover {
+    border-bottom-color: var(--accent-color);
+}
+
+.person-link-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 12px 16px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.person-link-card:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.person-link-avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.person-link-card .person-link-avatar {
+    width: 40px;
+    height: 40px;
+}
+
+.person-link-icon {
+    font-size: 14px;
+}
+
+.person-link-name {
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.person-link-role {
+    font-size: 11px;
+    color: var(--text-color-secondary);
+    font-style: italic;
+}
+
+.person-link-position {
+    font-size: 12px;
+    color: var(--text-color-secondary);
+    margin-top: 2px;
+}
+
+.person-link-unknown {
+    opacity: 0.6;
+    color: var(--text-color-secondary);
+}
+
+/* Size variants */
+.person-link-small {
+    font-size: 11px;
+}
+
+.person-link-small .person-link-avatar {
+    width: 20px;
+    height: 20px;
+}
+
+.person-link-large {
+    font-size: 14px;
+    padding: 6px 16px;
+}
+
+.person-link-large .person-link-avatar {
+    width: 32px;
+    height: 32px;
+}
+</style>
+{{- end -}}

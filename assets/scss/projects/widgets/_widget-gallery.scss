@@ -1,0 +1,92 @@
+// =============================================================================
+// PROJECT WIDGET - GALLERY
+// =============================================================================
+
+@import 'widget-base';
+
+.project-widget-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: $widget-gap-lg;
+}
+
+.project-widget-gallery-item {
+  position: relative;
+  aspect-ratio: 16/9;
+  border-radius: var(--border-radius-md);
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  background: var(--gallery-item-bg);
+  border: var(--gallery-item-border);
+  box-shadow: var(--gallery-item-shadow);
+  
+  &:hover {
+    transform: scale(1.08) translateY(-4px);
+    box-shadow: var(--gallery-item-hover-shadow);
+    border-color: var(--gallery-item-hover-border);
+    
+    img {
+      filter: brightness(1.1) contrast(1.2) saturate(1.1);
+      transform: scale(1.05);
+    }
+    
+    .project-widget-gallery-overlay {
+      opacity: 1;
+    }
+    
+    .project-widget-gallery-zoom-icon {
+      transform: scale(1);
+    }
+    
+    .project-widget-gallery-caption {
+      transform: translateY(0);
+    }
+  }
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.4s ease;
+    filter: brightness(0.9) contrast(1.1);
+  }
+}
+
+.project-widget-gallery-overlay {
+  position: absolute;
+  inset: 0;
+  background: var(--gallery-overlay-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+}
+
+.project-widget-gallery-zoom-icon {
+  @include widget-icon-circle(2.5rem, var(--gallery-zoom-icon-bg));
+  color: #fff;
+  transform: scale(0.8);
+  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  box-shadow: var(--gallery-zoom-icon-shadow);
+  
+  svg {
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+}
+
+.project-widget-gallery-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--gallery-caption-bg);
+  color: var(--gallery-caption-text);
+  padding: 0.5rem;
+  font-size: 0.8rem;
+  transform: translateY(100%);
+  transition: var(--transition-smooth);
+}

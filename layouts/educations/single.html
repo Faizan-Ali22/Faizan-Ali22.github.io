@@ -1,0 +1,1316 @@
+{{- define "main" -}}
+<div class="education-single">
+  <header class="education-header">
+    <h1>{{ .Title }}</h1>
+    <div class="education-meta">
+      <div class="institution">
+        {{- if .Params.school_logo -}}
+          <img src="{{ .Params.school_logo }}" alt="Logo {{ .Params.institution }}" class="institution-logo">
+        {{- end -}}
+        <div class="institution-details">
+          <span class="institution-name">{{ .Params.institution }}</span>
+          {{- if .Params.city -}}
+            <span class="city">📍 {{ .Params.city }}</span>
+          {{- end -}}
+        </div>
+      </div>
+      
+      <div class="details">
+        {{- if .Params.start_date -}}
+          {{- $startYear := (time .Params.start_date).Format "2006" -}}
+          {{- $endYear := "" -}}
+          {{- if .Params.end_date -}}
+            {{- $endYear = (time .Params.end_date).Format "2006" -}}
+          {{- else -}}
+            {{- $endYear = i18n "present" | default "En cours" -}}
+          {{- end -}}
+          <span class="period">📅 {{ $startYear }} - {{ $endYear }}</span>
+        {{- end -}}
+        
+        {{/* Map status to generic CSS class */}}
+        {{- $status := lower .Params.status -}}
+        {{- $cssClass := "unknown" -}}
+        {{- if or (eq $status "validé") (eq $status "obtenu") (eq $status "obtained") (eq $status "validée") -}}
+            {{- $cssClass = "completed" -}}
+        {{- else if or (eq $status "en cours") (eq $status "in progress") (eq $status "en préparation") (eq $status "in preparation") -}}
+            {{- $cssClass = "current" -}}
+        {{- end -}}
+        <span class="status status-{{ $cssClass }}">
+          {{- if eq $cssClass "completed" -}}
+            ✅ {{ .Params.status }}
+          {{- else if eq $cssClass "current" -}}
+            🟢 {{ .Params.status }}
+          {{- else -}}
+            {{ .Params.icon | default "🎓" }} {{ .Params.status }}
+          {{- end -}}
+        </span>
+        
+        {{- if .Params.external_link -}}
+          <a href="{{ .Params.external_link }}" target="_blank" rel="noopener noreferrer" class="external-link-btn">
+            🔗 {{ i18n "view_education" | default "Voir la formation" }}
+          </a>
+        {{- end -}}
+      </div>
+    </div>
+  </header>
+
+  <main class="education-content">
+    <div class="description">
+      <h2>{{ i18n "education_description" | default "Description de la formation" }}</h2>
+      <p>{{ .Params.description }}</p>
+    </div>
+
+
+
+    {{- if .Params.years_detail -}}
+    <div class="progression-section">
+      <h2>{{ i18n "year_progression" | default "Progression par année" }}</h2>
+      <div class="years-progress">
+        <div class="years-grid">
+          {{- range .Params.years_detail -}}
+            <div class="year-item status-{{ .status }}">
+              <span class="year-number">{{ i18n "year" | default "Année" }} {{ .year }}</span>
+              <span class="year-status">
+                {{- if eq .status "validated" -}}
+                  ✅ {{ i18n "validated" | default "Validée" }}
+                {{- else if eq .status "in_progress" -}}
+                  🟢 {{ i18n "in_progress" | default "En cours" }}
+                {{- else if eq .status "skipped" -}}
+                  ⏭️ {{ i18n "skipped" | default "Admis directement" }}
+                {{- else if eq .status "not_taken" -}}
+                  📋 {{ i18n "not_taken" | default "Non suivie" }}
+                {{- else if eq .status "completed" -}}
+                  🎓 {{ i18n "completed" | default "Terminé" }}
+                {{- else -}}
+                  📋 {{ .label }}
+                {{- end -}}
+              </span>
+            </div>
+          {{- end -}}
+        </div>
+      </div>
+    </div>
+    {{- end -}}
+
+    {{/* Testimonials Section */}}
+    {{- if .Params.testimonials -}}
+    {{- $localizedTestimonials := .Site.Data.testimonials -}}
+    {{- if eq .Language.Lang "en" -}}
+      {{- with .Site.Data.en.testimonials -}}
+        {{- $localizedTestimonials = . -}}
+      {{- end -}}
+    {{- end -}}
+    <div class="testimonials-education-section">
+      <h2>{{ i18n "testimonials" | default "Témoignages" }}</h2>
+      <div class="testimonials-education-slider">
+        <div class="testimonials-education-track">
+          {{- range .Params.testimonials -}}
+            {{- $testimonialId := . -}}
+            {{- $testimonialResults := where $localizedTestimonials "personId" $testimonialId -}}
+            {{- $testimonial := index $testimonialResults 0 -}}
+            {{- if $testimonial -}}
+              {{- $person := partial "helpers/get-person.html" (dict "context" $ "personId" $testimonial.personId) -}}
+              <div class="testimonial-education-card aero-glass">
+                <div class="testimonial-education-content">
+                  <p class="testimonial-education-text">
+                    "{{ $testimonial.text }}"
+                  </p>
+                  {{- if $person -}}
+                  <div class="testimonial-education-author clickable-person" data-person-id="{{ $testimonial.personId }}" title="{{ i18n "view_profile_of" | default "Voir le profil de" }} {{ $person.Params.title }}">
+                    <div class="testimonial-education-avatar {{ if not $person.Params.avatar }}placeholder{{ end }}">
+                      {{- if $person.Params.avatar -}}
+                        <img src="{{ $person.Params.avatar }}" alt="{{ $person.Params.title }}">
+                      {{- else -}}
+                        <span>{{ substr $person.Params.title 0 1 | upper }}</span>
+                      {{- end -}}
+                    </div>
+                    <div class="testimonial-education-info">
+                      <div class="testimonial-education-name">{{ $person.Params.title }}</div>
+                      <div class="testimonial-education-role">{{ $testimonial.position }} - {{ $testimonial.company }}</div>
+                    </div>
+                  </div>
+                  {{- else -}}
+                  <div class="testimonial-education-author">
+                    <div class="testimonial-education-avatar placeholder">
+                      <span>?</span>
+                    </div>
+                    <div class="testimonial-education-info">
+                      <div class="testimonial-education-name">{{ $testimonial.personId }}</div>
+                      <div class="testimonial-education-role">{{ $testimonial.position }} - {{ $testimonial.company }}</div>
+                    </div>
+                  </div>
+                  {{- end -}}
+                </div>
+              </div>
+            {{- end -}}
+          {{- end -}}
+        </div>
+        
+        {{- if gt (len .Params.testimonials) 1 -}}
+        <div class="slider-controls">
+          <button class="slider-btn prev" aria-label="Précédent">‹</button>
+          <div class="slider-indicators">
+            {{- range $index, $testimonial := .Params.testimonials -}}
+              <span class="indicator{{ if eq $index 0 }} active{{ end }}"></span>
+            {{- end -}}
+          </div>
+          <button class="slider-btn next" aria-label="Suivant">›</button>
+        </div>
+        
+        <!-- Barre de progression du défilement automatique -->
+        <div class="autoplay-progress-container">
+          <div class="autoplay-progress-bar"></div>
+        </div>
+        {{- end -}}
+      </div>
+    </div>
+    {{- end -}}
+
+    {{/* Vérification intelligente si au moins une catégorie a des compétences valides */}}
+    {{- $hasValidProgrammingLangs := false -}}
+    {{- $hasValidFrameworks := false -}}
+    {{- $hasValidSpecialties := false -}}
+    {{- $hasValidSoftSkills := false -}}
+    {{- $hasValidTools := false -}}
+    
+    {{/* Vérifier langages de programmation */}}
+    {{- if .Params.programming_languages -}}
+      {{- range .Params.programming_languages -}}
+        {{- $langKey := "" -}}
+        {{- if reflect.IsMap . -}}
+          {{- $langKey = .language -}}
+        {{- else -}}
+          {{- $langKey = . -}}
+        {{- end -}}
+        {{- range $.Site.Data.programming_languages -}}
+          {{- if eq .key $langKey -}}
+            {{- $hasValidProgrammingLangs = true -}}
+          {{- end -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+    
+    {{/* Vérifier frameworks */}}
+    {{- if .Params.frameworks_engines -}}
+      {{- range .Params.frameworks_engines -}}
+        {{- $frameworkKey := "" -}}
+        {{- if reflect.IsMap . -}}
+          {{- $frameworkKey = .framework -}}
+        {{- else -}}
+          {{- $frameworkKey = . -}}
+        {{- end -}}
+        {{- range $.Site.Data.frameworks_engines -}}
+          {{- if eq .key $frameworkKey -}}
+            {{- $hasValidFrameworks = true -}}
+          {{- end -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+    
+    {{/* Check specialties */}}
+    {{- if .Params.specialties -}}
+      {{- range .Params.specialties -}}
+        {{- $specialtyKey := "" -}}
+        {{- if reflect.IsMap . -}}
+          {{- $specialtyKey = .specialty -}}
+        {{- else -}}
+          {{- $specialtyKey = . -}}
+        {{- end -}}
+        {{- if $specialtyKey -}}
+          {{- range $.Site.Data.specialties -}}
+            {{- if eq .key $specialtyKey -}}
+              {{- $hasValidSpecialties = true -}}
+            {{- end -}}
+          {{- end -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+    
+    {{/* Vérifier soft skills */}}
+    {{- if .Params.soft_skills -}}
+      {{- range .Params.soft_skills -}}
+        {{- $softSkillKey := "" -}}
+        {{- if reflect.IsMap . -}}
+          {{- $softSkillKey = .skill -}}
+        {{- else -}}
+          {{- $softSkillKey = . -}}
+        {{- end -}}
+        {{- range $.Site.Data.soft_skills -}}
+          {{- if eq .key $softSkillKey -}}
+            {{- $hasValidSoftSkills = true -}}
+          {{- end -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+    
+    {{/* Vérifier tools */}}
+    {{- if .Params.tools -}}
+      {{- range .Params.tools -}}
+        {{- $toolKey := "" -}}
+        {{- if reflect.IsMap . -}}
+          {{- $toolKey = .tool -}}
+        {{- else -}}
+          {{- $toolKey = . -}}
+        {{- end -}}
+        {{- range $.Site.Data.tools -}}
+          {{- if eq .key $toolKey -}}
+            {{- $hasValidTools = true -}}
+          {{- end -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+    
+    {{- $hasAnySkills := or $hasValidProgrammingLangs $hasValidFrameworks $hasValidSpecialties $hasValidSoftSkills $hasValidTools -}}
+    {{- if $hasAnySkills -}}
+    <div class="technologies">
+      <h2>{{ i18n "acquired_skills" | default "Compétences acquises" }}</h2>
+      <div class="skills-categories-grid">
+        {{- if $hasValidProgrammingLangs -}}
+        <div class="skills-category" data-category="programming-languages">
+          <h3>{{ i18n "programming_languages" | default "Langages de programmation" }}</h3>
+        <div class="skills-grid">
+          {{- range .Params.programming_languages -}}
+            {{- $langKey := "" -}}
+            {{- if reflect.IsMap . -}}
+              {{- $langKey = .language -}}
+            {{- else -}}
+              {{- $langKey = . -}}
+            {{- end -}}
+            {{- range $.Site.Data.programming_languages -}}
+              {{- if eq .key $langKey -}}
+                {{- $localizedName := i18n .key | default .key -}}
+                {{- $experienceText := partial "helpers/format-experience.html" (dict "experience" .experience "context" $) -}}
+                <div class="skill-block clickable" 
+                     onclick="openSkillModal('{{ $localizedName }}', '{{ if .iconPath }}{{ .iconPath | absURL }}{{ else }}{{ .icon }}{{ end }}', '', '{{ .experience }}', '{{ if .iconPath }}svg{{ else }}emoji{{ end }}', '{{ .key }}')"
+                     data-skill-name="{{ .key }}"
+                     data-skill-type="programming-language">
+                  <span class="skill-icon">
+                    {{- if .iconPath -}}
+                      <img src="{{ .iconPath | absURL }}" alt="{{ $localizedName }}" class="tech-icon-svg" width="28" height="28">
+                    {{- else if .icon -}}
+                      <span class="tech-icon-emoji">{{ .icon }}</span>
+                    {{- end -}}
+                  </span>
+                  <span class="skill-name">{{ $localizedName }}</span>
+                  {{- if $experienceText -}}
+                    <span class="skill-level">{{ $experienceText }}</span>
+                  {{- end -}}
+                </div>
+              {{- end -}}
+            {{- end -}}
+          {{- end -}}
+          </div>
+        </div>
+        {{- end -}}
+
+        {{- if $hasValidFrameworks -}}
+        <div class="skills-category" data-category="frameworks-engines">
+        <h3>{{ i18n "frameworks_engines" | default "Frameworks & Moteurs" }}</h3>
+        <div class="skills-grid">
+          {{- range .Params.frameworks_engines -}}
+            {{- $frameworkKey := "" -}}
+            {{- if reflect.IsMap . -}}
+              {{- $frameworkKey = .framework -}}
+            {{- else -}}
+              {{- $frameworkKey = . -}}
+            {{- end -}}
+            {{- range $.Site.Data.frameworks_engines -}}
+              {{- if eq .key $frameworkKey -}}
+                {{- $localizedName := i18n .key | default .key -}}
+                {{- $experienceText := partial "helpers/format-experience.html" (dict "experience" .experience "context" $) -}}
+                <div class="skill-block clickable" 
+                     onclick="openSkillModal('{{ $localizedName }}', '{{ if .iconPath }}{{ .iconPath | absURL }}{{ else }}{{ .icon }}{{ end }}', '', '{{ .experience }}', '{{ if .iconPath }}svg{{ else }}emoji{{ end }}', '{{ .key }}')"
+                     data-skill-name="{{ .key }}"
+                     data-skill-type="framework">
+                  <span class="skill-icon">
+                    {{- if .iconPath -}}
+                      <img src="{{ .iconPath | absURL }}" alt="{{ $localizedName }}" class="tech-icon-svg" width="28" height="28">
+                    {{- else if .icon -}}
+                      <span class="tech-icon-emoji">{{ .icon }}</span>
+                    {{- end -}}
+                  </span>
+                  <span class="skill-name">{{ $localizedName }}</span>
+                  {{- if $experienceText -}}
+                    <span class="skill-level">{{ $experienceText }}</span>
+                  {{- end -}}
+                </div>
+              {{- end -}}
+            {{- end -}}
+          {{- end -}}
+          </div>
+        </div>
+        {{- end -}}
+
+        {{- if $hasValidSpecialties -}}
+        <div class="skills-category" data-category="specialties">
+        <h3>{{ i18n "specialties" | default "Spécialités" }}</h3>
+        <div class="skills-grid">
+          {{- range .Params.specialties -}}
+            {{- $specialtyKey := "" -}}
+            {{- if reflect.IsMap . -}}
+              {{- $specialtyKey = .specialty -}}
+            {{- else -}}
+              {{- $specialtyKey = . -}}
+            {{- end -}}
+            {{- if $specialtyKey -}}
+              {{- range $.Site.Data.specialties -}}
+                {{- if eq .key $specialtyKey -}}
+                  {{- $localizedName := i18n .key | default .key -}}
+                  {{- $localizedSubtitle := i18n (printf "%s_subtitle" .key) -}}
+                  <div class="skill-block clickable" 
+                       onclick="openSkillModal('{{ $localizedName }}', '{{ if .iconPath }}{{ .iconPath | absURL }}{{ else }}{{ .icon }}{{ end }}', '', '{{ .experience }}', '{{ if .iconPath }}svg{{ else }}emoji{{ end }}', '{{ .key }}')"
+                       data-skill-name="{{ .key }}"
+                       data-skill-type="specialty">
+                    <span class="skill-icon">
+                      {{- if .iconPath -}}
+                        <img src="{{ .iconPath | absURL }}" alt="{{ $localizedName }}" class="tech-icon-svg" width="28" height="28">
+                      {{- else if .icon -}}
+                        <span class="tech-icon-emoji">{{ .icon }}</span>
+                      {{- end -}}
+                    </span>
+                    <span class="skill-name">{{ $localizedName }}</span>
+                    {{- if $localizedSubtitle -}}
+                      <span class="skill-level">{{ $localizedSubtitle }}</span>
+                    {{- end -}}
+                  </div>
+                {{- end -}}
+              {{- end -}}
+            {{- end -}}
+          {{- end -}}
+          </div>
+        </div>
+        {{- end -}}
+
+        {{- if $hasValidSoftSkills -}}
+        <div class="skills-category" data-category="soft-skills">
+        <h3>{{ i18n "cross_functional_skills" | default "Compétences transversales" }}</h3>
+        <div class="skills-grid">
+          {{- range .Params.soft_skills -}}
+            {{- $softSkillKey := "" -}}
+            {{- if reflect.IsMap . -}}
+              {{- $softSkillKey = .skill -}}
+            {{- else -}}
+              {{- $softSkillKey = . -}}
+            {{- end -}}
+            {{- range $.Site.Data.soft_skills -}}
+              {{- if eq .key $softSkillKey -}}
+                {{- $localizedName := i18n .key | default .key -}}
+                {{- $localizedSubtitle := i18n (printf "%s_subtitle" .key) -}}
+                <div class="skill-block clickable" 
+                     onclick="openSkillModal('{{ $localizedName }}', '{{ if .iconPath }}{{ .iconPath | absURL }}{{ else }}{{ .icon }}{{ end }}', '', '{{ .experience }}', '{{ if .iconPath }}svg{{ else }}emoji{{ end }}', '{{ .key }}')"
+                     data-skill-name="{{ .key }}"
+                     data-skill-type="soft-skill">
+                  <span class="skill-icon">
+                    {{- if .iconPath -}}
+                      <img src="{{ .iconPath | absURL }}" alt="{{ $localizedName }}" class="tech-icon-svg" width="28" height="28">
+                    {{- else if .icon -}}
+                      <span class="tech-icon-emoji">{{ .icon }}</span>
+                    {{- end -}}
+                  </span>
+                  <span class="skill-name">{{ $localizedName }}</span>
+                  {{- if $localizedSubtitle -}}
+                    <span class="skill-level">{{ $localizedSubtitle }}</span>
+                  {{- end -}}
+                </div>
+              {{- end -}}
+            {{- end -}}
+          {{- end -}}
+          </div>
+        </div>
+        {{- end -}}
+
+        {{- if $hasValidTools -}}
+        <div class="skills-category" data-category="tools">
+        <h3>{{ i18n "tools" | default "Outils" }}</h3>
+        <div class="skills-grid">
+          {{- range .Params.tools -}}
+            {{- $toolKey := "" -}}
+            {{- if reflect.IsMap . -}}
+              {{- $toolKey = .tool -}}
+            {{- else -}}
+              {{- $toolKey = . -}}
+            {{- end -}}
+            {{- range $.Site.Data.tools -}}
+              {{- if eq .key $toolKey -}}
+                {{- $localizedName := i18n .key | default .key -}}
+                {{- $experienceText := partial "helpers/format-experience.html" (dict "experience" .experience "context" $) -}}
+                <div class="skill-block clickable" 
+                     onclick="openSkillModal('{{ $localizedName }}', '{{ if .iconPath }}{{ .iconPath | absURL }}{{ else }}{{ .icon }}{{ end }}', '', '{{ .experience }}', '{{ if .iconPath }}svg{{ else }}emoji{{ end }}', '{{ .key }}')"
+                     data-skill-name="{{ .key }}"
+                     data-skill-type="tool">
+                  <span class="skill-icon">
+                    {{- if .iconPath -}}
+                      <img src="{{ .iconPath | absURL }}" alt="{{ $localizedName }}" class="tech-icon-svg" width="28" height="28">
+                    {{- else if .icon -}}
+                      <span class="tech-icon-emoji">{{ .icon }}</span>
+                    {{- end -}}
+                  </span>
+                  <span class="skill-name">{{ $localizedName }}</span>
+                  {{- if $experienceText -}}
+                    <span class="skill-level">{{ $experienceText }}</span>
+                  {{- end -}}
+                </div>
+              {{- end -}}
+            {{- end -}}
+          {{- end -}}
+          </div>
+        </div>
+        {{- end -}}
+      </div>
+    </div>
+    {{- end -}}
+
+    {{- if .Params.projects -}}
+    <div class="projects-section">
+      <h2>{{ i18n "completed_projects" | default "Projets réalisés" }}</h2>
+      <div class="ps5-projects-tiles">
+        {{- range .Params.projects -}}
+          {{- $projectSlug := . -}}
+          {{- $siteProjects := where $.Site.RegularPages "Section" "projects" -}}
+          {{- $languageProjects := where $siteProjects "Lang" $.Site.Language.Lang -}}
+          {{- range where $languageProjects "Draft" false -}}
+            {{- $baseFileName := .File.BaseFileName -}}
+            {{- $cleanSlug := replace $baseFileName ".en" "" -}}
+            {{- $cleanSlug = replace $cleanSlug ".fr" "" -}}
+            {{- if eq $cleanSlug $projectSlug -}}
+              {{- $allTechnologies := slice -}}
+              {{- range .Params.programming_languages -}}{{ $allTechnologies = $allTechnologies | append . }}{{- end -}}
+              {{- range .Params.frameworks_engines -}}{{ $allTechnologies = $allTechnologies | append . }}{{- end -}}
+              
+              {{ partial "project-card-unified.html" (dict 
+                  "title" .Title
+                  "subtitle" .Params.subtitle
+                  "description" .Params.description
+                  "image" (.Params.image | default "images/placeholder-project.jpg")
+                  "url" .Permalink
+                  "status" (cond (eq .Params.status "completed") "Terminé" (cond (eq .Params.status "in-progress") "En cours" ""))
+                  "technologies" $allTechnologies
+                  "maxTechnologies" 4
+              ) }}
+            {{- end -}}
+          {{- end -}}
+        {{- end -}}
+      </div>
+    </div>
+    {{- end -}}
+
+    {{- if .Content -}}
+    <div class="additional-content">
+      {{ .Content }}
+    </div>
+    {{- end -}}
+  </main>
+</div>
+
+<style>
+.education-single {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 6rem 2rem 2rem 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.education-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  z-index: 100;
+}
+
+.education-header h1 {
+  font-size: 2.5rem;
+  color: #fff;
+  margin-bottom: 1.5rem;
+  position: relative;
+  z-index: 100;
+  background: linear-gradient(90deg, #8b5cf6, #a855f7);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.education-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.institution {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.institution-logo {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.institution-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.institution-name {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.city {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+}
+
+.details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.details > span {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+.status {
+  font-weight: 600;
+}
+
+.status-current {
+  background: linear-gradient(135deg, #10b981, #059669) !important;
+  color: #fff !important;
+  border-color: rgba(16, 185, 129, 0.5) !important;
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+}
+
+.status-completed {
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed) !important;
+  color: #fff !important;
+  border-color: rgba(139, 92, 246, 0.5) !important;
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+}
+
+.status-unknown {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.external-link-btn {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  text-decoration: none;
+  border: 1px solid rgba(59, 130, 246, 0.5);
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+}
+
+.external-link-btn:hover {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+  transform: translateY(-2px);
+}
+
+.education-content {
+  margin-top: 2rem;
+}
+
+.description {
+  margin-bottom: 2rem;
+}
+
+.description h2 {
+  color: #fff;
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.description p {
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.6;
+  font-size: 1.1rem;
+}
+
+.technologies {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 2rem;
+}
+
+.technologies h2 {
+  color: #fff;
+  margin-bottom: 2rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* Skills Categories Grid - 2x2 layout */
+.skills-categories-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.skills-category {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1.5rem;
+  backdrop-filter: blur(10px);
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+}
+
+.tech-section {
+  margin-bottom: 1.5rem;
+}
+
+.skills-category h3,
+.tech-section h3 {
+  color: #fff;
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  flex-shrink: 0;
+  text-align: center;
+  border-bottom: 2px solid rgba(var(--accent-rgb), 0.3);
+  padding-bottom: 0.75rem;
+}
+
+.skills-category h4 {
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+/* Skills grid dans chaque catégorie */
+.skills-category .skills-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+  align-content: start;
+}
+
+/* Responsive design pour mobile */
+@media (max-width: 768px) {
+  .skills-categories-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+  
+  .skills-category {
+    min-height: auto;
+  }
+  
+  .skills-category .skills-grid {
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  }
+}
+
+/* Skills Grid Layout */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.75rem;
+    width: 100%;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+/* Skill blocks - Exactement comme dans le style existant */
+.skill-block {
+    background: rgba(75, 85, 99, 0.5);
+    backdrop-filter: blur(10px) saturate(150%);
+    border: 1px solid rgba(var(--accent-rgb), 0.3);
+    border-radius: 12px;
+    padding: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 0.3rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    min-height: 100px;
+    aspect-ratio: 1;
+}
+
+.skill-block:hover {
+    background: rgba(var(--accent-rgb), 0.3);
+    border-color: rgba(var(--accent-rgb), 0.8);
+    box-shadow: 
+        0 8px 25px rgba(var(--accent-rgb), 0.3),
+        0 0 25px rgba(var(--accent-rgb), 0.2);
+    transform: translateY(-2px) scale(1.02);
+}
+
+.skill-icon {
+    font-size: 1.4rem;
+    width: auto;
+    text-align: center;
+    margin-bottom: 0.2rem;
+}
+
+.tech-icon-svg {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.tech-icon-emoji {
+    font-size: 1.4rem;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.skill-name {
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.8rem;
+    margin-bottom: 0.1rem;
+    line-height: 1.1;
+}
+
+.skill-level {
+    color: var(--accent);
+    font-size: 0.7rem;
+    font-weight: 500;
+}
+
+.skill-block.clickable {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.skill-block.clickable::after {
+    content: '✨';
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-size: 12px;
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: scale(0.8);
+}
+
+.skill-block.clickable:hover::after {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Projects Section */
+.projects-section {
+  margin: 3rem 0;
+  padding: 2rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.projects-section h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #fff;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+/* PS5 Projects Tiles Grid */
+.ps5-projects-tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 1.5rem;
+  perspective: 1000px;
+}
+
+.ps5-projects-tiles .project-card-unified {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.additional-content {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 2rem;
+  margin-top: 2rem;
+}
+
+.additional-content h2 {
+  color: #fff;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.additional-content h3 {
+  color: rgba(255, 255, 255, 0.9);
+  margin: 1.5rem 0 0.75rem 0;
+  font-weight: 600;
+}
+
+.additional-content ul {
+  margin: 0.5rem 0;
+  padding-left: 1.5rem;
+}
+
+.additional-content li {
+  margin-bottom: 0.25rem;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.5;
+}
+
+/* Testimonials Section */
+.testimonials-education-section {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.testimonials-education-section h2 {
+  color: #fff;
+  margin-bottom: 2rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.testimonials-education-slider {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 20px;
+  background: rgba(55, 65, 81, 0.4);
+  backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  box-sizing: border-box;
+}
+
+.testimonials-education-track {
+  display: flex;
+  transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+  width: 100%;
+}
+
+.testimonial-education-card {
+  min-width: 100%;
+  padding: 1.5rem 2rem;
+  background: rgba(55, 65, 81, 0.3);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 180px;
+  box-sizing: border-box;
+}
+
+.testimonial-education-card::before {
+  content: '"';
+  position: absolute;
+  top: 1rem;
+  left: 1.5rem;
+  font-size: 3rem;
+  color: rgba(255, 255, 255, 0.3);
+  opacity: 0.2;
+  font-family: serif;
+  line-height: 1;
+  z-index: 1;
+}
+
+.testimonial-education-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.testimonial-education-text {
+  color: #d1d5db;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  font-style: italic;
+  text-align: center;
+  width: 100%;
+  max-width: 100%;
+}
+
+.testimonial-education-author {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.testimonial-education-author:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+.testimonial-education-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  font-weight: bold;
+  color: white;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.testimonial-education-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.testimonial-education-avatar.placeholder {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.testimonial-education-info {
+  text-align: left;
+}
+
+.testimonial-education-name {
+  color: #fff;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  font-size: 1rem;
+}
+
+.testimonial-education-role {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.85rem;
+}
+
+/* Slider Controls */
+.testimonials-education-section .slider-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 0 0.5rem 0;
+  gap: 1rem;
+}
+
+.testimonials-education-section .slider-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1.2rem;
+  backdrop-filter: blur(10px);
+}
+
+.testimonials-education-section .slider-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: scale(1.05);
+}
+
+.testimonials-education-section .slider-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.testimonials-education-section .slider-indicators {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.testimonials-education-section .indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.testimonials-education-section .indicator.active {
+  background: #fff;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+}
+
+/* Barre de progression du défilement automatique */
+.testimonials-education-section .autoplay-progress-container {
+  width: 100%;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.1);
+  margin-top: 0.5rem;
+  border-radius: 2px;
+  overflow: hidden;
+  opacity: 0.8;
+}
+
+.testimonials-education-section .autoplay-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #fff, rgba(255, 255, 255, 0.7));
+  border-radius: 2px;
+  transition: width 0.1s linear;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+}
+
+/* Progression Section */
+.progression-section {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.progression-section h2 {
+  color: #fff;
+  margin-bottom: 2rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.years-progress {
+  padding: 0;
+}
+
+.years-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.year-item {
+  background: rgba(255, 255, 255, 0.12);
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  backdrop-filter: blur(15px) saturate(150%);
+}
+
+.year-number {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #fff;
+  display: block;
+}
+
+.year-status {
+  font-size: 1rem;
+  font-weight: 600;
+  display: block;
+}
+
+.year-item.status-validated {
+  background: rgba(16, 185, 129, 0.25);
+  border-color: rgba(16, 185, 129, 0.7);
+}
+
+.year-item.status-validated .year-status {
+  color: #34d399;
+}
+
+.year-item.status-in_progress {
+  background: rgba(251, 146, 60, 0.25);
+  border-color: rgba(251, 146, 60, 0.7);
+}
+
+.year-item.status-in_progress .year-status {
+  color: #fbbf24;
+}
+
+.year-item.status-skipped {
+  background: rgba(59, 130, 246, 0.25);
+  border-color: rgba(59, 130, 246, 0.7);
+}
+
+.year-item.status-skipped .year-status {
+  color: #60a5fa;
+}
+
+@media (max-width: 768px) {
+  .years-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .skills-grid {
+        grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+        gap: 0.6rem;
+    }
+}
+
+@media (max-width: 768px) {
+  .education-single {
+    padding: 5rem 1rem 1rem 1rem;
+  }
+  
+  .education-header h1 {
+    font-size: 2rem;
+  }
+  
+  .institution {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .details {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .skills-grid {
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 0.5rem;
+  }
+  
+  .skill-block {
+    min-height: 80px;
+    padding: 0.5rem;
+  }
+  
+  .skill-name {
+    font-size: 0.75rem;
+  }
+  
+  .skill-level {
+    display: none;
+  }
+  
+  .ps5-projects-tiles {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  /* Old PS5 tile classes removed - now using project-card-unified */
+  
+  .projects-section h2 {
+    font-size: 1.5rem;
+  }
+
+  .testimonial-education-card {
+    padding: 1rem 1.5rem;
+    min-height: 150px;
+  }
+  
+  .testimonial-education-text {
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .testimonial-education-author {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+  }
+  
+  .testimonial-education-avatar {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .testimonial-education-info {
+    text-align: center;
+  }
+  
+  .testimonials-education-section .slider-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+  
+  .testimonials-education-section .slider-controls {
+    padding: 0.5rem 0;
+  }
+}
+</style>
+
+{{- if .Params.testimonials -}}
+{{- if gt (len .Params.testimonials) 1 -}}
+<script>
+// Education Testimonials Slider - Using CarouselController
+document.addEventListener('DOMContentLoaded', function() {
+    const slider = document.querySelector('.testimonials-education-slider');
+    if (!slider) return;
+
+    // Initialize carousel with our centralized class
+    const carousel = new CarouselController('.testimonials-education-slider', {
+        autoplayDuration: 5000,
+        enableSwipe: true,
+        pauseOnHover: false, // Managed manually below
+        loop: true
+    });
+
+    // Integration with legacy global pause system for compatibility
+    if (!window.educationTestimonialsPausers) {
+        window.educationTestimonialsPausers = [];
+    }
+    window.educationTestimonialsPausers.push({
+        pause: () => carousel.pause(),
+        resume: () => carousel.resume()
+    });
+
+    // Manual pause on hover for this specific slider
+    slider.addEventListener('mouseenter', () => carousel.pause());
+    slider.addEventListener('mouseleave', () => carousel.resume());
+});
+</script>
+{{- end -}}
+{{- end -}}
+
+{{- end -}}

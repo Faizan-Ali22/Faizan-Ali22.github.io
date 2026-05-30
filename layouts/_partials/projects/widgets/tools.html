@@ -1,0 +1,71 @@
+{{/*
+  Partial: Tools Widget
+  Description: Widget compact pour afficher les outils utilisés dans un projet
+  Context: 
+    - .Params (dict) - Paramètres du projet avec .tools
+    - tools data (loaded from localized data files)
+    - .File.BaseFileName (string) - ID du projet
+*/}}
+
+{{- if .Params.tools -}}
+  {{- $projectTools := .Params.tools -}}
+  {{- $allTools := partial "get-localized-data.html" (dict "context" . "dataName" "tools") -}}
+  {{- $usedTools := slice -}}
+  {{- range $projectTools -}}
+    {{- $toolKey := . -}}
+    {{- range $allTools -}}
+      {{- if eq .key $toolKey -}}
+        {{- $usedTools = $usedTools | append . -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+  
+  {{- if $usedTools -}}
+<div class="project-widget developer-tools-box size-large">
+  <div class="project-widget-header" onclick="toggleInfoBox(this)">
+    <div class="project-widget-icon tools">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M22.7,19L13.6,9.9C14.5,7.6 14,4.9 12.1,3C10.1,1 7.1,0.6 4.7,1.7L9,6L6,9L1.6,4.7C0.4,7.1 0.9,10.1 2.9,12.1C4.8,14 7.5,14.5 9.8,13.6L18.9,22.7C19.3,23.1 19.9,23.1 20.3,22.7L22.6,20.4C23.1,20 23.1,19.3 22.7,19Z"/>
+      </svg>
+    </div>
+    <div class="project-widget-header-content">
+      <h3 class="project-widget-title">{{ i18n "tools_used" | default "Outils utilisés" }}</h3>
+      <div class="project-widget-summary">{{ len $usedTools }} {{ i18n "tools_employed" | default "outils employés" }}</div>
+      <!-- Aperçu des outils -->
+      <div class="tools-preview">
+        <div class="tool-icons-preview">
+          {{- range first 5 $usedTools -}}
+          {{- $toolName := i18n .key -}}
+          {{- $toolLabel := i18n "tool" | default "Outil" -}}
+          {{- $clickDetails := i18n "click_to_see_details" | default "Cliquez pour voir les détails" -}}
+          <div class="tool-icon-mini clickable" onclick="openSkillModal('{{ $toolName }}', '/{{ .iconPath }}', '{{ $toolLabel }}', '{{ .experience }}', 'svg', '{{ .key }}')" title="{{ $toolName }} - {{ $clickDetails }}">
+            {{- if .iconPath -}}
+            <img src="/{{ .iconPath }}" alt="{{ $toolName }}">
+            {{- else -}}
+            <span>{{ substr $toolName 0 2 | upper }}</span>
+            {{- end -}}
+          </div>
+          {{- end -}}
+          {{- if gt (len $usedTools) 5 -}}
+          <div class="tool-icon-mini more">
+            <span>+{{ sub (len $usedTools) 5 }}</span>
+          </div>
+          {{- end -}}
+        </div>
+      </div>
+    </div>
+    <div class="project-widget-toggle">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/>
+      </svg>
+    </div>
+  </div>
+  <div class="project-widget-content">
+    {{/* Load localized profile data */}}
+    {{- $profileData := partial "get-localized-data.html" (dict "context" . "dataName" "profile") -}}
+    {{/* Utiliser le partial tools pour l'affichage modal */}}
+    {{ partial "projects/widgets/modal/tools.html" (dict "tools" $projectTools "projectId" .File.BaseFileName "profileData" $profileData) }}
+  </div>
+</div>
+  {{- end -}}
+{{- end -}}

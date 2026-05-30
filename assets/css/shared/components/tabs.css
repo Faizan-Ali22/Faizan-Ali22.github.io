@@ -1,0 +1,452 @@
+/**
+ * Unified tab system for Portfolio theme
+ * Based on blog-tabs style with btn-action design
+ * Supports main tabs and sub-tabs
+ */
+
+/* ========================================
+   MAIN TAB CONTAINER
+   ======================================== */
+.tabs {
+    display: flex;
+    justify-content: center;
+    gap: 0.3rem;
+    margin-bottom: 2rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(15px);
+    border-radius: 25px;
+    padding: 0.3rem;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Minimal modification of main tabs when subtabs are visible */
+.tabs.has-subtabs {
+    margin-bottom: 0; /* Remove only margin to stick to subtabs */
+    position: relative;
+    z-index: 2; /* Above subtabs for overlay effect */
+}
+
+/* ========================================
+
+
+
+/* ========================================
+   TAB BUTTONS - BTN-ACTION INHERITANCE
+   ======================================== */
+.tab-btn {
+    /* Base inherited from btn-action */
+    display: inline-flex;
+    align-items: center;
+    gap: var(--gap-sm);
+    padding: 0.8rem 2rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    border-radius: 20px;
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-base);
+    transition: var(--transition-smooth);
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    min-height: auto;
+    justify-content: center;
+    white-space: nowrap;
+    
+    /* Default tab style */
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+/* Hover state - Inspired by project tabs with btn-action style */
+.tab-btn:hover:not(.active) {
+    color: var(--primary-blue-text, #4fd1c7);
+    background: rgba(79, 209, 199, 0.1);
+    transform: translateY(-1px);
+    text-decoration: none;
+}
+
+/* Active state - Adapted btn-action primary style */
+.tab-btn.active {
+    background: var(--primary-blue-bg);
+    border-color: var(--primary-blue-border);
+    color: var(--text-primary);
+    box-shadow: 0 2px 10px rgba(52, 152, 219, 0.3);
+    font-weight: var(--font-weight-bold);
+}
+
+.tab-btn.active:hover {
+    background: var(--primary-blue-bg-hover);
+    border-color: var(--primary-blue-border-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.4);
+}
+
+/* Icons in tabs */
+.tab-btn svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+/* Emoji support */
+.tab-btn .tab-emoji {
+    font-size: 1.1em;
+    margin-right: 0.5rem;
+}
+
+/* ========================================
+   SUB-TAB SYSTEM (PROJECTS) - INTEGRATED STYLE
+   ======================================== */
+.sub-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 0.4rem;
+    margin-top: -10px; /* Overlap slightly to create fusion effect */
+    margin-bottom: 2rem;
+    padding: 0.8rem 1.2rem 0.8rem 1.2rem; /* Reduced padding for more compact height */
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    
+    /* Fusion style - shape that connects to main tabs */
+    background: var(--glass-bg);
+    backdrop-filter: blur(15px);
+    border-radius: 0 0 25px 25px; /* Rounded only at bottom for fusion effect */
+    border: 1px solid var(--glass-border);
+    border-top: none; /* No top border to create fusion effect */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    
+    /* Position to create fusion effect */
+    position: relative;
+    z-index: 1; /* Below main tabs for continuity effect */
+    
+    /* Smooth appearance animation */
+    opacity: 0;
+    transform: translateY(-8px);
+    animation: subtabs-fade-in 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes subtabs-fade-in {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.sub-tab-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1.2rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    border-radius: 18px;
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-base);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-align: center;
+    justify-content: center;
+    white-space: nowrap;
+    position: relative;
+    
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    letter-spacing: 0.02em;
+    gap: 0.5rem;
+}
+
+.sub-tab-btn .subtab-icon {
+    font-size: 0.9em;
+    opacity: 0.7;
+    transition: all 0.3s ease;
+}
+
+.sub-tab-btn.active .subtab-icon,
+.sub-tab-btn:hover .subtab-icon {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+/* Count badges in sub-tabs */
+.sub-tab-btn .count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    margin-left: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    transition: all 0.3s ease;
+}
+
+/* Hover and active states similar to main tabs but more subtle */
+.sub-tab-btn:hover:not(.active) {
+    color: var(--primary-blue-text, #4fd1c7);
+    background: rgba(79, 209, 199, 0.08);
+    transform: translateY(-1px);
+}
+
+.sub-tab-btn:hover:not(.active) .count {
+    background: rgba(79, 209, 199, 0.15);
+    color: var(--primary-blue-text, #4fd1c7);
+}
+
+.sub-tab-btn.active {
+    background: rgba(79, 209, 199, 0.12);
+    color: var(--text-primary);
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(79, 209, 199, 0.2);
+}
+
+.sub-tab-btn.active .count {
+    background: rgba(79, 209, 199, 0.25);
+    color: var(--text-primary);
+}
+
+.sub-tab-btn.active:hover {
+    background: rgba(79, 209, 199, 0.18);
+    transform: translateY(-1px);
+    box-shadow: 0 3px 12px rgba(79, 209, 199, 0.25);
+}
+
+.sub-tab-btn.active:hover .count {
+    background: rgba(79, 209, 199, 0.35);
+}
+
+/* ========================================
+   RESPONSIVE LAYOUTS
+   ======================================== */
+@media (max-width: 768px) {
+    .tabs {
+        gap: 0.25rem;
+        padding: 0.25rem;
+        margin-bottom: 1.5rem;
+        margin-left: 0;
+        margin-right: 0;
+        width: 100%;
+        overflow-x: auto; /* Allow horizontal scroll if needed */
+        flex-wrap: nowrap; /* Keep in one line */
+    }
+    
+    .tab-btn {
+        padding: 0.65rem 1rem;
+        font-size: 0.8rem;
+        gap: 0.3rem;
+        white-space: nowrap;
+        flex-shrink: 0; /* Prevent shrinking */
+    }
+    
+    .tab-btn .tab-icon,
+    .tab-btn .tab-emoji {
+        font-size: 0.95em;
+    }
+    
+    .tab-btn .count {
+        min-width: 18px;
+        height: 18px;
+        padding: 0 5px;
+        font-size: 0.65rem;
+    }
+    
+    .sub-tabs {
+        display: none !important; /* Hide sub-tabs on mobile */
+    }
+    
+    .sub-tab-btn {
+        padding: 0.55rem 0.9rem;
+        font-size: 0.75rem;
+        gap: 0.3rem;
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+    
+    .sub-tab-btn .subtab-icon {
+        font-size: 0.85em;
+    }
+    
+    .sub-tab-btn .count {
+        min-width: 16px;
+        height: 16px;
+        padding: 0 4px;
+        font-size: 0.6rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .tabs {
+        gap: 0.15rem;
+        padding: 0.15rem;
+        overflow-x: auto;
+        overflow-y: hidden;
+        flex-wrap: nowrap;
+        -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+        justify-content: flex-start;
+        width: 100%; /* Full width instead of fit-content */
+        max-width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+        box-sizing: border-box;
+    }
+    
+    .tab-btn {
+        padding: 0.4rem 0.6rem;
+        font-size: 0.65rem;
+        min-width: auto;
+        flex-shrink: 0;
+        gap: 0.25rem;
+    }
+    
+    .tab-btn .tab-icon,
+    .tab-btn .tab-emoji {
+        font-size: 0.85em;
+    }
+    
+    .tab-btn .tab-label {
+        font-size: 0.65rem;
+    }
+    
+    .tab-btn .count {
+        min-width: 14px;
+        height: 14px;
+        padding: 0 3px;
+        font-size: 0.55rem;
+        margin-left: 3px;
+    }
+    
+    .sub-tabs {
+        gap: 0.1rem;
+        padding: 0.4rem;
+        overflow-x: auto;
+        overflow-y: hidden;
+        flex-wrap: nowrap;
+        -webkit-overflow-scrolling: touch;
+        justify-content: flex-start;
+        width: 100%; /* Full width instead of fit-content */
+        max-width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+        box-sizing: border-box;
+    }
+    
+    .sub-tab-btn {
+        padding: 0.35rem 0.55rem;
+        font-size: 0.6rem;
+        flex-shrink: 0;
+        gap: 0.25rem;
+    }
+    
+    .sub-tab-btn .subtab-icon {
+        font-size: 0.75em;
+    }
+    
+    .sub-tab-btn .count {
+        min-width: 12px;
+        height: 12px;
+        padding: 0 3px;
+        font-size: 0.5rem;
+        margin-left: 3px;
+    }
+}
+
+/* ========================================
+   ACCENT VARIANTS (FOR SPECIAL SECTIONS)
+   ======================================== */
+.tabs.accent .tab-btn.active {
+    background: var(--accent-bg, rgba(255, 107, 53, 0.15));
+    border-color: var(--accent-border, rgba(255, 107, 53, 0.4));
+    color: var(--accent-color, rgba(255, 107, 53, 1));
+    box-shadow: 0 2px 10px rgba(255, 107, 53, 0.3);
+}
+
+.tabs.accent .tab-btn:hover {
+    background: rgba(255, 107, 53, 0.1);
+    border-color: rgba(255, 107, 53, 0.3);
+}
+
+/* ========================================
+   TAB CONTENTS
+   ======================================== */
+.tab-content {
+    margin-top: 1rem;
+}
+
+.tab-panel {
+    display: none;
+    padding: 0;
+}
+
+.tab-panel.active {
+    display: block;
+}
+
+/* Fade-in animation for panels */
+.tab-panel.active {
+    animation: fadeInUp 0.3s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========================================
+   ADVANCED HOVER EFFECTS (inspired by project tabs)
+   ======================================== */
+
+/* Subtle shimmer effect on hover */
+.tab-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(79, 209, 199, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.tab-btn:hover:not(.active)::before {
+    left: 100%;
+}
+
+/* Hover with subtle gradient like project tabs */
+.tab-btn:hover:not(.active) {
+    background: rgba(79, 209, 199, 0.1);
+    box-shadow: 0 2px 10px rgba(79, 209, 199, 0.15);
+}
+
+/* ========================================
+   GRADIENT HOVER EFFECTS (Project tabs style)
+   ======================================== */
+
+/* Active state with gradient like project tabs */
+.tab-btn.active {
+    background: linear-gradient(135deg, rgba(79, 209, 199, 0.8), rgba(79, 209, 199, 0.6));
+    color: var(--text-primary);
+    box-shadow: 0 4px 15px rgba(79, 209, 199, 0.3);
+    font-weight: var(--font-weight-bold);
+}
+
+.tab-btn.active:hover {
+    background: linear-gradient(135deg, rgba(79, 209, 199, 0.9), rgba(79, 209, 199, 0.7));
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(79, 209, 199, 0.4);
+}

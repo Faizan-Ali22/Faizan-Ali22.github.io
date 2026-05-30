@@ -1,0 +1,225 @@
+/**
+ * Mobile Dropdown System for Tabs
+ * Activated via data-can-collapse="true" on .tabs container
+ * On mobile (<=480px), tabs can collapse into a dropdown menu
+ */
+
+/* ========================================
+   MOBILE DROPDOWN SYSTEM (data-can-collapse)
+   ======================================== */
+
+/* Mobile dropdown wrapper - hidden by default, shown on mobile for collapsible tabs */
+.tabs-mobile {
+    display: none;
+    position: relative;
+    z-index: 10020;
+}
+
+/* Custom dropdown container */
+.tabs-dropdown {
+    position: relative;
+    width: 100%;
+    z-index: 10020;
+}
+
+/* Dropdown button - styled like active tab */
+.tabs-dropdown-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    
+    /* Tab-like appearance - more opaque */
+    background: linear-gradient(135deg, rgba(79, 209, 199, 0.3), rgba(79, 209, 199, 0.25));
+    border: 1px solid rgba(79, 209, 199, 0.5);
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(79, 209, 199, 0.3);
+    
+    color: rgba(255, 255, 255, 1);
+    font-size: 14px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.tabs-dropdown-btn:hover {
+    background: linear-gradient(135deg, rgba(79, 209, 199, 0.4), rgba(79, 209, 199, 0.35));
+    border-color: rgba(79, 209, 199, 0.6);
+    box-shadow: 0 4px 15px rgba(79, 209, 199, 0.4);
+    transform: translateY(-1px);
+}
+
+.tabs-dropdown-btn:focus {
+    outline: none;
+    border-color: rgba(79, 209, 199, 0.5);
+    box-shadow: 0 0 0 3px rgba(79, 209, 199, 0.2), 0 2px 10px rgba(79, 209, 199, 0.3);
+}
+
+.dropdown-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.dropdown-text {
+    flex: 1;
+    text-align: left;
+}
+
+.dropdown-count {
+    background: rgba(255, 255, 255, 0.25);
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 600;
+    min-width: 24px;
+    text-align: center;
+}
+
+.dropdown-arrow {
+    font-size: 10px;
+    opacity: 0.7;
+    transition: transform 0.3s ease;
+}
+
+.tabs-dropdown-btn[aria-expanded="true"] .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+/* Dropdown menu */
+.tabs-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    z-index: 10020;
+    
+    background: rgba(30, 30, 30, 0.98);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    
+    overflow: hidden;
+    
+    animation: dropdownFadeIn 0.2s ease;
+}
+
+@keyframes dropdownFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Dropdown items */
+.tabs-dropdown-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 14px;
+    font-weight: 500;
+    font-family: inherit;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.tabs-dropdown-item:last-child {
+    border-bottom: none;
+}
+
+.tabs-dropdown-item:hover {
+    background: rgba(79, 209, 199, 0.1);
+    color: rgba(255, 255, 255, 0.95);
+}
+
+.tabs-dropdown-item.active {
+    background: rgba(79, 209, 199, 0.15);
+    color: #fff;
+    font-weight: 600;
+}
+
+.dropdown-item-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.dropdown-item-text {
+    flex: 1;
+}
+
+.dropdown-item-count {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 600;
+    min-width: 24px;
+    text-align: center;
+}
+
+.tabs-dropdown-item.active .dropdown-item-count {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* ========================================
+   RESPONSIVE - MOBILE ONLY
+   ======================================== */
+
+@media (max-width: 480px) {
+    /* Hide regular tabs and show dropdown for tabs with data-can-collapse="true" */
+    .tabs[data-can-collapse="true"] {
+        display: none !important;
+    }
+    
+    .tabs-mobile[data-collapse-active="true"] {
+        display: block;
+        padding: 8px;
+        background: rgba(0, 0, 0, 0.25);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+        border-radius: 12px;
+        margin-bottom: 1rem;
+        
+        /* Constrain width to stay within header/container */
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+        box-sizing: border-box;
+    }
+    
+    /* Ensure dropdown and button take full width of their container */
+    .tabs-dropdown {
+        width: 100%;
+    }
+    
+    .tabs-dropdown-btn {
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    /* Inside modals, take full width after header */
+    .unified-modal-content > .tabs-mobile[data-collapse-active="true"],
+    .skill-modal-content > .tabs-mobile[data-collapse-active="true"],
+    .person-modal-content > .tabs-mobile[data-collapse-active="true"] {
+        /* Full width with consistent padding */
+        width: 100%;
+        margin: 0;
+        padding: 8px 10px; /* Match modal padding */
+        border-radius: 0; /* Square corners to fill width */
+        box-sizing: border-box;
+    }
+}

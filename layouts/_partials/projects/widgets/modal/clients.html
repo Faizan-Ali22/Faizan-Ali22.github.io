@@ -1,0 +1,92 @@
+{{/*
+  Partial: Clients Modal Enhanced Layout
+  Description: Structure HTML pour l'affichage amélioré des clients dans les modals de project widget
+  Context: 
+    - .clients (slice) - Liste des clients avec leurs données
+    - .projectId (string) - ID du projet pour contextualiser les actions
+*/}}
+
+{{- $clients := .Project.Params.clients -}}
+{{- if $clients -}}
+  {{- $total := len $clients -}}
+  {{- $distinctSectors := slice -}}
+  
+  {{/* Collecter les secteurs uniques */}}
+  {{- range $clients -}}
+    {{- $sectors := .sectors | default (slice .sector) -}}
+    {{- range $sectors -}}
+      {{- if not (in $distinctSectors .) -}}
+        {{- $distinctSectors = $distinctSectors | append . -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+
+  <div class="clients-modal-enhanced">
+    <div class="clients-stats-bar">
+      <div class="clients-count">
+        <strong>{{ $total }}</strong> {{ i18n "partner_companies" | default "entreprises partenaires" }}
+      </div>
+      <div class="clients-sectors">
+        {{- range first 3 $distinctSectors -}}
+          <span class="clients-sector-chip">{{ . }}</span>
+        {{- end -}}
+      </div>
+    </div>
+    
+    <div class="clients-group">
+      <div class="clients-group-title">{{ i18n "partners" | default "Partenaires" }}</div>
+      <div class="clients-grid">
+        {{- range $clients -}}
+          {{- $initials := substr (.name | default "?") 0 1 | upper -}}
+          {{- $clientName := .name | default (i18n "clients" | default "Client") -}}
+          {{- $hasLogo := .logo | default false -}}
+          
+          <div class="client-card" 
+               tabindex="0" 
+               role="button" 
+               aria-label="Informations sur {{ $clientName }}">
+            
+            {{/* Logo du client */}}
+            <div class="client-logo{{ if not $hasLogo }} placeholder{{ end }}">
+              {{- if $hasLogo -}}
+                <img src="{{ .logo }}" alt="Logo {{ $clientName }}" loading="lazy" />
+              {{- else -}}
+                <span>{{ $initials }}</span>
+              {{- end -}}
+            </div>
+            
+            {{/* Informations du client */}}
+            <div class="client-info">
+              <div class="client-name">{{ $clientName }}</div>
+              {{- if .role -}}
+                <div class="client-role">{{ .role }}</div>
+              {{- end -}}
+              {{- $sectors := .sectors | default (slice .sector) -}}
+              {{- if $sectors -}}
+                <div class="client-sectors">
+                  {{- range first 2 $sectors -}}
+                    <span class="sector-chip">{{ . }}</span>
+                  {{- end -}}
+                </div>
+              {{- end -}}
+            </div>
+          </div>
+        {{- end -}}
+      </div>
+    </div>
+  </div>
+{{- else -}}
+  <div class="clients-modal-enhanced">
+    <div class="clients-stats-bar">
+      <div class="clients-count">
+        <strong>0</strong> {{ i18n "clients" | default "clients" }}
+      </div>
+    </div>
+    <div class="clients-group">
+      <div class="clients-group-title">{{ i18n "no_client" | default "Aucun client" }}</div>
+      <div class="clients-grid">
+        <p>{{ i18n "no_client_found" | default "Aucun client n'a été trouvé pour ce projet." }}</p>
+      </div>
+    </div>
+  </div>
+{{- end -}}

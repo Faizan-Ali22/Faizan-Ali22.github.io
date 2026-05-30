@@ -1,0 +1,39 @@
+{{/*
+  Partial: Ranking Widget
+  Description: Widget compact pour afficher le classement d'un projet
+  Context: 
+    - .Params (dict) - Paramètres du projet avec .ranking
+    - .File.BaseFileName (string) - ID du projet
+*/}}
+
+{{- if and .Params.ranking (gt .Params.ranking.position 0) -}}
+<div class="project-widget ranking-box {{ .Params.ranking_size | default "size-small" }}" onclick="toggleInfoBox(this)">
+  <div class="project-widget-header">
+    <div class="project-widget-icon ranking">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M5,16L3,5L8.5,12L12,5L15.5,12L21,5L19,16H5M19,19A1,1 0 0,1 18,20H6A1,1 0 0,1 5,19V18H19V19Z"/>
+      </svg>
+    </div>
+    <div class="project-widget-header-content">
+      <h3 class="project-widget-title">{{ .Params.ranking.event_type | default (i18n "ranking" | default "Classement") }}</h3>
+      <div class="project-widget-summary">{{ .Params.ranking.event | default (.Params.ranking.event_type | default (i18n "event" | default "Événement")) }}</div>
+      <!-- Aperçu du classement -->
+      <div class="project-widget-ranking-preview">
+        <div class="project-widget-ranking-preview-position">{{ .Params.ranking.position }}</div>
+        <div class="project-widget-ranking-preview-info">
+          <div class="project-widget-ranking-preview-total">/ {{ .Params.ranking.total }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="project-widget-toggle">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/>
+      </svg>
+    </div>
+  </div>
+  <div class="project-widget-content">
+    {{/* Contenu modal enhanced - uniquement ce qui doit apparaître dans le modal */}}
+    {{ partial "projects/widgets/modal/ranking.html" (dict "Project" . "Title" (i18n "ranking" | default "Classement")) }}
+  </div>
+</div>
+{{- end -}}

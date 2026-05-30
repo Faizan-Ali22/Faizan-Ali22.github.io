@@ -1,0 +1,31 @@
+<!-- Section Modals & Overlays -->
+<section class="demo-section">
+    <h2>🔲 Modals & Overlays</h2>
+    <p>Modals existants du thème avec leurs vraies interactions JavaScript.</p>
+    
+    <div class="demo-grid">
+        <div class="demo-item aero-glass">
+            <h4>Skill Modal Unity</h4>
+            <p>Modal skill existant - cliquez sur Unity dans la section Skills pour l'ouvrir.</p>
+            <button class="skill-trigger" data-skill="unity">
+                <img src="/images/technologies/Unity.svg" alt="Unity" style="width: 24px; height: 24px; vertical-align: middle; margin-right: 8px;">
+                Ouvrir Unity Modal
+            </button>
+        </div>
+        
+        <div class="demo-item aero-glass">
+            <h4>Person Modal</h4>
+            <p>Modal de profil - cliquez sur une personne cliquable dans les testimonials.</p>
+            <div class="clickable-person" data-person-id="john-doe" style="cursor: pointer; padding: 1rem; border: 1px solid var(--glass-border); border-radius: 8px;">
+                <img src="/images/avatar6.svg" alt="John Doe" style="width: 40px; height: 40px; border-radius: 50%; vertical-align: middle; margin-right: 10px;">
+                John Doe - Cliquez pour voir le modal
+            </div>
+        </div>
+        
+        <div class="demo-item aero-glass">
+            <h4>Right Dock avec Notifications</h4>
+            <p>Système de notifications existant dans le dock droit.</p>
+            {{ partial "right-dock.html" . }}
+        </div>
+    </div>
+</section>

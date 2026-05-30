@@ -1,0 +1,24 @@
+// =============================================================================
+// PROJECT WIDGETS - MAIN INDEX
+// =============================================================================
+// Centralizes all project widget styles with shared base components
+
+// Base components - must be imported first
+@import 'widget-base';
+@import 'project-widget';
+
+// Individual widget components
+@import 'widget-award';
+@import 'widget-client';
+@import 'widget-contributor';
+@import 'widget-dev-time';
+@import 'widget-download';
+@import 'widget-gallery';
+@import 'widget-grade';
+@import 'widget-ranking';
+@import 'widget-tech-specification';
+@import 'widget-testimonial';
+@import 'widget-youtube-single';
+
+// Modal-specific styles
+@import 'modal/index';

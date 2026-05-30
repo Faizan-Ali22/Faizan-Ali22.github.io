@@ -1,0 +1,34 @@
+// =============================================================================
+// PROJECT WIDGET - TECHNICAL SPECIFICATIONS
+// =============================================================================
+
+@import 'widget-base';
+
+.project-widget-technical-specs-list {
+  @extend %widget-list-layout;
+}
+
+.project-widget-spec-item {
+  @extend %widget-item-layout;
+  @include widget-item-with-accent(var(--primary-teal));
+  
+  &:hover {
+    transform: translateX(4px);
+    border-left-color: var(--primary-teal);
+    background: var(--spec-item-hover-bg);
+  }
+}
+
+.project-widget-spec-label {
+  color: var(--text-secondary);
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.project-widget-spec-value {
+  color: var(--text-primary);
+  font-weight: var(--font-weight-semibold);
+  font-size: 0.9rem;
+  text-align: right;
+  max-width: 60%;
+}

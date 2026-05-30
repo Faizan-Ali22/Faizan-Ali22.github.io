@@ -1,0 +1,24 @@
+{{/*
+    Helper to get a person by their ID from content types.
+    People profiles are NOT localized - there's only ONE file per person (French version).
+    This helper always returns the default language (French) version.
+    Usage: {{ $person := partial "helpers/get-person.html" (dict "context" . "personId" "person-id") }}
+*/}}
+
+{{ $personId := .personId }}
+{{ $context := .context }}
+{{ $person := "" }}
+
+{{/* Get the default language site (French) to avoid looking for EN versions */}}
+{{ $defaultSite := index .context.Sites 0 }}
+
+{{/* Search for the person in "people" type pages from the default language site */}}
+{{ range where $defaultSite.Pages "Type" "people" }}
+    {{ if eq .Params.id $personId }}
+        {{ $person = . }}
+        {{ break }}
+    {{ end }}
+{{ end }}
+
+{{/* Return the found person or an empty object */}}
+{{ return $person }}

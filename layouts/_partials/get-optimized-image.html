@@ -1,0 +1,86 @@
+{{/*
+  Partial helper for optimized image processing with WebP conversion
+  
+  Parameters (pass as dict):
+  - imagePath: string - Path to the image (e.g., "/images/project.jpg" or "images/project.jpg")
+  - width: int - Target width in pixels (default: 800)
+  - quality: int - WebP quality 1-100 (default: 85)
+  - format: string - Output format: "webp", "jpg", "png" or "original" (default: "webp")
+  
+  Returns a dict with:
+  - src: string - URL of the optimized image
+  - width: int - Width of the image (0 if not processed as resource)
+  - height: int - Height of the image (0 if not processed as resource)
+  - isResource: bool - true if processed as Hugo resource, false if static fallback
+  
+  Usage example:
+  {{ $img := partial "get-optimized-image.html" (dict "imagePath" .Params.image "width" 800 "quality" 85) }}
+  <img src="{{ $img.src }}" width="{{ $img.width }}" height="{{ $img.height }}" alt="...">
+*/}}
+
+{{- $imagePath := .imagePath | default "" -}}
+{{- $targetWidth := .width | default 800 -}}
+{{- $quality := .quality | default 85 -}}
+{{- $format := .format | default "webp" -}}
+
+{{- $result := dict "src" "" "width" 0 "height" 0 "isResource" false -}}
+
+{{- if $imagePath -}}
+    {{/* Clean up the image path */}}
+    {{- $cleanPath := strings.TrimPrefix "/" $imagePath -}}
+    {{- $cleanPath = strings.TrimPrefix "images/" $cleanPath -}}
+    {{- $resourcePath := printf "images/%s" $cleanPath -}}
+    
+    {{/* Try to get as Hugo resource */}}
+    {{- $imgResource := resources.Get $resourcePath -}}
+    
+    {{- if $imgResource -}}
+        {{- $ext := path.Ext $cleanPath -}}
+        
+        {{/* Skip processing for SVG (vector format) */}}
+        {{- if eq $ext ".svg" -}}
+            {{- $result = dict "src" ($imagePath | relURL) "width" 0 "height" 0 "isResource" false -}}
+        
+        {{/* If already in target format and format is webp, use as-is */}}
+        {{- else if and (eq $format "webp") (eq $ext ".webp") -}}
+            {{- $result = dict "src" ($imagePath | relURL) "width" 0 "height" 0 "isResource" false -}}
+        
+        {{/* Process and convert the image */}}
+        {{- else -}}
+            {{/* Check if resource MediaType starts with "image/" */}}
+            {{- $isImage := false -}}
+            {{- with $imgResource.MediaType -}}
+                {{- if hasPrefix .Type "image" -}}
+                    {{- $isImage = true -}}
+                {{- end -}}
+            {{- end -}}
+            
+            {{- if $isImage -}}
+                {{- $resizeSpec := "" -}}
+                {{- if eq $format "webp" -}}
+                    {{- $resizeSpec = printf "%dx webp q%d" $targetWidth $quality -}}
+                {{- else if eq $format "original" -}}
+                    {{- $resizeSpec = printf "%dx" $targetWidth -}}
+                {{- else -}}
+                    {{- $resizeSpec = printf "%dx %s q%d" $targetWidth $format $quality -}}
+                {{- end -}}
+                
+                {{/* Try to resize, with error handling */}}
+                {{- with $imgResource.Resize $resizeSpec -}}
+                    {{- $result = dict "src" .RelPermalink "width" .Width "height" .Height "isResource" true -}}
+                {{- else -}}
+                    {{/* Fallback if resize fails */}}
+                    {{- $result = dict "src" ($imagePath | relURL) "width" 0 "height" 0 "isResource" false -}}
+                {{- end -}}
+            {{- else -}}
+                {{/* Not an image resource, use static path */}}
+                {{- $result = dict "src" ($imagePath | relURL) "width" 0 "height" 0 "isResource" false -}}
+            {{- end -}}
+        {{- end -}}
+    {{- else -}}
+        {{/* Resource not found, use static path as fallback */}}
+        {{- $result = dict "src" ($imagePath | relURL) "width" 0 "height" 0 "isResource" false -}}
+    {{- end -}}
+{{- end -}}
+
+{{- return $result -}}

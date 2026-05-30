@@ -1,0 +1,38 @@
+# ============================================================
+# 🎯 SPECIALTIES
+# ============================================================
+
+- key: "spec_video_game_development"
+  icon: "🎮"
+  experience: 4
+  displayedInPortfolio: true
+
+- key: "spec_game_design"
+  icon: "🎲"
+  experience: 3
+  displayedInPortfolio: true
+
+- key: "spec_level_design"
+  icon: "🗺️"
+  experience: 2
+  displayedInPortfolio: true
+
+- key: "spec_gameplay_dev"
+  icon: "🕹️"
+  experience: 3
+  displayedInPortfolio: true
+
+- key: "spec_oop"
+  icon: "⚙️"
+  experience: 3
+  displayedInPortfolio: true
+
+- key: "spec_3d_design"
+  icon: "🧊"
+  experience: 2
+  displayedInPortfolio: true
+
+- key: "spec_ui_ux"
+  icon: "🎨"
+  experience: 3
+  displayedInPortfolio: true

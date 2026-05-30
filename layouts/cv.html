@@ -1,0 +1,379 @@
+{{ define "main" }}
+  {{/* CV Page - Color version with full styling and interactive elements */}}
+  {{ $profile := site.Data.profile }}
+  {{ $experiences := (.Site.GetPage "/experiences").Pages.ByParam "start_date" }}
+  {{ $educations := (where (.Site.GetPage "/educations").Pages "File.BaseFileName" "!=" "_index") }}
+  {{ $specialties := site.Data.specialties }}
+  {{ $softSkills := site.Data.soft_skills }}
+  {{ $programmingLanguages := site.Data.programming_languages }}
+  {{ $frameworksEngines := site.Data.frameworks_engines }}
+  {{ $technologies := site.Data.technologies }}
+  {{/* Certifications removed from CV */}}
+
+  {{/* Ensure CV stylesheet is loaded for this page */}}
+  {{ $cvStyles := resources.Get "scss/cv.scss" | toCSS | minify }}
+  <link rel="stylesheet" href="{{ $cvStyles.RelPermalink }}" />
+  
+  <!-- Print optimization meta tags for color preservation -->
+  <meta name="color-scheme" content="dark">
+  <style>
+    /* Force color printing on all browsers */
+    * {
+      -webkit-print-color-adjust: exact !important;
+      color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+  </style>
+
+  {{ $cvStyle := or .Params.cvStyle "twocol" }}
+  {{ $cvAccent := or .Params.cvAccent "#111111" }}
+  <section class="cv-page cv--{{ $cvStyle }}" id="cv" style="--cv-accent: {{ $cvAccent }};">
+    <!-- Navigation between versions -->
+    <div class="cv-version-nav">
+      <span class="cv-nav-current">🎨 Color version</span>
+      <a href="/cv/print/" class="cv-nav-link cv-nav-print">🖨️ Print version</a>
+    </div>
+
+    <header class="cv-header">
+      <div class="cv-identite">
+        <div class="cv-id-row">
+          {{ with $profile.media.profileImage }}
+            <img class="cv-avatar cv-avatar--header" src="{{ . }}" alt="{{ $profile.personal.fullName }}">
+          {{ end }}
+          <div>
+            <h1>{{ or $profile.personal.fullName (printf "%s %s" $profile.personal.firstName $profile.personal.lastName) }}</h1>
+            {{ with $profile.contact.status }}<p class="cv-title">{{ . }}</p>{{ end }}
+            {{ with $profile.personal.subtitle }}<p class="cv-subtag">{{ . }}</p>{{ end }}
+          </div>
+        </div>
+      </div>
+      <div class="cv-coordonnees">
+        <ul class="cv-contact-list">
+          {{ with $profile.contact.email }}<li>{{ . }}</li>{{ end }}
+          {{ with $profile.contact.linkedin }}<li><a href="https://{{ . }}" target="_blank" rel="noopener">{{ . }}</a></li>{{ end }}
+          {{ with $profile.contact.location }}<li>{{ . }}</li>{{ end }}
+          {{ with $profile.contact.phone }}<li>{{ . }}</li>{{ end }}
+        </ul>
+        <div class="cv-portfolio-link">
+          <a href="https://clixmods.github.io/" target="_blank" rel="noopener">Portfolio : clixmods.github.io</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="cv-grid">
+      <div class="cv-col cv-col-left">
+        <section class="cv-section cv-summary">
+          <div class="cv-summary-top">
+            <div class="cv-summary-text">
+              {{ with $profile.personal.title }}<p class="cv-item-desc">{{ . }}</p>{{ end }}
+              <ul class="cv-summary-bullets">
+                <li>Gameplay</li>
+                <li>Gestion de projet</li>
+                <li>Conception graphique</li>
+                <li>Outils de production</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+    {{ if $programmingLanguages }}
+      <section class="cv-section cv-languages">
+        <h2>Langage Prog.</h2>
+        <ul class="cv-tags cv-language-tags">
+          {{ range first 6 (sort $programmingLanguages "experience" "desc") }}
+            {{ $exp := .experience }}
+            <li class="cv-language-tag">
+              <span class="cv-lang-name">{{ .name }}</span>
+              <span class="cv-lang-exp">
+                {{ if ge $exp 1 }}
+                  {{/* Arrondi intelligent : si >= 1.8 ans, arrondir à l'année supérieure */}}
+                  {{ $roundedExp := math.Round $exp }}
+                  {{ $roundedExp }} {{ if eq $roundedExp 1 }}an{{ else }}ans{{ end }}
+                {{ else }}
+                  {{ printf "%.0f" (mul $exp 12) }} mois
+                {{ end }}
+              </span>
+            </li>
+          {{ end }}
+        </ul>
+      </section>
+    {{ end }}
+
+    {{ if $educations }}
+          <section class="cv-section cv-formations">
+            <h2>Formations</h2>
+            <ul class="cv-list cv-formations-list">
+              {{ range first 3 (sort $educations "Params.start_date" "desc") }}
+                <li class="cv-item cv-formation-item">
+                  <div class="cv-formation-header">
+                    <div class="cv-formation-main">
+                      <h3 class="cv-formation-title">{{ .Title }}</h3>
+                      {{ with .Params.subtitle }}<div class="cv-formation-subtitle">{{ . }}</div>{{ end }}
+                    </div>
+                    <div class="cv-formation-period">
+                      {{ if .Params.start_date }}
+                        {{ dateFormat "2006" .Params.start_date }}{{ if .Params.end_date }} - {{ dateFormat "2006" .Params.end_date }}{{ else }} - En cours{{ end }}
+                      {{ end }}
+                    </div>
+                  </div>
+                  
+                  <div class="cv-formation-description">
+                    {{ .Params.institution }}{{ if .Params.city }} - {{ .Params.city }}{{ end }}
+                  </div>
+                  
+                  {{ with .Params.status }}
+                    <div class="cv-formation-tags">
+                      <span class="cv-formation-status-tag">{{ . }}</span>
+                    </div>
+                  {{ end }}
+                </li>
+              {{ end }}
+            </ul>
+          </section>
+        {{ end }}
+
+        {{/* Interests (optional, displayed if available or fallback) */}}
+        {{ $interests := or $profile.details.interests $profile.personal.interests }}
+        {{ if or $interests (eq .Site.Language.Lang "fr") }}
+          <section class="cv-section">
+            <h2>Centres d'intérêt</h2>
+            <ul class="cv-tags cv-interests-tags">
+              {{ if $interests }}
+                {{ range $interests }}<li class="cv-interest-tag">{{ . }}</li>{{ end }}
+              {{ else }}
+                <li class="cv-interest-tag">Dessin</li>
+                <li class="cv-interest-tag">Jeux vidéo</li>
+                <li class="cv-interest-tag">Musique</li>
+                <li class="cv-interest-tag">Technologies</li>
+              {{ end }}
+            </ul>
+          </section>
+        {{ end }}
+      </div>
+      <div class="cv-col cv-col-right">
+
+        {{ if $experiences }}
+          <section class="cv-section cv-experiences-section">
+            <h2>Expériences Pro.</h2>
+            {{ range $i, $exp := first 2 $experiences }}
+              {{ $experienceData := partial "helpers/experience-data.html" $exp }}
+              <div class="cv-experience-item">
+                <div class="cv-experience-header">
+                  <div class="cv-experience-main">
+                    <h3 class="cv-experience-title">{{ $exp.Title }}</h3>
+                    <div class="cv-experience-company">
+                      <strong>{{ $exp.Params.company }}</strong>{{ with $exp.Params.location }} - <em>{{ . }}</em>{{ end }}
+                    </div>
+                  </div>
+                  <div class="cv-experience-period">
+                    {{ $experienceData.period }}{{ with $experienceData.duration }}<br><span class="cv-experience-duration">{{ . }}</span>{{ end }}
+                  </div>
+                </div>
+                
+                {{ with $exp.Params.description }}
+                  <div class="cv-experience-description">{{ . | truncate 180 }}</div>
+                {{ end }}
+                
+                {{/* Skills and technologies used - support both old format (string) and new format (object with displayInCV) */}}
+                {{ if or $exp.Params.programming_languages $exp.Params.frameworks_engines $exp.Params.specialties $exp.Params.soft_skills }}
+                  <div class="cv-experience-tags">
+                    {{ with $exp.Params.specialties }}
+                      {{ range . }}
+                        {{ $skillName := "" }}
+                        {{ $shouldDisplay := true }}
+                        {{ if reflect.IsMap . }}
+                          {{ $skillName = .specialty }}
+                          {{ $shouldDisplay = .displayInCV | default true }}
+                        {{ else }}
+                          {{ $skillName = . }}
+                        {{ end }}
+                        {{ if $shouldDisplay }}<span class="cv-experience-tag cv-tag-specialty">{{ $skillName }}</span>{{ end }}
+                      {{ end }}
+                    {{ end }}
+                    {{ with $exp.Params.programming_languages }}
+                      {{ range . }}
+                        {{ $skillName := "" }}
+                        {{ $shouldDisplay := true }}
+                        {{ if reflect.IsMap . }}
+                          {{ $skillName = .language }}
+                          {{ $shouldDisplay = .displayInCV | default true }}
+                        {{ else }}
+                          {{ $skillName = . }}
+                        {{ end }}
+                        {{ if $shouldDisplay }}<span class="cv-experience-tag cv-tag-lang">{{ $skillName }}</span>{{ end }}
+                      {{ end }}
+                    {{ end }}
+                    {{ with $exp.Params.frameworks_engines }}
+                      {{ range . }}
+                        {{ $skillName := "" }}
+                        {{ $shouldDisplay := true }}
+                        {{ if reflect.IsMap . }}
+                          {{ $skillName = .framework }}
+                          {{ $shouldDisplay = .displayInCV | default true }}
+                        {{ else }}
+                          {{ $skillName = . }}
+                        {{ end }}
+                        {{ if $shouldDisplay }}<span class="cv-experience-tag cv-tag-framework">{{ $skillName }}</span>{{ end }}
+                      {{ end }}
+                    {{ end }}
+                    {{ with $exp.Params.soft_skills }}
+                      {{ range . }}
+                        {{ $skillName := "" }}
+                        {{ $shouldDisplay := true }}
+                        {{ if reflect.IsMap . }}
+                          {{ $skillName = .skill }}
+                          {{ $shouldDisplay = .displayInCV | default true }}
+                        {{ else }}
+                          {{ $skillName = . }}
+                        {{ end }}
+                        {{ if $shouldDisplay }}<span class="cv-experience-tag cv-tag-soft">{{ $skillName }}</span>{{ end }}
+                      {{ end }}
+                    {{ end }}
+                  </div>
+                {{ end }}
+              </div>
+            {{ end }}
+          </section>
+        {{ end }}
+
+        {{/* Projects (compact, selected) */}}
+        {{ $selectedProjects := partial "cv/cv-projects-selection.html" . }}
+        {{ if gt (len $selectedProjects) 0 }}
+          <section class="cv-section cv-projects-section">
+            <h2>Projets Informatique</h2>
+            
+            {{/* Individual projects - dynamically selected */}}
+            {{ range $selectedProjects }}
+              {{ partial "cv/cv-project-item.html" . }}
+            {{ end }}
+            
+            {{/* Study projects - grouping */}}
+            <div class="cv-project-individual">
+              <div class="cv-project-header">
+                <div class="cv-project-main">
+                  <h3 class="cv-project-title">Projets d'études</h3>
+                </div>
+                <div class="cv-project-period">2021 - 2024</div>
+              </div>
+              
+              <div class="cv-project-description">
+                13 projets réalisés sur <strong>Unity</strong> et <strong>Unreal</strong> en équipe restreinte pendant les études.
+              </div>
+              
+              <div class="cv-project-tags">
+                <span class="cv-project-tag cv-tag-specialty">Gestion de projet</span>
+                <span class="cv-project-tag cv-tag-specialty">Méthode agile</span>
+                <span class="cv-project-tag cv-tag-specialty">Travail en équipe</span>
+                <span class="cv-project-tag cv-tag-lang">C#</span>
+                <span class="cv-project-tag cv-tag-framework">Unity</span>
+                <span class="cv-project-tag cv-tag-framework">.NET</span>
+              </div>
+            </div>
+            
+            {{/* Game Jam section */}}
+            <div class="cv-project-individual">
+              <div class="cv-project-header">
+                <div class="cv-project-main">
+                  <h3 class="cv-project-title">Game Jam</h3>
+                </div>
+                <div class="cv-project-period">2020 - 2024</div>
+              </div>
+              
+              <div class="cv-project-description">
+                Création de jeux vidéo en <strong>temps restreint</strong> et <strong>contrainte</strong>, avec une équipe aléatoire (dernièrement la Global Game Jam 2024 et les Ludum Jam 1to3).
+              </div>
+              
+              <div class="cv-project-tags">
+                <span class="cv-project-tag cv-tag-specialty">Création agile</span>
+                <span class="cv-project-tag cv-tag-specialty">Game Design</span>
+                <span class="cv-project-tag cv-tag-specialty">Développement rapide</span>
+                <span class="cv-project-tag cv-tag-specialty">Adaptation</span>
+              </div>
+            </div>
+            
+            {{/* Modding section */}}
+            <div class="cv-project-individual">
+              <div class="cv-project-header">
+                <div class="cv-project-main">
+                  <h3 class="cv-project-title">Modding</h3>
+                </div>
+                <div class="cv-project-period">2016 - 2019</div>
+              </div>
+              
+              <div class="cv-project-description">
+                <strong>Contenu de jeu vidéo</strong> pour le Steam Workshop de <strong>Call of Duty Black Ops 3</strong>.
+                <br/>+ 800 000 téléchargements cumulés
+              </div>
+              
+              <div class="cv-project-tags">
+                <span class="cv-project-tag cv-tag-specialty">Steam Workshop</span>
+                <span class="cv-project-tag cv-tag-specialty">Management communautaire</span>
+              </div>
+            </div>
+            
+          </section>
+        {{ end }}
+
+        {{/* Certifications section intentionally removed */}}
+
+
+      </div>
+    </div>
+  </section>
+  <script>
+    (function(){
+      try {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('download') === '1') {
+          // Wait a tick to ensure layout is complete before printing
+          window.addEventListener('load', function(){
+            setTimeout(function(){ window.print(); }, 150);
+          });
+        }
+      } catch (e) { /* ignore */ }
+    })();
+
+    // Auto-download PDF if available (not in print mode)
+    (function() {
+      // Check if we're not in print mode and PDF exists
+      if (!window.matchMedia('print').matches && !new URLSearchParams(window.location.search).has('print')) {
+        // Wait for page to load completely
+        window.addEventListener('load', function() {
+          // Check if PDF exists by making a HEAD request
+          fetch('/cv/clement-garcia-cv.pdf', { method: 'HEAD' })
+            .then(response => {
+              if (response.ok) {
+                console.log('PDF disponible, déclenchement du téléchargement automatique...');
+                // Create invisible download link and trigger it
+                const downloadLink = document.createElement('a');
+                downloadLink.href = '/cv/clement-garcia-cv.pdf';
+                downloadLink.download = 'clement-garcia-cv.pdf';
+                downloadLink.style.display = 'none';
+                document.body.appendChild(downloadLink);
+                
+                // Delay the download slightly to ensure page is fully rendered
+                setTimeout(function() {
+                  downloadLink.click();
+                  document.body.removeChild(downloadLink);
+                }, 1000);
+              } else {
+                console.log('PDF non disponible, génération en cours...');
+              }
+            })
+            .catch(error => {
+              console.log('Vérification PDF échouée:', error);
+            });
+        });
+      }
+    })();
+  </script>
+  
+  <!-- Export buttons placed after CV -->
+  <!-- Le PDF est automatiquement généré lors du build GitHub Actions -->
+  <div class="cv-external-controls">
+    <a href="/cv/print/" class="cv-export cv-export-bw">🖨️ B&W version</a>
+    <button class="cv-export cv-export-print" onclick="window.print()">🖨️ Imprimer</button>
+    <a href="/cv/CV.pdf" class="cv-export cv-export-download"
+       download="CV.pdf">📄 Download PDF</a>
+  </div>
+{{ end }}

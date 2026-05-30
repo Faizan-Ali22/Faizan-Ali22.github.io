@@ -1,0 +1,98 @@
+{{/*
+  Partial: cv-project-item.html
+  Renders an individual project for the CV
+  
+  Expected context: project page object
+  Usage: {{ partial "cv/cv-project-item.html" . }}
+  
+  TEMPORARY SOLUTION: Manual technology filtering for CV
+  Configure which technologies to display per project below
+*/}}
+
+{{/* === CONFIGURATION: Technologies à afficher par projet === */}}
+{{/* Utilise le slug du projet comme clé */}}
+{{ $cvTechConfig := dict
+  "terra-memoria" (dict
+    "specialties" (slice "Portage Console" "Portage Plateforme" "Expérience utilisateur (UX)" "Optimisation" "Maintenance & Débogage" "Développement Gameplay")
+    "programming_languages" (slice "C#")
+    "frameworks_engines" (slice "Unity")
+  )
+  "my-game-showcase" (dict
+    "specialties" (slice "Interface utilisateur" "Design Pattern et refactoring" "Développement Outils" "Portage Console")
+    "programming_languages" (slice "C#" "HTML" "CSS" "JavaScript")
+    "frameworks_engines" (slice "Blazor" "FastEndpoint" "SignalR" "Unity" ".NET")
+  )
+  "the-lost-city-stone-keeper" (dict
+    "specialties" (slice "Game Design" "Level Design" "Développement Outils" "Developpement Gameplay")
+    "programming_languages" (slice "C#")
+    "frameworks_engines" (slice "Unity")
+  )
+  "stone-keepers" (dict
+    "specialties" (slice "Game Design" "Level Design" "Développement Outils" "Developpement Gameplay")
+    "programming_languages" (slice "C#")
+    "frameworks_engines" (slice "Unity")
+  ) 
+  "projets-etudes" (dict
+    "specialties" (slice "Gestion de projet" "Méthode agile")
+    "programming_languages" (slice "C#")
+    "frameworks_engines" (slice "Unity")
+  )
+  "game-jam" (dict
+    "specialties" (slice "Game Design")
+    "programming_languages" (slice)
+    "frameworks_engines" (slice)
+  )
+  "modding" (dict
+    "specialties" (slice "Steam Workshop" "Management communautaire")
+    "programming_languages" (slice)
+    "frameworks_engines" (slice)
+  )
+}}
+{{/* === FIN CONFIGURATION === */}}
+
+{{ $projectSlug := .File.BaseFileName }}
+{{ $projectConfig := index $cvTechConfig $projectSlug }}
+
+<div class="cv-project-individual cv-project-with-bg" {{ with .Params.image }}style="background-image: url('{{ . }}')"{{ end }}>
+  <div class="cv-project-header">
+    <div class="cv-project-main">
+      <h3 class="cv-project-title">{{ .Title }}</h3>
+      {{ with .Params.subtitle }}<div class="cv-project-subtitle">{{ . }}</div>{{ end }}
+    </div>
+    <div class="cv-project-period">
+      {{ with .Params.date }}{{ dateFormat "2006" . }}{{ end }}
+    </div>
+  </div>
+  
+  {{ with .Params.description }}
+    <div class="cv-project-description">{{ . | plainify | truncate 160 }}</div>
+  {{ end }}
+  
+  {{/* Technical tags for this project */}}
+  <div class="cv-project-tags">
+    {{/* Si config existe pour ce projet, utilise la config, sinon affiche tout */}}
+    {{ if $projectConfig }}
+      {{/* Utilise les technologies configurées */}}
+      {{ with index $projectConfig "specialties" }}
+        {{ range . }}<span class="cv-project-tag cv-tag-specialty">{{ . }}</span>{{ end }}
+      {{ end }}
+      {{ with index $projectConfig "programming_languages" }}
+        {{ range . }}<span class="cv-project-tag cv-tag-lang">{{ . }}</span>{{ end }}
+      {{ end }}
+      {{ with index $projectConfig "frameworks_engines" }}
+        {{ range . }}<span class="cv-project-tag cv-tag-framework">{{ . }}</span>{{ end }}
+      {{ end }}
+    {{ else }}
+      {{/* Fallback: affiche toutes les technologies du projet */}}
+      {{ with .Params.specialties }}
+        {{ range . }}<span class="cv-project-tag cv-tag-specialty">{{ . }}</span>{{ end }}
+      {{ end }}
+      {{ with .Params.programming_languages }}
+        {{ range . }}<span class="cv-project-tag cv-tag-lang">{{ . }}</span>{{ end }}
+      {{ end }}
+      {{ with .Params.frameworks_engines }}
+        {{ range . }}<span class="cv-project-tag cv-tag-framework">{{ . }}</span>{{ end }}
+      {{ end }}
+    {{ end }}
+  </div>
+</div>

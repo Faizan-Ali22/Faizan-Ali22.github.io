@@ -1,0 +1,279 @@
+{{/*
+  Partial: Widget Sorter
+  Description: Trie et affiche tous les widgets selon leur ordre défini
+  Context: Page du projet (.Params)
+  
+  Ce partial centralise l'affichage de tous les widgets en les triant selon:
+  - widget_order.[widget_name] pour les widgets uniques
+  - .order pour les widgets multiples (galleries, youtube_singles)
+  
+  Valeurs par défaut si aucun ordre n'est défini:
+  - contributors: 10
+  - development_time: 20  
+  - gallery: 30
+  - technical_specs: 40
+  - specialties: 50
+  - soft_skills: 55
+  - tools: 60
+  - awards: 70
+  - testimonials: 80
+  - youtube_videos: 90
+  - clients: 100
+  - grade: 110
+  - downloads: 120
+  - ranking: 130
+*/}}
+
+{{/* Créer une liste de tous les widgets avec leur ordre */}}
+{{ $widgets := slice }}
+
+{{/* Widgets uniques */}}
+{{ if .Params.contributors }}
+  {{ $order := 10 }}
+  {{ if .Params.widget_order.contributors }}
+    {{ $order = .Params.widget_order.contributors }}
+  {{ end }}
+  {{ $widget := dict "type" "contributors" "order" $order "data" . }}
+  {{ $widgets = $widgets | append $widget }}
+{{ end }}
+
+{{ if .Params.development_time }}
+  {{ $order := 20 }}
+  {{ if .Params.widget_order.development_time }}
+    {{ $order = .Params.widget_order.development_time }}
+  {{ end }}
+  {{ $widget := dict "type" "development_time" "order" $order "data" . }}
+  {{ $widgets = $widgets | append $widget }}
+{{ end }}
+
+{{/* Only include the legacy single gallery widget if .Params.gallery is present */}}
+{{ if .Params.gallery }}
+  {{ $order := 30 }}
+  {{ if .Params.widget_order.gallery }}
+    {{ $order = .Params.widget_order.gallery }}
+  {{ end }}
+  {{ $widget := dict "type" "gallery" "order" $order "data" . }}
+  {{ $widgets = $widgets | append $widget }}
+{{ end }}
+
+{{ if or .Params.programming_languages .Params.frameworks_engines .Params.technical_specs }}
+  {{ $order := 40 }}
+  {{ if .Params.widget_order.technical_specs }}
+    {{ $order = .Params.widget_order.technical_specs }}
+  {{ end }}
+  {{ $widget := dict "type" "technical_specs" "order" $order "data" . }}
+  {{ $widgets = $widgets | append $widget }}
+{{ end }}
+
+{{ if .Params.specialties }}
+  {{ $order := 50 }}
+  {{ if .Params.widget_order.specialties }}
+    {{ $order = .Params.widget_order.specialties }}
+  {{ end }}
+  {{ $widget := dict "type" "specialties" "order" $order "data" . }}
+  {{ $widgets = $widgets | append $widget }}
+{{ end }}
+
+{{ if .Params.soft_skills }}
+  {{ $order := 55 }}
+  {{ if .Params.widget_order.soft_skills }}
+    {{ $order = .Params.widget_order.soft_skills }}
+  {{ end }}
+  {{ $widget := dict "type" "soft_skills" "order" $order "data" . }}
+  {{ $widgets = $widgets | append $widget }}
+{{ end }}
+
+{{ if .Params.tools }}
+  {{ $order := 60 }}
+  {{ if .Params.widget_order.tools }}
+    {{ $order = .Params.widget_order.tools }}
+  {{ end }}
+  {{ $widget := dict "type" "tools" "order" $order "data" . }}
+  {{ $widgets = $widgets | append $widget }}
+{{ end }}
+
+{{ if .Params.awards }}
+  {{ $order := 70 }}
+  {{ if .Params.widget_order.awards }}
+    {{ $order = .Params.widget_order.awards }}
+  {{ end }}
+  {{ $widget := dict "type" "awards" "order" $order "data" . }}
+  {{ $widgets = $widgets | append $widget }}
+{{ end }}
+
+{{ if .Params.testimonials }}
+  {{ $order := 80 }}
+  {{ if .Params.widget_order.testimonials }}
+    {{ $order = .Params.widget_order.testimonials }}
+  {{ end }}
+  {{ $widget := dict "type" "testimonials" "order" $order "data" . }}
+  {{ $widgets = $widgets | append $widget }}
+{{ end }}
+
+{{ if .Params.youtube_videos }}
+  {{ $order := 90 }}
+  {{ if .Params.widget_order.youtube_videos }}
+    {{ $order = .Params.widget_order.youtube_videos }}
+  {{ end }}
+  {{ $widget := dict "type" "youtube_videos" "order" $order "data" . }}
+  {{ $widgets = $widgets | append $widget }}
+{{ end }}
+
+{{ if .Params.clients }}
+  {{ $order := 100 }}
+  {{ if .Params.widget_order.clients }}
+    {{ $order = .Params.widget_order.clients }}
+  {{ end }}
+  {{ $widget := dict "type" "clients" "order" $order "data" . }}
+  {{ $widgets = $widgets | append $widget }}
+{{ end }}
+
+{{ if .Params.grade }}
+  {{ $order := 110 }}
+  {{ if .Params.widget_order.grade }}
+    {{ $order = .Params.widget_order.grade }}
+  {{ end }}
+  {{ $widget := dict "type" "grade" "order" $order "data" . }}
+  {{ $widgets = $widgets | append $widget }}
+{{ end }}
+
+{{ if .Params.downloads }}
+  {{ $order := 120 }}
+  {{ if .Params.widget_order.downloads }}
+    {{ $order = .Params.widget_order.downloads }}
+  {{ end }}
+  {{ $widget := dict "type" "downloads" "order" $order "data" . }}
+  {{ $widgets = $widgets | append $widget }}
+{{ end }}
+
+{{ if and .Params.ranking .Params.ranking.position .Params.ranking.total }}
+  {{ $order := 130 }}
+  {{ if .Params.widget_order.ranking }}
+    {{ $order = .Params.widget_order.ranking }}
+  {{ end }}
+  {{ $widget := dict "type" "ranking" "order" $order "data" . }}
+  {{ $widgets = $widgets | append $widget }}
+{{ end }}
+
+{{/* Multiple widgets - Individual galleries */}}
+{{ if reflect.IsSlice .Params.galleries }}
+{{ range $galleryIndex, $gallery := .Params.galleries }}
+  {{/* Fallback to file order when no explicit order is set */}}
+  {{ $order := add 30 $galleryIndex }}
+  {{ if $gallery.order }}
+    {{ $order = int $gallery.order }}
+  {{ end }}
+  {{ $widget := dict "type" "gallery_multiple" "order" $order "data" $gallery "index" $galleryIndex "context" $ }}
+  {{ $widgets = $widgets | append $widget }}
+{{ end }}
+{{ end }}
+
+{{/* Multiple widgets - Individual YouTube videos */}}
+{{ if reflect.IsSlice .Params.youtube_singles }}
+{{ range $videoIndex, $video := .Params.youtube_singles }}
+  {{/* Fallback to file order when no explicit order is set */}}
+  {{ $order := add 90 $videoIndex }}
+  {{ if $video.order }}
+    {{ $order = int $video.order }}
+  {{ end }}
+  {{ $widget := dict "type" "youtube_single" "order" $order "data" $video "index" $videoIndex "context" $ }}
+  {{ $widgets = $widgets | append $widget }}
+{{ end }}
+{{ end }}
+
+{{/* Multiple widgets - YouTube galleries */}}
+{{ if reflect.IsSlice .Params.youtube_galleries }}
+{{ range $galleryIndex, $gallery := .Params.youtube_galleries }}
+  {{/* Fallback to file order when no explicit order is set */}}
+  {{ $order := add 65 $galleryIndex }}
+  {{ if $gallery.order }}
+    {{ $order = int $gallery.order }}
+  {{ end }}
+  {{ $widget := dict "type" "youtube_gallery" "order" $order "data" $gallery "index" $galleryIndex "context" $ }}
+  {{ $widgets = $widgets | append $widget }}
+{{ end }}
+{{ end }}
+
+{{/* Sort widgets by ascending order */}}
+{{ $sortedWidgets := sort $widgets "order" }}
+
+{{/* Afficher les widgets triés */}}
+{{ range $sortedWidgets }}
+  {{ if eq .type "contributors" }}
+    {{ partial "projects/widgets/contributors.html" .data }}
+  {{ else if eq .type "development_time" }}
+    {{ partial "projects/widgets/development-time.html" .data }}
+  {{ else if eq .type "gallery" }}
+    {{ partial "projects/widgets/gallery.html" .data }}
+  {{ else if eq .type "technical_specs" }}
+    {{ partial "projects/widgets/technical-specs.html" .data }}
+  {{ else if eq .type "specialties" }}
+    {{ partial "projects/widgets/specialties.html" .data }}
+  {{ else if eq .type "soft_skills" }}
+    {{ partial "projects/widgets/soft-skills.html" .data }}
+  {{ else if eq .type "tools" }}
+    {{ partial "projects/widgets/tools.html" .data }}
+  {{ else if eq .type "awards" }}
+    {{ partial "projects/widgets/awards.html" .data }}
+  {{ else if eq .type "testimonials" }}
+    {{ partial "projects/widgets/testimonials.html" .data }}
+  {{ else if eq .type "youtube_videos" }}
+    {{ partial "projects/widgets/youtube-videos.html" .data }}
+  {{ else if eq .type "clients" }}
+    {{ partial "projects/widgets/clients.html" .data }}
+  {{ else if eq .type "grade" }}
+    {{ partial "projects/widgets/grade.html" .data }}
+  {{ else if eq .type "downloads" }}
+    {{ partial "projects/widgets/downloads.html" .data }}
+  {{ else if eq .type "ranking" }}
+    {{ partial "projects/widgets/ranking.html" .data }}
+  {{ else if eq .type "gallery_multiple" }}
+    {{/* Affichage galerie multiple individuelle */}}
+    {{ if .data.images }}
+    {{- $firstGalleryImg := partial "get-optimized-image.html" (dict "imagePath" (index .data.images 0).url "width" 500 "quality" 85) -}}
+    <div class="project-widget gallery-box multiple-gallery-{{ .index }} {{ .data.size | default "size-large" }}{{ if eq .data.gallery_aspect "16:9" }} gallery-16x9{{ end }}" onclick="toggleInfoBox(this)">
+        <!-- Gallery Preview Background pour l'état fermé -->
+        <div class="gallery-preview gallery-background"
+             style="--count: {{ len .data.images }}; background-image: url('{{ $firstGalleryImg.src }}'); background-size: cover; background-position: center;">
+            <div class="gallery-carousel">
+                {{ range $idx, $img := .data.images }}
+                {{- $optimizedGalleryImg := partial "get-optimized-image.html" (dict "imagePath" $img.url "width" 500 "quality" 85) -}}
+                <div class="gallery-mini-item" style="--i: {{$idx}};">
+                    <img src="{{ $optimizedGalleryImg.src }}" width="{{ $optimizedGalleryImg.width }}" height="{{ $optimizedGalleryImg.height }}" alt="{{ $img.caption }}" loading="lazy">
+                </div>
+                {{ end }}
+            </div>
+        </div>
+        
+        <div class="project-widget-header">
+            <div class="project-widget-icon gallery">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8.5,13.5L11,16.5L14.5,12L19,18H5M21,19V5C21,3.89 20.1,3 19,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19Z"/>
+                </svg>
+            </div>
+            <div class="project-widget-header-content">
+                <h3 class="project-widget-title">{{ .data.title | default (i18n "image_gallery" | default "Galerie d'images") }}</h3>
+                <div class="project-widget-summary">{{ len .data.images }} {{ if eq (len .data.images) 1 }}{{ i18n "image" | default "image" }}{{ else }}{{ i18n "images" | default "images" }}{{ end }}</div>
+                {{ if .data.description }}
+                <div class="project-widget-description">{{ .data.description }}</div>
+                {{ end }}
+            </div>
+            <div class="project-widget-toggle">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/>
+                </svg>
+            </div>
+        </div>
+        <div class="project-widget-content">
+            {{ partial "projects/widgets/modal/gallery.html" (dict "gallery" .data.images "projectId" .context.File.BaseFileName) }}
+        </div>
+    </div>
+    {{ else }}
+    {{/* Galerie sans images - ne pas afficher le widget */}}
+    {{ end }}
+  {{ else if eq .type "youtube_gallery" }}
+    {{ partial "projects/widgets/youtube-gallery.html" (dict "gallery" .data "context" .context) }}
+  {{ else if eq .type "youtube_single" }}
+    {{ partial "projects/widgets/youtube-single.html" (dict "video" .data "context" .context) }}
+  {{ end }}
+{{ end }}

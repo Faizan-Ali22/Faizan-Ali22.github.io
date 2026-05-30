@@ -1,0 +1,517 @@
+// ============================================================================
+// DEMO PAGE STYLES
+// ============================================================================
+// Styles spécifiques à la page demo.html pour la documentation des composants
+// Ces styles ne sont pas utilisés dans les autres pages du site.
+
+// Variables locales pour la demo
+:root {
+  --demo-primary: var(--primary-blue-text, #3498db);
+  --demo-border: var(--primary-blue-border);
+  --demo-glass-bg: var(--glass-bg);
+  --demo-glass-border: var(--glass-border);
+  --demo-text-primary: var(--text-primary);
+  --demo-text-secondary: var(--text-secondary);
+  --demo-border-radius: var(--border-radius-lg);
+  --demo-border-radius-md: var(--border-radius-md);
+}
+
+// ============================================================================
+// LAYOUT PRINCIPAL
+// ============================================================================
+
+.demo-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  color: var(--demo-text-primary);
+}
+
+.demo-section {
+  margin: 3rem 0;
+  padding: 2rem;
+  background: var(--demo-glass-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--demo-glass-border);
+  border-radius: var(--demo-border-radius);
+
+  // Titres de sections demo
+  > h2 {
+    color: var(--demo-primary);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--demo-border);
+
+    // Override pour les en-têtes unifiés
+    &.section-title-unified {
+      border-bottom: none !important;
+      padding-bottom: 0 !important;
+    }
+  }
+
+  > h3 {
+    margin: 2rem 0 1rem 0;
+    color: var(--demo-text-secondary);
+  }
+}
+
+// ============================================================================
+// GRILLES ET LAYOUTS
+// ============================================================================
+
+.demo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.demo-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+// ============================================================================
+// PALETTE DE COULEURS
+// ============================================================================
+
+.demo-color-palette {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.color-swatch {
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+// ============================================================================
+// TYPOGRAPHIE
+// ============================================================================
+
+.demo-typography {
+  line-height: 1.6;
+}
+
+// ============================================================================
+// CARTES ET CONTENEURS
+// ============================================================================
+
+.demo-card {
+  background: var(--demo-glass-bg);
+  border: 1px solid var(--demo-glass-border);
+  border-radius: var(--demo-border-radius-md);
+  padding: 1.5rem;
+  backdrop-filter: blur(5px);
+  transition: all 0.3s ease;
+
+  &:hover {
+    border-color: var(--demo-primary);
+    transform: translateY(-2px);
+  }
+}
+
+.demo-item {
+  &.aero-glass {
+    background: var(--demo-glass-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--demo-glass-border);
+    border-radius: var(--demo-border-radius-md);
+    padding: 1.5rem;
+  }
+}
+
+// ============================================================================
+// BADGES TECHNOLOGIQUES
+// ============================================================================
+
+.tech-badge-demo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: var(--demo-glass-bg);
+  border: 1px solid var(--demo-glass-border);
+  border-radius: 20px;
+  font-size: 0.9rem;
+  margin: 0.25rem;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: var(--demo-primary);
+    color: white;
+    transform: scale(1.05);
+  }
+}
+
+// ============================================================================
+// ACTIONS ET PROJETS
+// ============================================================================
+
+.project-action-demo {
+  display: flex;
+  gap: 0.5rem;
+  margin: 1rem 0;
+  flex-wrap: wrap;
+}
+
+// ============================================================================
+// SYSTÈME D'ONGLETS POUR DEMO
+// ============================================================================
+
+.demo-tab-content {
+  margin-top: 1rem;
+  min-height: 60px;
+}
+
+.demo-tab-panel {
+  display: none;
+  padding: 1rem;
+  background: var(--demo-glass-bg);
+  border-radius: var(--demo-border-radius-md);
+  border: 1px solid var(--demo-glass-border);
+  animation: fadeIn 0.3s ease;
+
+  &.active {
+    display: block;
+  }
+}
+
+// ============================================================================
+// ANNOTATIONS CSS
+// ============================================================================
+
+.css-class-info {
+  background: rgba(52, 152, 219, 0.1);
+  border: 1px solid rgba(52, 152, 219, 0.3);
+  border-radius: 6px;
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+  font-family: 'Courier New', monospace;
+  font-size: 0.85rem;
+  color: var(--demo-primary);
+  transition: all 0.2s ease;
+
+  strong {
+    color: var(--demo-text-primary);
+  }
+}
+
+.demo-element-wrapper {
+  position: relative;
+  margin: 1rem 0;
+
+  &:hover .css-class-info {
+    background: rgba(52, 152, 219, 0.15);
+    border-color: rgba(52, 152, 219, 0.5);
+  }
+}
+
+// ============================================================================
+// MODALS DEMO
+// ============================================================================
+
+.modals-demo-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+// ============================================================================
+// MODAL UNIFIÉ DEMO
+// ============================================================================
+
+.unified-modal-demo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(5px);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+
+  &.active {
+    display: flex;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .unified-modal-content {
+    background: var(--demo-glass-bg);
+    border: 1px solid var(--demo-glass-border);
+    border-radius: var(--demo-border-radius);
+    padding: 2rem;
+    max-width: 90%;
+    max-height: 90%;
+    overflow-y: auto;
+    position: relative;
+    backdrop-filter: blur(10px);
+
+    .unified-modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: var(--demo-text-primary);
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 50%;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: scale(1.1);
+      }
+    }
+  }
+}
+
+// ============================================================================
+// ANIMATIONS
+// ============================================================================
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ============================================================================
+// RESPONSIVE
+// ============================================================================
+
+@media (max-width: 768px) {
+  .demo-page {
+    padding: 1rem;
+  }
+
+  .demo-section {
+    margin: 2rem 0;
+    padding: 1.5rem;
+  }
+
+  .demo-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .demo-color-palette {
+    grid-template-columns: 1fr;
+  }
+
+  .demo-buttons {
+    flex-direction: column;
+  }
+
+  .project-action-demo {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  .demo-page {
+    padding: 0.5rem;
+  }
+
+  .demo-section {
+    margin: 1.5rem 0;
+    padding: 1rem;
+  }
+}
+
+// ============================================================================
+// STYLES SPÉCIFIQUES POUR MODALS DEMO
+// ============================================================================
+
+.modal-demo-container {
+  background: var(--demo-glass-bg);
+  border: 1px solid var(--demo-glass-border);
+  border-radius: var(--demo-border-radius);
+  padding: 1.5rem;
+  backdrop-filter: blur(5px);
+}
+
+// Styles pour les h3 des sections d'actions demo uniquement
+.demo-actions {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--demo-border-radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  h3 {
+    margin: 0 0 1rem 0;
+    color: var(--demo-text-primary);
+    font-size: 1.2rem;
+  }
+}
+
+.modal-demo-preview {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: var(--demo-border-radius-md);
+  padding: 1rem;
+  margin-top: 1rem;
+  min-height: 300px;
+  overflow: hidden;
+
+  // Modifier les modals pour qu'elles s'affichent en inline au lieu de fullscreen
+  .skill-modal-content,
+  .person-modal-content {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    height: auto !important;
+    max-height: 400px !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    overflow-y: auto;
+  }
+
+  // Permettre le backdrop-filter pour les modals unifiés
+  .unified-modal-content {
+    backdrop-filter: blur(20px) !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+  }
+
+  // Désactiver les boutons de fermeture en demo
+  .skill-modal-close,
+  .person-modal-close,
+  .modal-close,
+  .popup-close {
+    cursor: default;
+    pointer-events: none;
+  }
+
+  // Styles spécifiques pour Discord Modal Demo
+  .discord-modal {
+    position: relative !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    margin: 0 !important;
+  }
+
+  .discord-id-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 1rem 0;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+  }
+
+  .discord-id {
+    flex: 1;
+    font-family: 'Courier New', monospace;
+    font-size: 1rem;
+    color: var(--demo-primary);
+  }
+
+  .copy-btn {
+    background: none;
+    border: 1px solid var(--demo-glass-border);
+    border-radius: 4px;
+    padding: 0.25rem;
+    cursor: default;
+    color: var(--demo-text-secondary);
+  }
+
+  // Styles spécifiques pour Actions Popup Demo
+  .actions-popup {
+    height: auto !important;
+    position: relative !important;
+    background: rgba(0, 0, 0, 0.3) !important;
+    border-radius: 8px;
+  }
+
+  .popup-content {
+    position: relative !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    margin: 0 !important;
+    transform: none !important;
+  }
+
+  .popup-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .popup-action-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .popup-action-icon {
+    font-size: 1.25rem;
+  }
+
+  .popup-action-title {
+    font-weight: 600;
+    color: var(--demo-text-primary);
+  }
+
+  .popup-action-desc {
+    font-size: 0.85rem;
+    color: var(--demo-text-secondary);
+  }
+}
+
+.demo-btn {
+  background: var(--demo-primary);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--demo-border-radius-md);
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  margin: 0.25rem;
+
+  &:hover {
+    background: #2980b9;
+    transform: translateY(-2px);
+  }
+}

@@ -1,0 +1,39 @@
+{{/*
+  Partial: Grade Widget
+  Description: Widget compact pour afficher la note académique d'un projet
+  Context: 
+    - .Params (dict) - Paramètres du projet avec .grade
+    - .File.BaseFileName (string) - ID du projet
+*/}}
+
+{{- if and .Params.grade .Params.grade.value (ne .Params.grade.value "") -}}
+<div class="project-widget grade-box {{ .Params.grade_size | default "size-small" }}" onclick="toggleInfoBox(this)">
+  <div class="project-widget-header">
+    <div class="project-widget-icon grade">
+      {{- partial "icon.html" (dict "iconId" "grade") -}}
+    </div>
+    <div class="project-widget-header-content">
+      <h3 class="project-widget-title">{{ i18n "academic_grade" | default "Note académique" }}</h3>
+      <div class="project-widget-summary">{{ .Params.grade.subject | default (i18n "evaluation" | default "Évaluation") }}</div>
+      <!-- Aperçu simple de la note -->
+      <div class="project-widget-grade-preview">
+        <div class="project-widget-grade-preview-value">
+          {{ .Params.grade.value }}<span class="project-widget-grade-preview-scale">/ {{ .Params.grade.scale }}</span>
+        </div>
+        <div class="project-widget-grade-preview-info">
+          {{- if .Params.grade.percentage -}}
+          <div class="project-widget-grade-percentage">{{ .Params.grade.percentage }}%</div>
+          {{- end -}}
+        </div>
+      </div>
+    </div>
+    <div class="project-widget-toggle">
+      {{- partial "icon.html" (dict "iconId" "chevron-down") -}}
+    </div>
+  </div>
+  <div class="project-widget-content">
+    {{/* Contenu modal enhanced - uniquement ce qui doit apparaître dans le modal */}}
+    {{ partial "projects/widgets/modal/grade.html" (dict "Project" . "Title" (i18n "academic_grade" | default "Note académique")) }}
+  </div>
+</div>
+{{- end -}}

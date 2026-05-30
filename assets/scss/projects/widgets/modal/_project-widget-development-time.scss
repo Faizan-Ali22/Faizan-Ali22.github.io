@@ -1,0 +1,368 @@
+// =============================================================================
+// PROJECT WIDGET MODAL - DEVELOPMENT TIME
+// =============================================================================
+// Enhanced modal styles for development time project widget
+
+.development-time-modal-enhanced {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  
+  // Main statistics overview
+  .devtime-stats-overview {
+    @extend .widget-stats-bar;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    
+    .devtime-main-stat {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      
+      .devtime-main-value {
+        font-size: 2rem;
+        font-weight: var(--font-weight-bold);
+        color: var(--text-primary);
+        line-height: 1;
+      }
+      
+      .devtime-main-label {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        font-weight: var(--font-weight-medium);
+        margin-top: 0.25rem;
+      }
+    }
+    
+    .devtime-date-range {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      
+      .devtime-date-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        
+        .devtime-date-icon {
+          display: flex;
+          align-items: center;
+          color: var(--primary-teal);
+          
+          svg {
+            width: 16px;
+            height: 16px;
+          }
+        }
+        
+        .devtime-date-content {
+          display: flex;
+          flex-direction: column;
+          
+          .devtime-date-value {
+            font-weight: var(--font-weight-semibold);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+          }
+          
+          .devtime-date-label {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+          }
+        }
+      }
+      
+      .devtime-date-separator {
+        display: flex;
+        align-items: center;
+        color: var(--primary-teal);
+        
+        svg {
+          width: 12px;
+          height: 12px;
+        }
+      }
+    }
+  }
+
+  // Phases section with timeline
+  .devtime-phases-section {
+    @extend .widget-card;
+    
+    .devtime-phases-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      
+      h4 {
+        margin: 0;
+        font-size: 1.1rem;
+        color: var(--text-primary);
+        font-weight: var(--font-weight-semibold);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        
+        svg {
+          width: 18px;
+          height: 18px;
+          color: var(--primary-teal);
+          flex-shrink: 0;
+        }
+      }
+      
+      .devtime-phases-count {
+        @extend .widget-badge;
+        @extend .widget-badge--sm;
+      }
+    }
+    
+    .devtime-timeline {
+      position: relative;
+      
+      // Global timeline line
+      &::before {
+        content: '';
+        position: absolute;
+        left: calc(1rem); // Perfect center with bullets
+        top: 2rem;
+        bottom: 2rem;
+        width: 2px;
+        background: linear-gradient(
+          to bottom,
+          var(--primary-teal) 0%,
+          rgba(79, 209, 199, 0.3) 100%
+        );
+        z-index: -1; // Behind everything
+      }
+      
+      .devtime-timeline-item {
+        position: relative;
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        padding: 0.75rem 0;
+        
+        &:not(.last) {
+          margin-bottom: 0.5rem;
+        }
+        
+        .devtime-timeline-bullet {
+          @extend .widget-icon;
+          @extend .widget-icon--md;
+          background: var(--primary-gradient);
+          color: white;
+          font-weight: var(--font-weight-bold);
+          flex-shrink: 0;
+          position: relative;
+          z-index: 1; // Above the timeline line
+          
+          // Ensure opaque background to hide line behind
+          &::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: #1a1a1a; // Solid opaque background
+            border-radius: inherit;
+            z-index: -1;
+          }
+          
+          .devtime-phase-number {
+            font-size: 0.8rem;
+            position: relative;
+            z-index: 1;
+          }
+        }
+        
+        .devtime-phase-content {
+          flex: 1;
+          
+          .devtime-phase-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 0.5rem;
+            
+            .devtime-phase-name {
+              margin: 0;
+              font-size: 1rem;
+              color: var(--text-primary);
+              font-weight: var(--font-weight-medium);
+            }
+            
+            .devtime-phase-duration {
+              @extend .widget-badge;
+              background: var(--primary-gradient);
+              color: white;
+              font-weight: var(--font-weight-semibold);
+            }
+          }
+          
+          .devtime-phase-progress {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-top: 0.5rem;
+            
+            .devtime-phase-progress-bar {
+              height: 100%;
+              background: var(--primary-gradient);
+              border-radius: 2px;
+              transition: width 0.8s ease-in-out;
+              animation: progressGrow 1.2s ease-out forwards;
+            }
+          }
+        }
+        
+        // Hover effects for timeline items
+        &:hover {
+          .devtime-timeline-bullet {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(79, 209, 199, 0.4);
+          }
+          
+          .devtime-phase-content {
+            transform: translateX(2px);
+          }
+        }
+      }
+    }
+  }
+
+  // Methodology card section
+  .devtime-summary-section {
+    .devtime-summary-grid {
+      display: flex;
+      justify-content: center;
+      
+      .devtime-summary-card {
+        @extend .widget-card;
+        @extend .widget-card--compact;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        max-width: 300px;
+        
+        .devtime-card-icon {
+          @extend .widget-icon;
+          @extend .widget-icon--sm;
+          background: rgba(79, 209, 199, 0.1);
+          color: var(--primary-teal);
+          flex-shrink: 0;
+        }
+        
+        .devtime-card-content {
+          flex: 1;
+          
+          h5 {
+            margin: 0 0 0.25rem 0;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            font-weight: var(--font-weight-semibold);
+          }
+          
+          p {
+            margin: 0;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            line-height: 1.3;
+          }
+        }
+      }
+    }
+  }
+
+
+
+  // No data state
+  .devtime-no-data {
+    @extend .widget-card;
+    text-align: center;
+    padding: 2rem;
+    
+    .devtime-no-data-icon {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 1rem;
+      opacity: 0.6;
+      color: var(--text-muted);
+      
+      svg {
+        width: 48px;
+        height: 48px;
+      }
+    }
+    
+    .devtime-no-data-text {
+      h4 {
+        margin: 0 0 0.5rem 0;
+        color: var(--text-primary);
+        font-weight: var(--font-weight-semibold);
+      }
+      
+      p {
+        margin: 0;
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        line-height: 1.4;
+      }
+    }
+  }
+}
+
+// Animations
+@keyframes progressGrow {
+  from {
+    width: 0%;
+  }
+  to {
+    width: var(--progress-width, 100%);
+  }
+}
+
+
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .development-time-modal-enhanced {
+    .devtime-stats-overview {
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+      
+      .devtime-date-range {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+        
+        .devtime-date-separator {
+          display: none;
+        }
+      }
+    }
+    
+    .devtime-phases-section .devtime-timeline {
+      .devtime-timeline-item {
+        .devtime-phase-header {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 0.25rem;
+        }
+      }
+    }
+    
+    .devtime-summary-section .devtime-summary-grid {
+      justify-content: flex-start;
+    }
+  }
+}

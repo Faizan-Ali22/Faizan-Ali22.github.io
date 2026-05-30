@@ -1,0 +1,366 @@
+// =============================================================================
+// PROJECT WIDGET - YOUTUBE SINGLE
+// =============================================================================
+
+@import 'widget-base';
+
+// -----------------------------------------------------------------------------
+// Header-based compact style (matches gallery 16:9 preview behavior)
+// -----------------------------------------------------------------------------
+// Mirror gallery behavior: fixed 16:9 aspect when closed, no base min-height
+.project-widget.youtube-single-widget {
+  position: relative;
+  overflow: hidden;
+  min-height: unset;  // Remove default min-height from base widget
+  display: flex;
+  flex-direction: column;
+}
+
+// Remove fixed ratio when in expanded state (even though this widget doesn't expand)
+.project-widget.youtube-single-widget.expanded {
+  aspect-ratio: unset; // Same as gallery when expanded
+  min-height: 140px;   // Restore a sane minimum if ever used
+}
+
+// Full-bleed header filling the widget area with the thumbnail background
+// Split layout pieces
+.project-widget.youtube-single-widget .youtube-single-visual {
+  position: relative;
+  overflow: hidden;
+  flex: 1 1 auto; // take remaining space above the footer
+  min-height: 0; // allow flexbox to compute height correctly
+}
+
+.project-widget.youtube-single-widget .youtube-single-visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+// Footer header (separate block, not overlaying the image)
+.project-widget.youtube-single-widget .youtube-single-footer {
+  position: relative;
+  background: none; // remove banner background per request
+  padding: 1.5rem; // Uniform padding per request
+  align-items: center;
+  flex: 0 0 auto; // footer keeps its natural height
+  margin-top: auto; // push footer to the bottom
+  max-width: 100% !important; // Override any max-width constraint (was 70%)
+}
+
+.project-widget.youtube-single-widget .youtube-single-footer .project-widget-title {
+  color: #fff;
+  margin: 0;
+}
+
+// Override gallery-box behavior: keep header as bottom banner (not overlay)
+.project-widget.youtube-single-widget.gallery-box:not(.expanded) .project-widget-header {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  width: 100%;
+  max-width: 100% !important; // Override any max-width constraint
+  margin: 0;
+  background: none; // remove banner background per request
+  backdrop-filter: none;
+  padding: 1.5rem; // Uniform padding per request
+}
+
+// Hide icon/toggle in closed state for a cleaner header look (like gallery)
+.project-widget.youtube-single-widget:not(.expanded) .project-widget-icon,
+.project-widget.youtube-single-widget:not(.expanded) .project-widget-toggle {
+  display: none;
+}
+
+// Overlay + play button centered over the header background
+.project-widget.youtube-single-widget .youtube-single-play-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.25);
+  transition: all 0.3s ease;
+}
+
+.project-widget.youtube-single-widget .youtube-single-play-button {
+  width: 88px;   // bigger default
+  height: 88px;  // bigger default
+  background: rgba(255, 0, 0, 0.85);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+
+  svg {
+    width: 40px;   // enlarge play triangle
+    height: 40px;
+    color: #fff;
+    margin-left: 3px; // slight offset for visual centering
+  }
+}
+
+.project-widget.youtube-single-widget:hover .youtube-single-play-button {
+  transform: scale(1.06);
+  background: rgba(255, 0, 0, 0.95);
+}
+
+// Duration badge bottom-right
+.project-widget.youtube-single-widget .youtube-single-duration {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  backdrop-filter: blur(5px);
+}
+
+// Title banner at the bottom of the header
+// Legacy banner styles removed (footer now separate)
+
+.project-widget.youtube-single-widget .youtube-single-title-banner .project-widget-title {
+  color: #fff;
+  margin: 0;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+}
+
+.project-widget.youtube-single-widget .youtube-single-title-banner .project-widget-summary {
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
+  font-size: 0.85rem;
+}
+
+// Widget container principal
+// Spacing is managed by grid gap; no additional margin on the widget itself
+
+// Hide content on closed state (this widget never opens a modal)
+.project-widget.youtube-single-widget .project-widget-content { display: none !important; height: 0; padding: 0; }
+
+// Hide icon and toggle when closed for a clean look (gallery behavior)
+.project-widget.youtube-single-widget:not(.expanded) .project-widget-icon,
+.project-widget.youtube-single-widget:not(.expanded) .project-widget-toggle { display: none; }
+
+// Critical: prevent base widget rule from forcing header to take 100% height when closed
+.project-widget.youtube-single-widget:not(.expanded) .project-widget-header { height: auto !important; }
+
+// Card YouTube single - adaptable aux différentes tailles
+.youtube-single-card {
+  background: var(--widget-bg);
+  border: var(--widget-border);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-left: 4px solid #ff0000;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-left-color: #cc0000;
+
+    .youtube-single-thumbnail img { transform: scale(1.05); }
+    .youtube-single-play-button {
+      transform: scale(1.1);
+      background: rgba(255, 0, 0, 0.9);
+    }
+  }
+}
+
+// Responsive sizing per widget size (triangle and button)
+.youtube-single-widget.size-small .youtube-single-play-button { width: 72px; height: 72px; }
+.youtube-single-widget.size-small .youtube-single-play-button svg { width: 34px; height: 34px; }
+
+.youtube-single-widget.size-medium .youtube-single-play-button { width: 84px; height: 84px; }
+.youtube-single-widget.size-medium .youtube-single-play-button svg { width: 38px; height: 38px; }
+
+.youtube-single-widget.size-large .youtube-single-play-button,
+.youtube-single-widget.size-xl  .youtube-single-play-button { width: 92px; height: 92px; }
+.youtube-single-widget.size-large .youtube-single-play-button svg,
+.youtube-single-widget.size-xl  .youtube-single-play-button svg { width: 44px; height: 44px; }
+
+// Layout horizontal pour tuiles larges (3x1, 2x1, etc.)
+.youtube-single-widget.size-large .youtube-single-card,
+.youtube-single-widget.size-xlarge .youtube-single-card {
+  flex-direction: row;
+  
+  .youtube-single-thumbnail {
+    width: 40%;
+    flex-shrink: 0;
+  }
+  
+  .youtube-single-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+// Thumbnail de la vidéo
+.youtube-single-thumbnail {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+  background: #000;
+  
+  // Dans le layout horizontal, la thumbnail prend toute la hauteur
+  .youtube-single-widget.size-large &,
+  .youtube-single-widget.size-xlarge & {
+    aspect-ratio: unset;
+    height: 100%;
+  }
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+    display: block;
+  }
+}
+
+// Overlay pour le bouton play
+.youtube-single-play-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+// Bouton play centré
+.youtube-single-play-button {
+  width: 70px;
+  height: 70px;
+  background: rgba(255, 0, 0, 0.8);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  
+  svg {
+    width: 24px;
+    height: 24px;
+    color: white;
+    margin-left: 2px; // Ajustement visuel pour centrer le triangle
+  }
+}
+
+// Durée de la vidéo
+.youtube-single-duration {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  backdrop-filter: blur(5px);
+}
+
+// Informations de la vidéo
+.youtube-single-info {
+  padding: 1rem;
+  background: var(--widget-bg);
+}
+
+.youtube-single-title {
+  color: var(--text-primary);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.4;
+  margin: 0 0 0.5rem 0;
+  display: -webkit-box;
+  line-clamp: 2;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.youtube-single-description {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  line-height: 1.4;
+  margin: 0 0 0.75rem 0;
+  display: -webkit-box;
+  line-clamp: 2;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// Styles spécifiques pour les tuiles larges (layout horizontal)
+.youtube-single-widget.size-large,
+.youtube-single-widget.size-xlarge {
+  .youtube-single-title {
+    font-size: 1.2rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .youtube-single-description {
+    line-clamp: 3;
+    -webkit-line-clamp: 3;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
+  
+  .youtube-single-info {
+    padding: 1.5rem;
+  }
+}
+
+.youtube-single-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.youtube-single-date {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  
+  svg {
+    opacity: 0.7;
+  }
+}
+
+// Embed caché
+.youtube-single-embed {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: #000;
+  
+  .youtube-embed-iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+}

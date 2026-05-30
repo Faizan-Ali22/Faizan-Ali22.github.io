@@ -1,0 +1,288 @@
+// Projects Sections Styles
+// Styles pour la section projets sur la page d'accueil ET la page de liste (/projects/)
+
+// Section projets sur la page d'accueil
+.projects-section:not(.projects-page) {
+    width: 100%;
+    
+    .projects-header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    
+    .tabs {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+    }
+    
+    .projects-description {
+        text-align: center;
+        margin-bottom: 30px;
+        
+        p {
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+    }
+    
+    .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)) !important;
+        gap: 20px !important;
+        width: 100%;
+        box-sizing: border-box;
+        min-height: 400px; // Minimum height to prevent layout shift
+        transition: min-height 0.3s ease; // Smooth transition when height changes
+    }
+    
+    .project-card-wrapper {
+        display: none;  // Hidden by default on homepage
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+        opacity: 1;
+        transform: scale(1);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        
+        // Show only games cards by default (games is the default active tab on homepage)
+        &[data-category="games"] {
+            display: flex;
+        }
+        
+        &.hiding {
+            opacity: 0;
+            transform: scale(0.95);
+        }
+        
+        &.showing {
+            display: flex;
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        &.tile-ready {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        &.tile-visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        
+        .project-card-unified {
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+        }
+    }
+}
+
+// Page de liste des projets (/projects/)
+.projects-list-page {
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
+    
+    .main-content {
+        width: 100%;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+}
+
+.projects-section.projects-page {
+    width: 100%;
+    
+    // Header styles
+    .projects-header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    
+    // Tabs container
+    .tabs {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+    }
+    
+    // Description
+    .projects-description {
+        text-align: center;
+        margin-bottom: 30px;
+        
+        p {
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+    }
+    
+    // Augmentation de la spécificité pour override les styles génériques
+    &.projects-page .projects-grid,
+    .projects-grid {
+        display: grid;
+        // Maximum 3 colonnes - taille minimale plus grande pour limiter le nombre de colonnes
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)) !important;
+        gap: 20px !important;
+        width: 100%;
+        box-sizing: border-box;
+        max-width: 100%;
+        justify-content: center; // Center cards when less than full grid
+    }
+    
+    .project-card-wrapper {
+        // Wrapper must be block-level and fill its grid cell
+        display: block;
+        width: 100%;
+        max-width: 450px; // Limit max width to keep consistent size
+        height: 100%;
+        box-sizing: border-box;
+        margin: 0 auto; // Center card in its grid cell
+        
+        // Default: show all cards
+        opacity: 1;
+        transform: scale(1);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        
+        // Cards being hidden
+        &.hiding {
+            opacity: 0;
+            transform: scale(0.95);
+        }
+        
+        // Cards being shown
+        &.showing {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        // Animation ready state
+        &.tile-ready {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        // Animation visible state
+        &.tile-visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        
+        // Make sure the card inside takes full space
+        .project-card-unified {
+            height: 100%;
+            box-sizing: border-box;
+        }
+    }
+}
+
+// Responsive adjustments for ALL projects sections
+@media (max-width: 768px) {
+    .projects-list-page {
+        .main-content {
+            padding: 15px;
+        }
+    }
+    
+    // Both home page and list page
+    .projects-section {
+        .projects-grid {
+            grid-template-columns: 1fr !important;
+            gap: 15px !important;
+        }
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .projects-section {
+        .projects-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 15px !important;
+        }
+    }
+}
+
+@media (min-width: 1025px) and (max-width: 1400px) {
+    .projects-section {
+        .projects-grid {
+            grid-template-columns: repeat(3, 1fr) !important;
+            gap: 20px !important;
+        }
+    }
+}
+
+// Grand écran et fullscreen : maximum 3 colonnes
+@media (min-width: 1401px) {
+    .projects-section.projects-page {
+        .projects-grid {
+            grid-template-columns: repeat(3, 1fr) !important;
+            gap: 25px !important;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+    }
+    
+    // Home page section - centered but no max-width constraint
+    .projects-section:not(.projects-page) {
+        .projects-grid {
+            grid-template-columns: repeat(3, 1fr) !important;
+            gap: 25px !important;
+        }
+    }
+}
+
+// Filters bar container for sticky positioning
+.projects-filters-bar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 15px 0 0 0; // Remove bottom padding to let sub-tabs stick
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    // Sub-tabs initially hidden
+    .sub-tabs {
+        display: none;
+        margin-top: -27px; // Negative margin to stick to main tabs
+    }
+}
+
+// Mobile adjustments for filters bar
+@media (max-width: 768px) {
+    .projects-filters-bar {
+        padding: 10px 0 0 0;
+        width: 100%;
+        margin: 0;
+        overflow-x: hidden;
+    }
+    
+    .tabs, .sub-tabs {
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .projects-filters-bar {
+        padding: 8px 0 0 0;
+        width: 100%;
+        margin: 0;
+    }
+}

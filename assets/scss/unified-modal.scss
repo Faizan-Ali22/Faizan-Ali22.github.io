@@ -1,0 +1,1132 @@
+// MODAL UNIFIÉ - Système unifié pour remplacer tous les modals
+// Basé sur skill-modal avec intégration des systèmes .tab-btn et .btn-action existants
+
+.unified-modal {
+    /* Overlay container (matches /demo/ ambiance) */
+    display: none; /* Shown via JS */
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 10000;
+    backdrop-filter: blur(10px);
+    /* Center modal */
+    display: none;
+    align-items: center;
+    justify-content: center;
+    overflow: auto;
+}
+
+.unified-modal .unified-modal-content {
+    /* Glassy content container consistent with /demo/ */
+    max-width: 90vw;
+    max-height: 90vh;
+    margin: 0 auto; /* centered by flex container */
+    background: rgba(30, 30, 30, 0.98); /* More opaque background instead of blur */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    box-shadow:
+        0 25px 45px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    overflow: hidden;
+    position: relative;
+}
+
+
+
+/* Contact type specific sizing (strict parity with /demo/) */
+.unified-modal-content--contact {
+    width: 800px; /* matches demo target width */
+    max-width: calc(100vw - 40px);
+    min-height: 420px;
+}
+
+/* Base header/body/content-header rules already exist below in the unified section; avoid duplications here. */
+
+.unified-modal-demo {
+    /* Container de démo pour la page /demo/ */
+    .unified-modal-content {
+        background: rgba(30, 30, 30, 0.98); /* More opaque background instead of blur */
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 20px;
+        box-shadow: 
+            0 25px 45px rgba(0, 0, 0, 0.1),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        max-width: 900px;
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+    }
+}
+
+.unified-modal-preview {
+    /* Style pour les prévisualisations statiques des modals */
+    .unified-modal-content {
+        background: rgba(30, 30, 30, 0.98); /* More opaque background instead of blur */
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 20px;
+        box-shadow: 
+            0 25px 45px rgba(0, 0, 0, 0.1),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        max-width: 900px;
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+    }
+}
+
+/* === UNIFIED HEADER - NOW CONTAINS CONTENT-HEADER AND TABS === */
+.unified-modal-header {
+    position: relative;
+    padding: 15px 70px 0px 20px; /* No bottom padding for cut-out effect */
+    border-radius: 20px 20px 0 0; /* Rounded only at top */
+    overflow: hidden; /* To contain child elements */
+    
+    .unified-modal-close {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        color: rgba(255, 255, 255, 0.8);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        z-index: 10; /* Ensure it's above everything */
+        
+        &:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            transform: scale(1.05);
+        }
+    }
+    
+    /* Content header within header */
+    .unified-modal-content-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 20px;
+        margin-top: 10px;
+    }
+    
+    /* Tabs in header - Original tab system color */
+    .unified-modal-tabs {
+        margin: 15px -20px 0 -20px; /* Top margin to space from content-header */
+        width: calc(100% + 90px); /* Also compensate right padding (70px for close button) */
+        padding: 8px 20px 8px 20px; /* Reduced vertical padding */
+        background: rgba(0, 0, 0, 0.25); /* Original tab system color */
+        border-radius: 0; /* No rounding */
+        border: none; /* No borders */
+        box-sizing: border-box;
+        position: relative;
+        
+        /* Cut-out effect with inner shadow */
+        box-shadow: 
+            inset 0 1px 0 rgba(255, 255, 255, 0.05),
+            inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+    }
+}
+
+/* === UNIFIED BODY - PERFECTLY INTEGRATES WITH HEADER === */
+.unified-modal-body {
+    padding: 20px;
+    background: rgb(34, 34, 34); /* Darker shade than header */
+    border-top: none; /* No border - continuity with tabs */
+    border-radius: 0 0 20px 20px; /* Rounded only at bottom */
+    max-height: 75vh; /* Taller body for better readability */
+    overflow-y: auto; /* Vertical scroll if needed */
+}
+
+/* === UNIFIED CONTENT HEADER - NOW WITHIN THE HEADER === */
+.unified-modal-content-header {
+    /* Styles are now in .unified-modal-header .unified-modal-content-header */
+    gap: 20px;
+    
+    .unified-modal-content-header-left {
+        display: flex;
+        align-items: flex-start;
+        gap: 20px;
+        flex: 1;
+        min-width: 0;
+    }
+    
+    .unified-modal-content-header-right {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        flex-shrink: 0;
+    }
+}
+
+.unified-modal-icon-large {
+    flex-shrink: 0;
+    
+    img {
+        width: 64px;
+        height: 64px;
+        object-fit: contain;
+    }
+    
+    span {
+        display: block;
+        font-size: 48px;
+        line-height: 1;
+    }
+}
+
+.unified-modal-title-block {
+    h2 {
+        margin: 0 0 10px 0;
+        font-size: 28px;
+        font-weight: 700;
+        color: white;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+}
+
+.unified-modal-chips {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    
+    .chip {
+        background: rgba(74, 222, 128, 0.2);
+        border: 1px solid rgba(74, 222, 128, 0.3);
+        color: #4ade80;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        
+        &.secondary {
+            background: rgba(156, 163, 175, 0.2);
+            border-color: rgba(156, 163, 175, 0.3);
+            color: #9ca3af;
+        }
+    }
+}
+
+/* === LAYOUT DEUX COLONNES === */
+.unified-modal-two-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    
+    h4 {
+        margin: 0 0 20px 0;
+        color: white;
+        font-weight: 600;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .contact-info-column,
+    .contact-form-column {
+        min-width: 0; /* Permet la compression */
+    }
+}
+
+/* === UNIFIED TAB SYSTEM === */
+.unified-modal-tabs {
+    /* Uses existing .tabs styles from theme */
+    margin-bottom: 25px;
+    
+    /* Specific styles for tabs in modals */
+    .tab-btn {
+        /* Existing theme styles apply automatically */
+        
+        .count {
+            margin-left: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        
+        &.active .count {
+            background: rgba(255, 255, 255, 0.3);
+        }
+    }
+}
+
+/* === CONTENT PANELS === */
+.unified-modal-panels {
+    .unified-modal-panel {
+        display: none;
+        
+        &.active {
+            display: block;
+        }
+    }
+}
+
+/* === SIMPLE CONTENT (no tabs) === */
+.unified-modal-simple-content {
+    p {
+        color: rgba(255, 255, 255, 0.9);
+        line-height: 1.6;
+        margin-bottom: 15px;
+    }
+    
+    .note {
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.7);
+        font-style: italic;
+    }
+}
+
+/* === GRILLES ET LISTES === */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.project-card, .experience-item, .formation-item {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 20px;
+    
+    h4 {
+        margin: 0 0 8px 0;
+        color: white;
+        font-weight: 600;
+    }
+    
+    p {
+        margin: 0 0 15px 0;
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 14px;
+    }
+    
+    .card-actions, .item-actions {
+        margin-top: 15px;
+    }
+}
+
+.experiences-list, .formations-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* === CONTENU CONTACT === */
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    
+    &:hover {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 255, 255, 0.2);
+        transform: translateY(-1px);
+    }
+    
+    .contact-icon {
+        font-size: 24px;
+        flex-shrink: 0;
+    }
+    
+    .contact-details {
+        flex: 1;
+        
+        .contact-title {
+            font-weight: 600;
+            color: white;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+        
+        .contact-value {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 13px;
+        }
+    }
+    
+    .contact-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: rgba(79, 209, 199, 0.1);
+        border: 1px solid rgba(79, 209, 199, 0.3);
+        color: #4fd1c7;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        flex-shrink: 0;
+        
+        &:hover {
+            background: rgba(79, 209, 199, 0.2);
+            border-color: rgba(79, 209, 199, 0.5);
+            transform: scale(1.05);
+        }
+        
+        svg {
+            width: 16px;
+            height: 16px;
+        }
+    }
+}
+
+/* === FORMULAIRE CONTACT === */
+.contact-form-content {
+    .contact-form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        
+        label {
+            font-weight: 600;
+            color: white;
+            font-size: 14px;
+        }
+        
+        input, textarea {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 12px;
+            color: white;
+            font-size: 14px;
+            
+            &::placeholder {
+                color: rgba(255, 255, 255, 0.5);
+            }
+            
+            &:focus {
+                outline: none;
+                border-color: rgba(74, 222, 128, 0.5);
+                box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.1);
+            }
+        }
+    }
+    
+    .form-actions {
+        margin-top: 10px;
+    }
+}
+
+/* === CONTENU ABOUT === */
+.about-content {
+    p {
+        color: rgba(255, 255, 255, 0.9);
+        line-height: 1.6;
+        font-size: 15px;
+    }
+}
+
+/* === SKILLS CONTENT === */
+.skills-content {
+    .skills-list {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        
+        .skill-tag {
+            background: rgba(59, 130, 246, 0.2);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            color: #60a5fa;
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+    }
+}
+
+/* === DISCORD CONTENT === */
+.discord-id-display {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: transparent; /* Remove blue background */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Neutral border */
+    border-radius: 12px;
+    padding: 15px;
+    margin: 15px 0;
+    
+    .discord-id {
+        background: rgba(0, 0, 0, 0.2);
+        padding: 8px 12px;
+        border-radius: 6px;
+        color: rgba(255, 255, 255, 0.9); /* Neutral text color */
+        font-family: 'Courier New', monospace;
+        font-weight: 600;
+        flex: 1;
+    }
+
+    /* Button feedback states scoped to modal */
+
+    /* Button feedback states scoped to modal */
+    .btn-action.copied {
+        background: rgba(74, 222, 128, 0.2);
+        border: 1px solid rgba(74, 222, 128, 0.5);
+        color: #4ade80;
+    }
+    .btn-action.copy-error {
+        background: rgba(244, 63, 94, 0.2);
+        border: 1px solid rgba(244, 63, 94, 0.5);
+        color: #f43f5e;
+    }
+}
+
+/* Scoped feedback states for copy buttons inside contact as well */
+.unified-modal-content--contact .btn-action.copied {
+    background: rgba(74, 222, 128, 0.2);
+    border: 1px solid rgba(74, 222, 128, 0.5);
+    color: #4ade80;
+}
+.unified-modal-content--contact .btn-action.copy-error {
+    background: rgba(244, 63, 94, 0.2);
+    border: 1px solid rgba(244, 63, 94, 0.5);
+    color: #f43f5e;
+}
+
+.simple-actions {
+    margin-top: 20px;
+}
+
+/* === ACTIONS LIST === */
+.actions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* === CV CONTENT (unified) === */
+.cv-content {
+    .cv-options {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-top: 12px;
+    }
+    .cv-option {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        /* override base .btn-action to behave like a wide card */
+        justify-content: flex-start;
+        white-space: normal;
+        padding: 16px;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 12px;
+        color: rgba(255, 255, 255, 0.95);
+        cursor: pointer;
+        transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+        text-align: left;
+        
+        &:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        &:focus-visible {
+            outline: 2px solid #667eea;
+            outline-offset: 2px;
+        }
+    }
+    .cv-icon {
+        width: 40px;
+        height: 40px;
+        display: grid;
+        place-items: center;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.08);
+        color: #ffffff;
+        flex-shrink: 0;
+        svg { width: 24px; height: 24px; }
+    }
+    .cv-text { flex: 1; }
+    .cv-title { font-weight: 700; margin-bottom: 4px; }
+    .cv-desc { color: rgba(255, 255, 255, 0.75); font-size: 13px; }
+    .badge {
+        display: inline-block;
+        margin-top: 8px;
+        /* Neutral glass background to avoid "blue on blue" while keeping primary accent */
+        background: var(--glass-bg, rgba(255, 255, 255, 0.08));
+        border: 1px solid var(--primary-blue-border, rgba(52, 152, 219, 0.4));
+        color: var(--primary-blue, #3498db);
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 600;
+    }
+}
+
+.action-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    font-family: inherit;
+    position: relative;
+    
+    // Arrow indicator on the right
+    &::after {
+        content: '→';
+        font-size: 20px;
+        color: rgba(255, 255, 255, 0.4);
+        margin-left: auto;
+        transition: all 0.3s ease;
+    }
+    
+    &:hover {
+        background: rgba(255, 255, 255, 0.12);
+        border-color: rgba(255, 255, 255, 0.2);
+        transform: translateX(4px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        
+        &::after {
+            color: rgba(255, 255, 255, 0.9);
+            transform: translateX(4px);
+        }
+        
+        .action-title {
+            color: #fff;
+        }
+    }
+    
+    &:active {
+        transform: translateX(2px);
+    }
+    
+    .action-icon {
+        font-size: 32px;
+        flex-shrink: 0;
+        color: rgba(255, 255, 255, 0.9);
+    }
+    
+    .action-content {
+        flex: 1;
+        
+        .action-title {
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 4px;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+        
+        .action-desc {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+    }
+}
+
+/* === RESPONSIVE MEDIUM SCREENS === */
+@media (max-width: 1024px) and (min-width: 769px) {
+    .unified-modal-two-columns {
+        gap: 25px;
+    }
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+    /* FULLSCREEN MODE FOR ALL UNIFIED MODALS ON MOBILE */
+    .unified-modal,
+    .unified-modal.unified-modal--projectWidget {
+        padding: 0 !important; /* Remove all padding from modal container */
+        align-items: stretch !important;
+        justify-content: stretch !important;
+        backdrop-filter: none !important; /* Remove blur effect on mobile */
+    }
+    
+    .unified-modal-content {
+        width: 100vw !important;
+        height: 100dvh !important;
+        max-width: 100vw !important;
+        max-height: 100dvh !important;
+        margin: 0 !important;
+        border-radius: 0 !important;
+        border: none !important;
+        display: flex !important;
+        flex-direction: column !important;
+    }
+    
+    .unified-modal-demo .unified-modal-content,
+    .unified-modal-preview .unified-modal-content {
+        width: 100vw !important;
+        height: 100dvh !important;
+        max-width: 100vw !important;
+        max-height: 100dvh !important;
+        margin: 0 !important;
+        border-radius: 0 !important;
+        border: none !important;
+        display: flex !important;
+        flex-direction: column !important;
+    }
+    
+    .unified-modal-header {
+        padding: 15px 60px 0 15px; /* Moins d'espace mais toujours réservé pour le close */
+        border-radius: 0; /* No rounded corners on mobile fullscreen */
+        
+        .unified-modal-close {
+            right: 15px;
+            width: 35px;
+            height: 35px;
+            font-size: 20px;
+        }
+    }
+    
+    .unified-modal-body {
+        border-radius: 0; /* No rounded corners on mobile fullscreen */
+        flex: 1 !important; /* Grow to fill container */
+        overflow-y: auto !important; /* Ensure scrolling works */
+        overflow-x: hidden !important; /* Prevent horizontal scroll */
+        -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    }
+    
+    .unified-modal-content-header {
+        flex-direction: column;
+        gap: 15px;
+        
+        .unified-modal-content-header-left {
+            width: 100%;
+            max-width: 100%;
+        }
+        
+        .unified-modal-content-header-right {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+    
+    .contact-social-actions {
+        justify-content: center;
+    }
+    
+    .unified-modal-two-columns {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+    
+    .unified-modal-quick-stats {
+        gap: 15px;
+    }
+    
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .contact-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+    
+    .action-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+        
+        .action-content {
+            order: 1;
+        }
+        
+        .btn-action {
+            order: 2;
+        }
+    }
+    
+    .discord-id-display {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .cv-content .cv-options {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* === BOUTONS SOCIAUX === */
+.contact-social-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+/* =================================== */
+/* SYSTÈME UNIFIÉ REFACTORISÉ - NOUVEAUX STYLES */
+/* =================================== */
+
+/* Modal principal - version finale */
+.unified-modal {
+    &.fade-enter {
+        opacity: 0;
+        
+        .unified-modal-content {
+            transform: translateY(-20px) scale(0.95);
+        }
+    }
+    
+    &.fade-enter-active {
+        opacity: 1;
+        transition: opacity 0.3s ease;
+        
+        .unified-modal-content {
+            transform: translateY(0) scale(1);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+    }
+    
+    &.fade-exit {
+        opacity: 1;
+        
+        .unified-modal-content {
+            transform: translateY(0) scale(1);
+        }
+    }
+    
+    &.fade-exit-active {
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        
+        .unified-modal-content {
+            transform: translateY(-20px) scale(0.95);
+            transition: transform 0.3s ease;
+        }
+    }
+}
+
+/* Chips avec variants de type */
+.unified-modal-chips {
+    .chip {
+        &.primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        &.secondary {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        &.accent {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+        
+        &.success {
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+            color: white;
+        }
+        
+        &.warning {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            color: #8b4513;
+        }
+    }
+}
+
+/* Amélioration des tabs avec compteurs */
+.unified-modal-tabs {
+    .tab-btn {
+        .count {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 2px 8px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 8px;
+            min-width: 20px;
+            text-align: center;
+        }
+        
+        &.active .count {
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+        }
+    }
+}
+
+/* Gestion des erreurs */
+.error-content {
+    padding: 40px;
+    text-align: center;
+    
+    .error-message {
+        background: rgba(255, 0, 0, 0.1);
+        border: 1px solid rgba(255, 0, 0, 0.3);
+        border-radius: 12px;
+        padding: 20px;
+        
+        h3 {
+            color: #ff4757;
+            margin: 0 0 10px 0;
+        }
+        
+        p {
+            color: rgba(255, 255, 255, 0.7);
+            margin: 0;
+        }
+    }
+}
+
+/* Responsive amélioré - REMOVED: Fullscreen rules are now in main responsive section */
+@media (max-width: 768px) {
+    /* Modal body padding on mobile - reduced for fullscreen */
+    .unified-modal-body {
+        padding: 15px !important;
+    }
+    
+    .unified-modal-two-columns {
+        flex-direction: column;
+        gap: 30px;
+        
+        .contact-info-column,
+        .contact-form-column {
+            width: 100%;
+        }
+    }
+    
+    .contact-social-actions {
+        justify-content: center;
+        margin-top: 15px;
+    }
+    
+    .unified-modal-content-header {
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: 15px;
+        
+        .unified-modal-content-header-left {
+            width: 100%;
+        }
+        
+        .unified-modal-content-header-right {
+            width: 100%;
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .unified-modal-tabs {
+        flex-wrap: wrap;
+        gap: 8px;
+        
+        .tab-btn {
+            flex: 1;
+            min-width: calc(50% - 4px);
+            
+            .tab-label {
+                display: none;
+            }
+            
+            .tab-icon {
+                font-size: 20px;
+            }
+        }
+    }
+    
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Accessibilité améliorée */
+.unified-modal {
+    &:focus-within {
+        outline: none;
+    }
+}
+
+.unified-modal-close,
+.tab-btn,
+.btn-action,
+.btn-action-icon {
+    &:focus-visible {
+        outline: 2px solid #667eea;
+        outline-offset: 2px;
+    }
+}
+
+/* Support pour les thèmes sombres */
+@media (prefers-color-scheme: dark) {
+    .unified-modal-content {
+        background: rgba(25, 25, 25, 0.95);
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    .error-content .error-message {
+        background: rgba(139, 0, 0, 0.2);
+        border-color: rgba(255, 69, 0, 0.4);
+    }
+}
+
+/* =================================== */
+/* NAVIGATION DES TYPES DE MODALS - ARCHITECTURE MODULAIRE */
+/* =================================== */
+
+.modal-types-navigation {
+    background: rgba(40, 40, 40, 0.95); /* More opaque background instead of blur */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 32px;
+    
+    h3 {
+        margin: 0 0 20px 0;
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 18px;
+        font-weight: 600;
+    }
+}
+
+.modal-types-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+}
+
+.modal-type-item {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    
+    &:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.3);
+        transform: translateY(-2px);
+    }
+    
+    .modal-type-icon {
+        font-size: 24px;
+        margin-right: 12px;
+        flex-shrink: 0;
+    }
+    
+    strong {
+        color: rgba(255, 255, 255, 0.9);
+        font-weight: 600;
+        margin-right: 8px;
+    }
+    
+    .modal-type-file {
+        font-family: 'Monaco', 'Menlo', monospace;
+        font-size: 11px;
+        color: rgba(255, 255, 255, 0.6);
+        background: rgba(0, 0, 0, 0.2);
+        padding: 4px 8px;
+        border-radius: 6px;
+        margin-left: auto;
+        flex-shrink: 0;
+    }
+}
+
+/* Amélioration des boutons de démo */
+.demo-actions {
+    margin-top: 40px;
+    
+    h3 {
+        color: rgba(255, 255, 255, 0.9);
+        margin-bottom: 20px;
+        font-size: 20px;
+    }
+}
+
+.demo-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    
+    .demo-btn {
+        padding: 16px 24px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        border-radius: 12px;
+        color: white;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        
+        &:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+        
+        &:active {
+            transform: translateY(0);
+        }
+    }
+}
+
+/* Responsive pour la navigation */
+@media (max-width: 768px) {
+    .modal-types-list {
+        grid-template-columns: 1fr;
+    }
+    
+    .modal-type-item {
+        flex-direction: column;
+        align-items: flex-start;
+        
+        .modal-type-icon {
+            margin-bottom: 8px;
+            margin-right: 0;
+        }
+        
+        .modal-type-file {
+            margin-left: 0;
+            margin-top: 8px;
+        }
+    }
+    
+    .demo-buttons {
+        grid-template-columns: 1fr;
+    }
+}
+

@@ -1,0 +1,60 @@
+{{/*
+  Partial: cv-projects-selection.html
+  Returns a selection of projects for CV display
+  
+  Returns: slice of project pages, prioritized for CV display
+  
+  Priority order:
+  1. Projects with featuredInCV = true
+  2. Projects with featured = true  
+  3. Recent projects (sorted by date)
+  
+  Usage: {{ $projects := partial "cv/cv-projects-selection.html" . }}
+*/}}
+
+{{ $allProjects := where (where .Site.RegularPages "Section" "projects") "Draft" false }}
+{{ $featuredCV := where $allProjects "Params.featuredInCV" true }}
+{{ $featured := where $allProjects "Params.featured" true }}
+{{ $recentProjects := sort $allProjects "Date" "desc" }}
+
+{{/* Create prioritized list: featuredCV first, then featured, then recent */}}
+{{ $prioritizedProjects := slice }}
+
+{{/* Add featuredInCV projects first */}}
+{{ range $featuredCV }}
+  {{ $prioritizedProjects = $prioritizedProjects | append . }}
+{{ end }}
+
+{{/* Add featured projects that aren't already in the list */}}
+{{ range $featured }}
+  {{ $alreadyIncluded := false }}
+  {{ range $prioritizedProjects }}
+    {{ if eq .File.Path $.File.Path }}
+      {{ $alreadyIncluded = true }}
+    {{ end }}
+  {{ end }}
+  {{ if not $alreadyIncluded }}
+    {{ $prioritizedProjects = $prioritizedProjects | append . }}
+  {{ end }}
+{{ end }}
+
+{{/* Fill remaining slots with recent projects */}}
+{{ $maxProjects := 3 }}
+{{ $currentCount := len $prioritizedProjects }}
+{{ if lt $currentCount $maxProjects }}
+  {{ $remaining := sub $maxProjects $currentCount }}
+  {{ range first $remaining $recentProjects }}
+    {{ $alreadyIncluded := false }}
+    {{ range $prioritizedProjects }}
+      {{ if eq .File.Path $.File.Path }}
+        {{ $alreadyIncluded = true }}
+      {{ end }}
+    {{ end }}
+    {{ if not $alreadyIncluded }}
+      {{ $prioritizedProjects = $prioritizedProjects | append . }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+
+{{/* Return first maxProjects */}}
+{{ return first $maxProjects $prioritizedProjects }}

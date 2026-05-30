@@ -1,0 +1,75 @@
+{{/* Modal for displaying person details - UnifiedModal visual integration (JS unchanged) */}}
+<div id="personModal" class="person-modal" style="display: none;">
+    <div class="person-modal-backdrop" onclick="closePersonModal()"></div>
+    <div class="person-modal-content unified-modal-content">
+        <!-- Unified header: content header + tabs inside header -->
+        <div class="unified-modal-header person-modal-header">
+            <button class="person-modal-close unified-modal-close" onclick="closePersonModal()" aria-label="Fermer le modal">&times;</button>
+            <div class="unified-modal-content-header">
+                <div class="unified-modal-content-header-left">
+                    <div class="person-modal-avatar-container">
+                        <div class="person-modal-avatar-large unified-modal-icon-large" id="personAvatarLarge">
+                            <img id="modalPersonAvatar" src="" alt="">
+                        </div>
+                    </div>
+
+                    <div class="unified-modal-title-block">
+                        <h2 id="modalPersonName" class="person-modal-name"></h2>
+                        <div class="unified-modal-chips">
+                            <span class="position-chip chip" id="modalPersonPosition"></span>
+                            <span class="company-chip chip secondary" id="modalPersonCompany"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="unified-modal-content-header-right">
+                    <div class="person-modal-contact-buttons" id="personModalContactButtons">
+                        <!-- Contact buttons (LinkedIn, GitHub, website, email, discord) -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testimonials section - full width under header content -->
+            <div class="person-modal-testimonials-wrapper">
+                <button class="testimonials-toggle-btn" id="testimonialsToggleBtn" aria-label="Afficher/Masquer les témoignages" style="display: none;">
+                    <span class="toggle-icon">▼</span>
+                    <span class="toggle-text">Voir les témoignages</span>
+                </button>
+                <div id="modalPersonTestimonials" class="person-modal-testimonials-full-width">
+                    <!-- Testimonials will be inserted here -->
+                </div>
+            </div>
+
+            <!-- Tabs integrated in header (preserve .nav-tab for JS, add .tab-btn for unified styles) -->
+            <nav class="person-modal-nav-tabs unified-modal-tabs tabs" role="tablist" data-can-collapse="true" data-collapse-id="personModal">
+                <button class="nav-tab tab-btn active" role="tab" aria-selected="true" aria-controls="personModalTabBio" data-tab="bio">
+                    <span class="nav-tab-icon">👤</span>
+                    <span class="nav-tab-label">Biographie</span>
+                </button>
+                <button class="nav-tab tab-btn" role="tab" aria-selected="false" aria-controls="personModalTabProjects" data-tab="projects">
+                    <span class="nav-tab-icon">🚀</span>
+                    <span class="nav-tab-label">Projets</span>
+                </button>
+            </nav>
+        </div>
+
+        <!-- Unified body containing tab panels -->
+        <div class="unified-modal-body person-modal-body">
+            <div class="person-modal-content-area unified-modal-panels">
+                <div class="content-panel unified-modal-panel active" id="personModalTabBio" role="tabpanel" aria-labelledby="personModalTabBtnBio">
+                    <div class="bio-container">
+                        <div id="modalPersonBio" class="bio-content">
+                            <!-- Person biography and details -->
+                        </div>
+                    </div>
+                </div>
+                <div class="content-panel unified-modal-panel" id="personModalTabProjects" role="tabpanel" aria-labelledby="personModalTabBtnProjects" hidden>
+                    <div class="projects-container">
+                        <div id="modalPersonProjects" class="projects-content">
+                            <!-- Person projects will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

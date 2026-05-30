@@ -1,0 +1,135 @@
+ <!-- Section Systèmes d'Onglets Fonctionnels -->
+    <section class="demo-section">
+        <h2>� Systèmes d'Onglets</h2>
+        
+        <h3>1. Onglets de Projets Basiques (page d'accueil)</h3>
+        <div class="demo-element-wrapper">
+            <div class="css-class-info">
+                <strong>Container :</strong> <code>.projects-tabs</code><br>
+                <strong>Boutons :</strong> <code>.tab-btn</code> + <code>.active</code><br>
+                <strong>Attributs :</strong> <code>data-category="[nom]"</code>
+            </div>
+            <div class="projects-tabs">
+                <button class="tab-btn active" data-category="games">🎮 Jeux</button>
+                <button class="tab-btn" data-category="apps-web">💻 Apps/Web</button>
+                <button class="tab-btn" data-category="mods-tools">🛠️ Mods & Tools</button>
+            </div>
+        </div>
+        <div class="demo-element-wrapper">
+            <div class="css-class-info">
+                <strong>Container :</strong> <code>.demo-tab-content</code><br>
+                <strong>Panneaux :</strong> <code>.demo-tab-panel</code> + <code>.active</code><br>
+                <strong>Attributs :</strong> <code>data-category="[nom]"</code>
+            </div>
+            <div class="demo-tab-content">
+                <div class="demo-tab-panel active" data-category="games">
+                    <p>🎮 Contenu des projets de jeux vidéo</p>
+                </div>
+                <div class="demo-tab-panel" data-category="apps-web">
+                    <p>💻 Contenu des applications web</p>
+                </div>
+                <div class="demo-tab-panel" data-category="mods-tools">
+                    <p>🛠️ Contenu des mods et outils</p>
+                </div>
+            </div>
+        </div>
+
+        <h3>2. Système de Tabs (page projets)</h3>
+        <div class="demo-element-wrapper">
+            <div class="css-class-info">
+                <strong>Container principal :</strong> <code>.projects-filters-bar</code><br>
+                <strong>Navigation tabs :</strong> <code>.projects-tabs</code><br>
+                <strong>Boutons tabs :</strong> <code>.tab-btn</code> + <code>.active</code><br>
+                <strong>Icônes tabs :</strong> <code>.tab-icon</code><br>
+                <strong>Labels tabs :</strong> <code>.tab-label</code><br>
+                <strong>Attributs :</strong> <code>data-category="[nom]"</code>, <code>role="tab"</code>, <code>aria-selected="true/false"</code>
+            </div>
+            <div class="projects-filters-bar">
+                <div class="tabs projects-tabs demo-tabs" role="tablist">
+                    <button class="tab-btn active" data-demo-category="all" role="tab" aria-selected="true">
+                        <span class="tab-icon">📦</span>
+                        <span class="tab-label">Tous</span>
+                    </button>
+                    <button class="tab-btn" data-demo-category="games" role="tab" aria-selected="false">
+                        <span class="tab-icon">🎮</span>
+                        <span class="tab-label">Games</span>
+                    </button>
+                    <button class="tab-btn" data-demo-category="appsweb" role="tab" aria-selected="false">
+                        <span class="tab-icon">🌐</span>
+                        <span class="tab-label">Apps & Web</span>
+                    </button>
+                    <button class="tab-btn" data-demo-category="mods" role="tab" aria-selected="false">
+                        <span class="tab-icon">🧩</span>
+                        <span class="tab-label">Mods</span>
+                    </button>
+                    <button class="tab-btn" data-demo-category="tools" role="tab" aria-selected="false">
+                        <span class="tab-icon">🛠️</span>
+                        <span class="tab-label">Tools</span>
+                    </button>
+                </div>
+                
+                <!-- Subtabs pour Games -->
+                <div class="sub-tabs demo-games-subtabs" id="demo-games-subtabs" style="display: none;">
+                    <button class="sub-tab-btn active" data-demo-subcategory="games-all">
+                        <span class="subtab-icon">📦</span>Tous
+                    </button>
+                    <button class="sub-tab-btn" data-demo-subcategory="games-professionnel">
+                        <span class="subtab-icon">💼</span>Professionnel
+                    </button>
+                    <button class="sub-tab-btn" data-demo-subcategory="games-personnel">
+                        <span class="subtab-icon">🎯</span>Personnel
+                    </button>
+                    <button class="sub-tab-btn" data-demo-subcategory="games-gamejams">
+                        <span class="subtab-icon">⚡</span>Game Jams
+                    </button>
+                </div>
+                
+                <!-- Subtabs pour Apps & Web -->
+                <div class="sub-tabs demo-appsweb-subtabs" id="demo-appsweb-subtabs" style="display: none;">
+                    <button class="sub-tab-btn active" data-demo-subcategory="appsweb-all">
+                        <span class="subtab-icon">📦</span>Tous
+                    </button>
+                    <button class="sub-tab-btn" data-demo-subcategory="appsweb-professionnel">
+                        <span class="subtab-icon">🏢</span>Professionnel
+                    </button>
+                    <button class="sub-tab-btn" data-demo-subcategory="appsweb-etude">
+                        <span class="subtab-icon">🎓</span>Étude
+                    </button>
+                </div>
+            </div>
+            <div class="demo-note">
+                <p><strong>Note :</strong> Les subtabs apparaissent automatiquement pour les catégories Games et Apps & Web, permettant un filtrage plus précis.</p>
+            </div>
+        </div>
+        
+        <div class="demo-projects-content">
+            <p id="projects-demo-text">📦 Affichage de tous les projets</p>
+        </div>
+
+        <h3>2. Onglets d'Expérience (comme sur la vraie page)</h3>
+        <div class="tabs experience-tabs">
+            <button class="tab-btn active" data-tab="experiences">💼 Expériences</button>
+            <button class="tab-btn" data-tab="internships">🏢 Recherche</button>
+        </div>
+        <div class="demo-tab-content">
+            <div class="demo-tab-panel active" data-tab="experiences">
+                <p>💼 Contenu des expériences professionnelles</p>
+            </div>
+            <div class="demo-tab-panel" data-tab="internships">
+                <p>🏢 Contenu de la recherche d'emploi</p>
+            </div>
+        </div>
+
+        <h3>3. Onglets d'Éducation</h3>
+        <div class="tabs education-tabs">
+            <button class="tab-btn active" data-tab="education">🎓 Formation</button>
+            <button class="tab-btn" data-tab="certifications">📜 Certifications</button>
+        </div>
+
+        <h3>4. Onglets de Blog</h3>
+        <div class="tabs blog-tabs">
+            <button class="tab-btn active" data-category="all">📰 Tous</button>
+            <button class="tab-btn" data-category="tech">💻 Tech</button>
+            <button class="tab-btn" data-category="gamedev">🎮 GameDev</button>
+        </div>
+    </section>

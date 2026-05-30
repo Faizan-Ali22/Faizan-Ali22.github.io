@@ -1,0 +1,59 @@
+# ============================================================
+# ⚙️ FRAMEWORKS & ENGINES — Add your frameworks and game engines
+# ============================================================
+# Fields:
+#   key:                  Unique identifier (used for i18n name lookup)
+#   iconPath:             Path to SVG icon (place in static/images/skills/)
+#   icon:                 Emoji fallback (used if no iconPath)
+#   experience:           Years of experience (number)
+#   displayedInPortfolio: true/false — show on homepage
+#   color:                Optional — hex color
+#
+# IMPORTANT: Add a matching entry in i18n/en.yaml:
+#   fw_react: "React"
+#   fw_unity: "Unity"
+# ============================================================
+
+# Uncomment and customize:
+
+# - key: "fw_react"
+#   iconPath: "/images/skills/react.svg"
+#   experience: 2
+#   displayedInPortfolio: true
+#   color: "#61DAFB"
+
+# - key: "fw_nodejs"
+#   iconPath: "/images/skills/nodejs.svg"
+#   experience: 2
+#   displayedInPortfolio: true
+#   color: "#339933"
+
+- key: "fw_unity"
+  iconPath: "/images/skills/unity.svg"
+  experience: 3
+  displayedInPortfolio: true
+  color: "#000000"
+
+- key: "fw_unreal_engine"
+  iconPath: "/images/skills/unrealengine.svg"
+  experience: 2
+  displayedInPortfolio: true
+  color: "#0E1128"
+
+- key: "fw_blender"
+  iconPath: "/images/skills/blender.png"
+  experience: 2
+  displayedInPortfolio: true
+  color: "#E87D0D"
+
+- key: "fw_adobe_photoshop"
+  iconPath: "/images/skills/adobephotoshop.png"
+  experience: 2
+  displayedInPortfolio: true
+  color: "#31A8FF"
+
+- key: "fw_adobe_illustrator"
+  iconPath: "/images/skills/adobeillustrator.png"
+  experience: 2
+  displayedInPortfolio: true
+  color: "#FF9A00"

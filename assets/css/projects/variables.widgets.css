@@ -1,0 +1,274 @@
+/* ========================================
+   VARIABLES WIDGETS (clients / grade / downloads / ranking / infobox / awards / testimonial / contributor / dev-time / gallery / specs / youtube)
+   Séparé de variables.portfolio.css pour clarté.
+   ======================================== */
+
+:root[data-page="projects"] { /* corrigé depuis portfolio -> projects */
+  /* === Widgets (Clients / Grade / Downloads / Ranking) === */
+  --clients-item-bg: linear-gradient(135deg, rgba(255,255,255,0.02) 100%);
+  --clients-item-hover-bg: linear-gradient(135deg, rgba(255,255,255,0.05) 100%);
+  --clients-item-border: 1px solid rgba(255,255,255,0.08);
+  --clients-item-hover-border-color: rgba(52,152,219,0.3);
+  --clients-item-hover-shadow: 0 8px 25px rgba(0,0,0,0.2);
+  --clients-logo-bg: rgba(255,255,255,0.1);
+  --clients-logo-border: 1px solid rgba(255,255,255,0.1);
+  --clients-preview-bg: linear-gradient(135deg, rgba(52,152,219,0.08) 0%, rgba(255,255,255,0.03) 100%);
+  --clients-preview-border-left: 2px solid var(--primary-blue, #3498db);
+
+  --grade-value-gradient: linear-gradient(135deg, var(--primary-teal,#4fd1c7), var(--primary-blue,#3498db));
+  --grade-preview-bg: linear-gradient(135deg, rgba(var(--accent-rgb,79,209,199),0.08) 0%, rgba(52,152,219,0.05) 100%);
+  --grade-preview-border-left: 2px solid var(--primary-teal,#4fd1c7);
+
+  --downloads-value-gradient: linear-gradient(135deg, #27ae60, #2ecc71);
+  --downloads-platform-bg: linear-gradient(135deg, rgba(255,255,255,0.02) 100%);
+  --downloads-platform-border: 1px solid rgba(255,255,255,0.08);
+  --downloads-preview-bg: linear-gradient(135deg, rgba(39,174,96,0.08) 0%, rgba(46,204,113,0.05) 100%);
+  --downloads-preview-border-left: 2px solid #27ae60;
+
+  --ranking-position-gradient: linear-gradient(135deg, #f39c12, #e67e22);
+  --ranking-preview-bg: linear-gradient(135deg, rgba(243,156,18,0.08) 0%, rgba(230,126,34,0.05) 100%);
+  --ranking-preview-border-left: 2px solid #f39c12;
+  --widget-separator-border: 1px solid rgba(255,255,255,0.1);
+
+  /* === Info Boxes (project-info-box) === */
+  --infobox-bg: linear-gradient(135deg, rgba(32,36,46,0.95) 0%, rgba(24,28,38,0.85) 100%);
+  --infobox-border: 1px solid rgba(255,255,255,0.15);
+  --infobox-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 8px 25px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1);
+  --infobox-hover-border: rgba(52,152,219,0.4);
+  --infobox-hover-shadow: 0 30px 60px rgba(0,0,0,0.5), 0 15px 35px rgba(52,152,219,0.2), 0 0 30px rgba(52,152,219,0.1), inset 0 1px 0 rgba(255,255,255,0.15);
+  --infobox-expanded-bg: linear-gradient(135deg, rgba(32,36,46,0.98) 0%, rgba(24,28,38,0.95) 100%);
+  --infobox-expanded-border-color: rgba(52,152,219,0.3);
+  --infobox-expanded-shadow: 0 25px 50px rgba(0,0,0,0.5), 0 15px 35px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.15), 0 0 0 1px rgba(52,152,219,0.2);
+  --infobox-top-bar-gradient: linear-gradient(90deg, var(--primary-blue) 0%, var(--primary-teal) 50%, var(--primary-blue) 100%);
+  --infobox-header-bg: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+  --infobox-header-divider: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.1) 50%, transparent 100%);
+  --infobox-header-hover-bg: linear-gradient(135deg, rgba(52,152,219,0.08) 0%, rgba(255,255,255,0.05) 100%);
+  --infobox-content-bg: linear-gradient(180deg, rgba(255,255,255,0.01) 0%, rgba(255,255,255,0.02) 100%);
+  --infobox-toggle-bg: rgba(255,255,255,0.05);
+  --infobox-toggle-bg-hover: rgba(52,152,219,0.25);
+
+  /* === Widget Awards === */
+  --award-item-bg: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+  --award-item-hover-bg: linear-gradient(135deg, rgba(243,156,18,0.1) 0%, rgba(255,255,255,0.05) 100%);
+  --award-item-border: 1px solid rgba(255,255,255,0.08);
+  --award-item-hover-border: rgba(243,156,18,0.3);
+  --award-item-hover-shadow: 0 8px 25px rgba(0,0,0,0.2);
+  --award-icon-gradient: linear-gradient(135deg, #f39c12, #e67e22);
+  --award-icon-shadow: 0 4px 15px rgba(243,156,18,0.3);
+
+  /* Ajouts Clients complémentaires */
+  --clients-logo-gradient: linear-gradient(135deg, var(--primary-blue), var(--primary-teal));
+  --clients-logo-border-strong: 2px solid rgba(255,255,255,0.1);
+  --clients-logo-mini-border: 1px solid rgba(255,255,255,0.2);
+
+  /* === Widget Testimonials (déplacé depuis variables.portfolio.css) === */
+  --testimonials-slider-bg: rgba(var(--slate-rgb,55,65,81),0.4);
+  --testimonials-slider-border: 1px solid rgba(var(--accent-rgb,79,209,199),0.2);
+  --testimonials-slider-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  --testimonials-slider-inner-highlight: inset 0 1px 0 rgba(255,255,255,0.1);
+  --testimonial-card-bg: rgba(var(--slate-rgb,55,65,81),0.3);
+  --testimonial-card-border: 1px solid rgba(var(--accent-rgb,79,209,199),0.1);
+  --testimonial-card-shadow: none;
+  --testimonial-quote-color: var(--accent);
+  --testimonial-quote-opacity: 0.2;
+  --testimonial-text-color: #d1d5db;
+  --testimonial-name-color: #ffffff;
+  --testimonial-company-color: #a0a0a0;
+  --testimonial-avatar-border: 2px solid var(--accent);
+  --testimonial-avatar-glow: 0 0 15px rgba(var(--accent-rgb,79,209,199),0.4);
+  --testimonial-slider-btn-bg: rgba(var(--accent-rgb,79,209,199),0.2);
+  --testimonial-slider-btn-border: 2px solid rgba(var(--accent-rgb,79,209,199),0.6);
+  --testimonial-slider-btn-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  --testimonial-slider-btn-bg-hover: rgba(var(--accent-rgb,79,209,199),0.4);
+  --testimonial-slider-btn-border-hover: rgba(var(--accent-rgb,79,209,199),0.8);
+  --testimonial-slider-btn-shadow-hover: 0 0 20px rgba(var(--accent-rgb,79,209,199),0.5), 0 8px 25px rgba(0,0,0,0.2);
+  --testimonial-indicator-bg: rgba(var(--accent-rgb,79,209,199),0.3);
+  --testimonial-indicator-border: 1px solid var(--accent);
+  --testimonial-indicator-bg-active: var(--accent);
+  --testimonial-indicator-glow-active: 0 0 10px rgba(var(--accent-rgb,79,209,199),0.6);
+
+  /* === Widget Contributor === */
+  --contributor-item-bg: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+  --contributor-item-border: 1px solid rgba(255,255,255,0.08);
+  --contributor-item-border-left: 3px solid var(--primary-blue);
+  --contributor-item-hover-bg: linear-gradient(135deg, rgba(52,152,219,0.1) 0%, rgba(255,255,255,0.05) 100%);
+  --contributor-item-hover-border: 1px solid rgba(52,152,219,0.3);
+  --contributor-item-hover-shadow: 0 8px 25px rgba(0,0,0,0.2);
+  --contributor-avatar-bg: var(--primary-blue);
+  --contributor-avatar-placeholder-gradient: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-dark,#216fa5) 100%);
+  --contributor-avatar-shadow: 0 6px 20px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2);
+
+  /* === Widget Dev Time === */
+  --devtime-stat-bg: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+  --devtime-stat-border: 1px solid rgba(255,255,255,0.08);
+  --devtime-stat-border-left: 3px solid var(--primary-teal);
+  --devtime-stat-hover-bg: linear-gradient(135deg, rgba(79,209,199,0.08) 0%, rgba(255,255,255,0.05) 100%);
+  --devtime-stat-hover-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  --devtime-phase-bg: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+  --devtime-phase-border: 1px solid rgba(255,255,255,0.05);
+  --devtime-phase-hover-bg: linear-gradient(135deg, rgba(79,209,199,0.05) 0%, rgba(255,255,255,0.03) 100%);
+  --devtime-phase-hover-border: 1px solid rgba(79,209,199,0.2);
+  --devtime-separator-border: 1px solid rgba(255,255,255,0.1);
+
+  /* === Widget Gallery === */
+  --gallery-item-bg: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+  --gallery-item-border: 1px solid rgba(255,255,255,0.1);
+  --gallery-item-shadow: 0 8px 25px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.1);
+  --gallery-item-hover-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 25px rgba(52,152,219,0.3), inset 0 1px 0 rgba(255,255,255,0.2);
+  --gallery-item-hover-border: rgba(52,152,219,0.5);
+  --gallery-overlay-bg: linear-gradient(135deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.1) 100%);
+  --gallery-zoom-icon-bg: rgba(52,152,219,0.9);
+  --gallery-zoom-icon-shadow: 0 8px 20px rgba(0,0,0,0.3), 0 0 15px rgba(52,152,219,0.6);
+  --gallery-caption-bg: linear-gradient(transparent, rgba(0,0,0,0.8));
+  --gallery-caption-text: #fff;
+
+  /* === Widget Tech Specs === */
+  --spec-item-bg: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+  --spec-item-border-left: 3px solid var(--primary-blue);
+  --spec-item-hover-bg: linear-gradient(135deg, rgba(52,152,219,0.08) 0%, rgba(255,255,255,0.05) 100%);
+  --spec-item-hover-border-left: 3px solid var(--primary-teal);
+
+  /* === Widget YouTube Single === */
+  --youtube-item-bg: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+  --youtube-item-border: 1px solid rgba(255,255,255,0.08);
+  --youtube-item-border-left: 3px solid #ff0000;
+  --youtube-item-hover-bg: linear-gradient(135deg, rgba(255,0,0,0.08) 0%, rgba(255,255,255,0.05) 100%);
+  --youtube-item-hover-border-left: 3px solid #cc0000;
+  --youtube-item-hover-shadow: 0 8px 25px rgba(0,0,0,0.2), 0 3px 10px rgba(255,0,0,0.15);
+  --youtube-thumbnail-bg: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+  --youtube-play-btn-bg: rgba(255,0,0,0.9);
+  --youtube-play-btn-border: 3px solid rgba(255,255,255,0.3);
+  --youtube-play-btn-shadow: 0 8px 25px rgba(0,0,0,0.3);
+  --youtube-play-btn-hover-bg: rgba(255,0,0,1);
+  --youtube-play-btn-hover-shadow: 0 12px 35px rgba(0,0,0,0.4), 0 0 30px rgba(255,0,0,0.6);
+  --youtube-duration-bg: rgba(0,0,0,0.8);
+  --youtube-duration-border: 1px solid rgba(255,255,255,0.1);
+}
+
+/* Mode clair widgets */
+[data-theme="light"][data-page="projects"] { /* corrigé depuis portfolio -> projects */
+  --clients-item-bg: linear-gradient(135deg, rgba(255,255,255,0.65) 100%);
+  --clients-item-hover-bg: linear-gradient(135deg, rgba(255,255,255,0.85) 100%);
+  --clients-item-border: 1px solid rgba(0,0,0,0.06);
+  --clients-item-hover-border-color: rgba(52,152,219,0.45);
+  --clients-logo-bg: rgba(0,0,0,0.05);
+  --clients-logo-border: 1px solid rgba(0,0,0,0.06);
+  --clients-preview-bg: linear-gradient(135deg, rgba(52,152,219,0.12) 0%, rgba(255,255,255,0.65) 100%);
+  --clients-preview-border-left: 2px solid var(--primary-blue,#3498db);
+
+  --grade-preview-bg: linear-gradient(135deg, rgba(var(--accent-rgb,79,209,199),0.12) 0%, rgba(52,152,219,0.08) 100%);
+  --grade-preview-border-left: 2px solid var(--primary-teal,#4fd1c7);
+
+  --downloads-platform-bg: linear-gradient(135deg, rgba(0,0,0,0.02) 100%);
+  --downloads-platform-border: 1px solid rgba(0,0,0,0.06);
+  --downloads-preview-bg: linear-gradient(135deg, rgba(39,174,96,0.12) 0%, rgba(46,204,113,0.08) 100%);
+  --downloads-preview-border-left: 2px solid #27ae60;
+
+  --ranking-preview-bg: linear-gradient(135deg, rgba(243,156,18,0.12) 0%, rgba(230,126,34,0.08) 100%);
+  --ranking-preview-border-left: 2px solid #f39c12;
+  --widget-separator-border: 1px solid rgba(0,0,0,0.08);
+
+  --infobox-bg: linear-gradient(135deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.75) 100%);
+  --infobox-border: 1px solid rgba(0,0,0,0.08);
+  --infobox-shadow: 0 20px 40px rgba(0,0,0,0.18), 0 8px 25px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.45);
+  --infobox-hover-shadow: 0 30px 60px rgba(0,0,0,0.25), 0 15px 35px rgba(52,152,219,0.25), 0 0 30px rgba(52,152,219,0.15), inset 0 1px 0 rgba(255,255,255,0.55);
+  --infobox-expanded-bg: linear-gradient(135deg, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.88) 100%);
+  --infobox-expanded-border-color: rgba(52,152,219,0.35);
+  --infobox-expanded-shadow: 0 25px 50px rgba(0,0,0,0.28), 0 15px 35px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.55), 0 0 0 1px rgba(52,152,219,0.25);
+  --infobox-header-bg: linear-gradient(135deg, rgba(0,0,0,0.03) 0%, rgba(0,0,0,0.015) 100%);
+  --infobox-header-divider: linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.12) 50%, transparent 100%);
+  --infobox-header-hover-bg: linear-gradient(135deg, rgba(52,152,219,0.12) 0%, rgba(0,0,0,0.04) 100%);
+  --infobox-content-bg: linear-gradient(180deg, rgba(0,0,0,0.015) 0%, rgba(0,0,0,0.04) 100%);
+  --infobox-toggle-bg: rgba(0,0,0,0.06);
+  --infobox-toggle-bg-hover: rgba(52,152,219,0.25);
+
+  --award-item-bg: linear-gradient(135deg, rgba(0,0,0,0.04) 0%, rgba(0,0,0,0.02) 100%);
+  --award-item-hover-bg: linear-gradient(135deg, rgba(243,156,18,0.18) 0%, rgba(0,0,0,0.04) 100%);
+  --award-item-border: 1px solid rgba(0,0,0,0.06);
+  --award-item-hover-border: rgba(243,156,18,0.45);
+  --award-item-hover-shadow: 0 8px 25px rgba(243,156,18,0.25);
+  --award-icon-shadow: 0 4px 15px rgba(243,156,18,0.35);
+
+  /* === Widget Testimonials (déplacé depuis variables.portfolio.css) === */
+  --testimonials-slider-bg: rgba(var(--slate-rgb,55,65,81),0.4);
+  --testimonials-slider-border: 1px solid rgba(var(--accent-rgb,79,209,199),0.2);
+  --testimonials-slider-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  --testimonials-slider-inner-highlight: inset 0 1px 0 rgba(255,255,255,0.1);
+  --testimonial-card-bg: rgba(var(--slate-rgb,55,65,81),0.3);
+  --testimonial-card-border: 1px solid rgba(var(--accent-rgb,79,209,199),0.1);
+  --testimonial-card-shadow: none;
+  --testimonial-quote-color: var(--accent);
+  --testimonial-quote-opacity: 0.2;
+  --testimonial-text-color: #d1d5db;
+  --testimonial-name-color: #ffffff;
+  --testimonial-company-color: #a0a0a0;
+  --testimonial-avatar-border: 2px solid var(--accent);
+  --testimonial-avatar-glow: 0 0 15px rgba(var(--accent-rgb,79,209,199),0.4);
+  --testimonial-slider-btn-bg: rgba(var(--accent-rgb,79,209,199),0.2);
+  --testimonial-slider-btn-border: 2px solid rgba(var(--accent-rgb,79,209,199),0.6);
+  --testimonial-slider-btn-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  --testimonial-slider-btn-bg-hover: rgba(var(--accent-rgb,79,209,199),0.4);
+  --testimonial-slider-btn-border-hover: rgba(var(--accent-rgb,79,209,199),0.8);
+  --testimonial-slider-btn-shadow-hover: 0 0 20px rgba(var(--accent-rgb,79,209,199),0.5), 0 8px 25px rgba(0,0,0,0.2);
+  --testimonial-indicator-bg: rgba(var(--accent-rgb,79,209,199),0.3);
+  --testimonial-indicator-border: 1px solid var(--accent);
+  --testimonial-indicator-bg-active: var(--accent);
+  --testimonial-indicator-glow-active: 0 0 10px rgba(var(--accent-rgb,79,209,199),0.6);
+
+  /* === Widget Contributor === */
+  --contributor-item-bg: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+  --contributor-item-border: 1px solid rgba(255,255,255,0.08);
+  --contributor-item-border-left: 3px solid var(--primary-blue);
+  --contributor-item-hover-bg: linear-gradient(135deg, rgba(52,152,219,0.1) 0%, rgba(255,255,255,0.05) 100%);
+  --contributor-item-hover-border: 1px solid rgba(52,152,219,0.3);
+  --contributor-item-hover-shadow: 0 8px 25px rgba(0,0,0,0.2);
+  --contributor-avatar-bg: var(--primary-blue);
+  --contributor-avatar-placeholder-gradient: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-dark,#216fa5) 100%);
+  --contributor-avatar-shadow: 0 6px 20px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2);
+
+  /* === Widget Dev Time === */
+  --devtime-stat-bg: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+  --devtime-stat-border: 1px solid rgba(255,255,255,0.08);
+  --devtime-stat-border-left: 3px solid var(--primary-teal);
+  --devtime-stat-hover-bg: linear-gradient(135deg, rgba(79,209,199,0.08) 0%, rgba(255,255,255,0.05) 100%);
+  --devtime-stat-hover-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  --devtime-phase-bg: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+  --devtime-phase-border: 1px solid rgba(255,255,255,0.05);
+  --devtime-phase-hover-bg: linear-gradient(135deg, rgba(79,209,199,0.05) 0%, rgba(255,255,255,0.03) 100%);
+  --devtime-phase-hover-border: 1px solid rgba(79,209,199,0.2);
+  --devtime-separator-border: 1px solid rgba(255,255,255,0.1);
+
+  /* === Widget Gallery === */
+  --gallery-item-bg: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+  --gallery-item-border: 1px solid rgba(255,255,255,0.1);
+  --gallery-item-shadow: 0 8px 25px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.1);
+  --gallery-item-hover-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 25px rgba(52,152,219,0.3), inset 0 1px 0 rgba(255,255,255,0.2);
+  --gallery-item-hover-border: rgba(52,152,219,0.5);
+  --gallery-overlay-bg: linear-gradient(135deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.1) 100%);
+  --gallery-zoom-icon-bg: rgba(52,152,219,0.9);
+  --gallery-zoom-icon-shadow: 0 8px 20px rgba(0,0,0,0.3), 0 0 15px rgba(52,152,219,0.6);
+  --gallery-caption-bg: linear-gradient(transparent, rgba(0,0,0,0.8));
+  --gallery-caption-text: #fff;
+
+  /* === Widget Tech Specs === */
+  --spec-item-bg: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+  --spec-item-border-left: 3px solid var(--primary-blue);
+  --spec-item-hover-bg: linear-gradient(135deg, rgba(52,152,219,0.08) 0%, rgba(255,255,255,0.05) 100%);
+  --spec-item-hover-border-left: 3px solid var(--primary-teal);
+
+  /* === Widget YouTube Single === */
+  --youtube-item-bg: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+  --youtube-item-border: 1px solid rgba(255,255,255,0.08);
+  --youtube-item-border-left: 3px solid #ff0000;
+  --youtube-item-hover-bg: linear-gradient(135deg, rgba(255,0,0,0.08) 0%, rgba(255,255,255,0.05) 100%);
+  --youtube-item-hover-border-left: 3px solid #cc0000;
+  --youtube-item-hover-shadow: 0 8px 25px rgba(0,0,0,0.2), 0 3px 10px rgba(255,0,0,0.15);
+  --youtube-thumbnail-bg: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+  --youtube-play-btn-bg: rgba(255,0,0,0.9);
+  --youtube-play-btn-border: 3px solid rgba(255,255,255,0.3);
+  --youtube-play-btn-shadow: 0 8px 25px rgba(0,0,0,0.3);
+  --youtube-play-btn-hover-bg: rgba(255,0,0,1);
+  --youtube-play-btn-hover-shadow: 0 12px 35px rgba(0,0,0,0.4), 0 0 30px rgba(255,0,0,0.6);
+  --youtube-duration-bg: rgba(0,0,0,0.8);
+  --youtube-duration-border: 1px solid rgba(255,255,255,0.1);
+}

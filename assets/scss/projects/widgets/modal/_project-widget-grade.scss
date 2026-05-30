@@ -1,0 +1,139 @@
+// Project Widget Modal - Grade Layout
+// Uses base components from _project-widget-base.scss
+// IMPORTANT: HTML structure should come from Hugo partial, not JavaScript
+
+.grade-modal-enhanced {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    
+    // Uses .widget-stats-bar from base
+    .grade-stats-bar {
+        @extend .widget-stats-bar;
+        
+        .grade-context {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .grade-meta { 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: .5rem; 
+        }
+        
+        .grade-date-chip,
+        .grade-prof-chip {
+            @extend .widget-badge;
+            @extend .widget-badge--sm;
+        }
+    }
+    
+    // Main grade display card
+    .grade-display-card {
+        @extend .widget-card;
+        @extend .widget-card--static;
+        padding: 2rem;
+        text-align: center;
+        
+        .grade-score-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            
+            .grade-value-large {
+                font-size: 4rem;
+                font-weight: 700;
+                color: var(--accent-primary);
+                line-height: 1;
+                text-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            }
+            
+            .grade-scale-text {
+                font-size: 1.2rem;
+                color: var(--text-secondary);
+                font-weight: 500;
+                margin-top: -0.5rem;
+            }
+            
+            .grade-percentage-badge {
+                @extend .widget-badge;
+                @extend .widget-badge--lg;
+                background: var(--accent-primary);
+                color: white;
+                font-size: 1.1rem;
+                font-weight: 600;
+                margin-top: 0.5rem;
+            }
+        }
+        
+        // Responsive
+        @media (max-width: 600px) {
+            padding: 1.5rem;
+            
+            .grade-score-section {
+                .grade-value-large {
+                    font-size: 3rem;
+                }
+            }
+        }
+    }
+    
+    // Details grid
+    .grade-details-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        
+        .grade-detail-card {
+            @extend .widget-card;
+            @extend .widget-card--compact;
+            text-align: center;
+            
+            .detail-label {
+                font-size: 0.85rem;
+                color: var(--text-secondary);
+                margin-bottom: 0.5rem;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+            }
+            
+            .detail-value {
+                font-size: 1rem;
+                font-weight: 600;
+                color: var(--text-primary);
+            }
+        }
+        
+        .grade-comment-card {
+            @extend .widget-card;
+            @extend .widget-card--compact;
+            grid-column: 1 / -1;
+            text-align: left;
+            
+            .comment-label {
+                font-size: 0.85rem;
+                color: var(--text-secondary);
+                margin-bottom: 0.75rem;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                font-weight: 600;
+            }
+            
+            .comment-text {
+                color: var(--text-primary);
+                line-height: 1.5;
+                
+                p {
+                    margin: 0;
+                }
+            }
+        }
+        
+        // Responsive
+        @media (max-width: 600px) {
+            grid-template-columns: 1fr;
+        }
+    }
+}

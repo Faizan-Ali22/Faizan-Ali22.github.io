@@ -1,0 +1,76 @@
+{{- /* Load localized testimonials data */ -}}
+{{- $testimonials := partial "get-localized-data.html" (dict "context" . "dataName" "testimonials") -}}
+
+<div class="testimonials-section">
+    <div class="section-header section-header-unified">
+    <h2 class="section-title-unified">{{ i18n "testimonials" | default "Testimonials" }}</h2>
+        <p class="section-subtitle section-subtitle-unified">
+            {{ i18n "testimonials_subtitle" | default "What colleagues and clients say about my work" }}
+        </p>
+    </div>
+    
+    <div class="testimonials-slider">
+        <div class="testimonials-track">
+            {{ with $testimonials }}
+            {{ range . }}
+            {{ $person := partial "helpers/get-person.html" (dict "context" $ "personId" .personId) }}
+            <div class="testimonial-card aero-glass">
+                <div class="testimonial-content">
+                    <p class="testimonial-text">
+                        "{{ .text }}"
+                    </p>
+                    <div class="testimonial-author{{ if $person }} clickable-person{{ end }}"{{ if $person }} data-person-id="{{ .personId }}" title="Voir le profil de {{ $person.Title }}"{{ end }}>
+                        {{ if $person }}
+                            {{ if $person.Params.avatar }}
+                                {{- $avatar := partial "get-optimized-image.html" (dict "imagePath" $person.Params.avatar "width" 200 "quality" 85) -}}
+                                <img src="{{ $avatar.src }}" 
+                                     alt="{{ $person.Title }}" 
+                                     class="testimonial-avatar"
+                                     {{- if and $avatar.isResource (gt $avatar.width 0) }} width="{{ $avatar.width }}"{{ end -}}
+                                     {{- if and $avatar.isResource (gt $avatar.height 0) }} height="{{ $avatar.height }}"{{ end -}}
+                                     loading="lazy">
+                            {{ else }}
+                            <div class="testimonial-avatar placeholder">
+                                <span>{{ substr $person.Title 0 1 | upper }}</span>
+                            </div>
+                            {{ end }}
+                            <div class="testimonial-info">
+                                <div class="testimonial-name">{{ $person.Title }}</div>
+                                <div class="testimonial-position">{{ .position }}</div>
+                                <div class="testimonial-company">{{ .company }}</div>
+                            </div>
+                        {{ else }}
+                            <div class="testimonial-avatar placeholder">
+                                <span>{{ substr .personId 0 1 | upper }}</span>
+                            </div>
+                            <div class="testimonial-info">
+                                <div class="testimonial-name">Personne inconnue ({{ .personId }})</div>
+                                <div class="testimonial-position">{{ .position }}</div>
+                                <div class="testimonial-company">{{ .company }}</div>
+                            </div>
+                        {{ end }}
+                    </div>
+                </div>
+            </div>
+            {{ end }}
+            {{ end }}
+        </div>
+        
+        <div class="slider-controls">
+            <button class="slider-btn prev" aria-label="{{ i18n "previous" | default "Previous" }}">‹</button>
+            <div class="slider-indicators">
+                {{ with $testimonials }}
+                {{ range $index, $testimonial := . }}
+                <span class="indicator{{ if eq $index 0 }} active{{ end }}"></span>
+                {{ end }}
+                {{ end }}
+            </div>
+            <button class="slider-btn next" aria-label="{{ i18n "next" | default "Suivant" }}">›</button>
+        </div>
+        
+        <!-- Progress bar for automatic scrolling -->
+        <div class="autoplay-progress-container">
+            <div class="autoplay-progress-bar"></div>
+        </div>
+    </div>
+</div>

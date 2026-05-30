@@ -1,0 +1,65 @@
+<!-- Main navigation dock -->
+<nav id="dock" role="navigation" aria-label="{{ i18n "main_navigation" | default "Main navigation" }}">
+  <ul class="dock-list">
+    <!-- Profile -->
+    <li class="dock-item">
+      <a href="{{ "/" | relLangURL }}" class="dock-button" aria-label="{{ i18n "profile_home" | default "Profile - Home" }}">
+        {{- partial "icon.html" (dict "iconId" "profile" "size" "24" "class" "dock-icon") -}}
+        <span class="dock-label">{{ i18n "profile" | default "Profile" }}</span>
+      </a>
+    </li>
+
+    <!-- Skills -->
+  <li class="dock-item">
+      <a href="{{ "/skills" | relLangURL }}" class="dock-button" aria-label="{{ i18n "technical_skills" | default "Technical Skills" }}">
+        {{- partial "icon.html" (dict "iconId" "skills" "size" "24" "class" "dock-icon") -}}
+        <span class="dock-label">{{ i18n "skills" | default "Skills" }}</span>
+      </a>
+    </li>
+
+    {{ if .Site.Data.config.features.blog }}
+    <!-- Blog -->
+    <li class="dock-item">
+      <a href="{{ "/posts" | relLangURL }}" class="dock-button" aria-label="{{ i18n "blog" | default "Blog" }}">
+        {{- partial "icon.html" (dict "iconId" "blog" "size" "24" "class" "dock-icon") -}}
+        <span class="dock-label">{{ i18n "blog" | default "Blog" }}</span>
+      </a>
+    </li>
+    {{ end }}
+
+    <!-- Projects -->
+    <li class="dock-item">
+      <a href="{{ "/projects" | relLangURL }}" class="dock-button" aria-label="{{ i18n "projects" | default "Projects" }}">
+        {{- partial "icon.html" (dict "iconId" "projects" "size" "24" "class" "dock-icon") -}}
+        <span class="dock-label">{{ i18n "projects" | default "Projects" }}</span>
+      </a>
+    </li>
+
+    <!-- Education -->
+    <li class="dock-item">
+      <a href="{{ "/educations" | relLangURL }}" class="dock-button" aria-label="{{ i18n "education" | default "Education" }}">
+        {{- partial "icon.html" (dict "iconId" "education" "size" "24" "class" "dock-icon") -}}
+        <span class="dock-label">{{ i18n "education" | default "Education" }}</span>
+      </a>
+    </li>
+
+    <!-- Experiences -->
+    <li class="dock-item">
+      <a href="{{ "/experiences" | relLangURL }}" class="dock-button" aria-label="{{ i18n "experiences" | default "Experiences" }}">
+        {{- partial "icon.html" (dict "iconId" "experiences" "size" "24" "class" "dock-icon") -}}
+        <span class="dock-label">{{ i18n "experiences" | default "Experiences" }}</span>
+      </a>
+    </li>
+
+    <!-- Competences -->
+   <!-- <li class="dock-item">
+      <a href="javascript:void(0)" 
+         onclick="document.getElementById('competences').scrollIntoView({behavior: 'smooth'})"
+         class="dock-button" 
+         aria-label="{{ i18n "technical_skills" | default "Technical Skills" }}">
+        {{- partial "icon.html" (dict "iconId" "skills" "size" "24" "class" "dock-icon") -}}
+        <span class="dock-label">{{ i18n "skills" | default "Skills" }}</span>
+      </a>
+    </li> -->
+  </ul>
+</nav>

@@ -1,0 +1,194 @@
+/* PS5-Style Sector Badge with Diagonal Split */
+.ps5-sector-badge {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 24px;
+    min-width: 85px;
+    padding: 0;
+    background: transparent;
+    border-radius: 4px;
+    font-family: 'Helvetica Neue', 'Arial', sans-serif;
+    font-weight: 500;
+    line-height: 1;
+    box-shadow: 
+        0 1px 3px rgba(0, 0, 0, 0.15);
+    transition: all 0.2s ease;
+    overflow: hidden;
+    isolation: isolate;
+
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border: 1px solid rgba(40, 40, 40, 0.3);
+        border-radius: 4px;
+        pointer-events: none;
+        z-index: 10;
+    }
+
+    &:hover {
+        transform: translateY(-1px);
+        box-shadow: 
+            0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Diagonal split backgrounds */
+    .sector-primary {
+        position: relative;
+        z-index: 2;
+        padding: 0 8px 0 10px;
+        font-size: 10px;
+        font-weight: 700;
+        color: #111111;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        white-space: nowrap;
+        text-shadow: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            bottom: -2px;
+            left: -100px;
+            right: -3px;
+            background: #FFFFFF;
+            transform: skewX(-10deg);
+            transform-origin: bottom left;
+            z-index: -1;
+        }
+    }
+
+    .sector-secondary {
+        position: relative;
+        z-index: 2;
+        padding: 0 10px 0 8px;
+        font-size: 10px;
+        font-weight: 700;
+        color: #EDEDED;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        white-space: nowrap;
+        text-shadow: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+
+        &::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            bottom: -2px;
+            left: -3px;
+            right: -100px;
+            background: #000000;
+            transform: skewX(-10deg);
+            transform-origin: bottom right;
+            z-index: -1;
+        }
+    }
+
+    /* Diagonal separator line */
+    .sector-divider {
+        position: absolute;
+        top: -2px;
+        bottom: -2px;
+        left: 50%;
+        width: 1px;
+        background: rgba(40, 40, 40, 0.3);
+        transform: translateX(-50%) skewX(-10deg);
+        z-index: 5;
+    }
+
+    /* Single word badge (no divider) - solid background */
+    &:not(:has(.sector-divider)) {
+        background: linear-gradient(135deg, #FFFFFF 0%, #F5F5F5 100%);
+
+        .sector-primary {
+            padding: 0 20px;
+            color: #1A1A1A;
+
+            &::before {
+                display: none;
+            }
+        }
+    }
+}
+
+/* Hero placement */
+.project-hero-sector {
+    margin-top: 16px;
+    margin-bottom: 8px;
+}
+
+/* Description placement */
+.description-sector-badge {
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .ps5-sector-badge {
+        height: 20px;
+        min-width: 72px;
+        border-radius: 3px;
+
+        &::before {
+            border-radius: 3px;
+        }
+
+        .sector-primary,
+        .sector-secondary {
+            font-size: 8.5px;
+            letter-spacing: 0.8px;
+        }
+
+        .sector-primary {
+            padding: 0 10px 0 8px;
+
+            &::before {
+                top: -2px;
+                bottom: -2px;
+                right: -5px;
+            }
+        }
+
+        .sector-secondary {
+            padding: 0 8px 0 10px;
+
+            &::after {
+                top: -2px;
+                bottom: -2px;
+                left: -5px;
+            }
+        }
+
+        .sector-divider {
+            top: -2px;
+            bottom: -2px;
+        }
+
+        &:not(:has(.sector-divider)) .sector-primary {
+            padding: 0 15px;
+        }
+    }
+
+    .project-hero-sector {
+        margin-top: 10px;
+        margin-bottom: 6px;
+    }
+
+    .description-sector-badge {
+        margin-bottom: 14px;
+        padding-bottom: 10px;
+    }
+}

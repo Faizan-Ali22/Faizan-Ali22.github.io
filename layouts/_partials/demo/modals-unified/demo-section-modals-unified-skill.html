@@ -1,0 +1,135 @@
+<!-- Unified Modal - Skill/Technology Use Case -->
+<div class="modal-demo-container">
+  <div class="css-class-info">
+    <strong>Name:</strong> Unified Modal - Skill/Technology<br />
+    <strong>Main class:</strong> <code>.unified-modal</code><br />
+    <strong>Tab system:</strong> <code>.tab-btn</code> (unified)<br />
+    <strong>Buttons:</strong> <code>.btn-action</code> (unified)<br />
+    <strong>Replaces:</strong> skill-modal
+  </div>
+  <div class="modal-demo-preview unified-modal-preview">
+    <div class="unified-modal-content">
+      <!-- Unified header with close, content header and tabs -->
+      <div class="unified-modal-header">
+        <button class="unified-modal-close">&times;</button>
+        
+        <!-- Content Header with icon/avatar and title -->
+        <div class="unified-modal-content-header">
+          <div class="unified-modal-content-header-left">
+            <div class="unified-modal-icon-large">
+              <img
+                src="/images/technologies/CSharp.svg"
+                alt="C#"
+                width="64"
+                height="64"
+              />
+            </div>
+            <div class="unified-modal-title-block">
+              <h2>C#</h2>
+              <div class="unified-modal-chips">
+                <span class="chip">Avancé</span>
+                <span class="chip secondary">4 ans d'expérience</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Unified tab system -->
+        <div class="tabs unified-modal-tabs">
+          <button class="tab-btn active" data-tab="projects">
+            <span class="tab-icon">💼</span>
+            <span class="tab-label">Projets</span>
+            <span class="count">12</span>
+          </button>
+          <button class="tab-btn" data-tab="experiences">
+            <span class="tab-icon">🏢</span>
+            <span class="tab-label">Expériences</span>
+            <span class="count">3</span>
+          </button>
+          <button class="tab-btn" data-tab="formations">
+            <span class="tab-icon">🎓</span>
+            <span class="tab-label">Formations</span>
+            <span class="count">2</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="unified-modal-body">
+
+        <!-- Content Panels -->
+        <div class="unified-modal-panels">
+          <div class="unified-modal-panel active" data-panel="projects">
+            <div class="projects-grid">
+              <div class="project-card">
+                <h4>Nuketown Zombies Remastered</h4>
+                <p>Projet de mod complet avec mécaniques avancées</p>
+                <div class="card-actions">
+                  <button class="btn-action primary">Voir le projet</button>
+                </div>
+              </div>
+              <div class="project-card">
+                <h4>Studio La Moutarde - Tools</h4>
+                <p>Outils internes de développement</p>
+                <div class="card-actions">
+                  <button class="btn-action">Détails</button>
+                </div>
+              </div>
+              <div class="project-card">
+                <h4>Fish'n'Ship</h4>
+                <p>Jeu de pêche en multijoueur développé en Unity</p>
+                <div class="card-actions">
+                  <button class="btn-action">Voir le projet</button>
+                </div>
+              </div>
+              <div class="project-card">
+                <h4>Demon's Tower</h4>
+                <p>Jeu de plateforme avec mécaniques de combat</p>
+                <div class="card-actions">
+                  <button class="btn-action">Voir le projet</button>
+                </div>
+              </div>
+              <div class="project-card">
+                <h4>Aspiro Shop</h4>
+                <p>Application e-commerce développée en Blazor</p>
+                <div class="card-actions">
+                  <button class="btn-action">Voir le projet</button>
+                </div>
+              </div>
+              <div class="project-card">
+                <h4>Portfolio Website</h4>
+                <p>Site portfolio personnel avec Hugo et C#</p>
+                <div class="card-actions">
+                  <button class="btn-action">Voir le projet</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="unified-modal-panel" data-panel="experiences">
+            <div class="experiences-list">
+              <div class="experience-item">
+                <h4>Développeur chez Studio La Moutarde</h4>
+                <p>Alternance - Développement d'outils et applications</p>
+                <div class="item-actions">
+                  <button class="btn-action accent">
+                    Voir l'expérience
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="unified-modal-panel" data-panel="formations">
+            <div class="formations-list">
+              <div class="formation-item">
+                <h4>BUT IAMSI - IUT Montpellier</h4>
+                <p>Intégration d'Application et Management des SI</p>
+                <div class="item-actions">
+                  <button class="btn-action">Voir la formation</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,656 @@
+/**
+ * Forms Styles - Portfolio Theme
+ * ================================
+ * 
+ * This file contains all form-related styles for the portfolio theme.
+ * It includes contact forms, buttons, and interactive elements with
+ * modern glassmorphism effects and smooth animations.
+ * 
+ * Table of Contents:
+ * 1. Contact Form Container
+ * 2. Form Groups and Input Fields
+ * 3. Submit Buttons
+ * 4. Action Buttons (Download, Read More, etc.)
+ * 5. Social Icons
+ * 6. Button Animations and Effects
+ * 7. Responsive Design
+ * 
+ * Color Scheme:
+ * - Primary: var(--accent) (Turquoise)
+ * - Secondary: #40e0d0 (Turquoise variant)
+ * - Text: rgba(255, 255, 255, 0.8)
+ * - Background: rgba(55, 65, 81, 0.6-0.7)
+ * - Borders: rgba(var(--accent-rgb), 0.2-0.6)
+ */
+
+/* ================================
+   1. CONTACT FORM CONTAINER
+   ================================ */
+
+/**
+ * Main container for contact forms
+ * Features glassmorphism effect with backdrop blur
+ */
+.contact-form-container {
+    padding: 2rem;
+    border-radius: 15px;
+    background: rgba(55, 65, 81, 0.6);
+    backdrop-filter: blur(15px) saturate(180%);
+    border: 1px solid rgba(var(--accent-rgb), 0.2);
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/**
+ * Form container title styling
+ */
+.contact-form-container h3 {
+    color: var(--accent);
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+/* ================================
+   2. FORM GROUPS AND INPUT FIELDS
+   ================================ */
+
+/**
+ * Main form container with flexbox layout
+ */
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/**
+ * Individual form field container
+ */
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+/**
+ * Form field labels
+ */
+.form-group label {
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+/**
+ * All input types, select dropdowns, and textareas
+ * Features consistent styling with focus states
+ */
+.form-group input,
+.form-group select,
+.form-group textarea {
+    background: rgba(26, 26, 26, 0.6);
+    border: 1px solid rgba(var(--accent-rgb), 0.3);
+    border-radius: 10px;
+    padding: 1rem;
+    color: white;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: all 0.3s ease;
+}
+
+/**
+ * Placeholder text styling
+ */
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/**
+ * Focus states for all form inputs
+ * Adds glowing border effect
+ */
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 10px rgba(var(--accent-rgb), 0.3);
+    background: rgba(26, 26, 26, 0.8);
+}
+
+/**
+ * Textarea specific styling
+ */
+.form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+    font-family: inherit;
+    line-height: 1.5;
+}
+
+/**
+ * Select dropdown options styling
+ */
+.form-group select option {
+    background: #1a1a1a;
+    color: white;
+    padding: 0.5rem;
+}
+
+/* ================================
+   3. SUBMIT BUTTONS
+   ================================ */
+
+/**
+ * Primary submit button for forms
+ * Features glassmorphism design with hover color effects
+ */
+.submit-btn {
+    background: rgba(55, 65, 81, 0.6);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(var(--accent-rgb), 0.2);
+    border-radius: 12px;
+    padding: 1rem 2rem;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+/**
+ * Submit button hover effects
+ */
+.submit-btn:hover {
+    transform: translateY(-3px);
+    background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.8), rgba(var(--accent-rgb), 0.8));
+    border-color: rgba(var(--accent-rgb), 0.6);
+    color: #fff;
+    box-shadow: 0 10px 25px rgba(var(--accent-rgb), 0.3);
+}
+
+/**
+ * Submit button active (pressed) state
+ */
+.submit-btn:active {
+    transform: translateY(-1px);
+}
+
+/**
+ * Submit button disabled state
+ */
+.submit-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+    background: rgba(55, 65, 81, 0.3);
+    border-color: rgba(var(--accent-rgb), 0.1);
+}
+
+.submit-btn:disabled:hover {
+    transform: none;
+    background: rgba(55, 65, 81, 0.3);
+    border-color: rgba(var(--accent-rgb), 0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* ================================
+   4. ACTION BUTTONS
+   ================================ */
+
+/**
+ * Download resume button container
+ */
+.download-resume-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+/**
+ * Download resume button styling
+ * Features glassmorphism design with hover color effects
+ */
+.download-resume-btn {
+    background: rgba(55, 65, 81, 0.6);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(var(--accent-rgb), 0.2);
+    border-radius: 12px;
+    padding: 0.8rem 1.5rem;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+/**
+ * Download button hover effects
+ */
+.download-resume-btn:hover {
+    transform: translateY(-3px);
+    background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.8), rgba(var(--accent-rgb), 0.8));
+    border-color: rgba(var(--accent-rgb), 0.6);
+    color: #fff;
+    box-shadow: 0 8px 25px rgba(var(--accent-rgb), 0.3);
+}
+
+/**
+ * Download button active state
+ */
+.download-resume-btn:active {
+    transform: translateY(-1px);
+}
+
+/**
+ * Shimmer effect overlay for download button
+ */
+.download-resume-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+/**
+ * Activate shimmer effect on hover
+ */
+.download-resume-btn:hover::before {
+    left: 100%;
+}
+
+/**
+ * Read more button for blog posts
+ * Features glassmorphism design consistent with other buttons
+ */
+.read-more-btn {
+    background: rgba(55, 65, 81, 0.6);
+    backdrop-filter: blur(15px);
+    color: rgba(255, 255, 255, 0.8);
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border: 1px solid rgba(var(--accent-rgb), 0.2);
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+/**
+ * Read more button hover effects
+ */
+.read-more-btn:hover {
+    background: rgba(var(--accent-rgb), 0.8);
+    border-color: rgba(var(--accent-rgb), 0.6);
+    color: #fff;
+    transform: translateX(3px);
+    box-shadow: 0 4px 15px rgba(var(--accent-rgb), 0.2);
+}
+
+/**
+ * See all projects button container - kept for layout
+ */
+.projects-see-all {
+    text-align: center;
+    margin-top: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.projects-see-all .btn-action {
+    display: inline-flex;
+}
+
+/* ================================
+   5. SOCIAL ICONS
+   ================================ */
+
+/**
+ * Social links section container
+ */
+.social-links {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+/**
+ * Social links section title
+ */
+.social-links h3 {
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 1.5rem;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+/**
+ * Social icons container with flexbox layout
+ */
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+/**
+ * Individual social icon styling
+ * Features circular design with hover animations
+ */
+.social-icon {
+    background: rgba(55, 65, 81, 0.6);
+    border: 2px solid rgba(var(--accent-rgb), 0.3);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    font-size: 1.8rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/**
+ * Social icon hover effects
+ */
+.social-icon:hover {
+    border-color: rgba(var(--accent-rgb), 0.8);
+    color: var(--accent);
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0 10px 30px rgba(var(--accent-rgb), 0.3);
+    background: rgba(var(--accent-rgb), 0.1);
+}
+
+/**
+ * SVG icons styling inside social icons
+ */
+.social-icon svg {
+    width: 24px;
+    height: 24px;
+    fill: currentColor;
+    transition: all 0.3s ease;
+}
+
+/* ================================
+   6. BUTTON ANIMATIONS AND EFFECTS
+   ================================ */
+
+/**
+ * Generic button icon styling
+ */
+.btn-icon {
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+}
+
+/**
+ * Button text styling
+ */
+.btn-text {
+    font-size: 0.95rem;
+}
+
+/**
+ * Button arrow icon with animation
+ */
+.btn-arrow {
+    font-size: 1rem;
+    transition: transform 0.3s ease;
+}
+
+/**
+ * Arrow bounce animation on hover
+ */
+.download-resume-btn:hover .btn-arrow {
+    transform: translateY(2px);
+    animation: bounce 0.6s ease infinite;
+}
+
+/**
+ * Bounce keyframe animation
+ */
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(2px);
+    }
+    50% {
+        transform: translateY(5px);
+    }
+}
+
+/**
+ * Button loading state (can be added via JavaScript)
+ */
+.btn-loading {
+    position: relative;
+    color: transparent;
+}
+
+.btn-loading::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 50%;
+    left: 50%;
+    margin-left: -10px;
+    margin-top: -10px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 1s linear infinite;
+}
+
+/**
+ * Spin animation for loading state
+ */
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ================================
+   7. RESPONSIVE DESIGN
+   ================================ */
+
+/**
+ * Tablet styles (max-width: 1024px)
+ */
+@media (max-width: 1024px) {
+    .contact-form-container {
+        padding: 1.8rem;
+    }
+    
+    .download-resume-btn {
+        padding: 0.75rem 1.3rem;
+        font-size: 0.95rem;
+    }
+    
+
+}
+
+/**
+ * Mobile styles (max-width: 768px)
+ */
+@media (max-width: 768px) {
+    .contact-form-container {
+        padding: 1.5rem;
+        border-radius: 12px;
+    }
+    
+    .contact-form {
+        gap: 1.2rem;
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        padding: 0.8rem;
+        font-size: 0.95rem;
+    }
+    
+    .submit-btn {
+        padding: 0.9rem 1.5rem;
+        font-size: 1rem;
+    }
+    
+    .download-resume-container {
+        width: 100%;
+        margin: 1rem 0;
+    }
+    
+    .download-resume-btn {
+        padding: 0.7rem 1.2rem;
+        font-size: 0.9rem;
+        width: auto;
+        min-width: 200px;
+    }
+    
+    /* Section "Voir tous" sur mobile */
+    .projects-see-all {
+        margin-top: 2rem;
+        padding-bottom: 1.5rem;
+    }
+    
+    .social-icons {
+        gap: 0.8rem;
+    }
+    
+    .social-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+    }
+}
+
+/**
+ * Small mobile styles (max-width: 480px)
+ */
+@media (max-width: 480px) {
+    .contact-form-container {
+        padding: 1rem;
+        margin: 0 0.5rem;
+    }
+    
+    .contact-form-container h3 {
+        font-size: 1.3rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        padding: 0.7rem;
+        font-size: 0.9rem;
+    }
+    
+    .form-group textarea {
+        min-height: 100px;
+    }
+    
+    .submit-btn {
+        padding: 0.8rem 1.2rem;
+        font-size: 0.95rem;
+    }
+    
+    .download-resume-btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+        min-width: 180px;
+    }
+    
+    .read-more-btn {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+    }
+    
+
+    
+    .social-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 1.3rem;
+    }
+}
+
+/**
+ * High DPI displays optimization
+ */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        border-width: 0.5px;
+    }
+    
+    .social-icon {
+        border-width: 1px;
+    }
+}
+
+/**
+ * Dark mode preferences
+ */
+@media (prefers-color-scheme: dark) {
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        background: rgba(15, 15, 15, 0.8);
+    }
+    
+    .form-group select option {
+        background: #0f0f0f;
+    }
+}
+
+/**
+ * Reduced motion preferences
+ */
+@media (prefers-reduced-motion: reduce) {
+    .submit-btn,
+    .download-resume-btn,
+    .read-more-btn,
+    .social-icon,
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        transition: none;
+    }
+    
+    .download-resume-btn:hover .btn-arrow {
+        animation: none;
+    }
+    
+    .bounce-animation,
+    .spin-animation {
+        animation-duration: 0.01ms;
+    }
+}

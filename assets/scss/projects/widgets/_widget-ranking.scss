@@ -1,0 +1,125 @@
+// =============================================================================
+// PROJECT WIDGET - RANKING
+// =============================================================================
+
+@import 'widget-base';
+
+.project-widget-ranking-content {
+  text-align: center;
+  padding: $widget-padding-lg;
+}
+
+.project-widget-ranking-display {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: $widget-padding-lg;
+}
+
+.project-widget-ranking-position {
+  @include widget-gradient-text('ranking-position');
+  font-size: 3rem;
+  font-weight: var(--font-weight-bold);
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  position: relative;
+  
+  &::after {
+    content: attr(data-suffix);
+    font-size: 1rem;
+    color: var(--text-muted);
+    position: absolute;
+    top: 0.5rem;
+    right: -1rem;
+  }
+}
+
+.project-widget-ranking-total {
+  font-size: 1.5rem;
+  color: var(--text-muted);
+  font-weight: var(--font-weight-medium);
+}
+
+.project-widget-ranking-details {
+  @extend %widget-list-layout;
+  gap: $widget-gap-sm;
+}
+
+.project-widget-ranking-event {
+  color: var(--text-primary);
+  font-weight: var(--font-weight-semibold);
+  font-size: 1.1rem;
+}
+
+.project-widget-ranking-category,
+.project-widget-ranking-date {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.project-widget-ranking-achievement {
+  color: var(--primary-gold);
+  font-size: 0.9rem;
+  font-weight: var(--font-weight-semibold);
+  background: rgba(255,215,0,0.1);
+  padding: 0.6rem;
+  border-radius: var(--border-radius-sm);
+  @include widget-item-with-accent(var(--primary-gold));
+}
+
+// Styles spécifiques pour l'icône ranking
+.project-widget.ranking-box {
+  .project-widget-icon.ranking {
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    color: #8B4513;
+    
+    svg {
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+    }
+  }
+  
+  .project-widget-title,
+  .project-widget-summary {
+    color: var(--text-primary);
+    -webkit-text-fill-color: var(--text-primary);
+  }
+}
+
+// Preview mode (for collapsed state)
+.project-widget-ranking-preview {
+  @extend %widget-preview-item;
+  
+  .project-widget-ranking-preview-position {
+    @extend .preview-value;
+    color: #FFD700;
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-size: 1.5rem;
+    font-weight: var(--font-weight-bold);
+    position: relative;
+    min-width: 40px;
+    
+    &::after {
+      content: attr(data-suffix);
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      -webkit-text-fill-color: var(--text-muted);
+      position: absolute;
+      top: 0.2rem;
+      right: -0.8rem;
+    }
+  }
+  
+  .project-widget-ranking-preview-info {
+    @extend .preview-info;
+  }
+  
+  .project-widget-ranking-preview-total {
+    @extend .preview-meta;
+    color: var(--text-secondary);
+    -webkit-text-fill-color: var(--text-secondary);
+    font-weight: var(--font-weight-medium);
+  }
+}

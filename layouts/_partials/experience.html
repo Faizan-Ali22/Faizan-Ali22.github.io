@@ -1,0 +1,366 @@
+{{- /* Load localized skills data at the top */ -}}
+{{- $programmingLanguages := partial "get-localized-data.html" (dict "context" . "dataName" "programming_languages") -}}
+{{- $frameworksEngines := partial "get-localized-data.html" (dict "context" . "dataName" "frameworks_engines") -}}
+{{- $tools := partial "get-localized-data.html" (dict "context" . "dataName" "tools") -}}
+{{- $specialties := partial "get-localized-data.html" (dict "context" . "dataName" "specialties") -}}
+{{- $softSkills := partial "get-localized-data.html" (dict "context" . "dataName" "soft_skills") -}}
+
+<section class="experience-section">
+    <div class="experience-header section-header-unified">
+    <h2 class="section-title-unified">{{ i18n "experience_title" | default "Professional Experience" }}</h2>
+    <p class="experience-subtitle section-subtitle-unified">{{ i18n "experience_subtitle" | default "My professional journey, from real-world projects to skills developed in companies" }}</p>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="tabs" data-can-collapse="true" data-collapse-id="experience">
+        <button class="tab-btn active" data-tab="experiences">
+            <span class="icon">💼</span>
+            <span class="tab-label">{{ i18n "experiences" | default "Experiences" }}</span>
+        </button>
+    </div>
+
+    <!-- Experiences Timeline -->
+    <div class="experience-timeline" id="experiences-timeline" data-tab="experiences">
+        {{ range $index, $exp := (.Site.GetPage "/experiences").Pages.ByParam "start_date" }}
+        {{ $experienceData := partial "helpers/experience-data.html" $exp }}
+        <div class="experience-card {{ if eq $experienceData.status "current" }}current{{ end }}">
+            <div class="experience-header-card">
+                <div class="company-info">
+                    <div class="company-logo">
+                        {{- $companyLogo := partial "get-optimized-image.html" (dict "imagePath" $exp.Params.logo "width" 200 "quality" 90) -}}
+                        <img src="{{ $companyLogo.src }}" 
+                             alt="{{ $exp.Params.company }}"
+                             {{- if and $companyLogo.isResource (gt $companyLogo.width 0) }} width="{{ $companyLogo.width }}"{{ end -}}
+                             {{- if and $companyLogo.isResource (gt $companyLogo.height 0) }} height="{{ $companyLogo.height }}"{{ end -}}
+                             loading="lazy">
+                    </div>
+                    <div class="company-details">
+                        <h3 class="job-title">{{ $exp.Title }}</h3>
+                        <h4 class="company-name">{{ $exp.Params.company }}</h4>
+                        <div class="job-meta">
+                            <span class="job-period">{{ $experienceData.period }}</span>
+                            <span class="job-duration">{{ $experienceData.duration }}</span>
+                        </div>
+                        <div class="job-info">
+                            <span class="job-type">{{ $exp.Params.type }}</span>
+                            <span class="job-location">📍 {{ $exp.Params.location }}</span>
+                        </div>
+                    </div>
+                </div>
+                {{ if eq $experienceData.status "current" }}
+                <div class="current-badge">{{ i18n "in_progress" | default "In Progress" }}</div>
+                {{ else }}
+                <div class="completed-badge">{{ i18n "completed" | default "Completed" }}</div>
+                {{ end }}
+            </div>
+
+            <div class="experience-content">
+                <p class="experience-description">{{ $exp.Params.description }}</p>
+
+                {{ if $exp.Params.projects }}
+                <div class="projects-section">
+                    <div class="projects-header">
+                        <h5>{{ i18n "main_projects" | default "Main projects:" }}</h5>
+                    </div>
+                    {{ $layout := $exp.Params.projects_layout | default "horizontal" }}
+                    <div class="projects-container projects-container-{{ $layout }}" data-default-layout="{{ $layout }}">
+                    {{ range $exp.Params.projects }}
+                        {{/* Handle project references */}}
+                        {{ if .project_ref }}
+                            {{/* Get project page - handle both slug and path formats */}}
+                            {{ $projectPage := "" }}
+                            {{ if hasPrefix .project_ref "/" }}
+                                {{/* It's a Hugo path like /projects/my-game-showcase/ */}}
+                                {{ $projectPage = $.Site.GetPage .project_ref }}
+                            {{ else }}
+                                {{/* It's just a slug like my-game-showcase */}}
+                                {{ $projectPage = $.Site.GetPage (printf "/projects/%s" .project_ref) }}
+                            {{ end }}
+                            {{ if $projectPage }}
+                                {{ $allTechnologies := partial "get-all-technologies.html" $projectPage }}
+                                {{ $projectImage := $projectPage.Params.image | default "images/placeholder-project.jpg" }}
+                                
+                                {{ partial "project-card-unified.html" (dict 
+                                    "title" $projectPage.Title
+                                    "subtitle" ($projectPage.Params.description | default $projectPage.Params.subtitle)
+                                    "description" (cond .role_description .role_description $projectPage.Params.description)
+                                    "image" $projectImage
+                                    "url" $projectPage.RelPermalink
+                                    "technologies" $allTechnologies
+                                    "maxTechnologies" 4
+                                ) }}
+                            {{ else }}
+                                {{/* Fallback if project not found */}}
+                                {{ partial "project-card-unified.html" (dict 
+                                    "title" .project_ref
+                                    "subtitle" (i18n "project_not_found" | default "Referenced project not found")
+                                ) }}
+                            {{ end }}
+                        {{ else }}
+                            {{/* Handle inline project definition */}}
+                            {{ $allTechnologies := partial "get-all-technologies.html" . }}
+                            {{ $inlineImagePath := printf "/images/projects/%s/thumbnail.jpg" (lower (.name | urlize)) }}
+                            
+                            {{ partial "project-card-unified.html" (dict 
+                                "title" .name
+                                "subtitle" .description
+                                "description" (cond .role_description .role_description .description)
+                                "image" $inlineImagePath
+                                "url" .link
+                                "technologies" $allTechnologies
+                            ) }}
+                        {{ end }}
+                    {{ end }}
+                    </div>
+                </div>
+                {{ else if $exp.Params.tasks }}
+                <div class="tasks-section">
+                    <h5>{{ i18n "responsibilities" | default "Responsibilities:" }}</h5>
+                    <ul class="experience-tasks">
+                        {{ range $exp.Params.tasks }}
+                        <li>{{ . }}</li>
+                        {{ end }}
+                    </ul>
+                </div>
+                {{ end }}
+
+                {{- /* Load localized skills data */ -}}
+                {{- $programmingLanguages := partial "get-localized-data.html" (dict "context" $ "dataName" "programming_languages") -}}
+
+                <div class="experience-skills">
+                    <h5>{{ i18n "technical_skills" | default "Technical skills:" }}</h5>
+                    <div class="skills-tags">
+                        {{ range $exp.Params.programming_languages }}
+                        {{ $skillKey := . }}
+                        {{ $found := false }}
+                        {{ range $programmingLanguages }}
+                        {{ if eq .key $skillKey }}
+                        {{ $localizedName := i18n .key | default .key }}
+                        <span class="skill-tag clickable" 
+                              onclick="openSkillModal('{{ $localizedName }}', '{{ if .iconPath }}{{ .iconPath }}{{ else }}{{ .icon }}{{ end }}', '', '{{ .experience }}', '{{ if .iconPath }}svg{{ else }}emoji{{ end }}', '{{ .key }}')"
+                              data-skill-name="{{ .key }}"
+                              data-skill-type="programming-language">
+                            {{ partial "tech-icon.html" . }} {{ $localizedName }}
+                        </span>
+                        {{ $found = true }}
+                        {{ end }}
+                        {{ end }}
+                        {{ if not $found }}
+                        <span class="skill-tag">{{ i18n $skillKey | default $skillKey }}</span>
+                        {{ end }}
+                        {{ end }}
+                        {{ range $exp.Params.frameworks_engines }}
+                        {{ $skillKey := . }}
+                        {{ $found := false }}
+                        {{ range $frameworksEngines }}
+                        {{ if eq .key $skillKey }}
+                        {{ $localizedName := i18n .key | default .key }}
+                        <span class="skill-tag clickable" 
+                              onclick="openSkillModal('{{ $localizedName }}', '{{ if .iconPath }}{{ .iconPath }}{{ else }}{{ .icon }}{{ end }}', '', '{{ .experience }}', '{{ if .iconPath }}svg{{ else }}emoji{{ end }}', '{{ .key }}')"
+                              data-skill-name="{{ .key }}"
+                              data-skill-type="framework-engine">
+                            {{ partial "tech-icon.html" . }} {{ $localizedName }}
+                        </span>
+                        {{ $found = true }}
+                        {{ end }}
+                        {{ end }}
+                        {{ if not $found }}
+                        <span class="skill-tag">{{ i18n $skillKey | default $skillKey }}</span>
+                        {{ end }}
+                        {{ end }}
+                        {{ range $exp.Params.tools }}
+                        {{ $skillKey := . }}
+                        {{ $found := false }}
+                        {{ range $tools }}
+                        {{ if eq .key $skillKey }}
+                        {{ $localizedName := i18n .key | default .key }}
+                        <span class="skill-tag clickable" 
+                              onclick="openSkillModal('{{ $localizedName }}', '{{ if .iconPath }}{{ .iconPath }}{{ else }}{{ .icon }}{{ end }}', '{{ .description }}', '{{ .experience }}', '{{ if .iconPath }}svg{{ else }}emoji{{ end }}', '{{ .key }}')"
+                              data-skill-name="{{ .key }}"
+                              data-skill-type="tool">
+                            {{ partial "tech-icon.html" . }} {{ $localizedName }}
+                        </span>
+                        {{ $found = true }}
+                        {{ end }}
+                        {{ end }}
+                        {{ if not $found }}
+                        <span class="skill-tag">{{ i18n $skillKey | default $skillKey }}</span>
+                        {{ end }}
+                        {{ end }}
+                    </div>
+                </div>
+
+                {{ if or $exp.Params.specialties $exp.Params.soft_skills }}
+                <div class="experience-skills">
+                    <h5>{{ i18n "cross_skills" | default "Cross-functional skills:" }}</h5>
+                    <div class="skills-tags">
+                        {{ range $exp.Params.specialties }}
+                        {{ $skillKey := . }}
+                        {{ $found := false }}
+                        {{ range $specialties }}
+                        {{ if eq .key $skillKey }}
+                        {{ $localizedName := i18n .key | default .key }}
+                        <span class="skill-tag clickable" 
+                              onclick="openSkillModal('{{ $localizedName }}', '{{ if .iconPath }}{{ .iconPath }}{{ else }}{{ .icon }}{{ end }}', '', '{{ .experience }}', '{{ if .iconPath }}svg{{ else }}emoji{{ end }}', '{{ .key }}')"
+                              data-skill-name="{{ .key }}"
+                              data-skill-type="specialty">
+                            {{ partial "tech-icon.html" . }} {{ $localizedName }}
+                        </span>
+                        {{ $found = true }}
+                        {{ end }}
+                        {{ end }}
+                        {{ if not $found }}
+                        <span class="skill-tag">{{ i18n $skillKey | default $skillKey }}</span>
+                        {{ end }}
+                        {{ end }}
+                        {{ range $exp.Params.soft_skills }}
+                        {{ $skillKey := . }}
+                        {{ $found := false }}
+                        {{ range $softSkills }}
+                        {{ if eq .key $skillKey }}
+                        {{ $localizedName := i18n .key | default .key }}
+                        <span class="skill-tag clickable" 
+                              onclick="openSkillModal('{{ $localizedName }}', '{{ if .iconPath }}{{ .iconPath }}{{ else }}{{ .icon }}{{ end }}', '', '{{ .experience }}', '{{ if .iconPath }}svg{{ else }}emoji{{ end }}', '{{ .key }}')"
+                              data-skill-name="{{ .key }}"
+                              data-skill-type="soft-skill">
+                            {{ partial "tech-icon.html" . }} {{ $localizedName }}
+                        </span>
+                        {{ $found = true }}
+                        {{ end }}
+                        {{ end }}
+                        {{ if not $found }}
+                        <span class="skill-tag">{{ i18n $skillKey | default $skillKey }}</span>
+                        {{ end }}
+                        {{ end }}
+                    </div>
+                </div>
+                {{ end }}
+            </div>
+        </div>
+        {{ end }}
+    </div>
+
+    <!-- Internships Timeline -->
+    <div class="experience-timeline" id="internships-timeline" data-tab="internships" style="display: none;">
+        {{- $internshipsData := partial "get-localized-data.html" (dict "context" . "dataName" "internships") -}}
+        {{ range $index, $int := $internshipsData }}
+        <div class="experience-card seeking">
+            <div class="experience-header-card">
+                <div class="company-info">
+                    <div class="company-logo">
+                        <div class="seeking-icon">🔍</div>
+                    </div>
+                    <div class="company-details">
+                        <h3 class="job-title">{{ $int.title }}</h3>
+                        <h4 class="company-name">{{ $int.company }}</h4>
+                        <div class="job-meta">
+                            <span class="job-period">{{ $int.period }}</span>
+                            <span class="job-duration">{{ $int.duration }}</span>
+                        </div>
+                        <div class="job-info">
+                            <span class="job-type">{{ $int.type }}</span>
+                            <span class="job-location">📍 {{ $int.location }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="seeking-badge">{{ i18n "actively_seeking" | default "Actively Seeking" }}</div>
+            </div>
+
+            <div class="experience-content">
+                <p class="experience-description">{{ $int.description }}</p>
+
+                {{ if $int.requirements }}
+                <div class="requirements-section">
+                    <h5>{{ i18n "looking_for" | default "Looking for:" }}</h5>
+                    <ul class="requirements-list">
+                        {{ range $int.requirements }}
+                        <li>{{ . }}</li>
+                        {{ end }}
+                    </ul>
+                </div>
+                {{ end }}
+
+                <div class="experience-skills">
+                    <h5>{{ i18n "skills_to_apply" | default "Skills to apply:" }}</h5>
+                    <div class="skills-tags">
+                        {{ range $int.skills }}
+                        {{ $skillKey := . }}
+                        {{ $found := false }}
+                        {{ range ($programmingLanguages | append $frameworksEngines | append $specialties | append $tools) }}
+                        {{ if eq .key $skillKey }}
+                        {{ $localizedName := i18n .key | default .key }}
+                        <span class="skill-tag clickable" 
+                              onclick="openSkillModal('{{ $localizedName }}', '{{ if .iconPath }}{{ .iconPath }}{{ else }}{{ .icon }}{{ end }}', '{{ .description }}', '{{ .experience }}', '{{ if .iconPath }}svg{{ else }}emoji{{ end }}', '{{ .key }}')"
+                              data-skill-name="{{ .key }}"
+                              data-skill-type="skill">
+                            {{ partial "tech-icon.html" . }} {{ $localizedName }}
+                        </span>
+                        {{ $found = true }}
+                        {{ end }}
+                        {{ end }}
+                        {{ if not $found }}
+                        <span class="skill-tag">{{ i18n $skillKey | default $skillKey }}</span>
+                        {{ end }}
+                        {{ end }}
+                    </div>
+                </div>
+
+                {{ if $int.technologies }}
+                <div class="experience-technologies">
+                    <h5>{{ i18n "preferred_technologies" | default "Preferred technologies:" }}</h5>
+                    <div class="tech-chips">
+                        {{ range $int.technologies }}
+                        {{ $techKey := . }}
+                        {{ $found := false }}
+                        {{ $techType := "framework-engine" }}
+                        {{ range $programmingLanguages }}
+                        {{ if eq .key $techKey }}
+                        {{ $techType = "programming-language" }}
+                        {{ $localizedName := i18n .key | default .key }}
+                        <span class="tech-chip clickable" 
+                              style="--tech-color: {{ .color | default "#666" }}"
+                              onclick="openSkillModal('{{ $localizedName }}', '{{ if .iconPath }}{{ .iconPath }}{{ else }}{{ .icon }}{{ end }}', '', '{{ .experience }}', '{{ if .iconPath }}svg{{ else }}emoji{{ end }}', '{{ .key }}')"
+                              data-skill-name="{{ .key }}"
+                              data-skill-type="{{ $techType }}">
+                            {{ partial "tech-icon.html" . }} {{ $localizedName }}
+                        </span>
+                        {{ $found = true }}
+                        {{ end }}
+                        {{ end }}
+                        {{ if not $found }}
+                        {{ range $frameworksEngines }}
+                        {{ if eq .key $techKey }}
+                        {{ $localizedName := i18n .key | default .key }}
+                        <span class="tech-chip clickable" 
+                              style="--tech-color: {{ .color | default "#666" }}"
+                              onclick="openSkillModal('{{ $localizedName }}', '{{ if .iconPath }}{{ .iconPath }}{{ else }}{{ .icon }}{{ end }}', '', '{{ .experience }}', '{{ if .iconPath }}svg{{ else }}emoji{{ end }}', '{{ .key }}')"
+                              data-skill-name="{{ .key }}"
+                              data-skill-type="framework-engine">
+                            {{ partial "tech-icon.html" . }} {{ $localizedName }}
+                        </span>
+                        {{ $found = true }}
+                        {{ end }}
+                        {{ end }}
+                        {{ end }}
+                        {{ if not $found }}
+                        <span class="tech-chip">{{ i18n $techKey | default $techKey }}</span>
+                        {{ end }}
+                        {{ end }}
+                    </div>
+                </div>
+                {{ end }}
+            </div>
+        </div>
+        {{ end }}
+    </div>
+
+    <!-- Bouton voir toutes les expériences - Only show on homepage, not on the experiences list page -->
+    {{- if .IsHome }}
+    <div class="experience-footer">
+        <a href="{{ "/experiences/" | relLangURL }}" class="btn-action">
+            <span>{{ i18n "see_all_experiences" | default "See all experiences" }}</span>
+            {{- partial "icon.html" (dict "iconId" "arrow-right" "size" "18") -}}
+        </a>
+    </div>
+    {{- end }}
+</section>

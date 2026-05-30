@@ -1,0 +1,49 @@
+{{/*
+  Partial: Specialties Widget
+  Description: Widget compact pour afficher les spécialités utilisées dans un projet
+  Context: 
+    - .Params (dict) - Paramètres du projet avec .specialties
+    - specialties data (loaded from localized data files)
+    - .File.BaseFileName (string) - ID du projet
+*/}}
+
+{{- if .Params.specialties -}}
+  {{- $projectSpecialities := .Params.specialties -}}
+  {{- $allSpecialities := partial "get-localized-data.html" (dict "context" . "dataName" "specialties") -}}
+  {{- $usedSpecialities := slice -}}
+  {{- range $projectSpecialities -}}
+    {{- $specialtyKey := . -}}
+    {{- range $allSpecialities -}}
+      {{- if eq .key $specialtyKey -}}
+        {{- $usedSpecialities = $usedSpecialities | append . -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+  
+  {{- if $usedSpecialities -}}
+<div class="project-widget developer-specialties-box size-medium">
+  <div class="project-widget-header" onclick="toggleInfoBox(this)">
+    <div class="project-widget-icon specialties">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M20.5,11H19V7C19,5.89 18.1,5 17,5H13V3.5A2.5,2.5 0 0,0 10.5,1A2.5,2.5 0 0,0 8,3.5V5H4C2.89,5 2,5.89 2,7V10.8H3.5C5,10.8 6.2,12 6.2,13.5C6.2,15 5,16.2 3.5,16.2H2V20C2,21.11 2.89,22 4,22H7.8V20.5C7.8,19 9,17.8 10.5,17.8C12,17.8 13.2,19 13.2,20.5V22H17C18.11,22 19,21.11 19,20V16H20.5A2.5,2.5 0 0,0 23,13.5A2.5,2.5 0 0,0 20.5,11Z"/>
+      </svg>
+    </div>
+    <div class="project-widget-header-content">
+      <h3 class="project-widget-title">{{ i18n "specialties_used" | default "Spécialités utilisées" }}</h3>
+      <div class="project-widget-summary">{{ len $usedSpecialities }} {{ i18n "domains_applied" | default "domaines appliqués" }}</div>
+    </div>
+    <div class="project-widget-toggle">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/>
+      </svg>
+    </div>
+  </div>
+  <div class="project-widget-content">
+    {{/* Load localized profile data */}}
+    {{- $profileData := partial "get-localized-data.html" (dict "context" . "dataName" "profile") -}}
+    {{/* Utiliser le partial pour l'affichage modal */}}
+    {{ partial "projects/widgets/modal/specialties.html" (dict "specialties" $usedSpecialities "projectId" .File.BaseFileName "profileData" $profileData) }}
+  </div>
+</div>
+  {{- end -}}
+{{- end -}}

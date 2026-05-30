@@ -1,0 +1,460 @@
+/* ========================================
+   RESPONSIVE DESIGN FOR TROPHIES MODAL
+   ======================================== */
+
+/* Tablet Portrait */
+@media (max-width: 1024px) {
+  .trophies-modal-content {
+    border-radius: 0;
+  }
+
+  .trophies-modal-header {
+    padding: 24px;
+  }
+
+  .modal-title {
+    font-size: 2.2rem;
+  }
+
+  .trophies-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .trophies-modal-footer {
+    padding: 24px;
+  }
+}
+
+/* Mobile Landscape & Portrait */
+@media (max-width: 768px) {
+  .trophies-modal-content {
+    background: linear-gradient(180deg, 
+      rgba(20, 20, 30, 0.98), 
+      rgba(15, 15, 25, 0.98)
+    );
+  }
+
+  .trophies-modal-header {
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px 60px 24px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .modal-title-section {
+    padding-right: 0;
+  }
+
+  .modal-title {
+    font-size: 1.8rem;
+  }
+
+  .modal-subtitle {
+    font-size: 0.9rem;
+  }
+
+  .modal-close-btn {
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .modal-progress-section {
+    width: 100%;
+  }
+
+  .overall-progress {
+    max-width: 100%;
+  }
+
+  .progress-label {
+    font-size: 0.8rem;
+    margin-bottom: 8px;
+  }
+
+  .progress-bar-bg {
+    height: 8px;
+  }
+
+  .progress-text {
+    font-size: 1rem;
+  }
+
+  /* Grid */
+  .trophies-modal-body {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+
+  .trophies-grid {
+    padding: 24px 16px;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  /* Cards */
+  .trophy-card {
+    padding: 16px;
+    border-radius: 12px;
+  }
+
+  .trophy-card-header {
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .trophy-card-icon {
+    width: 52px;
+    height: 52px;
+    font-size: 1.6rem;
+    flex-shrink: 0;
+  }
+
+  .trophy-card-title {
+    font-size: 1.1rem;
+  }
+
+  .trophy-card-rarity {
+    font-size: 0.7rem;
+    padding: 3px 6px;
+  }
+
+  .trophy-card-description {
+    font-size: 0.9rem;
+    line-height: 1.4;
+    margin: 8px 0;
+  }
+
+  .trophy-card-requirement {
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+  }
+
+  .trophy-card-date {
+    font-size: 0.8rem;
+  }
+
+  /* Footer */
+  .trophies-modal-footer {
+    padding: 16px 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(0, 0, 0, 0.2);
+  }
+
+  .footer-stats {
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: space-around;
+  }
+
+  .stat-item {
+    min-width: calc(50% - 12px);
+    text-align: center;
+  }
+
+  .stat-value {
+    font-size: 1.5rem;
+  }
+
+  .stat-label {
+    font-size: 0.85rem;
+  }
+
+  /* Notifications */
+  .new-trophy-notification {
+    padding: 16px 20px;
+    margin: 0 16px;
+    max-width: calc(100vw - 32px);
+    border-radius: 12px;
+  }
+
+  .new-trophy-notification .trophy-emoji {
+    font-size: 2rem;
+  }
+
+  .new-trophy-notification h3 {
+    font-size: 1.1rem;
+  }
+
+  .new-trophy-notification p {
+    font-size: 0.9rem;
+  }
+
+  /* Animations optimized for mobile */
+  @keyframes modalSlideIn {
+    from {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .trophy-card:hover {
+    transform: none;
+  }
+
+  .trophy-card:active {
+    transform: scale(0.98);
+    background: rgba(255, 255, 255, 0.06);
+  }
+}
+
+/* Small Mobile Devices */
+@media (max-width: 480px) {
+  .trophies-modal-header {
+    padding: 16px 56px 20px 16px;
+    gap: 16px;
+  }
+
+  .modal-title-section {
+    padding-right: 0;
+  }
+
+  .modal-title {
+    font-size: 1.5rem;
+  }
+
+  .modal-subtitle {
+    font-size: 0.85rem;
+  }
+
+  .modal-close-btn {
+    top: 16px;
+    right: 16px;
+    width: 36px;
+    height: 36px;
+  }
+
+  .modal-progress-section {
+    padding-top: 0;
+  }
+
+  .progress-label {
+    font-size: 0.75rem;
+  }
+
+  .progress-bar-container {
+    gap: 12px;
+  }
+
+  .trophies-grid {
+    padding: 20px 12px;
+    gap: 10px;
+  }
+
+  .trophy-card {
+    padding: 14px;
+  }
+
+  .trophy-card-header {
+    gap: 10px;
+  }
+
+  .trophy-card-icon {
+    width: 46px;
+    height: 46px;
+    font-size: 1.4rem;
+  }
+
+  .trophy-card-title {
+    font-size: 1rem;
+  }
+
+  .trophy-card-description {
+    font-size: 0.85rem;
+  }
+
+  .trophy-card-requirement {
+    font-size: 0.8rem;
+  }
+
+  .trophies-modal-footer {
+    padding: 14px 16px;
+  }
+
+  .footer-stats {
+    gap: 12px;
+  }
+
+  .stat-item {
+    min-width: calc(50% - 8px);
+  }
+
+  .stat-value {
+    font-size: 1.3rem;
+  }
+
+  .stat-label {
+    font-size: 0.8rem;
+  }
+}
+
+/* Extra Small Mobile (360px and below) */
+@media (max-width: 360px) {
+  .trophies-modal-header {
+    padding: 14px 50px 18px 14px;
+    gap: 14px;
+  }
+
+  .modal-title {
+    font-size: 1.3rem;
+  }
+
+  .modal-subtitle {
+    font-size: 0.8rem;
+  }
+
+  .modal-close-btn {
+    top: 14px;
+    right: 14px;
+    width: 32px;
+    height: 32px;
+  }
+
+  .progress-label {
+    font-size: 0.7rem;
+  }
+
+  .trophies-grid {
+    padding: 18px 10px;
+  }
+
+  .trophy-card {
+    padding: 12px;
+  }
+
+  .trophy-card-icon {
+    width: 42px;
+    height: 42px;
+    font-size: 1.2rem;
+  }
+
+  .trophy-card-title {
+    font-size: 0.95rem;
+  }
+
+  .trophy-card-rarity {
+    font-size: 0.65rem;
+    padding: 2px 5px;
+  }
+
+  .trophy-card-description {
+    font-size: 0.8rem;
+  }
+
+  .stat-value {
+    font-size: 1.2rem;
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+  }
+
+  /* Reduce animations for performance */
+  * {
+    animation-duration: 0.2s !important;
+    transition-duration: 0.2s !important;
+  }
+}
+
+/* Landscape Mobile Optimization */
+@media (max-width: 768px) and (orientation: landscape) {
+  .trophies-modal-header {
+    padding: 12px 20px 16px 20px;
+    gap: 12px;
+  }
+
+  .modal-title {
+    font-size: 1.4rem;
+  }
+
+  .modal-subtitle {
+    display: none;
+  }
+
+  .modal-close-btn {
+    top: 12px;
+    right: 20px;
+  }
+
+  .progress-label {
+    font-size: 0.75rem;
+    margin-bottom: 6px;
+  }
+
+  .progress-bar-bg {
+    height: 6px;
+  }
+
+  .trophies-grid {
+    padding: 16px 20px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .trophy-card {
+    padding: 12px;
+  }
+
+  .trophy-card-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+  }
+
+  .trophy-card-description {
+    font-size: 0.8rem;
+    margin: 6px 0;
+  }
+
+  .trophies-modal-footer {
+    padding: 10px 20px;
+  }
+
+  .footer-stats {
+    gap: 16px;
+  }
+
+  .stat-item {
+    min-width: auto;
+  }
+
+  .stat-value {
+    font-size: 1.2rem;
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+  }
+}
+
+/* Touch-friendly improvements */
+@media (max-width: 768px) {
+  .trophy-card,
+  .modal-close-btn {
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .trophy-card {
+    cursor: pointer;
+    user-select: none;
+  }
+
+  /* Improve scrolling on iOS */
+  .trophies-modal-body {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+
+  /* Prevent zoom on double-tap */
+  .trophy-card-title,
+  .trophy-card-description,
+  .modal-title {
+    touch-action: manipulation;
+  }
+}

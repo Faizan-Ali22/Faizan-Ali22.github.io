@@ -1,0 +1,116 @@
+{{/* 
+  Helper to render skill tags with tech data lookup and modal integration
+  Usage: {{ partial "helpers/skill-tags.html" (dict "skillNames" .Params.programming_languages "dataSource" "programming_languages" "skillType" "programming-language" "tagClass" "programming" "context" $) }}
+  
+  Parameters:
+  - skillNames: Array of skill names from front matter (required)
+  - dataSource: Name of the data source (required) - e.g., "programming_languages", "frameworks_engines", "specialties", "soft_skills"
+  - skillType: Type for data attribute (required) - e.g., "programming-language", "framework-engine", "specialty", "soft-skill"
+  - tagClass: CSS class for the tag (required) - e.g., "programming", "framework", "specialty", "soft"
+  - context: Hugo context for accessing site data (required)
+  - usePartialTechIcon: Whether to use partial tech-icon.html instead of inline icon (optional, default: false)
+*/}}
+
+{{- $skillNames := .skillNames -}}
+{{- $dataSource := .dataSource -}}
+{{- $skillType := .skillType -}}
+{{- $tagClass := .tagClass -}}
+{{- $context := .context -}}
+{{- $usePartialTechIcon := .usePartialTechIcon | default false -}}
+
+{{- if not $skillNames -}}
+  {{- /* No skills to render, exit gracefully */ -}}
+  {{- return -}}
+{{- end -}}
+
+{{- if not $dataSource -}}
+  {{- errorf "skill-tags helper: 'dataSource' parameter is required" -}}
+{{- end -}}
+
+{{- if not $skillType -}}
+  {{- errorf "skill-tags helper: 'skillType' parameter is required" -}}
+{{- end -}}
+
+{{- if not $tagClass -}}
+  {{- errorf "skill-tags helper: 'tagClass' parameter is required" -}}
+{{- end -}}
+
+{{- if not $context -}}
+  {{- errorf "skill-tags helper: 'context' parameter is required" -}}
+{{- end -}}
+
+{{- /* Get the data source */ -}}
+{{- $siteData := index $context.Site.Data $dataSource -}}
+{{- if not $siteData -}}
+  {{- errorf "skill-tags helper: data source '%s' not found in site data" $dataSource -}}
+{{- end -}}
+
+{{- range $skillNames -}}
+  {{- /* Support both old format (string) and new format (object with displayInList) */ -}}
+  {{- $skillName := "" -}}
+  {{- $shouldDisplay := true -}}
+  
+  {{- /* Determine skill name and display preference based on format */ -}}
+  {{- if reflect.IsMap . -}}
+    {{- /* New format: object with skill name and display toggles */ -}}
+    {{- if .language -}}
+      {{- $skillName = .language -}}
+    {{- else if .framework -}}
+      {{- $skillName = .framework -}}
+    {{- else if .specialty -}}
+      {{- $skillName = .specialty -}}
+    {{- else if .skill -}}
+      {{- $skillName = .skill -}}
+    {{- else if .tool -}}
+      {{- $skillName = .tool -}}
+    {{- end -}}
+    {{- $shouldDisplay = .displayInList | default true -}}
+  {{- else -}}
+    {{- /* Old format: simple string */ -}}
+    {{- $skillName = . -}}
+  {{- end -}}
+  
+  {{- /* Only render if should be displayed */ -}}
+  {{- if $shouldDisplay -}}
+  {{- $found := false -}}
+  
+  {{- /* Look for skill in data source by key */ -}}
+  {{- range $siteData -}}
+    {{- if eq .key $skillName -}}
+      {{- $found = true -}}
+      {{- $localizedName := i18n .key | default .key -}}
+      
+      {{- /* Determine icon path and type */ -}}
+      {{- $iconPath := "" -}}
+      {{- $iconType := "emoji" -}}
+      {{- if .iconPath -}}
+        {{- $iconPath = .iconPath -}}
+        {{- $iconType = "svg" -}}
+      {{- else -}}
+        {{- $iconPath = .icon -}}
+      {{- end -}}
+      
+      {{- /* Render clickable skill tag */ -}}
+      <span class="skill-tag clickable" 
+            onclick="openSkillModal('{{ $localizedName }}', '{{ $iconPath }}', '{{ .description | default `` }}', '{{ .experience | default `` }}', '{{ $iconType }}', '{{ .key }}')"
+            data-skill-name="{{ .key }}"
+            data-skill-type="{{ $skillType }}">
+        {{- if $usePartialTechIcon -}}
+          {{ partial "tech-icon.html" . }} {{ $localizedName }}
+        {{- else -}}
+          {{- if .iconPath -}}
+            <img src="{{ .iconPath }}" alt="{{ $localizedName }}" class="tech-icon-svg" width="16" height="16"> {{ $localizedName }}
+          {{- else -}}
+            {{ .icon }} {{ $localizedName }}
+          {{- end -}}
+        {{- end -}}
+      </span>
+    {{- end -}}
+  {{- end -}}
+  
+  {{- /* If skill not found in data, render as non-clickable tag with i18n fallback */ -}}
+  {{- if not $found -}}
+    <span class="skill-tag {{ $tagClass }}">{{ i18n $skillName | default $skillName }}</span>
+  {{- end -}}
+  {{- end -}}
+{{- end -}}

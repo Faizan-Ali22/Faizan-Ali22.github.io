@@ -1,0 +1,58 @@
+{{/* Partial to display technologies in project technical specifications */}}
+{{/* Takes technology type and list of keys as parameters */}}
+{{/* Content files now reference technologies by their i18n key (e.g., "lang_csharp", "fw_unity") */}}
+
+{{ $techType := .TechType }}
+{{ $techList := .TechList }}
+{{ $site := .Site }}
+
+<div class="tech-chips">
+    {{ range $techList }}
+    {{ $techKey := . }}
+    {{ $found := false }}
+    
+    {{/* Search in programming_languages */}}
+    {{ if eq $techType "programming_languages" }}
+        {{ range $site.Data.programming_languages }}
+            {{ if eq .key $techKey }}
+                {{ $found = true }}
+                {{ $displayName := i18n .key }}
+                <span class="tech-chip clickable" 
+                      style="--tech-color: {{ .color | default "#666" }}"
+                      onclick="openSkillModal('{{ $displayName }}', '{{ .iconPath }}', '', '{{ .experience }}', 'svg', '{{ .key }}')"
+                      data-skill-name="{{ $displayName }}"
+                      data-skill-type="programming-language">
+                    {{ partial "tech-icon.html" . }} {{ $displayName }}
+                </span>
+            {{ end }}
+        {{ end }}
+    {{ end }}
+    
+    {{/* Search in frameworks_engines */}}
+    {{ if eq $techType "frameworks_engines" }}
+        {{ range $site.Data.frameworks_engines }}
+            {{ if eq .key $techKey }}
+                {{ $found = true }}
+                {{ $displayName := i18n .key }}
+                <span class="tech-chip clickable" 
+                      style="--tech-color: {{ .color | default "#666" }}"
+                      onclick="openSkillModal('{{ $displayName }}', '{{ .iconPath }}', '', '{{ .experience }}', 'svg', '{{ .key }}')"
+                      data-skill-name="{{ $displayName }}"
+                      data-skill-type="framework-engine">
+                    {{ partial "tech-icon.html" . }} {{ $displayName }}
+                </span>
+            {{ end }}
+        {{ end }}
+    {{ end }}
+    
+    {{/* If not found, display the key as fallback */}}
+    {{ if not $found }}
+    <span class="tech-chip clickable" 
+          onclick="openSkillModal('{{ $techKey }}', '', '', 'Non spécifié', 'emoji', '{{ $techKey }}')"
+          data-skill-name="{{ $techKey }}"
+          data-skill-type="unknown">
+        {{ i18n $techKey | default $techKey }}
+    </span>
+    {{ end }}
+    {{ end }}
+</div>

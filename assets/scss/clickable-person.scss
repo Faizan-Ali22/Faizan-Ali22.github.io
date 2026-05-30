@@ -1,0 +1,175 @@
+/* Clickable Person Styles */
+/* Styles pour rendre les éléments de personnes cliquables et interactifs */
+
+.clickable-person {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    border-radius: 8px;
+}
+
+.clickable-person:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(79, 209, 197, 0.3);
+}
+
+.clickable-person:active {
+    transform: translateY(0);
+}
+
+/* Styles spécifiques pour les différents types d'éléments */
+
+/* Testimonial authors (page d'accueil) */
+.testimonial-author.clickable-person:hover {
+    background: rgba(79, 209, 197, 0.1);
+    border-radius: 12px;
+    padding: 4px;
+    margin: -4px;
+}
+
+.testimonial-author.clickable-person:hover .testimonial-name {
+    color: var(--accent-color);
+}
+
+/* Contributors */
+.project-widget-contributor-item.clickable-person {
+    border-radius: 12px;
+    padding: 8px;
+    margin: -8px;
+}
+
+.project-widget-contributor-item.clickable-person:hover {
+    background: rgba(79, 209, 197, 0.1);
+    border: 1px solid rgba(79, 209, 197, 0.3);
+}
+
+.project-widget-contributor-item.clickable-person:hover .project-widget-contributor-name {
+    color: var(--accent-color);
+}
+
+/* Contributor mini avatars */
+.contributor-avatar-mini.clickable-person {
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.contributor-avatar-mini.clickable-person:hover {
+    border-color: var(--accent-color);
+    transform: scale(1.1);
+    z-index: 10;
+    position: relative;
+}
+
+/* Widget testimonials */
+.widget-testimonial-author.clickable-person {
+    border-radius: 12px;
+    padding: 4px;
+    margin: -4px;
+}
+
+.widget-testimonial-author.clickable-person:hover {
+    background: rgba(79, 209, 197, 0.1);
+}
+
+.widget-testimonial-author.clickable-person:hover .widget-testimonial-name {
+    color: var(--accent-color);
+}
+
+/* Widget testimonial preview headers */
+.widget-testimonial-preview-header.clickable-person {
+    border-radius: 8px;
+    padding: 4px;
+    margin: -4px;
+}
+
+.widget-testimonial-preview-header.clickable-person:hover {
+    background: rgba(79, 209, 197, 0.1);
+}
+
+.widget-testimonial-preview-header.clickable-person:hover .widget-testimonial-preview-author {
+    color: var(--accent-color);
+}
+
+/* Loading state for person modal */
+.clickable-person.loading {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.clickable-person.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 16px;
+    height: 16px;
+    margin: -8px 0 0 -8px;
+    border: 2px solid transparent;
+    border-top-color: var(--accent-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Focus states for accessibility */
+.clickable-person:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .clickable-person:hover {
+        transform: none;
+        box-shadow: 0 2px 8px rgba(79, 209, 197, 0.2);
+    }
+    
+    .contributor-avatar-mini.clickable-person:hover {
+        transform: scale(1.05);
+    }
+}
+
+/* Specific styles for dark mode compatibility */
+@media (prefers-color-scheme: dark) {
+    .clickable-person:hover {
+        box-shadow: 0 4px 12px rgba(79, 209, 197, 0.4);
+    }
+}
+
+/* Animation for smooth transitions */
+.clickable-person * {
+    transition: color 0.3s ease;
+}
+
+/* Ensure text doesn't get selected on rapid clicks */
+.clickable-person {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+/* Subtle gradient overlay on hover for enhanced visual feedback */
+.clickable-person::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, transparent 0%, rgba(79, 209, 197, 0.05) 50%, transparent 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.clickable-person:hover::before {
+    opacity: 1;
+}

@@ -1,0 +1,80 @@
+{{/* 
+  Helper to render a clickable skill block with modal integration
+  Usage: {{ partial "helpers/skill-block.html" (dict "skill" . "skillType" "programming-language" "skillCategory" "programming-languages" "context" $) }}
+  
+  Parameters:
+  - skill: The skill data object from site data (required)
+  - skillType: Type for data attribute (required) - e.g., "programming-language", "framework-engine", "specialty", "soft-skill"
+  - skillCategory: Category for data attribute (optional) - e.g., "programming-languages", "frameworks"
+  - context: Hugo context for accessing site data (required)
+  - additionalClasses: Additional CSS classes (optional)
+  - showExperience: Whether to show experience text (optional, default: true)
+  
+  Note: Icon paths always use absURL to prevent language prefix addition for non-localized images
+*/}}
+
+{{- $skill := .skill -}}
+{{- $skillType := .skillType -}}
+{{- $skillCategory := .skillCategory -}}
+{{- $context := .context -}}
+{{- $additionalClasses := .additionalClasses | default "" -}}
+{{- $showExperience := .showExperience | default true -}}
+
+{{- if not $skill -}}
+  {{- errorf "skill-block helper: 'skill' parameter is required" -}}
+{{- end -}}
+
+{{- if not $skillType -}}
+  {{- errorf "skill-block helper: 'skillType' parameter is required" -}}
+{{- end -}}
+
+{{- if not $context -}}
+  {{- errorf "skill-block helper: 'context' parameter is required" -}}
+{{- end -}}
+
+{{- /* Format experience text if needed */ -}}
+{{- $experienceText := "" -}}
+{{- if and $showExperience $skill.experience -}}
+  {{- $experienceText = partial "helpers/format-experience.html" (dict "experience" $skill.experience "context" $context) -}}
+{{- end -}}
+
+{{- /* Determine icon path - always use absURL for non-localized images */ -}}
+{{- $iconPath := "" -}}
+{{- if $skill.iconPath -}}
+  {{- $iconPath = $skill.iconPath | absURL -}}
+{{- else -}}
+  {{- $iconPath = $skill.icon -}}
+{{- end -}}
+
+{{- /* Build onclick parameters */ -}}
+{{- $iconType := "emoji" -}}
+{{- if $skill.iconPath -}}
+  {{- $iconType = "svg" -}}
+{{- end -}}
+
+{{- /* Build description parameter */ -}}
+{{- $description := $skill.description | default "" -}}
+
+{{- /* Get localized skill name and subtitle using i18n */ -}}
+{{- $skillName := i18n $skill.key | default $skill.key -}}
+{{- $skillSubtitle := i18n (printf "%s_subtitle" $skill.key) -}}
+
+<div class="skill-block clickable{{ with $additionalClasses }} {{ . }}{{ end }}" 
+     onclick="openSkillModal('{{ $skillName }}', '{{ $iconPath }}', '{{ $description }}', '{{ $skill.experience }}', '{{ $iconType }}', '{{ $skill.key }}')"
+     data-skill-name="{{ $skillName }}"
+     data-skill-type="{{ $skillType }}"{{ if $skillCategory }}
+     data-skill-category="{{ $skillCategory }}"{{ end }}>
+    <span class="skill-icon">
+        {{ if $skill.iconPath }}
+          <img src="{{ $iconPath }}" alt="{{ $skillName }}" class="tech-icon-svg" width="28" height="28">
+        {{ else }}
+          <span class="tech-icon-emoji">{{ $skill.icon }}</span>
+        {{ end }}
+    </span>
+    <span class="skill-name">{{ $skillName }}</span>
+    {{- if and $showExperience $experienceText -}}
+    <span class="skill-level">{{ $experienceText }}</span>
+    {{- else if $skillSubtitle -}}
+    <span class="skill-level">{{ $skillSubtitle }}</span>
+    {{- end -}}
+</div>

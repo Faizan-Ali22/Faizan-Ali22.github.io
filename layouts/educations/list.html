@@ -1,0 +1,388 @@
+{{- define "main" -}}
+<!-- Utilisation du CSS education existant -->
+{{ with resources.Get "css/education.css" }}
+<link rel="stylesheet" href="{{ .RelPermalink }}">
+{{ end }}
+{{ with resources.Get "css/tabs.css" }}
+<link rel="stylesheet" href="{{ .RelPermalink }}">
+{{ end }}
+
+<style>
+/* Ajustement pour le dock en haut */
+.education-section {
+    padding-top: 120px !important; /* Compense la hauteur du dock fixe */
+    margin-top: 0 !important; /* Retire le margin-top par défaut */
+}
+</style>
+
+<section class="education-section">
+    <div class="section-header-unified">
+        <h2 class="section-title-unified">{{ .Title | default (i18n "education") | default "Education" }}</h2>
+        <p class="section-subtitle-unified">{{ .Params.description | default .Content | default "My academic and professional background, building the foundation of my technical expertise." }}</p>
+    </div>
+
+    <!-- Navigation Tabs -->
+    {{ $hasCertifications := gt (len .Site.Data.certifications) 0 }}
+    <div class="tabs" data-can-collapse="true" data-collapse-id="educationsList">
+        <button class="tab-btn active" data-tab="education">
+            <span class="icon">🎓</span>
+            <span class="tab-label">{{ i18n "education" | default "Formation" }}</span>
+        </button>
+        {{ if $hasCertifications }}
+        <button class="tab-btn" data-tab="certifications">
+            <span class="icon">📜</span>
+            <span class="tab-label">{{ i18n "certifications" | default "Certifications" }}</span>
+        </button>
+        {{ end }}
+    </div>
+
+    <!-- Education Timeline -->
+    <div class="timeline-container" id="education-timeline" data-tab="education">
+        <div class="timeline-line"></div>
+        
+        {{ range ((where .Site.RegularPages "Section" "educations").ByParam "end_date").Reverse }}
+        {{ if ne .File.BaseFileName "_index" }}
+        <div class="timeline-item education-item" data-category="education">
+            <div class="timeline-marker" data-marker-color="{{ .Params.color }}">
+                {{ if .Params.school_logo }}
+                    <img src="{{ .Params.school_logo }}" alt="{{ .Params.institution }}" class="timeline-school-logo">
+                {{ else }}
+                    <span class="timeline-icon">{{ .Params.icon }}</span>
+                {{ end }}
+            </div>
+            
+            <div class="timeline-content">
+                <div class="timeline-card">
+                    <div class="timeline-header">
+                        <div class="timeline-period">
+                            {{ if .Params.start_date }}
+                                {{ dateFormat "2006" .Params.start_date }} - 
+                                {{ if .Params.end_date }}
+                                    {{ dateFormat "2006" .Params.end_date }}
+                                {{ else }}
+                                    {{ i18n "present" | default "Présent" }}
+                                {{ end }}
+                            {{ end }}
+                        </div>
+                        {{/* Map status to generic CSS class */}}
+                        {{- $status := lower .Params.status -}}
+                        {{- $cssClass := "info" -}}
+                        {{- if or (eq $status "validé") (eq $status "obtenu") (eq $status "obtained") (eq $status "validée") -}}
+                            {{- $cssClass = "success" -}}
+                        {{- else if or (eq $status "en cours") (eq $status "in progress") (eq $status "en préparation") (eq $status "in preparation") -}}
+                            {{- $cssClass = "warning" -}}
+                        {{- end -}}
+                        <div class="timeline-status status-{{ $cssClass }}">{{ .Params.status }}</div>
+                    </div>
+                    
+                    <h3 class="timeline-title">
+                        <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+                    </h3>
+                    <h4 class="timeline-institution">{{ .Params.institution }}{{ if .Params.city }} - {{ .Params.city }}{{ end }}</h4>
+                    
+                    <p class="timeline-description">{{ .Params.description }}</p>
+                    
+                    <div class="timeline-details">
+                        <div class="timeline-results">
+                            <strong>{{ i18n "results" | default "Résultats :" }}</strong>
+                            <div class="results-badges">
+                                {{ if .Params.years_detail }}
+                                    {{/* Use custom year details */}}
+                                    {{ range .Params.years_detail }}
+                                        {{ if eq .status "validated" }}
+                                            <div class="result-badge validated">
+                                                <span class="badge-text">{{ i18n "year" | default "Année" }} {{ .year }}</span>
+                                                <span class="badge-status">{{ i18n "validated" | default "Validée" }}</span>
+                                            </div>
+                                        {{ else if eq .status "in_progress" }}
+                                            <div class="result-badge in-progress">
+                                                <span class="badge-icon">⏳</span>
+                                                <span class="badge-text">{{ i18n "year" | default "Année" }} {{ .year }}</span>
+                                                <span class="badge-status">{{ i18n "in_progress" | default "En cours" }}</span>
+                                            </div>
+                                        {{ else if eq .status "not_taken" }}
+                                            <div class="result-badge not-taken">
+                                                <span class="badge-icon">🚫</span>
+                                                <span class="badge-text">{{ i18n "year" | default "Année" }} {{ .year }}</span>
+                                                <span class="badge-status">{{ i18n "not_taken" | default "Non suivie" }}</span>
+                                            </div>
+                                        {{ else if eq .status "skipped" }}
+                                            <div class="result-badge skipped">
+                                                <span class="badge-text">{{ i18n "year" | default "Année" }} {{ .year }}</span>
+                                                <span class="badge-status">{{ i18n "skipped" | default "Admis directement" }}</span>
+                                            </div>
+                                        {{ else if eq .status "completed" }}
+                                            <div class="result-badge completed">
+                                                <span class="badge-icon">🎓</span>
+                                                <span class="badge-text">{{ i18n "year" | default "Année" }} {{ .year }}</span>
+                                                <span class="badge-status">{{ i18n "completed" | default "Terminé" }}</span>
+                                            </div>
+                                        {{ end }}
+                                    {{ end }}
+                                {{ else }}
+                                    {{/* Classic automatic logic */}}
+                                    {{ if or (eq .Params.status "Obtenu") (eq .Params.status "Obtained") }}
+                                        {{ $startYear := dateFormat "2006" .Params.start_date }}
+                                        {{ $endYear := dateFormat "2006" .Params.end_date }}
+                                        {{ $duration := sub (int $endYear) (int $startYear) }}
+                                        {{ range seq $duration }}
+                                            <div class="result-badge validated">
+                                                <span class="badge-text">{{ i18n "year" | default "Année" }} {{ . }}</span>
+                                                <span class="badge-status">{{ i18n "validated" | default "Validée" }}</span>
+                                            </div>
+                                        {{ end }}
+                                    {{ else if or (eq .Params.status "En cours") (eq .Params.status "In progress") }}
+                                        {{ $startYear := dateFormat "2006" .Params.start_date }}
+                                        {{ $currentYear := now.Format "2006" }}
+                                        {{ $yearsCompleted := sub (int $currentYear) (int $startYear) }}
+                                        {{ if gt $yearsCompleted 0 }}
+                                            {{ range seq $yearsCompleted }}
+                                                <div class="result-badge validated">
+                                                    <span class="badge-text">{{ i18n "year" | default "Année" }} {{ . }}</span>
+                                                    <span class="badge-status">{{ i18n "validated" | default "Validée" }}</span>
+                                                </div>
+                                            {{ end }}
+                                        {{ end }}
+                                        <div class="result-badge in-progress">
+                                            <span class="badge-icon">⏳</span>
+                                            <span class="badge-text">{{ i18n "year" | default "Année" }} {{ add $yearsCompleted 1 }}</span>
+                                            <span class="badge-status">{{ i18n "in_progress" | default "En cours" }}</span>
+                                        </div>
+                                    {{ else }}
+                                        <div class="result-badge general">
+                                            <span class="badge-icon">📚</span>
+                                            <span class="badge-text">{{ i18n "education" | default "Formation" }}</span>
+                                            <span class="badge-status">{{ .Params.grade }}</span>
+                                        </div>
+                                    {{ end }}
+                                {{ end }}
+                            </div>
+                        </div>
+                        
+                        {{ if or .Params.programming_languages .Params.frameworks_engines .Params.tools }}
+                        <div class="timeline-skills">
+                            <strong>{{ i18n "technical_skills_label" | default "Compétences techniques :" }}</strong>
+                            <div class="skills-tags">
+                                {{ range .Params.programming_languages }}
+                                {{/* Support both old format (string) and new format (object with displayInList) */}}
+                                {{ $skillKey := "" }}
+                                {{ $shouldDisplay := true }}
+                                {{ if reflect.IsMap . }}
+                                    {{ $skillKey = .language }}
+                                    {{ $shouldDisplay = .displayInList | default true }}
+                                {{ else }}
+                                    {{ $skillKey = . }}
+                                {{ end }}
+                                {{ if $shouldDisplay }}
+                                {{ $found := false }}
+                                {{ range $.Site.Data.programming_languages }}
+                                {{ if eq .key $skillKey }}
+                                {{ $localizedName := i18n .key | default .key }}
+                                <span class="skill-tag clickable" 
+                                      onclick="openSkillModal('{{ $localizedName }}', '{{ if .iconPath }}{{ .iconPath }}{{ else }}{{ .icon }}{{ end }}', '', '{{ .experience }}', '{{ if .iconPath }}svg{{ else }}emoji{{ end }}', '{{ .key }}')"
+                                      data-skill-name="{{ .key }}"
+                                      data-skill-type="programming-language">
+                                    {{ partial "tech-icon.html" . }} {{ $localizedName }}
+                                </span>
+                                {{ $found = true }}
+                                {{ end }}
+                                {{ end }}
+                                {{ if not $found }}
+                                <span class="skill-tag programming">{{ i18n $skillKey | default $skillKey }}</span>
+                                {{ end }}
+                                {{ end }}
+                                {{ end }}
+                                {{ range .Params.frameworks_engines }}
+                                {{ $skillKey := "" }}
+                                {{ $shouldDisplay := true }}
+                                {{ if reflect.IsMap . }}
+                                    {{ $skillKey = .framework }}
+                                    {{ $shouldDisplay = .displayInList | default true }}
+                                {{ else }}
+                                    {{ $skillKey = . }}
+                                {{ end }}
+                                {{ if $shouldDisplay }}
+                                {{ $found := false }}
+                                {{ range $.Site.Data.frameworks_engines }}
+                                {{ if eq .key $skillKey }}
+                                {{ $localizedName := i18n .key | default .key }}
+                                <span class="skill-tag clickable" 
+                                      onclick="openSkillModal('{{ $localizedName }}', '{{ if .iconPath }}{{ .iconPath }}{{ else }}{{ .icon }}{{ end }}', '', '{{ .experience }}', '{{ if .iconPath }}svg{{ else }}emoji{{ end }}', '{{ .key }}')"
+                                      data-skill-name="{{ .key }}"
+                                      data-skill-type="framework-engine">
+                                    {{ partial "tech-icon.html" . }} {{ $localizedName }}
+                                </span>
+                                {{ $found = true }}
+                                {{ end }}
+                                {{ end }}
+                                {{ if not $found }}
+                                <span class="skill-tag framework">{{ i18n $skillKey | default $skillKey }}</span>
+                                {{ end }}
+                                {{ end }}
+                                {{ end }}
+                                {{ range .Params.tools }}
+                                {{ $skillKey := "" }}
+                                {{ $shouldDisplay := true }}
+                                {{ if reflect.IsMap . }}
+                                    {{ $skillKey = .tool }}
+                                    {{ $shouldDisplay = .displayInList | default true }}
+                                {{ else }}
+                                    {{ $skillKey = . }}
+                                {{ end }}
+                                {{ if $shouldDisplay }}
+                                {{ $found := false }}
+                                {{ range $.Site.Data.tools }}
+                                {{ if eq .key $skillKey }}
+                                {{ $localizedName := i18n .key | default .key }}
+                                <span class="skill-tag clickable" 
+                                      onclick="openSkillModal('{{ $localizedName }}', '{{ if .iconPath }}{{ .iconPath }}{{ else }}{{ .icon }}{{ end }}', '{{ .description }}', '{{ .experience }}', '{{ if .iconPath }}svg{{ else }}emoji{{ end }}', '{{ .key }}')"
+                                      data-skill-name="{{ .key }}"
+                                      data-skill-type="tool">
+                                    {{ partial "tech-icon.html" . }} {{ $localizedName }}
+                                </span>
+                                {{ $found = true }}
+                                {{ end }}
+                                {{ end }}
+                                {{ if not $found }}
+                                <span class="skill-tag tool">{{ i18n $skillKey | default $skillKey }}</span>
+                                {{ end }}
+                                {{ end }}
+                                {{ end }}
+                            </div>
+                        </div>
+                        {{ end }}
+                        
+                        {{ if or .Params.specialties .Params.soft_skills }}
+                        <div class="timeline-skills">
+                            <strong>{{ i18n "cross_skills_label" | default "Compétences transversales :" }}</strong>
+                            <div class="skills-tags">
+                                {{ range .Params.specialties }}
+                                {{ $skillKey := "" }}
+                                {{ $shouldDisplay := true }}
+                                {{ if reflect.IsMap . }}
+                                    {{ $skillKey = .specialty }}
+                                    {{ $shouldDisplay = .displayInList | default true }}
+                                {{ else }}
+                                    {{ $skillKey = . }}
+                                {{ end }}
+                                {{ if $shouldDisplay }}
+                                {{ $found := false }}
+                                {{ range $.Site.Data.specialties }}
+                                {{ if eq .key $skillKey }}
+                                {{ $localizedName := i18n .key | default .key }}
+                                <span class="skill-tag clickable" 
+                                      onclick="openSkillModal('{{ $localizedName }}', '{{ if .iconPath }}{{ .iconPath }}{{ else }}{{ .icon }}{{ end }}', '', '{{ .experience }}', '{{ if .iconPath }}svg{{ else }}emoji{{ end }}', '{{ .key }}')"
+                                      data-skill-name="{{ .key }}"
+                                      data-skill-type="specialty">
+                                    {{ partial "tech-icon.html" . }} {{ $localizedName }}
+                                </span>
+                                {{ $found = true }}
+                                {{ end }}
+                                {{ end }}
+                                {{ if not $found }}
+                                <span class="skill-tag specialty">{{ i18n $skillKey | default $skillKey }}</span>
+                                {{ end }}
+                                {{ end }}
+                                {{ end }}
+                                {{ range .Params.soft_skills }}
+                                {{ $skillKey := "" }}
+                                {{ $shouldDisplay := true }}
+                                {{ if reflect.IsMap . }}
+                                    {{ $skillKey = .skill }}
+                                    {{ $shouldDisplay = .displayInList | default true }}
+                                {{ else }}
+                                    {{ $skillKey = . }}
+                                {{ end }}
+                                {{ if $shouldDisplay }}
+                                {{ $found := false }}
+                                {{ range $.Site.Data.soft_skills }}
+                                {{ if eq .key $skillKey }}
+                                {{ $localizedName := i18n .key | default .key }}
+                                <span class="skill-tag clickable" 
+                                      onclick="openSkillModal('{{ $localizedName }}', '{{ if .iconPath }}{{ .iconPath }}{{ else }}{{ .icon }}{{ end }}', '', '{{ .experience }}', '{{ if .iconPath }}svg{{ else }}emoji{{ end }}', '{{ .key }}')"
+                                      data-skill-name="{{ .key }}"
+                                      data-skill-type="soft-skill">
+                                    {{ partial "tech-icon.html" . }} {{ $localizedName }}
+                                </span>
+                                {{ $found = true }}
+                                {{ end }}
+                                {{ end }}
+                                {{ if not $found }}
+                                <span class="skill-tag soft">{{ i18n $skillKey | default $skillKey }}</span>
+                                {{ end }}
+                                {{ end }}
+                                {{ end }}
+                            </div>
+                        </div>
+                        {{ end }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{ end }}
+        {{ end }}
+    </div>
+
+    <!-- Certifications Timeline -->
+    {{ if $hasCertifications }}
+    <div class="timeline-container" id="certifications-timeline" data-tab="certifications" style="display: none;">
+        <div class="timeline-line"></div>
+        
+        {{ range $index, $cert := .Site.Data.certifications }}
+        <div class="timeline-item certification-item" data-category="certifications">
+            <div class="timeline-marker" data-marker-color="{{ $cert.color }}">
+                <span class="timeline-icon">{{ $cert.icon }}</span>
+            </div>
+            
+            <div class="timeline-content">
+                <div class="timeline-card">
+                    <div class="timeline-header">
+                        <div class="timeline-period">{{ $cert.date }}</div>
+                        <div class="timeline-status status-{{ lower $cert.status }}">{{ $cert.status }}</div>
+                    </div>
+                    
+                    <h3 class="timeline-title">{{ $cert.title }}</h3>
+                    <h4 class="timeline-institution">{{ $cert.issuer }}</h4>
+                    
+                    <p class="timeline-description">{{ $cert.description }}</p>
+                </div>
+            </div>
+        </div>
+        {{ end }}
+    </div>
+    {{ end }}
+</section>
+
+<!-- Education tabs using TabController -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Education tabs using TabController with fade animation
+    const educationTabs = new TabController('.education-section .tab-btn', {
+        contentSelector: '.timeline-container[data-tab]',
+        contentAttribute: 'data-tab',
+        animationType: 'fade',
+        animationDuration: 300
+    });
+
+    // Initialize timeline styles
+    const timelines = [
+        document.getElementById('education-timeline'),
+        document.getElementById('certifications-timeline')
+    ];
+    timelines.forEach(timeline => {
+        if (timeline) {
+            timeline.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+        }
+    });
+
+    // Apply marker colors from data attributes
+    document.querySelectorAll('.timeline-marker[data-marker-color]').forEach(marker => {
+        const color = marker.getAttribute('data-marker-color');
+        if (color) {
+            marker.style.backgroundColor = color;
+        }
+    });
+});
+</script>
+
+{{- end -}}

@@ -1,0 +1,549 @@
+/**
+ * ========================================
+ * PROJECTS SECTION CSS
+ * ========================================
+ * 
+ * This file contains all CSS styles for the projects section of the portfolio.
+ * It includes:
+ * - Main projects section layout
+ * - Navigation tabs and filters
+ * - Project cards and grid layout
+ * - Technology badges and chips
+ * - Hover effects and animations
+ * - Responsive design for mobile devices
+ * 
+ * Author: Portfolio Theme
+ * Version: 1.0
+ * Last Updated: July 2025
+ */
+
+/* ========================================
+   MAIN PROJECTS SECTION
+   ======================================== */
+
+/**
+ * Main container for the projects section
+ * Sets up spacing and layout for the entire projects area
+ */
+.projects-section {
+    margin: 4rem 0;
+    width: 100%;
+}
+
+/**
+ * Header section containing title and subtitle
+/* Projects header styles are now handled by section-headers.css */
+
+/**
+ * Description paragraph styling
+ * Additional descriptive text for the projects section
+ */
+.projects-description {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.projects-description p {
+    color: var(--projects-section-description-color, #d1d5db);
+    font-size: 1rem;
+}
+
+/* ========================================
+   NAVIGATION TABS - MIGRÉ VERS LE SYSTÈME UNIFIÉ
+   ======================================== */
+
+/**
+ * OBSOLÈTE : Les onglets des projets utilisent maintenant le système unifié
+ * Voir : css/shared/components/tabs.css (.unified-tabs et .unified-tab-btn)
+ * L'ancien système .projects-tabs et .tab-btn a été supprimé
+ * Migration effectuée vers .unified-tabs dans layouts/_partials/projects.html
+ */
+
+/* Tabs container wrapper for consistent spacing */
+.projects-section .tabs-container {
+    margin-bottom: 1rem;
+}
+
+/* Ensure mobile dropdown has proper spacing in projects section */
+@media (max-width: 480px) {
+    .projects-section .tabs-mobile[data-collapse-active="true"] {
+        display: block !important;
+        padding: 8px !important;
+        margin-bottom: 1rem !important;
+        background: rgba(0, 0, 0, 0.25);
+        border-radius: 12px;
+        box-sizing: border-box;
+    }
+    
+    .projects-section .tabs-dropdown-btn {
+        padding: 12px 16px !important;
+        min-height: 48px !important;
+    }
+}
+
+/* ========================================
+   TECHNOLOGY FILTER BADGES
+   ======================================== */
+
+/**
+ * Container for technology filter badges
+ * Flexbox layout with wrapping and center alignment
+ */
+.tech-filters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.8rem;
+    margin-bottom: 1.5rem;
+}
+
+/**
+ * Individual technology badge styling
+ * Glassmorphism effect with rounded corners
+ */
+.tech-badge {
+    background: var(--projects-tech-badge-bg, rgba(55, 65, 81, 0.7));
+    backdrop-filter: blur(10px);
+    border: var(--projects-tech-badge-border, 1px solid rgba(var(--accent-rgb), 0.3));
+    color: var(--projects-tech-badge-color, #a0a0a0);
+    padding: 0.4rem 0.8rem;
+    border-radius: 15px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+/**
+ * Technology badges with custom colors
+ * Uses CSS custom properties for dynamic coloring
+ */
+.tech-badge[style*="--tech-color"] {
+    border-color: rgba(var(--tech-color-rgb), 0.3);
+}
+
+/**
+ * Active and hover states for technology badges
+ * Default theme color highlighting
+ */
+.tech-badge.active,
+.tech-badge:hover {
+    background: var(--projects-tech-badge-hover-bg, rgba(var(--accent-rgb), 0.2));
+    color: var(--projects-tech-badge-hover-color, #4fd1c7);
+    border-color: var(--projects-tech-badge-hover-border, rgba(var(--accent-rgb), 0.6));
+    box-shadow: var(--projects-tech-badge-hover-shadow, 0 2px 10px rgba(var(--accent-rgb), 0.2));
+}
+
+/**
+ * Active and hover states for custom colored badges
+ * Uses technology-specific colors when available
+ */
+.tech-badge[style*="--tech-color"].active,
+.tech-badge[style*="--tech-color"]:hover {
+    background: rgba(var(--tech-color-rgb), 0.2);
+    color: var(--tech-color);
+    border-color: rgba(var(--tech-color-rgb), 0.6);
+    box-shadow: 0 2px 10px rgba(var(--tech-color-rgb), 0.2);
+}
+
+/* ========================================
+   PROJECTS GRID LAYOUT
+   ======================================== */
+
+/**
+ * Grid container for project cards
+ * Responsive grid that adapts to screen size
+ */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+/* ========================================
+   PROJECT CARDS
+   ======================================== */
+
+/**
+ * Individual project card styling
+ * Glassmorphism card with shadow and border effects
+ */
+.project-card {
+    background: var(--projects-card-bg, rgba(55, 65, 81, 0.6));
+    backdrop-filter: blur(15px);
+    border: var(--projects-card-border, 1px solid rgba(var(--accent-rgb), 0.2));
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    position: relative;
+    box-shadow: var(--projects-card-shadow, 0 8px 32px rgba(0, 0, 0, 0.2));
+}
+
+/**
+ * Project card hover effect
+ * Elevates card and enhances border glow
+ */
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--projects-card-hover-shadow, 0 12px 40px rgba(var(--accent-rgb), 0.15), 0 8px 32px rgba(0, 0, 0, 0.3));
+    border-color: var(--projects-card-hover-border, rgba(var(--accent-rgb), 0.4));
+}
+
+/* ========================================
+   PROJECT CARD IMAGES
+   ======================================== */
+
+/**
+ * Project image container
+ * Fixed height with gradient background fallback
+ */
+.project-image {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+    background: var(--projects-image-fallback-gradient, linear-gradient(135deg, rgba(var(--accent-rgb), 0.1), rgba(55, 65, 81, 0.3)));
+}
+
+/**
+ * Project image styling
+ * Full coverage with smooth scaling transition
+ */
+.project-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+/**
+ * Image zoom effect on card hover
+ * Subtle scale increase for visual interest
+ */
+.project-card:hover .project-image img {
+    transform: scale(1.05);
+}
+
+/**
+ * Overlay for project images
+ * Gradient overlay for better text readability
+ */
+.project-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--projects-image-overlay-gradient, linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.7) 100%));
+    display: flex;
+    align-items: flex-end;
+    padding: 1rem;
+}
+
+/**
+ * Container for project tags on image overlay
+ * Flexible layout for multiple tags
+ */
+.project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+/**
+ * Individual project tag styling
+ * Bright, prominent tags for quick identification
+ */
+.project-tag {
+    background: var(--projects-tag-bg, rgba(var(--accent-rgb), 0.8));
+    color: var(--projects-tag-color, #fff);
+    padding: 0.25rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    backdrop-filter: blur(10px);
+}
+
+/* ========================================
+   PROJECT CARD CONTENT
+   ======================================== */
+
+/**
+ * Content area of project cards
+ * Padding and layout for text content
+ */
+.project-content {
+    padding: 1.5rem;
+}
+
+/**
+ * Project title styling
+ * Large, bold white text for prominence
+ */
+.project-title {
+    color: var(--projects-project-title-color, #fff);
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+}
+
+/**
+ * Project subtitle styling
+ * Accent colored text for project type/category
+ */
+.project-subtitle {
+    color: var(--projects-project-subtitle-color, #4fd1c7);
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+    text-transform: lowercase;
+}
+
+/**
+ * Project description text
+ * Clear, readable description with proper spacing
+ */
+.project-description {
+    color: var(--projects-project-description-color, #d1d5db);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+}
+
+/**
+ * Container for technology chips
+ * Flexible layout for technology indicators
+ */
+.project-technologies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+/**
+ * Individual technology chip styling
+ * Small badges showing used technologies
+ */
+.tech-chip {
+    background: var(--projects-tech-chip-bg, rgba(79, 209, 199, 0.2));
+    color: var(--projects-tech-chip-color, #4fd1c7);
+    padding: 0.3rem 0.6rem;
+    border-radius: 10px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border: var(--projects-tech-chip-border, 1px solid rgba(var(--accent-rgb), 0.3));
+}
+
+/* ========================================
+   RESPONSIVE DESIGN - TABLET
+   ======================================== */
+
+/**
+ * Tablet breakpoint (768px and below)
+ * Adjusts layout for medium-sized screens
+ */
+@media (max-width: 768px) {
+    /* Projects header responsive styles are now handled by section-headers.css */
+    
+    /**
+     */
+    
+    /**
+     * Added padding for technology filters on smaller screens
+     */
+    .tech-filters {
+        padding: 0 1rem;
+    }
+    
+    /**
+     * 2 columns grid for tablet viewing
+     */
+    .projects-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+    
+    /**
+     * Smaller border radius for mobile cards
+     */
+    .project-card {
+        border-radius: 15px;
+    }
+    
+    /**
+     * Reduced image height for mobile screens
+     */
+    .project-image {
+        height: 180px;
+    }
+    
+    /**
+     * Reduced padding for mobile content
+     */
+    .project-content {
+        padding: 1.2rem;
+    }
+}
+
+/* ========================================
+   RESPONSIVE DESIGN - MOBILE
+   ======================================== */
+
+/**
+ * Mobile breakpoint (480px and below)
+ * Optimized for small mobile screens
+ */
+@media (max-width: 768px) {
+    /**
+     * Added padding for technology filters on smaller screens
+     */
+    .tech-filters {
+        padding: 0 1rem;
+    }
+    
+    /**
+     * Single column grid for better mobile viewing
+     * Reduced gap for more compact layout
+     */
+    .projects-grid {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+        padding: 0;
+        margin-left: 0;
+        margin-right: 0;
+    }
+    
+    /**
+     * Smaller border radius for mobile cards
+     */
+    .project-card {
+        border-radius: 15px;
+    }
+    
+    /**
+     * Reduced image height for mobile screens
+     */
+    .project-image {
+        height: 180px;
+    }
+    
+    /**
+     * Reduced padding for mobile content
+     */
+    .project-content {
+        padding: 1.2rem;
+    }
+}
+
+/* ========================================
+   RESPONSIVE DESIGN - MOBILE
+   ======================================== */
+
+/**
+ * Mobile breakpoint (480px and below)
+ * Optimized for small mobile screens
+ */
+@media (max-width: 480px) {
+    /* Projects header responsive styles are now handled by section-headers.css */
+    
+    /**
+     * Reduced filter padding for small screens
+     */
+    .tech-filters {
+        padding: 0 0.5rem;
+    }
+    
+    /**
+     * Smaller technology badges for mobile
+     */
+    .tech-badge {
+        font-size: 0.75rem;
+        padding: 0.3rem 0.6rem;
+    }
+    
+    /**
+     * Extended grid to edges on mobile
+     */
+    .projects-grid {
+        gap: 1rem;
+        padding: 0;
+    }
+    
+    /**
+     * Minimal padding for mobile project content
+     */
+    .project-content {
+        padding: 1rem;
+    }
+    
+    /**
+     * Smaller project title for mobile screens
+     */
+    .project-title {
+        font-size: 1.1rem;
+    }
+}
+
+/* ========================================
+   PROJECT LINKS AND ACTIONS
+   ======================================== */
+
+/**
+ * Styling for project title links
+ * Makes titles clickable and interactive
+ */
+.project-link {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.project-link:hover {
+    color: #3498db;
+    text-decoration: none;
+}
+
+/**
+ * Project actions container
+ * Contains buttons and links for project interaction
+ */
+.project-actions {
+    margin-top: 1rem;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+/**
+ * Primary button styling for project actions
+ * Features glassmorphism design with hover color effects
+ */
+.btn-primary {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background: var(--projects-btn-bg, rgba(55, 65, 81, 0.6));
+    backdrop-filter: blur(15px);
+    border: var(--projects-btn-border, 1px solid rgba(var(--accent-rgb), 0.2));
+    color: var(--projects-btn-text, rgba(255, 255, 255, 0.8));
+    text-decoration: none;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    box-shadow: var(--projects-btn-shadow, 0 2px 8px rgba(0, 0, 0, 0.1));
+}
+
+.btn-primary:hover {
+    background: var(--projects-btn-hover-gradient, linear-gradient(135deg, rgba(var(--accent-rgb), 0.8), rgba(64, 224, 208, 0.8)));
+    border-color: var(--projects-btn-hover-border, rgba(var(--accent-rgb), 0.6));
+    box-shadow: var(--projects-btn-hover-shadow, 0 4px 12px rgba(var(--accent-rgb), 0.3));
+    text-decoration: none;
+    color: var(--projects-btn-hover-text, #fff);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+    box-shadow: var(--projects-btn-active-shadow, 0 2px 6px rgba(52, 152, 219, 0.2));
+}

@@ -1,0 +1,45 @@
+{{/* 
+    Partial: sector-badge.html
+    Generate PS5-style sector badge based on project sector
+    Usage: {{ partial "projects/sector-badge.html" .Params.sector }}
+*/}}
+
+{{ $sector := . }}
+{{ $sectorPrimary := "" }}
+{{ $sectorSecondary := "" }}
+
+{{/* Map sector codes to display labels with split parts */}}
+{{ if eq $sector "games-professionnel" }}
+    {{ $sectorPrimary = "Game" }}
+    {{ $sectorSecondary = "Pro" }}
+{{ else if eq $sector "games-personnel" }}
+    {{ $sectorPrimary = "Game" }}
+    {{ $sectorSecondary = "Personal" }}
+{{ else if eq $sector "games-gamejams" }}
+    {{ $sectorPrimary = "Game" }}
+    {{ $sectorSecondary = "Jams" }}
+{{ else if eq $sector "appsweb-professionnel" }}
+    {{ $sectorPrimary = "App" }}
+    {{ $sectorSecondary = "Pro" }}
+{{ else if eq $sector "appsweb-etude" }}
+    {{ $sectorPrimary = "App" }}
+    {{ $sectorSecondary = "Study" }}
+{{ else if eq $sector "mods" }}
+    {{ $sectorPrimary = "Mods" }}
+    {{ $sectorSecondary = "" }}
+{{ else if eq $sector "tools" }}
+    {{ $sectorPrimary = "Tools" }}
+    {{ $sectorSecondary = "" }}
+{{ else }}
+    {{/* Fallback for unknown sectors */}}
+    {{ $sectorPrimary = $sector | title }}
+    {{ $sectorSecondary = "" }}
+{{ end }}
+
+<div class="ps5-sector-badge">
+    <span class="sector-primary">{{ $sectorPrimary }}</span>
+    {{ if $sectorSecondary }}
+    <span class="sector-divider"></span>
+    <span class="sector-secondary">{{ $sectorSecondary }}</span>
+    {{ end }}
+</div>

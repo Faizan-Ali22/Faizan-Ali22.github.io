@@ -1,0 +1,76 @@
+<!-- Profile Badge - User profile badge with expandable actions on hover -->
+<div id="profile-badge" class="profile-badge">
+  <div class="profile-badge-header">
+    <div class="profile-avatar">
+      <img src="{{ with .Site.Data.profile }}{{ .media.profileImage }}{{ end }}"
+           alt="{{ with .Site.Data.profile }}{{ .personal.fullName }}{{ end }}"
+           class="avatar-image">
+    </div>
+    <div class="profile-info">
+      <span class="profile-name">{{ with .Site.Data.profile }}{{ .personal.firstName }}{{ end }}</span>
+    </div>
+  </div>
+
+  <!-- Primary Actions (always visible) -->
+  <div class="profile-badge-primary-actions">
+    <div class="profile-actions-separator"></div>
+
+    <div class="profile-actions-group">
+      <a href="/cv/"
+         class="dock-button primary-btn download-btn"
+         title="{{ i18n "download_resume" | default "Download Resume" }}"
+         aria-label="{{ i18n "download_resume" | default "Download Resume" }}">
+        {{- partial "icon.html" (dict "iconId" "document-download" "size" "24" "class" "dock-icon") -}}
+      </a>
+
+      <a href="mailto:{{ with $.Site.Data.profile.contact.email }}{{ . }}{{ else }}your.email@example.com{{ end }}"
+         class="dock-button primary-btn"
+         title="{{ i18n "email" | default "Email" }}"
+         aria-label="{{ i18n "email" | default "Email" }}">
+        {{- partial "icon.html" (dict "iconId" "email" "size" "24" "class" "dock-icon") -}}
+      </a>
+
+      <a href="#"
+         class="dock-button primary-btn"
+         title="{{ i18n "phone" | default "Phone" }}"
+         aria-label="{{ i18n "phone" | default "Phone" }}"
+         onclick="event.preventDefault(); UnifiedModal.create({ type: 'phone', title: &quot;{{ i18n "my_phone" | default "My Phone" }}&quot;, icon: '📱', content: { phoneNumber: '{{ with $.Site.Data.profile.contact.phone }}{{ . }}{{ else }}+1 234 567 8900{{ end }}' } });">
+        {{- partial "icon.html" (dict "iconId" "phone" "size" "24" "class" "dock-icon") -}}
+      </a>
+    </div>
+  </div>
+
+  <!-- Expandable Social Actions (revealed on hover) -->
+  <div class="profile-badge-social-actions">
+    <div class="profile-actions-separator"></div>
+
+    <!-- Social Networks Group -->
+    <div class="profile-actions-group social-group">
+      {{ range .Site.Data.config.social }}
+      {{ if and (ne .title "Email") (ne .title "Phone") }}
+      <a href="{{ .url }}"
+         {{ if .external }}target="_blank" rel="noopener noreferrer"{{ end }}
+         class="dock-button social-btn"
+         title="{{ .title }}"
+         data-social="{{ lower .title }}"
+         {{ if eq .title "Discord" }}
+           onclick="event.preventDefault(); 
+           UnifiedModal.create({ type: 'discord', title: &quot;{{ i18n "my_discord" | default "My Discord" }}&quot;, icon: '/images/social/discord.svg', content: { discordId: '{{ with $.Site.Data.profile.contact.discord }}{{ . }}{{ else }}yourdiscord{{ end }}' } });"
+         {{ end }}>
+        {{ if eq .title "LinkedIn" }}
+        {{- partial "icon.html" (dict "iconId" "linkedin" "class" "dock-icon") -}}
+        {{ else if eq .title "GitHub" }}
+        {{- partial "icon.html" (dict "iconId" "github" "class" "dock-icon") -}}
+        {{ else if eq .title "Discord" }}
+        {{- partial "icon.html" (dict "iconId" "discord" "class" "dock-icon") -}}
+        {{ else if eq .title "ArtStation" }}
+        {{- partial "icon.html" (dict "iconId" "artstation" "size" "24" "class" "dock-icon") -}}
+        {{ else }}
+        <span class="dock-emoji">{{ .icon }}</span>
+        {{ end }}
+      </a>
+      {{ end }}
+      {{ end }}
+    </div>
+  </div>
+</div>

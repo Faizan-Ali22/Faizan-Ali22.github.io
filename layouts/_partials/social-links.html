@@ -1,0 +1,17 @@
+<div class="social-links">
+    <h3>{{ i18n "find_me_on" | default "Find me on" }}</h3>
+    <div class="social-icons">
+                {{ range .Site.Data.config.social }}
+                <a href="{{ .url }}"
+                     {{ if .external }}target="_blank" rel="noopener noreferrer"{{ end }}
+                     class="social-icon aero-glass"
+                     title="{{ .title }}"
+                     data-social="{{ lower .title }}"
+                     {{ if eq .title "Discord" }}
+                         onclick="event.preventDefault(); UnifiedModal.create({ type: 'discord', title: 'My Discord', icon: '/images/social/discord.svg', content: { discordId: '{{ with $.Site.Data.profile.contact.discord }}{{ . }}{{ else }}yourdiscord{{ end }}' } });"
+                     {{ end }}>
+                        {{ .icon }}
+                </a>
+                {{ end }}
+    </div>
+</div>

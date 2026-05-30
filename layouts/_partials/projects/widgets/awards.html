@@ -1,0 +1,30 @@
+{{/*
+  Partial: Awards Widget
+  Description: Widget compact pour afficher les récompenses d'un projet
+  Context: 
+    - .Params (dict) - Paramètres du projet avec .awards
+    - .File.BaseFileName (string) - ID du projet
+*/}}
+
+{{- if .Params.awards -}}
+<div class="project-widget awards-box {{ .Params.awards_size | default "size-medium" }}">
+  <div class="project-widget-header" onclick="toggleInfoBox(this)">
+    <div class="project-widget-icon awards">
+      {{- partial "icon.html" (dict "iconId" "award") -}}
+    </div>
+    <div class="project-widget-header-content">
+      <h3 class="project-widget-title">{{ i18n "awards_recognition" | default "Récompenses & Reconnaissance" }}</h3>
+      <div class="project-widget-summary">{{ len .Params.awards }} {{ if eq (len .Params.awards) 1 }}{{ i18n "reward" | default "récompense" }}{{ else }}{{ i18n "rewards" | default "récompenses" }}{{ end }}</div>
+    </div>
+    <div class="project-widget-toggle">
+      {{- partial "icon.html" (dict "iconId" "chevron-down") -}}
+    </div>
+  </div>
+  <div class="project-widget-content">
+    {{/* Load localized profile data */}}
+    {{- $profileData := partial "get-localized-data.html" (dict "context" . "dataName" "profile") -}}
+    {{/* Utiliser le partial awards pour l'affichage modal */}}
+    {{ partial "projects/widgets/modal/awards.html" (dict "awards" .Params.awards "projectId" .File.BaseFileName "profileData" $profileData) }}
+  </div>
+</div>
+{{- end -}}

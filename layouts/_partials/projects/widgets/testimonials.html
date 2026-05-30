@@ -1,0 +1,83 @@
+{{/*
+  Partial: Testimonials Widget
+  Description: Widget compact pour afficher les témoignages d'un projet
+  Context: 
+    - .Params (dict) - Paramètres du projet avec .testimonials
+    - .File.BaseFileName (string) - ID du projet
+*/}}
+
+{{- if .Params.testimonials -}}
+<div class="project-widget widget-testimonials-box {{ .Params.testimonials_size | default "size-large" }}" data-modal-title="{{ i18n "project_testimonials" | default "Témoignages" }}">
+  <div class="project-widget-header" onclick="toggleInfoBox(this)">
+    <div class="project-widget-header-content">
+      {{- if .Params.testimonials -}}
+        {{- $firstTestimonial := index .Params.testimonials 0 -}}
+        {{- $firstPerson := partial "helpers/get-person.html" (dict "context" $ "personId" $firstTestimonial.person) -}}
+        {{- $displayName := "" -}}
+        {{- if and $firstPerson (ne $firstPerson "") -}}
+          {{- $displayName = $firstPerson.Params.title -}}
+        {{- else -}}
+          {{- $displayName = ($firstTestimonial.person | humanize | title) -}}
+        {{- end -}}
+      <div class="project-widget-title-testimonial{{ if and $firstPerson (ne $firstPerson "") }} clickable-person{{ end }}"{{ if and $firstPerson (ne $firstPerson "") }} data-person-id="{{ $firstTestimonial.person }}" title="Voir le profil de {{ $firstPerson.Params.title }}"{{ end }}>
+        <div class="project-widget-title-avatar {{ if or (not $firstPerson) (not $firstPerson.Params.avatar) }}placeholder{{ end }}">
+          {{- if and $firstPerson (ne $firstPerson "") $firstPerson.Params.avatar -}}
+          <img src="{{ (partial "get-optimized-image.html" (dict "imagePath" $firstPerson.Params.avatar "width" 80 "quality" 90)).src }}" alt="{{ $displayName }}">
+          {{- else -}}
+          <span>{{ substr $displayName 0 1 | upper }}</span>
+          {{- end -}}
+        </div>
+        <h3 class="project-widget-title">{{ $displayName }}{{ if $firstTestimonial.role }}, {{ $firstTestimonial.role }}{{ end }}</h3>
+      </div>
+      {{- end -}}
+      <!-- Aperçu rotatif des testimonials -->
+      {{- if .Params.testimonials -}}
+      <div class="widget-testimonials-preview">
+        <div class="widget-testimonials-rotator">
+          <!-- Zone unique pour afficher le témoignage actuel -->
+          <div class="widget-testimonial-preview-content">
+            <div class="widget-testimonial-preview-quote">
+              {{- $firstTestimonial := index .Params.testimonials 0 -}}
+              {{ $firstTestimonial.quote | markdownify | default (i18n "testimonial_loading" | default "Témoignage en cours de chargement...") }}
+            </div>
+          </div>
+          
+          <!-- Données cachées pour le JavaScript -->
+          <div class="widget-testimonials-data" style="display: none;">
+            {{- range $index, $testimonial := .Params.testimonials -}}
+              {{- $person := partial "helpers/get-person.html" (dict "context" $ "personId" $testimonial.person) -}}
+              {{- $displayName := "" -}}
+              {{- if and $person (ne $person "") -}}
+                {{- $displayName = $person.Params.title -}}
+              {{- else -}}
+                {{- $displayName = ($testimonial.person | humanize | title) -}}
+              {{- end -}}
+              {{- $roleText := "" -}}
+              {{- if $testimonial.role -}}
+                {{- $roleText = printf ", %s" $testimonial.role -}}
+              {{- end -}}
+              {{- $displayTitle := printf "%s%s" $displayName $roleText -}}
+              {{- $avatarPath := "" -}}
+              {{- if and $person (ne $person "") $person.Params.avatar -}}
+                {{- $avatarPath = $person.Params.avatar -}}
+              {{- end -}}
+            <div class="widget-testimonial-data-item" data-index="{{ $index }}" data-testimonial-quote="{{ $testimonial.quote }}"{{ if and $person (ne $person "") }} data-person-id="{{ $testimonial.person }}"{{ end }} data-person-name="{{ $displayTitle }}"{{ if $avatarPath }} data-person-avatar="{{ $avatarPath }}"{{ end }}{{ if and $person (ne $person "") }} data-person-title="Voir le profil de {{ $person.Params.title }}"{{ end }}></div>
+            {{- end -}}
+          </div>
+        </div>
+        <div class="widget-testimonials-progress"></div>
+      </div>
+      {{- end -}}
+    </div>
+    <div class="project-widget-toggle">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/>
+      </svg>
+    </div>
+  </div>
+  <div class="project-widget-content">
+    {{/* Nouveau modal unifié pour les témoignages */}}
+    {{ partial "projects/widgets/modal/testimonials.html" (dict "testimonials" .Params.testimonials "projectId" .File.BaseFileName "context" .) }}
+  </div>
+</div>
+{{- end -}}

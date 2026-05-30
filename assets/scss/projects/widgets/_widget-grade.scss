@@ -1,0 +1,99 @@
+// =============================================================================
+// PROJECT WIDGET - GRADE
+// =============================================================================
+
+@import 'widget-base';
+
+.project-widget-grade-content {
+  text-align: center;
+  padding: $widget-padding;
+}
+
+.project-widget-grade-display {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: $widget-padding-lg;
+}
+
+.project-widget-grade-value {
+  @include widget-gradient-text('grade-value');
+  font-size: 3rem;
+  font-weight: var(--font-weight-bold);
+}
+
+.project-widget-grade-scale {
+  font-size: 1.5rem;
+  color: var(--text-muted);
+  font-weight: var(--font-weight-medium);
+}
+
+.project-widget-grade-details {
+  @extend %widget-list-layout;
+  gap: $widget-gap-sm;
+}
+
+.project-widget-grade-subject {
+  color: var(--text-primary);
+  font-weight: var(--font-weight-semibold);
+  font-size: 1.1rem;
+}
+
+.project-widget-grade-professor,
+.project-widget-grade-date {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.project-widget-grade-comment {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  line-height: 1.4;
+  font-style: italic;
+  background: rgba(255,255,255,0.05);
+  padding: $widget-padding-sm;
+  border-radius: var(--border-radius-sm);
+  @include widget-item-with-accent(var(--primary-green));
+}
+
+// Preview mode (for collapsed state)
+.project-widget-grade-preview {
+  @extend %widget-preview-item;
+  
+  .project-widget-grade-preview-value {
+    @extend .preview-value;
+    font-size: 1.5rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--text-primary);
+    min-width: 60px;
+    display: flex;
+    align-items: baseline;
+    gap: 0.2rem;
+    
+    // Forcer la couleur du texte sans gradient pour éviter la transparence
+    -webkit-text-fill-color: var(--text-primary);
+    text-fill-color: var(--text-primary);
+  }
+  
+  .project-widget-grade-preview-scale {
+    font-size: 1rem;
+    color: var(--text-muted);
+    font-weight: var(--font-weight-medium);
+  }
+  
+  .project-widget-grade-preview-info {
+    @extend .preview-info;
+  }
+  
+  .project-widget-grade-preview-subject {
+    @extend .preview-label;
+    color: var(--text-primary);
+  }
+  
+  .project-widget-grade-percentage {
+    color: var(--primary-green);
+    font-weight: var(--font-weight-bold);
+    font-size: 0.9rem;
+  }
+}

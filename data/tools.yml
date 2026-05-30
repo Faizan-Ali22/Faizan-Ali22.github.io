@@ -1,0 +1,69 @@
+# ============================================================
+# 🔧 TOOLS & ENVIRONMENTS — Add your development tools
+# ============================================================
+# Fields:
+#   key:                  Unique identifier (used for i18n lookup)
+#   iconPath:             Path to SVG icon
+#   icon:                 Emoji fallback
+#   category:             "ide", "version_control", "design", "devops", etc.
+#   description:          Short description of usage
+#   experience:           Years of experience (number)
+#   displayedInPortfolio: true/false
+#
+# IMPORTANT: Add matching entry in i18n/en.yaml:
+#   tool_vscode: "Visual Studio Code"
+# ============================================================
+
+# Uncomment and customize:
+
+- key: "VS-code"
+  iconPath: "/images/skills/vscode.svg"
+  category: "ide"
+  description: "Primary code editor"
+  experience: 3
+  displayedInPortfolio: true
+
+- key: "tool_github"
+  iconPath: "/images/skills/github.svg"
+  category: "version_control"
+  description: "Version control and collaboration"
+  experience: 3
+  displayedInPortfolio: true
+
+# - key: "tool_docker"
+#   iconPath: "/images/skills/docker.svg"
+#   category: "devops"
+#   description: "Containerized environments"
+#   experience: 1
+#   displayedInPortfolio: true
+- key: "tool_figma"
+  name: "Figma"
+  icon: "🎨"
+  category: "design"
+  description: "UI/UX Design and Prototyping"
+  experience: 2
+  displayedInPortfolio: true
+
+- key: "tool_visual_studio"
+  name: "Visual Studio"
+  icon: "💻"
+  displayedInPortfolio: true
+
+# - key: "tool_git"
+#   name: "Git"
+#   icon: "gd"
+#   displayedInPortfolio: true
+
+- key: "tool_jira"
+  iconPath: "/images/skills/jira.svg"
+  category: "project_management"
+  description: "Project and issue tracking"
+  experience: 2          # ← Change this from [number] to a number
+  displayedInPortfolio: true
+
+- key: "tool_primavera_p6"
+  iconPath: "/images/skills/primavera-p6.svg"
+  category: "project_management"
+  description: "Enterprise project management and construction planning"
+  experience: 1          # ← Change this from [number] to a number
+  displayedInPortfolio: true

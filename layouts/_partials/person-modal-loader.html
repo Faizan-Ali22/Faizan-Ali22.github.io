@@ -1,0 +1,20 @@
+{{/* 
+  Person Modal Loader
+  This partial should be included in layouts where you want person modal functionality
+  Usage: {{ partial "person-modal-loader.html" . }}
+*/}}
+
+{{/* Include the modal HTML */}}
+{{ partial "person-modal.html" . }}
+
+{{/* Include the CSS */}}
+{{ $personModalCSS := resources.Get "scss/person-modal.scss" | css.Sass | resources.Minify }}
+<link rel="stylesheet" href="{{ $personModalCSS.RelPermalink }}">
+
+{{/* Include unified project card CSS */}}
+{{ $projectCardCSS := resources.Get "scss/project-card-unified.scss" | css.Sass | resources.Minify }}
+<link rel="stylesheet" href="{{ $projectCardCSS.RelPermalink }}">
+
+{{/* Include the utility JavaScript */}}
+{{ $personModalJS := resources.Get "js/person-modal-utils.js" | resources.Minify }}
+<script src="{{ $personModalJS.RelPermalink }}"></script>

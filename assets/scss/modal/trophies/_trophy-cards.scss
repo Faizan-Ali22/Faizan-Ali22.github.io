@@ -1,0 +1,161 @@
+/* ========================================
+  TROPHY CARDS
+  ======================================== */
+
+.trophy-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 24px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+.trophy-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--trophy-gradient);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.trophy-card:hover {
+  transform: translateY(-4px);
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.trophy-card:hover::before {
+  opacity: 1;
+}
+
+.trophy-card.unlocked {
+  background: linear-gradient(135deg, 
+    rgba(255, 215, 0, 0.05), 
+    rgba(255, 165, 0, 0.02)
+  );
+  border-color: rgba(255, 215, 0, 0.15);
+  --trophy-gradient: linear-gradient(90deg, #FFD700, #FFA500);
+}
+
+.trophy-card.locked {
+  opacity: 0.6;
+  --trophy-gradient: linear-gradient(90deg, #666, #888);
+}
+
+.trophy-card-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.trophy-card-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.trophy-card-icon.locked {
+  background: rgba(128, 128, 128, 0.3);
+  filter: grayscale(100%);
+}
+
+.trophy-card-icon.unlocked {
+  background: linear-gradient(135deg, #FFD700, #FFA500);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+  animation: trophy-pulse 3s ease-in-out infinite;
+}
+
+@keyframes trophy-pulse {
+  0%, 100% { 
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+    transform: scale(1);
+  }
+  50% { 
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
+    transform: scale(1.05);
+  }
+}
+
+.trophy-card-info {
+  flex: 1;
+}
+
+.trophy-card-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 4px 0;
+}
+
+.trophy-card-rarity {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.trophy-card-rarity.common {
+  background: rgba(169, 169, 169, 0.3);
+  color: #A9A9A9;
+}
+
+.trophy-card-rarity.rare {
+  background: rgba(30, 144, 255, 0.3);
+  color: #1E90FF;
+}
+
+.trophy-card-rarity.epic {
+  background: rgba(138, 43, 226, 0.3);
+  color: #8A2BE2;
+}
+
+.trophy-card-rarity.legendary {
+  background: rgba(255, 215, 0, 0.3);
+  color: #FFD700;
+}
+
+.trophy-card-description {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.5;
+  margin: 12px 0;
+}
+
+.trophy-card-requirement {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-style: italic;
+  margin-bottom: 12px;
+}
+
+.trophy-card-date {
+  font-size: 0.85rem;
+  color: #FFD700;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.trophy-card-date::before {
+  content: '🗓️';
+  font-size: 0.8rem;
+}

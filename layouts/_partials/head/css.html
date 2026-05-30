@@ -1,0 +1,175 @@
+{{/* Global Variables (always) */}}
+{{ partial "helpers/load-css.html" "css/variables.global.css" }}
+
+{{/* Determine page type to load dedicated variables */}}
+{{- $pageType := "" -}}
+{{- if .IsHome -}}
+  {{- $pageType = "portfolio" -}}
+{{- else if eq .Section "posts" -}}
+  {{- $pageType = "blog" -}}
+{{- else if eq .Section "projects" -}}
+  {{- $pageType = "projects" -}}
+{{- else -}}
+  {{- $pageType = "portfolio" -}}
+{{- end -}}
+{{- $varFile := printf "css/variables.%s.css" $pageType -}}
+{{ partial "helpers/load-css.html" $varFile }}
+
+{{/* Add global Hero Background */}}
+{{ partial "helpers/load-css.html" "css/hero-background.css" }}
+
+{{/* Base Stylesheets - Load first */}}
+{{ partial "helpers/load-css.html" "css/style.css" }}
+{{ partial "helpers/load-css.html" "css/main.css" }}
+
+{{/* Translucent Footer Styles */}}
+{{ partial "helpers/load-css.html" "css/footer.css" }}
+
+{{/* Tech Icons Styles */}}
+<link rel="stylesheet" href="/css/tech-icons.css">
+
+{{/* Skill Icon Colors */}}
+{{ partial "helpers/load-css.html" "css/skill-icon-colors.css" }}
+
+{{/* Profile Stats Styles */}}
+{{ partial "helpers/load-css.html" "css/profile-stats.css" }}
+
+{{/* Dock Styles */}}
+{{ partial "helpers/load-scss.html" "scss/dock.scss" }}
+
+{{/* Mobile Menu Styles */}}
+{{ partial "helpers/load-scss.html" "scss/mobile-menu.scss" }}
+
+{{/* Profile Badge Styles (with integrated actions) */}}
+{{ partial "helpers/load-scss.html" "scss/profile-badge.scss" }}
+
+{{/* Right Dock Styles */}}
+{{ partial "helpers/load-scss.html" "scss/right-dock.scss" }}
+
+{{/* Toast Notifications Styles */}}
+{{ partial "helpers/load-scss.html" "scss/toasts.scss" }}
+
+{{/* CSS Fix for dropdowns only */}}
+{{- if hugo.IsDevelopment }}
+  {{- with resources.Get "css/dropdown-fix.css" }}
+    <link rel="stylesheet" href="{{ .RelPermalink }}">
+  {{- end }}
+{{- end }}
+
+{{/* Trophies Modal Styles */}}
+{{ partial "helpers/load-scss.html" "scss/modal/trophies/trophies.scss" }}
+
+
+{{/* Skill Modal Styles */}}
+{{ partial "helpers/load-scss.html" "scss/skill-modal.scss" }}
+
+{{/* Project Card Unified Styles - Used in skill modal, person modal, and experiences */}}
+{{ partial "helpers/load-scss.html" "scss/project-card-unified.scss" }}
+
+{{/* Projects List Page Styles - Specific to /projects/ page */}}
+{{ partial "helpers/load-scss.html" "scss/projects-list.scss" }}
+
+{{/* Skills Page Styles 
+     IMPORTANT: This CSS must be loaded on both the home page (.IsHome) and the skills page (Section "competences")
+     because the skills partial is used on the homepage. If styles are not applying to skills section elements
+     on the homepage, verify this condition includes (.IsHome). Without it, elements like .skills-footer
+     will not have their styles applied on the homepage, causing layout issues like uncentered buttons.
+*/}}
+{{- if or (eq .Section "competences") (.IsHome) }}
+  {{ partial "helpers/load-css.html" "css/skills.css" }}
+{{- end }}
+
+{{/* Unified Modal Styles (replaces legacy Discord modal styles) */}}
+{{ partial "helpers/load-scss.html" "scss/unified-modal.scss" }}
+
+{{/* Image Modal Styles - Loaded via css/shared/components/*.css pattern (line 158) - DO NOT DUPLICATE */}}
+
+{{/* Separated technologies - SCSS (special template execution) */}}
+{{- with resources.Get "scss/separated-technologies.scss" }}
+  {{- with . | resources.ExecuteAsTemplate "separated-technologies.scss" . | css.Sass }}
+    {{- if hugo.IsDevelopment }}
+      <link rel="stylesheet" href="{{ .RelPermalink }}">
+    {{- else }}
+      {{- with . | fingerprint }}
+        <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
+      {{- end }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+
+{{ partial "helpers/load-css.html" "css/background.css" }}
+
+{{/* Layout Components */}}
+
+{{/* Section-specific Stylesheets */}}
+{{ partial "helpers/load-css.html" "css/profile-hero.css" }}
+
+{{ partial "helpers/load-css.html" "css/info-sections.css" }}
+
+{{ partial "helpers/load-css.html" "css/projects.css" }}
+
+{{/* Projects List Page Styles */}}
+{{ if eq .Section "projects" }}
+  {{ if not .IsHome }}
+    {{ partial "helpers/load-css.html" "css/projects-list.css" }}
+  {{ end }}
+{{ end }}
+
+{{/* Technical Specifications Styles */}}
+{{ partial "helpers/load-css.html" "css/technical-specs.css" }}
+
+{{/* Blog Styles (SCSS) */}}
+{{ partial "helpers/load-scss.html" "scss/blog.scss" }}
+
+{{/* Dropdown Styles for Blog Sort Controls */}}
+{{ partial "helpers/load-scss.html" "scss/dropdown.scss" }}
+
+{{ partial "helpers/load-css.html" "css/shortcodes.css" }}
+
+{{ partial "helpers/load-css.html" "css/section-headers.css" }}
+{{ partial "helpers/load-css.html" "css/experience.css" }}
+
+{{/* Experiences List Page Styles */}}
+{{ if eq .Section "experiences" }}
+  {{ if not .IsHome }}
+    {{ partial "helpers/load-css.html" "css/experiences-list.css" }}
+  {{ end }}
+{{ end }}
+
+{{ partial "helpers/load-css.html" "css/education.css" }}
+{{ partial "helpers/load-css.html" "css/testimonials.css" }}
+
+{{ partial "helpers/load-css.html" "css/forms.css" }}
+
+{{/* Project-specific styles - Loaded only on project pages */}}
+{{ if eq .Section "projects" }}
+  {{/* Project variables (PS5 and widgets) */}}
+  {{ partial "helpers/load-css.html" "css/projects/variables.widgets.css" }}
+  {{ partial "helpers/load-css.html" "css/projects/variables.ps5.css" }}
+  {{/* Developer Widgets Styles - Specialties and Tools (used in project widgets) */}}
+  {{ partial "helpers/load-css.html" "css/projects/developer-widgets.css" }}
+{{ end }}
+
+{{/* Project widgets SCSS (refactored from CSS) - Loaded only on project pages */}}
+{{ if eq .Section "projects" }}
+  {{ partial "helpers/load-scss.html" "scss/projects/widgets/_index.scss" }}
+{{ end }}
+
+{{/* Section-specific component */}}
+{{ partial "helpers/load-css-pattern.html" "css/shared/components/*.css" }}
+
+{{/* Section-specific project page styles (loaded only on project pages) */}}
+{{ if eq .Section "projects" }}
+  {{ partial "helpers/load-css-pattern.html" "css/projects/*.css" }}
+{{ end }}
+
+{{/* CV page styles (loaded only on CV page) */}}
+{{- $isCV := or
+  (eq .Layout "cv")
+  (in .RelPermalink "/cv/")
+  (in .RelPermalink "/cv")
+  (and .File (or (in .File.Path "content/cv.md") (in .File.Path "/cv.md")))
+ -}}
+{{- if $isCV }}
+  {{ partial "helpers/load-scss.html" "scss/cv.scss" }}
+{{- end }}

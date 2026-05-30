@@ -1,0 +1,80 @@
+<section id="blog" class="blog-section">
+    <div class="blog-header section-header-unified">
+        <h2 class="section-title-unified">{{ i18n "blog_articles" | default "Blog Articles" }}</h2>
+        <p class="blog-subtitle section-subtitle-unified">
+            {{ i18n "blog_subtitle" | default "Discover my latest articles and thoughts on web development and new technologies" }}
+        </p>
+    </div>
+
+        <!-- Blog Grid -->
+        <div class="blog-grid">
+            {{ $blogLimit := .Site.Data.config.blog.homeLimit | default 3 }}
+            {{ range first $blogLimit (where (where site.RegularPages "Section" "posts") "Draft" false) }}
+            <article class="blog-card {{ if not .Params.image }}blog-card--no-image{{ end }}">
+                <!-- Blog Category (top left) -->
+                {{ if .Params.category }}
+                <span class="post-category">{{ .Params.category | title }}</span>
+                {{ end }}
+                
+                <!-- Reading Time (top right) -->
+                {{ if .ReadingTime }}
+                <div class="blog-reading-time">{{ .ReadingTime }} min de lecture</div>
+                {{ end }}
+
+                {{ if .Params.image }}
+                <div class="blog-image">
+                    {{- $blogImage := partial "get-optimized-image.html" (dict "imagePath" .Params.image "width" 800 "quality" 85) -}}
+                    <img src="{{ $blogImage.src }}" 
+                         alt="{{ .Title }}" 
+                         {{- if and $blogImage.isResource (gt $blogImage.width 0) }} width="{{ $blogImage.width }}"{{ end -}}
+                         {{- if and $blogImage.isResource (gt $blogImage.height 0) }} height="{{ $blogImage.height }}"{{ end -}}
+                         loading="lazy">
+                </div>
+                {{ end }}
+                
+                <div class="blog-content">
+                    <!-- Blog Title -->
+                    <h3 class="blog-title">
+                        <a href="{{ .Permalink }}" class="blog-title-link">{{ .Title }}</a>
+                    </h3>
+                    
+                    <!-- Blog Description -->
+                    <p class="blog-description">
+                        {{ if .Params.description }}
+                            {{ .Params.description | truncate 120 "..." }}
+                        {{ else }}
+                            {{ .Summary | truncate 120 "..." }}
+                        {{ end }}
+                    </p>
+                </div>
+
+                <!-- Blog Footer -->
+                <div class="blog-card-footer">
+                    <!-- Date (bottom left) -->
+                    <time class="post-date" datetime="{{ .Date.Format "2006-01-02" }}">
+                        {{ if eq .Site.Language.Lang "fr" }}
+                            {{ .Date.Day }} {{ index (slice "janvier" "février" "mars" "avril" "mai" "juin" "juillet" "août" "septembre" "octobre" "novembre" "décembre") (sub .Date.Month 1) }} {{ .Date.Year }}
+                        {{ else }}
+                            {{ .Date.Format (.Site.Data.config.blog.dateFormat | default "Jan 02, 2006") }}
+                        {{ end }}
+                    </time>
+                    
+                    <!-- Read Article Button (bottom right) -->
+                    <a href="{{ .Permalink }}" class="read-more-btn">
+                        {{ i18n "read_more" | default "Lire la suite" }}
+                    </a>
+                </div>
+            </article>
+            {{ end }}
+        </div>
+        
+    <!-- Blog Footer -->
+    <div class="blog-footer">
+        <a href="/posts" class="btn-action">
+            {{ i18n "view_all_posts" | default "Voir tous les articles" }}
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+        </a>
+    </div>
+</section>

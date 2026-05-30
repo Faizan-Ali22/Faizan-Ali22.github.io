@@ -1,0 +1,22 @@
+{{/*
+  Helper to load SCSS file with compilation, minify and fingerprint handling
+  
+  Usage: {{ partial "helpers/load-scss.html" "scss/dock.scss" }}
+  
+  Params:
+  - . (string): Path to SCSS file in assets/
+*/}}
+{{- $resource := resources.Get . }}
+{{- if $resource }}
+  {{- with $resource | toCSS | minify }}
+    {{- if hugo.IsDevelopment }}
+      <link rel="stylesheet" href="{{ .RelPermalink }}">
+    {{- else }}
+      {{- with . | fingerprint }}
+        <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
+      {{- end }}
+    {{- end }}
+  {{- end }}
+{{- else }}
+  {{- errorf "SCSS file not found: %s (check assets/ directory)" . }}
+{{- end }}

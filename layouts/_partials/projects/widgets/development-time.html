@@ -1,0 +1,28 @@
+{{/*
+  Partial: Development Time Widget
+  Description: Widget compact pour afficher le temps de développement d'un projet
+  Context: 
+    - .Params (dict) - Paramètres du projet avec .development_time
+    - .File.BaseFileName (string) - ID du projet
+*/}}
+
+{{- if and .Params.development_time .Params.development_time.total (ne .Params.development_time.total "") -}}
+<div class="project-widget development-time-box {{ .Params.development_time_size | default "size-medium" }}">
+  <div class="project-widget-header" onclick="toggleInfoBox(this)">
+    <div class="project-widget-icon time">
+      {{- partial "icon.html" (dict "iconId" "clock") -}}
+    </div>
+    <div class="project-widget-header-content">
+      <h3 class="project-widget-title">{{ i18n "development_time" | default "Temps de développement" }}</h3>
+      <div class="project-widget-summary">{{ .Params.development_time.total }}</div>
+    </div>
+    <div class="project-widget-toggle">
+      {{- partial "icon.html" (dict "iconId" "chevron-down") -}}
+    </div>
+  </div>
+  <div class="project-widget-content">
+    {{/* Utiliser le partial enhanced pour l'affichage modal du temps de développement */}}
+    {{ partial "projects/widgets/modal/development-time.html" (dict "development_time" .Params.development_time "projectId" .File.BaseFileName) }}
+  </div>
+</div>
+{{- end -}}

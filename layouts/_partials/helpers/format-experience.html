@@ -1,0 +1,16 @@
+{{- /*
+  Format experience years for display
+  Usage: {{ partial "helpers/format-experience.html" (dict "experience" 4 "context" .) }}
+  Returns: "4 years" or "1 year"
+*/ -}}
+
+{{- $experience := .experience -}}
+{{- $context := .context -}}
+
+{{- if $experience -}}
+  {{- if eq (int $experience) 1 -}}
+    {{- printf "%d %s" (int $experience) (i18n "year" | default "year") -}}
+  {{- else -}}
+    {{- printf "%d %s" (int $experience) (i18n "years" | default "years") -}}
+  {{- end -}}
+{{- end -}}

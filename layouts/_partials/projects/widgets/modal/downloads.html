@@ -1,0 +1,106 @@
+{{/*
+  Partial: Downloads Modal Enhanced Layout
+  Description: Structure HTML pour l'affichage amélioré des téléchargements dans les modals de project widget
+  Context: 
+    - .Project (Page) - Project page context
+    - .Title (string) - Modal title
+*/}}
+
+{{- $downloads := .Project.Params.downloads -}}
+{{- if $downloads -}}
+  {{- $total := $downloads.total | default "0" -}}
+  {{- $total = int $total -}}
+  {{- $platforms := $downloads.platforms | default slice -}}
+  
+  <div class="downloads-modal-enhanced">
+    {{/* Stats bar avec informations contextuelles */}}
+    <div class="downloads-stats-bar">
+      <div class="downloads-context">
+        <strong>{{ partial "helpers/format-number.html" $total }}</strong> {{ i18n "downloads_text" | default "téléchargements" }}
+      </div>
+      <div class="downloads-meta">
+        {{- if $platforms -}}
+          <span class="platforms-count-chip">{{ len $platforms }} {{ i18n "platforms" | default "plateformes" }}</span>
+        {{- end -}}
+        {{- if $downloads.last_updated -}}
+          <span class="update-date-chip">{{ $downloads.last_updated | dateFormat "January 2006" }}</span>
+        {{- end -}}
+      </div>
+    </div>
+    
+    {{/* Grille des plateformes */}}
+    {{- if $platforms -}}
+    <div class="downloads-platforms-group">
+      <div class="platforms-group-title">{{ i18n "platform_distribution" | default "Répartition par plateforme" }}</div>
+      <div class="platforms-grid">
+        {{- range $platforms -}}
+          {{- $platformName := .name | default (i18n "platform" | default "Plateforme") -}}
+          {{- $platformDownloads := .downloads | default "0" -}}
+          {{- $platformDownloads = int $platformDownloads -}}
+          {{- $hasIcon := .icon | default false -}}
+          {{- $initials := substr $platformName 0 1 | upper -}}
+          
+          <div class="platform-card" 
+               tabindex="0" 
+               role="button" 
+               aria-label="Statistiques {{ $platformName }}">
+            
+            {{/* Icône de la plateforme */}}
+            <div class="platform-icon{{ if not $hasIcon }} placeholder{{ end }}">
+              {{- if $hasIcon -}}
+                <img src="{{ .icon }}" alt="Icône {{ $platformName }}" loading="lazy" />
+              {{- else -}}
+                <span>{{ $initials }}</span>
+              {{- end -}}
+            </div>
+            
+            {{/* Informations de la plateforme */}}
+            <div class="platform-info">
+              <div class="platform-name">{{ $platformName }}</div>
+              <div class="platform-downloads">
+                {{ partial "helpers/format-number.html" $platformDownloads }} {{ i18n "downloads_text" | default "téléchargements" }}
+              </div>
+              {{- if and $platformDownloads $total (gt $total 0) -}}
+              <div class="platform-percentage">
+                {{- $percentage := div (mul $platformDownloads 100.0) $total -}}
+                {{- $roundedPercentage := math.Round $percentage -}}
+                {{ $roundedPercentage }}{{ i18n "percent_of_total" | default "% du total" }}
+              </div>
+              {{- end -}}
+            </div>
+          </div>
+        {{- end -}}
+      </div>
+    </div>
+    {{- end -}}
+    
+    {{/* Timeline si disponible */}}
+    {{- if $downloads.timeline -}}
+    <div class="downloads-timeline-group">
+      <div class="timeline-group-title">{{ i18n "time_evolution" | default "Évolution temporelle" }}</div>
+      <div class="timeline-grid">
+        {{- range $downloads.timeline -}}
+        <div class="timeline-card">
+          <div class="period-label">{{ .period }}</div>
+          <div class="period-count">{{ .count }}</div>
+        </div>
+        {{- end -}}
+      </div>
+    </div>
+    {{- end -}}
+  </div>
+{{- else -}}
+  <div class="downloads-modal-enhanced">
+    <div class="downloads-stats-bar">
+      <div class="downloads-context">
+        <strong>0</strong> {{ i18n "downloads_text" | default "téléchargements" }}
+      </div>
+    </div>
+    <div class="downloads-platforms-group">
+      <div class="platforms-group-title">{{ i18n "no_data" | default "Aucune donnée" }}</div>
+      <div class="platforms-grid">
+        <p>{{ i18n "no_download_stats" | default "Aucune statistique de téléchargement n'a été trouvée pour ce projet." }}</p>
+      </div>
+    </div>
+  </div>
+{{- end -}}
