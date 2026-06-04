@@ -1,0 +1,122 @@
+/* ========================================
+   BACKGROUND STYLES - MINIMAL
+   ======================================== */
+
+/* Body configuration */
+body { 
+    background: var(--bg-body, #1a1a1a); 
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Sidebar background styles */
+.sidebar { 
+    background: var(--surface-strong, rgba(26,26,26,0.8));
+    backdrop-filter: blur(20px) saturate(180%);
+}
+
+/* Navigation items backgrounds */
+.nav-item { 
+    background: var(--gradient-nav, linear-gradient(135deg, rgba(45, 55, 72, 0.8), rgba(55, 65, 81, 0.8)));
+}
+
+.nav-item::before {
+    background: var(--gradient-nav-indicator, linear-gradient(90deg, var(--accent,#4fd1c7), var(--accent-60, rgba(79,209,199,0.6))));
+}
+
+.nav-item::after {
+    background: var(--accent,#4fd1c7);
+}
+
+.nav-item:hover { 
+    background: var(--gradient-nav-hover, linear-gradient(135deg, rgba(79, 209, 199, 0.3), rgba(55, 65, 81, 0.8)));
+}
+
+.nav-item.active { 
+    background: var(--gradient-nav-active, linear-gradient(135deg, rgba(79, 209, 199, 0.4), rgba(55, 65, 81, 0.9)));
+}
+
+/* Contact section background */
+.contact-section {
+    background: linear-gradient(135deg, var(--surface-alt, rgba(55, 65, 81, 0.6)), var(--accent-10, rgba(79, 209, 199, 0.1)));
+    backdrop-filter: blur(15px) saturate(180%);
+}
+
+/* Gradient text backgrounds for titles */
+.contact-header h2 {
+    background: var(--gradient-accent-linear, linear-gradient(135deg, var(--accent,#4fd1c7), var(--accent-alt,#40e0d0)));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Aero-glass effect backgrounds (legacy simple) */
+.aero-glass {
+    background: var(--surface-medium, rgba(26, 26, 26, 0.6));
+    backdrop-filter: blur(10px) saturate(150%);
+}
+
+/* Hover state backgrounds */
+.contact-item:hover {
+    background: var(--glass-bg-hover, rgba(255, 255, 255, 0.15));
+}
+
+/* Form elements and buttons backgrounds */
+.form-group input,
+.form-group select,
+.form-group textarea {
+    background: var(--glass-bg-lighter, rgba(255, 255, 255, 0.1));
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    background: var(--glass-bg-hover, rgba(255, 255, 255, 0.15));
+}
+
+.form-group select option {
+    background: var(--color-bg-600,#374151);
+}
+
+.submit-btn {
+    background: var(--gradient-accent-linear, linear-gradient(135deg, var(--accent,#4fd1c7), var(--accent-alt,#40e0d0)));
+}
+
+.submit-btn:hover {
+    background: var(--gradient-accent-linear-reverse, linear-gradient(135deg, var(--accent-alt,#40e0d0), var(--accent,#4fd1c7)));
+}
+
+/* Progress bar backgrounds */
+.scroll-progress {
+    background: var(--progress-bg, rgba(26, 26, 26, 0.8));
+}
+
+.scroll-progress-bar {
+    background: var(--progress-fill, linear-gradient(90deg, var(--accent,#4fd1c7), var(--accent-80, rgba(79, 209, 199, 0.8))));
+}
+
+/* Social icons backgrounds */
+.social-icon {
+    background: var(--accent-20, rgba(79, 209, 199, 0.2));
+    backdrop-filter: blur(10px);
+}
+
+.social-icon:hover {
+    background: var(--accent-40, rgba(79, 209, 199, 0.4));
+}
+
+/* Section highlight animation backgrounds */
+@keyframes sectionHighlight {
+    0% { background: var(--accent-10, rgba(79, 209, 199, 0.1)); }
+    100% { background: transparent; }
+}
+
+/* Skill blocks backgrounds */
+.skill-block {
+    background: var(--surface-alt, rgba(55, 65, 81, 0.6));
+}
+
+/* Shimmer effects backgrounds */
+.shimmer::before {
+    background: var(--shimmer-gradient, linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent));
+}

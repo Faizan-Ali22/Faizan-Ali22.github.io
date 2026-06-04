@@ -1,0 +1,129 @@
+/* ========================================
+   PROJECT HERO SECTION
+   ======================================== */
+
+.project-hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+
+    /* Variables CSS pour l'effet de blur dynamique */
+    --blur-intensity: 8px;
+}
+
+/* S'assurer que les canvas de background sont en arrière-plan sur les pages de projet */
+.project-page #particles-canvas,
+.project-page #waves-canvas {
+    z-index: -25 !important;
+}
+
+.project-page .hero-background {
+    z-index: -30 !important;
+}
+
+/* Background fixe via pseudo-Ã©lÃ©ment pour ne flouter que l'image */
+body {
+    position: relative;
+    /* pas de background direct */
+}
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: var(--hero-bg-image);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    /* filter removed; blur applied dynamically via JavaScript */
+    filter: none !important;
+    animation: none !important;
+    pointer-events: none;
+    z-index: -10;
+}
+
+.project-hero-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        linear-gradient(
+            135deg,
+            rgba(0, 0, 0, 0.15) 0%,
+            rgba(0, 0, 0, 0.1) 40%,
+            rgba(0, 0, 0, 0.15) 100%
+        ),
+        linear-gradient(
+            to top right,
+            rgba(0, 0, 0, 0.4) 0%,
+            rgba(0, 0, 0, 0.2) 40%,
+            transparent 70%
+        ),
+        /* DÃ©gradÃ© vers le bas pour une transition plus fluide */
+        linear-gradient(
+            to bottom,
+            transparent 0%,
+            transparent 70%,
+            rgba(26, 26, 26, 0.05) 85%,
+            rgba(26, 26, 26, 0.15) 95%,
+            rgba(26, 26, 26, 0.25) 100%
+        );
+    z-index: -5;
+}
+
+.project-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 20%, rgba(52, 152, 219, 0.1) 0%, transparent 40%),
+        radial-gradient(circle at 80% 80%, rgba(155, 89, 182, 0.08) 0%, transparent 40%);
+    z-index: 2;
+    pointer-events: none;
+}
+
+.project-hero-content {
+    position: relative;
+    z-index: 10;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 2rem 0;
+    min-height: 60vh;
+}
+
+/* Classe pour coller le contenu en bas quand il n'y a pas de section top */
+.project-hero-content.no-top {
+    justify-content: flex-end;
+    padding-bottom: 2rem; /* Espace minimal en bas pour éviter le dock */
+}
+
+.project-hero-top {
+    flex: 0 0 auto;
+}
+
+.project-hero-container,
+.project-content-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.project-content-container {
+    max-width: 800px;
+}

@@ -1,0 +1,52 @@
+/* Skill icon brand colors */
+.skill-block[data-skill-name="C#"] .tech-icon-svg {
+    filter: brightness(0) saturate(100%) invert(48%) sepia(79%) saturate(452%) hue-rotate(93deg) brightness(95%) contrast(90%) !important;
+}
+.skill-block[data-skill-name="C++"] .tech-icon-svg {
+    filter: brightness(0) saturate(100%) invert(27%) sepia(89%) saturate(1535%) hue-rotate(187deg) brightness(96%) contrast(101%) !important;
+}
+.skill-block[data-skill-name="Python"] .tech-icon-svg {
+    filter: brightness(0) saturate(100%) invert(37%) sepia(52%) saturate(601%) hue-rotate(186deg) brightness(96%) contrast(92%) !important;
+}
+.skill-block[data-skill-name="JavaScript"] .tech-icon-svg {
+    filter: brightness(0) saturate(100%) invert(83%) sepia(55%) saturate(553%) hue-rotate(358deg) brightness(103%) contrast(94%) !important;
+}
+.skill-block[data-skill-name="HTML"] .tech-icon-svg {
+    filter: brightness(0) saturate(100%) invert(37%) sepia(93%) saturate(1350%) hue-rotate(350deg) brightness(91%) contrast(97%) !important;
+}
+.skill-block[data-skill-name="CSS"] .tech-icon-svg {
+    filter: brightness(0) saturate(100%) invert(30%) sepia(93%) saturate(1683%) hue-rotate(194deg) brightness(93%) contrast(88%) !important;
+}
+.skill-block[data-skill-name="SQL"] .tech-icon-svg {
+    filter: brightness(0) saturate(100%) invert(33%) sepia(60%) saturate(700%) hue-rotate(184deg) brightness(92%) contrast(90%) !important;
+}
+
+/* Unity - white icon */
+.skill-block[data-skill-name="Unity"] .tech-icon-svg {
+    filter: brightness(0) invert(1) !important;
+}
+
+/* Unreal Engine - white icon */
+.skill-block[data-skill-name="Unreal Engine"] .tech-icon-svg {
+    filter: brightness(0) invert(1) !important;
+}
+
+/* Blender - orange brand color */
+.skill-block[data-skill-name="Blender"] .tech-icon-svg {
+    filter: none !important;
+}
+
+/* Adobe Photoshop - show original colors */
+.skill-block[data-skill-name="Adobe Photoshop"] .tech-icon-svg {
+    filter: none !important;
+}
+
+/* Adobe Illustrator - show original colors */
+.skill-block[data-skill-name="Adobe Illustrator"] .tech-icon-svg {
+    filter: none !important;
+}
+
+/* Make only SVG skill icons white on dark background — PNGs are left untouched */
+.tech-icon-svg[src$=".svg"] {
+    filter: brightness(0) invert(1) !important;
+}

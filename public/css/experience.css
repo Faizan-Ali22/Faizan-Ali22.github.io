@@ -1,0 +1,931 @@
+/**
+ * EXPERIENCE SECTION STYLES
+ * ========================
+ * 
+ * This file contains all CSS styles related to the experience section of the portfolio.
+ * It includes styles for experience cards, tabs, timelines, and responsive design.
+ * 
+ * Dependencies:
+ * - Main color scheme variables from style.css
+ * - PS5 tile variables for project items
+ * - Backdrop filter support for modern glass morphism effects
+ * 
+ * Components included:
+ * - Experience section layout
+ * - Experience header and subtitle
+ * - Experience navigation tabs
+ * - Experience timeline container
+ * - Experience cards with glass morphism
+ * - Company information display
+ * - Job details and metadata
+ * - Status badges (current/seeking)
+ * - Project sections within experience with PS5 tile style
+ * - Skills and technologies tags
+ * - Responsive breakpoints for mobile/tablet
+ * 
+ * Color Palette:
+ * - Primary: #4fd1c7 (Teal)
+ * - Text Primary: #fff (White)
+ * - Text Secondary: #a0a0a0 (Light Gray)
+ * - Text Tertiary: #d1d5db (Lighter Gray)
+ * - Background: rgba(55, 65, 81, 0.7) (Dark Glass)
+ * - Accent: #fbbf24 (Amber for seeking status)
+ * - Success: #22c55e (Green for current status)
+ */
+
+/* PS5 Variables for project tiles */
+:root {
+    --ps5-blue: #0070f3;
+    --ps5-blue-dark: #003d82;
+    --ps5-blue-light: #1e88e5;
+    --ps5-white: #ffffff;
+    --ps5-black: #000000;
+    --ps5-gray-900: #0a0e13;
+    --ps5-gray-850: #0f1419;
+    --ps5-gray-800: #151b23;
+    --ps5-gray-750: #1a212a;
+    --ps5-gray-700: #1f2937;
+    --ps5-gray-600: #374151;
+    --ps5-gray-500: #6b7280;
+    --ps5-gray-400: #9ca3af;
+    --ps5-gray-300: #d1d5db;
+    --ps5-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --ps5-border-radius: 20px;
+}
+
+/* ===================================
+   EXPERIENCE SECTION - MAIN CONTAINER
+   =================================== */
+
+/**
+ * Main container for the experience section
+ * Provides consistent spacing and full width layout
+ * Includes padding-top to compensate for fixed top dock
+ */
+.experience-section {
+    padding-top: 120px; /* Compensation for fixed dock (72px height + 20px top + margin) */
+    margin: 0 0 4rem 0; /* Remove top margin to avoid conflict with padding-top */
+    width: 100%;
+}
+
+/* ===================================
+   EXPERIENCE HEADER
+   =================================== */
+
+/* Experience header styles are now handled by section-headers.css */
+
+/* ===================================
+   EXPERIENCE NAVIGATION TABS
+   =================================== */
+
+/**
+ */
+
+/* ===================================
+   EXPERIENCE TIMELINE CONTAINER
+   =================================== */
+
+/**
+ * Timeline container with centered layout
+ * Provides structure for experience cards with smooth transitions
+ */
+.experience-timeline {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* ===================================
+   EXPERIENCE CARDS
+   =================================== */
+
+/**
+ * Individual experience card with glass morphism effect
+ * Modern design with backdrop blur and subtle shadows
+ */
+.experience-card {
+    background: var(--exp-card-bg, rgba(var(--slate-rgb),0.7));
+    backdrop-filter: blur(20px) saturate(180%);
+    border: var(--exp-card-border, 1px solid rgba(var(--accent-rgb),0.3));
+    border-radius: 20px;
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--exp-card-shadow, 0 8px 32px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.1));
+    transition: all 0.3s ease;
+}
+
+/**
+ * Hover effect for experience cards
+ * Elevates card with enhanced shadows and border glow
+ */
+.experience-card:hover {
+    box-shadow: var(--exp-card-shadow-hover, 0 12px 40px rgba(var(--accent-rgb),0.15), 0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2));
+    border-color: var(--exp-card-border-hover, rgba(var(--accent-rgb),0.5));
+}
+
+/**
+ * Current position highlight
+ * Enhanced border and glow effect for active positions
+ */
+.experience-card.current {
+    border-color: var(--exp-card-current-border, rgba(var(--accent-rgb),0.6));
+    box-shadow: var(--exp-card-current-shadow, 0 8px 32px rgba(var(--accent-rgb),0.2), 0 0 20px rgba(var(--accent-rgb),0.1), inset 0 1px 0 rgba(255,255,255,0.1));
+}
+
+/**
+ * Job seeking status highlight
+ * Amber accent for positions being sought
+ */
+.experience-card.seeking {
+    border-color: var(--exp-card-seeking-border, rgba(var(--status-warning-rgb),0.5));
+    box-shadow: var(--exp-card-seeking-shadow, 0 8px 32px rgba(var(--status-warning-rgb),0.15), inset 0 1px 0 rgba(255,255,255,0.1));
+}
+
+/* ===================================
+   EXPERIENCE CARD HEADER
+   =================================== */
+
+/**
+ * Header section of experience cards
+ * Contains company info and job details in a flex layout
+ */
+.experience-header-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 2rem;
+    border-bottom: var(--exp-header-border, 1px solid rgba(var(--accent-rgb),0.2));
+}
+
+/**
+ * Company information container
+ * Groups company logo and details together
+ */
+.company-info {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    flex: 1;
+}
+
+/**
+ * Company logo container with consistent sizing
+ * Rounded corners with teal border accent
+ */
+.company-logo {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--exp-company-logo-bg, rgba(var(--accent-rgb),0.1));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: var(--exp-company-logo-border, 2px solid rgba(var(--accent-rgb),0.3));
+}
+
+/**
+ * Company logo image styling
+ * Ensures proper fit and coverage within container
+ */
+.company-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/**
+ * Icon for job seeking status
+ * Amber colored icon to indicate seeking status
+ */
+.seeking-icon {
+    font-size: 1.8rem;
+    color: var(--status-warning);
+}
+
+/**
+ * Company details container
+ * Flexible container for job information
+ */
+.company-details {
+    flex: 1;
+}
+
+/**
+ * Job title styling
+ * Primary heading for the position
+ */
+.job-title {
+    color: var(--text-primary);
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+}
+
+/**
+ * Company name with teal accent
+ * Secondary heading with brand color
+ */
+.company-name {
+    color: var(--accent);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+}
+
+/**
+ * Job metadata container
+ * Flexible layout for job details like period and duration
+ */
+.job-meta {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+}
+
+/**
+ * Job period badge
+ * Highlighted date range with teal styling
+ */
+.job-period {
+    background: var(--exp-job-period-bg, rgba(var(--accent-rgb),0.2));
+    color: var(--accent);
+    padding: 0.3rem 0.8rem;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border: var(--exp-job-period-border, 1px solid rgba(var(--accent-rgb),0.3));
+}
+
+/**
+ * Job duration text
+ * Muted text showing length of employment
+ */
+.job-duration {
+    color: var(--text-neutral);
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 0.3rem 0;
+}
+
+/**
+ * Additional job information container
+ * Vertical layout for job type and location
+ */
+.job-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+/**
+ * Job type information
+ * Employment type (full-time, contract, etc.)
+ */
+.job-type {
+    color: var(--color-bg-300);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/**
+ * Job location information
+ * Geographic location or remote status
+ */
+.job-location {
+    color: var(--text-neutral);
+    font-size: 0.85rem;
+}
+
+/* ===================================
+   STATUS BADGES
+   =================================== */
+
+/**
+ * Base styling for status badges
+ * Common properties for current, completed and seeking badges
+ */
+.current-badge,
+.completed-badge,
+.seeking-badge {
+    padding: 0.5rem 1rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+/**
+ * Current position badge
+ * Yellow styling with pulsing animation (same as formations en cours)
+ */
+.current-badge {
+    background: rgba(251,191,36,0.2);
+    color: #fbbf24;
+    border: 1px solid rgba(251,191,36,0.3);
+    animation: pulse-current 2s ease-in-out infinite;
+}
+
+/**
+ * Completed position badge
+ * Green styling for finished experiences (same as formations obtenu)
+ */
+.completed-badge {
+    background: rgba(34,197,94,0.2);
+    color: #22c55e;
+    border: 1px solid rgba(34,197,94,0.3);
+}
+
+/**
+ * Job seeking badge
+ * Amber styling with pulsing animation
+ */
+.seeking-badge {
+    background: rgba(var(--status-warning-rgb), 0.2);
+    color: var(--status-warning);
+    border: 1px solid rgba(var(--status-warning-rgb), 0.4);
+    animation: pulse-seeking 2s ease-in-out infinite;
+}
+
+/**
+ * Pulsing animation for current position badge
+ * Subtle glow effect to indicate active status (yellow)
+ */
+@keyframes pulse-current {
+    0%, 100% { box-shadow: 0 0 5px rgba(251,191,36, 0.3); }
+    50% { box-shadow: 0 0 15px rgba(251,191,36, 0.5); }
+}
+
+/**
+ * Pulsing animation for seeking badge
+ * Amber glow effect to draw attention
+ */
+@keyframes pulse-seeking {
+    0%, 100% { box-shadow: 0 0 5px rgba(var(--status-warning-rgb), 0.3); }
+    50% { box-shadow: 0 0 20px rgba(var(--status-warning-rgb), 0.6); }
+}
+
+/* ===================================
+   PROJECT LAYOUTS - HORIZONTAL & VERTICAL
+   =================================== */
+
+/**
+ * Projects section with flexible layout options
+ */
+.projects-section {
+    margin-bottom: 2rem;
+}
+
+/**
+ * Projects header with title and layout controls (specific to experience section)
+ */
+.experience-section .projects-section .projects-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    text-align: left; /* Override the centered text from projects.css */
+}
+
+.experience-section .projects-section .projects-header h5 {
+    margin: 0 0 0 0;
+    color: var(--accent);
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+/**
+ * Projects container - horizontal layout (grid)
+ */
+.projects-container-horizontal {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+/**
+ * Projects container - vertical layout (list)
+ */
+.projects-container-vertical {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+/**
+ * Project item in horizontal layout
+ */
+.projects-container-horizontal .project-item {
+    min-height: 240px;
+    aspect-ratio: 16/10;
+}
+
+/**
+ * Project item in vertical layout
+ */
+.projects-container-vertical .project-item {
+    min-height: 200px;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+}
+
+/* Vertical layout styles removed - now handled by project-card-unified.scss */
+
+/* ===================================
+   EXPERIENCE CONTENT
+   =================================== */
+
+/**
+ * Main content area of experience cards
+ * Contains detailed information about the position
+ */
+.experience-content {
+    padding: 2rem;
+}
+
+/**
+ * Job description text
+ * Overview paragraph with comfortable line spacing
+ */
+.experience-description {
+    color: var(--exp-description-text, #d1d5db);
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+/**
+ * Content sections spacing
+ * Consistent spacing between different content areas
+ */
+.projects-section,
+.tasks-section,
+.requirements-section {
+    margin-bottom: 2rem;
+}
+
+/**
+ * Section headings within experience content
+ * Teal colored headings for content organization
+ */
+.projects-section h5,
+.tasks-section h5,
+.requirements-section h5,
+.experience-skills h5,
+.experience-technologies h5 {
+    color: var(--accent);
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+/* Project item styles removed - now handled by project-card-unified.scss */
+
+/**
+ * Project name styling (updated for tile design)
+ */
+.project-name {
+    color: var(--text-primary);
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/**
+ * Project description (updated for tile design)
+ */
+.project-desc {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.9rem;
+    line-height: 1.4;
+    margin-bottom: 1rem;
+    font-style: normal;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/**
+ * Project detailed description (in hover overlay)
+ */
+.project-detailed-desc {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.85rem;
+    line-height: 1.4;
+    margin-bottom: 1.5rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Project tile tech styles removed - now handled by project-card-unified.scss */
+
+/**
+ * Task and requirement lists (updated for tile design)
+ * Clean list styling without default bullets, styled for PS5 tiles
+ */
+.project-tasks,
+.experience-tasks,
+.requirements-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/**
+ * Individual task/requirement items (updated for tile design)
+ * Custom bullet points with consistent spacing
+ */
+.project-tasks li,
+.experience-tasks li,
+.requirements-list li {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.8rem;
+    line-height: 1.4;
+    margin-bottom: 0.4rem;
+    padding-left: 1.2rem;
+    position: relative;
+}
+
+/**
+ * Custom bullet points for lists (updated for tile design)
+ * Teal colored arrow markers
+ */
+.project-tasks li::before,
+.experience-tasks li::before,
+.requirements-list li::before {
+    content: "▸";
+    color: #4fd1c7;
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+}
+
+/* Project tile actions and buttons removed - now handled by project-card-unified.scss */
+
+/* ===================================
+   SKILLS AND TECHNOLOGIES
+   =================================== */
+
+/**
+ * Skills and technologies sections
+ * Consistent spacing for tag containers
+ */
+.experience-skills,
+.experience-technologies {
+    margin-top: 1.5rem;
+}
+
+/**
+ * Tag containers for skills and technologies
+ * Flexible layout with wrapping and consistent gaps
+ */
+.skills-tags,
+.tech-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    position: relative;
+    z-index: 10;
+}
+
+/**
+ * Individual skill tags
+ * Teal themed badges for skills
+ */
+.skill-tag {
+    background: rgba(var(--accent-rgb), 0.2);
+    color: var(--accent);
+    padding: 0.4rem 0.8rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    border: 1px solid rgba(var(--accent-rgb), 0.3);
+}
+
+/**
+ * Clickable skill tags
+ * Styled like mini skill-blocks with glassmorphism effect and teal accent
+ */
+.skill-tag.clickable {
+    background: rgba(75, 85, 99, 0.85);
+    border: 1px solid rgba(var(--accent-rgb), 0.3);
+    border-radius: 8px;
+    padding: 0.4rem 0.8rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 20;
+    overflow: visible;
+}
+
+.skill-tag.clickable:hover {
+    background: rgba(var(--accent-rgb), 0.3);
+    border-color: rgba(var(--accent-rgb), 0.8);
+    transform: translateY(-1px) scale(1.02);
+    box-shadow: 
+        0 4px 15px rgba(var(--accent-rgb), 0.3),
+        0 0 15px rgba(var(--accent-rgb), 0.2);
+    z-index: 25;
+}
+
+.skill-tag.clickable:active {
+    transform: translateY(0) scale(1);
+    z-index: 25;
+}
+
+/* Skill icon styles within clickable tags */
+.skill-tag.clickable .tech-icon-svg {
+    width: 16px;
+    height: 16px;
+    filter: brightness(1.1);
+}
+
+.skill-tag.clickable .tech-icon-emoji {
+    font-size: 14px;
+    line-height: 1;
+}
+
+/**
+ * Technology chips
+ * Purple themed badges for technologies
+ */
+.tech-chip {
+    background: rgba(var(--external-primary, 99, 102, 241), 0.2);
+    color: var(--accent-purple-soft);
+    padding: 0.3rem 0.7rem;
+    border-radius: 10px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border: 1px solid rgba(var(--external-primary, 99, 102, 241), 0.3);
+}
+
+/**
+ * Clickable technology chips
+ * Styled like mini skill-blocks with glassmorphism effect
+ */
+.tech-chip.clickable {
+    background: rgba(75, 85, 99, 0.85);
+    border: 1px solid rgba(var(--accent-rgb), 0.3);
+    border-radius: 8px;
+    padding: 0.4rem 0.8rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 20;
+    overflow: visible;
+}
+
+.tech-chip.clickable:hover {
+    background: rgba(var(--accent-rgb), 0.3);
+    border-color: rgba(var(--accent-rgb), 0.8);
+    transform: translateY(-1px) scale(1.02);
+    box-shadow: 
+        0 4px 15px rgba(var(--accent-rgb), 0.3),
+        0 0 15px rgba(var(--accent-rgb), 0.2);
+    z-index: 25;
+}
+
+.tech-chip.clickable:active {
+    transform: translateY(0) scale(1);
+    z-index: 25;
+}
+
+/* Tech icon styles within clickable chips */
+.tech-chip.clickable .tech-icon-svg {
+    width: 16px;
+    height: 16px;
+    filter: brightness(1.1);
+}
+
+.tech-chip.clickable .tech-icon-emoji {
+    font-size: 14px;
+    line-height: 1;
+}
+
+/* ===================================
+   RESPONSIVE DESIGN - MOBILE & TABLET
+   =================================== */
+
+/**
+ * Mobile and tablet responsive adjustments
+ * Optimized layout for smaller screens
+ */
+@media (max-width: 768px) {
+    /* Experience header responsive styles are now handled by section-headers.css */
+    
+    /**
+     * OBSOLÈTE : Styles responsifs des anciens onglets supprimés
+     * Le responsive des onglets est maintenant géré dans css/shared/components/tabs.css
+     */
+    
+    /**
+     * Vertical header card layout for mobile
+     * Stacked layout instead of side-by-side
+     */
+    .experience-header-card {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1.5rem;
+    }
+    
+    /**
+     * Left-aligned company info on mobile
+     * Horizontal layout with logo and details side by side
+     */
+    .company-info {
+        flex-direction: row;
+        align-items: flex-start;
+        text-align: left;
+        width: 100%;
+        gap: 1rem;
+    }
+    
+    /**
+     * Smaller company logo on mobile to fit alongside text
+     * More compact for better layout
+     */
+    .company-logo {
+        width: 60px;
+        height: 60px;
+        flex-shrink: 0;
+    }
+    
+    /**
+     * Company details take remaining space
+     */
+    .company-details {
+        flex: 1;
+        min-width: 0; /* Allow text truncation if needed */
+    }
+    
+    /**
+     * Adjust job title size for mobile
+     */
+    .job-title {
+        font-size: 1.1rem;
+        line-height: 1.2;
+        margin-bottom: 0.3rem;
+    }
+    
+    /**
+     * Adjust company name size for mobile
+     */
+    .company-name {
+        font-size: 0.95rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    /**
+     * Left-aligned job metadata on mobile
+     */
+    .job-meta {
+        justify-content: flex-start;
+        gap: 0.5rem;
+    }
+    
+    /**
+     * Adjust badge sizes for mobile
+     */
+    .job-period {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.6rem;
+    }
+    
+    .job-duration {
+        font-size: 0.8rem;
+    }
+    
+    .job-type,
+    .job-location {
+        font-size: 0.8rem;
+    }
+    
+    /**
+     * Full width badges on mobile
+     */
+    .current-badge,
+    .completed-badge,
+    .seeking-badge {
+        align-self: stretch;
+        text-align: center;
+        font-size: 0.75rem;
+        padding: 0.4rem 0.8rem;
+    }
+    
+    /**
+     * Reduced padding for mobile content
+     */
+    .experience-content {
+        padding: 1.5rem;
+    }
+    
+    /**
+     * Mobile adjustments for project tiles
+     * Remove fixed heights and allow natural content flow
+     */
+    .project-item {
+        min-height: auto;
+        border-radius: 15px;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    /**
+     * Responsive layouts for mobile
+     */
+    .experience-section .projects-section .projects-header {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: flex-start;
+    }
+    
+    /**
+     * Single column layout for horizontal projects on mobile
+     */
+    .projects-container-horizontal {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    /**
+     * Horizontal projects display as stacked cards on mobile
+     */
+    .projects-container-horizontal .project-item {
+        min-height: auto;
+        aspect-ratio: unset;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    /* Project tile responsive styles removed - now handled by project-card-unified.scss */
+    
+    /**
+     * Adjust tasks list for mobile
+     */
+    .experience-tasks {
+        padding-left: 1.2rem;
+    }
+    
+    .experience-tasks li {
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
+    }
+}
+
+/* ===================================
+   BOUTON VOIR TOUTES LES EXPÉRIENCES
+   =================================== */
+
+.experience-footer {
+    text-align: center;
+    margin-top: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.experience-footer .btn-action {
+    display: inline-flex;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .experience-footer {
+        margin-top: 2rem;
+        padding-bottom: 1.5rem;
+    }
+}

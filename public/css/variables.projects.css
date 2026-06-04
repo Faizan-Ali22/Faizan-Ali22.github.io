@@ -1,0 +1,22 @@
+/* ========================================
+   VARIABLES PROJETS
+   Spécifiques aux pages liste projets / fiche projet
+   ======================================== */
+:root[data-page="projects"] {
+  --projects-grid-gap: 2.5rem;
+  --projects-card-bg: rgba(20,24,32,0.55);
+  --projects-card-border: rgba(255,255,255,0.1);
+  --projects-card-hover-border: rgba(79,209,199,0.4);
+  --projects-tag-bg: rgba(79,209,199,0.15);
+  --projects-tag-color: var(--accent, #4fd1c7);
+  --projects-radius: 22px;
+  --projects-transition: 0.35s cubic-bezier(.4,0,.2,1);
+}
+
+[data-theme="light"][data-page="projects"] {
+  --projects-card-bg: rgba(255,255,255,0.75);
+  --projects-card-border: rgba(0,0,0,0.08);
+  --projects-card-hover-border: rgba(52,152,219,0.45);
+  --projects-tag-bg: rgba(52,152,219,0.12);
+  --projects-tag-color: #2980b9;
+}

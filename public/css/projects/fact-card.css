@@ -1,0 +1,92 @@
+
+/* Fact card base styles - shared by all fact cards */
+.fact-card,
+.fact-card-hero {
+    background: var(--glass-bg);
+    backdrop-filter: blur(5px);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--shadow-glass);
+    position: relative;
+    overflow: hidden;
+    padding: var(--padding-glass);
+    border-radius: var(--border-radius-sm);
+    transition: var(--transition-smooth);
+}
+
+.fact-card::after,
+.fact-card-hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--glass-bg-light);
+    border-radius: var(--border-radius-sm);
+    z-index: -1;
+}
+
+/* Fact icon base styles - shared by all fact icons */
+.fact-icon,
+.fact-icon-hero {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--border-radius-circle);
+    color: var(--primary-bg);
+    font-weight: var(--font-weight-semibold);
+    background: var(--gradient-teal);
+    flex-shrink: 0;
+}
+
+/* Hero specific adjustments */
+.fact-card-hero {
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    gap: var(--gap-sm);
+    margin-bottom: var(--gap-lg);
+}
+
+.fact-card-hero:last-child {
+    margin-bottom: 0;
+}
+
+.fact-icon-hero {
+    width: 1.75rem;
+    height: 1.75rem;
+    font-size: 0.8rem;
+    margin: 0;
+}
+
+/* Sidebar specific adjustments */
+.fact-card {
+    background: var(--glass-bg-strong);
+    backdrop-filter: blur(10px);
+    margin-bottom: 1rem;
+}
+
+.fact-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(79, 209, 199, 0.3);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(79, 209, 199, 0.1);
+}
+
+.fact-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--gradient-teal);
+    border-radius: 0 2px 2px 0;
+}
+
+.fact-card::after {
+    background: var(--glass-bg-lighter);
+}
+
+.fact-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}

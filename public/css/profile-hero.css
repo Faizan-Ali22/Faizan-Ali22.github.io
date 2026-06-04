@@ -1,0 +1,611 @@
+/**
+ * PROFILE SECTION STYLES - HERO CENTERED LAYOUT
+ * 
+ * This file contains all styles related to the profile section of the portfolio website.
+ * It includes styles for the centered hero layout, avatar with status badge, action buttons,
+ * and responsive design adaptations for different screen sizes.
+ * 
+ * Author: Portfolio Theme
+ * Date: 2025
+ */
+
+/* ==========================================================================
+   MAIN PROFILE SECTION - HERO CENTERED
+   ========================================================================== */
+
+/**
+ * Profile Section Container - Hero Centered Layout
+ * 
+ * Fullscreen hero section with centered content, positioned to avoid dock overlap
+ */
+.profile-section.hero-centered { 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    width: 100vw;
+    padding: 120px 2rem 50px 2rem; /* Top padding for top dock, reduced bottom padding */
+    position: relative;
+    background: transparent; /* Use existing portfolio background */
+    color: white;
+    text-align: center;
+    overflow-x: hidden;
+    box-sizing: border-box;
+}
+
+/* ==========================================================================
+   HERO MAIN CONTENT
+   ========================================================================== */
+
+.hero-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+    z-index: 1; /* Below docks but above background */
+    position: relative;
+    padding: 0 20px; /* Prevents overflow on sides */
+}
+
+/* ==========================================================================
+   HERO AVATAR - CLEAN AND MODERN VERSION
+   ========================================================================== */
+
+.hero-avatar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 0.0rem;
+}
+
+.avatar-container {
+    position: relative;
+    display: inline-block;
+}
+
+.hero-profile-image {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: none;
+    padding: 0;
+    box-shadow: 
+        0 12px 40px rgba(0, 0, 0, 0.35),
+        0 0 0 3px rgba(79, 209, 199, 0.12),
+        0 0 30px rgba(79, 209, 199, 0.25),
+        0 0 80px rgba(79, 209, 199, 0.08),
+        inset 0 2px 0 rgba(255, 255, 255, 0.15),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hero-profile-image:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.45),
+        0 0 0 3px rgba(79, 209, 199, 0.25),
+        0 0 50px rgba(79, 209, 199, 0.4),
+        0 0 120px rgba(79, 209, 199, 0.15),
+        inset 0 2px 0 rgba(255, 255, 255, 0.25),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+}
+
+
+
+/* Status Badge - Positioned at bottom right of avatar */
+.status-badge {
+    position: absolute;
+    bottom: 8px;
+    right: -100px;
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    border: 2px solid rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 
+        0 4px 12px rgba(79, 70, 229, 0.4),
+        0 2px 6px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    cursor: default;
+    pointer-events: none;
+    z-index: 10;
+    overflow: hidden;
+}
+
+.status-badge::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    animation: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+.status-badge.available {
+    background: linear-gradient(135deg, #059669, #10b981);
+    box-shadow: 
+        0 4px 12px rgba(5, 150, 105, 0.4),
+        0 2px 6px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.status-badge.unavailable {
+    background: linear-gradient(135deg, #dc2626, #ef4444);
+    box-shadow: 
+        0 4px 12px rgba(220, 38, 38, 0.4),
+        0 2px 6px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+/* ==========================================================================
+   HERO TEXT CONTENT
+   ========================================================================== */
+
+.hero-content {
+    text-align: center;
+}
+
+.hero-greeting {
+    color: #c4d3e0;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    font-weight: 400;
+}
+
+.hero-name {
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.5em;
+}
+
+.hero-title-job {
+    font-size: 2.8rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+    color: #e2e8f0;
+}
+
+.hero-specialty {
+    color: #fff;
+    font-weight: 700;
+    background: linear-gradient(90deg, #f59e0b, #f97316);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero-subtitle-actions {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    line-height: 1.1;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    line-height: 1.1;
+    white-space: nowrap;
+}
+
+.hero-action {
+    display: inline-block;
+    margin-right: 0.5rem;
+    font-weight: 800;
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Subtle and elegant gradients for each word */
+.hero-action:nth-child(1),
+.hero-action:nth-child(2) {
+    background: linear-gradient(
+        90deg,
+        #4ade80,
+        #22c55e,
+        #4ade80,
+        #34d399
+    );
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: subtleFlow 4s ease-in-out infinite;
+}
+
+.hero-action:nth-child(3) {
+    background: linear-gradient(
+        90deg,
+        #60a5fa,
+        #3b82f6,
+        #60a5fa,
+        #2563eb
+    );
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: subtleFlow 4s ease-in-out infinite;
+    animation-delay: 1.3s;
+}
+
+.hero-action:nth-child(4) {
+    background: linear-gradient(
+        90deg,
+        #f59e0b,
+        #d97706,
+        #f59e0b,
+        #ea580c
+    );
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: subtleFlow 4s ease-in-out infinite;
+    animation-delay: 2.6s;
+}
+
+/* Animation douce et élégante */
+@keyframes subtleFlow {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+/* Fallback pour les navigateurs qui ne supportent pas background-clip: text */
+@supports not (-webkit-background-clip: text) {
+    .hero-action:nth-child(1) { color: #4ade80; }
+    .hero-action:nth-child(2) { color: #60a5fa; }
+    .hero-action:nth-child(3) { color: #f59e0b; }
+}
+
+.hero-subtitle {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: #e2e8f0;
+}
+
+.hero-description {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #cbd5e1;
+    margin-bottom: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ==========================================================================
+   HERO ACTION BUTTONS
+   ========================================================================== */
+
+.hero-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.btn-primary, .btn-secondary {
+    padding: 0.75rem 2rem;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    white-space: nowrap;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #ff6b35 0%, #f59e0b 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 107, 53, 0.6);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.6);
+}
+
+/* ==========================================================================
+   TECHNOLOGY BADGES
+   ========================================================================== */
+
+.hero-tech-badges {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+
+.tech-badge {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.tech-badge:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   HERO BOTTOM SECTION
+   ========================================================================== */
+
+.hero-bottom {
+    margin: 0.5rem auto 1.5rem;
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+.hero-bottom:hover {
+    transform: translateY(-4px);
+}
+
+.hero-explore {
+    display: none;
+}
+
+.hero-scroll-indicator {
+    width: 48px;
+    height: 48px;
+    color: rgba(255, 255, 255, 0.6);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+    transform-origin: center center;
+    animation: glowPulse 3s ease-in-out infinite;
+}
+
+.hero-bottom:hover .hero-scroll-indicator {
+    color: #4fd1c7;
+    transform: scale(1.15);
+    filter: drop-shadow(0 4px 12px rgba(79, 209, 199, 0.6));
+    animation: none;
+}
+
+@keyframes glowPulse {
+    0%, 100% {
+        filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+    }
+    50% {
+        filter: drop-shadow(0 2px 12px rgba(79, 209, 199, 0.5));
+    }
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translate(0, 0);
+    }
+    40% {
+        transform: translate(0, -8px);
+    }
+    60% {
+        transform: translate(0, -4px);
+    }
+}
+
+
+
+@keyframes softGlow {
+    0%, 100% {
+        opacity: 0.6;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+
+
+/* ==========================================================================
+   COURSE PREVIEW CARDS
+   ========================================================================== */
+
+.hero-courses-preview {
+    position: absolute;
+    bottom: 120px; /* Positioned above the bottom dock */
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 1rem;
+    opacity: 0.7;
+    z-index: 5; /* Ensure it's above background but below docks */
+}
+
+.course-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 1rem;
+    width: 120px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.course-card:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-5px);
+}
+
+.course-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.course-card h3 {
+    font-size: 0.9rem;
+    margin: 0;
+    color: white;
+    font-weight: 500;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    .profile-section.hero-centered {
+        padding: 100px 1rem 130px 1rem; /* Adjust for mobile dock sizes */
+    }
+
+    .hero-title {
+        font-size: 2.5rem;
+        white-space: normal;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.5rem;
+    }
+    
+    .hero-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .btn-primary, .btn-secondary {
+        width: 200px;
+    }
+    
+    .hero-courses-preview {
+        position: static;
+        transform: none;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .course-card {
+        width: 100px;
+    }
+    
+    /* Avatar Mobile Styles */
+    .hero-profile-image {
+        width: 150px;
+        height: 150px;
+    }
+    
+
+    
+    /* Status Badge Mobile Styles */
+    .status-badge {
+        bottom: 6px;
+        right: -80px;
+        font-size: 9px;
+        padding: 4px 8px;
+        border-radius: 16px;
+    }
+    
+    /* Hero Bottom Arrow Mobile */
+    .hero-bottom {
+        margin: 1.5rem auto 1rem;
+    }
+    
+    .hero-scroll-indicator {
+        width: 42px;
+        height: 42px;
+    }
+}
+
+@media (max-width: 480px) {
+    .profile-section.hero-centered {
+        padding: 80px 1rem 110px 1rem; /* Further adjust for small mobile screens */
+    }
+    
+    .hero-title {
+        font-size: 2rem;
+        white-space: normal;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.3rem;
+    }
+    
+    .hero-description {
+        font-size: 1rem;
+    }
+
+    .hero-courses-preview {
+        margin-top: 1.5rem;
+    }
+    
+    /* Avatar Extra Small Mobile */
+    .hero-profile-image {
+        width: 120px;
+        height: 120px;
+    }
+    
+
+    
+    /* Status Badge for very small screens */
+    .status-badge {
+        bottom: 4px;
+        right: -60px;
+        font-size: 8px;
+        padding: 3px 6px;
+        border-radius: 12px;
+        border-width: 1px;
+    }
+    
+    /* Hero Bottom Arrow Small Mobile */
+    .hero-bottom {
+        margin: 1rem auto 0.5rem;
+    }
+    
+    .hero-scroll-indicator {
+        width: 38px;
+        height: 38px;
+    }
+}

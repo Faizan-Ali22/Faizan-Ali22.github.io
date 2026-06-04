@@ -1,0 +1,405 @@
+/**
+ * ========================================
+ * TECHNICAL SPECIFICATIONS CSS
+ * ========================================
+ * 
+ * Styles cohérents avec le design des skill boxes et info-boxes
+ * Utilise les variables CSS globales pour la cohérence
+ */
+
+/* ========================================
+   TECHNICAL SPECIFICATIONS CONTAINER
+   ======================================== */
+
+.technical-specs-list, .project-widget-technical-specs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+    padding: 0;
+}
+
+/* ========================================
+   SPECIFICATION ITEMS - Style Info-Box
+   ======================================== */
+
+.spec-item {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--border-radius-sm);
+    padding: 1rem;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.spec-item:hover {
+    background: var(--glass-bg-hover);
+    border-color: var(--glass-border-lighter);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-glass);
+}
+
+/* ========================================
+   SPECIFICATION LABELS - Style Skill Modal
+   ======================================== */
+
+.spec-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.spec-label svg {
+    width: 14px;
+    height: 14px;
+    opacity: 0.7;
+}
+
+/* ========================================
+   SPECIFICATION VALUES
+   ======================================== */
+
+.spec-value {
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+/* ========================================
+   TECHNOLOGY PILLS - Style Tech Items
+   ======================================== */
+
+.tech-pills-specs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+    margin-top: 0.25rem;
+}
+
+.tech-pill-spec {
+    background: var(--glass-bg);
+    color: var(--text-primary);
+    padding: 4px 8px;
+    border-radius: var(--border-radius-sm);
+    font-size: 11px;
+    font-weight: 500;
+    border: 1px solid var(--glass-border);
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+}
+
+.tech-pill-spec:hover {
+    background: var(--glass-bg-hover);
+    border-color: var(--glass-border-lighter);
+    transform: scale(1.05);
+}
+
+/* Styles pour les pills cliquables */
+.tech-pill-spec.clickable-tech {
+    cursor: pointer;
+    position: relative;
+    user-select: none;
+}
+
+.tech-pill-spec.clickable-tech:hover {
+    background: var(--glass-bg-hover);
+    border-color: var(--glass-border-lighter);
+    transform: scale(1.05);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.tech-pill-spec.clickable-tech:active {
+    transform: scale(0.98);
+}
+
+.tech-pill-spec.clickable-tech:focus {
+    outline: 2px solid rgba(0, 122, 255, 0.5);
+    outline-offset: 1px;
+}
+
+/* Indicateur visuel pour les pills cliquables */
+.tech-pill-spec.clickable-tech::after {
+    content: '↗';
+    font-size: 8px;
+    opacity: 0;
+    margin-left: 3px;
+    transition: opacity 0.2s ease;
+    color: var(--text-secondary);
+}
+
+.tech-pill-spec.clickable-tech:hover::after {
+    opacity: 0.6;
+}
+
+/* Animation de pulse subtile pour indiquer l'interactivité */
+@keyframes subtlePulse {
+    0%, 100% { 
+        box-shadow: 0 0 0 0 rgba(0, 122, 255, 0.4); 
+    }
+    50% { 
+        box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.1); 
+    }
+}
+
+.tech-pill-spec.clickable-tech {
+    animation: subtlePulse 3s infinite;
+}
+
+.tech-pill-spec.clickable-tech:hover {
+    animation: none;
+}
+
+/* Styles spécifiques par type de technologie */
+.tech-pill-spec.programming-language {
+    border-color: rgba(255, 59, 48, 0.3);
+}
+
+.tech-pill-spec.programming-language:hover {
+    border-color: rgba(255, 59, 48, 0.5);
+    background: rgba(255, 59, 48, 0.1);
+}
+
+.tech-pill-spec.framework-engine {
+    border-color: rgba(52, 199, 89, 0.3);
+}
+
+.tech-pill-spec.framework-engine:hover {
+    border-color: rgba(52, 199, 89, 0.5);
+    background: rgba(52, 199, 89, 0.1);
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+
+@media (max-width: 768px) {
+    .technical-specs-list, .project-widget-technical-specs-list {
+        gap: 0.75rem;
+    }
+    
+    .spec-item {
+        padding: 0.875rem;
+    }
+    
+    .spec-label {
+        font-size: 0.8rem;
+        margin-bottom: 0.375rem;
+    }
+    
+    .spec-value {
+        font-size: 0.9rem;
+    }
+    
+    .tech-pills-specs {
+        gap: 0.3rem;
+    }
+    
+    .tech-pill-spec {
+        padding: 3px 6px;
+        font-size: 10px;
+    }
+}
+
+/* ========================================
+   ANIMATIONS SUBTILES
+   ======================================== */
+
+.spec-item {
+    opacity: 0;
+    animation: fadeInUp 0.5s ease forwards;
+}
+
+.spec-item:nth-child(1) { animation-delay: 0.1s; }
+.spec-item:nth-child(2) { animation-delay: 0.15s; }
+.spec-item:nth-child(3) { animation-delay: 0.2s; }
+.spec-item:nth-child(4) { animation-delay: 0.25s; }
+.spec-item:nth-child(5) { animation-delay: 0.3s; }
+.spec-item:nth-child(6) { animation-delay: 0.35s; }
+.spec-item:nth-child(7) { animation-delay: 0.4s; }
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========================================
+   HINT MESSAGE POUR LES PILLS CLIQUABLES
+   ======================================== */
+
+.tech-specs-hint {
+    margin-top: 0.75rem;
+    padding: 0.5rem 0.75rem;
+    background: var(--glass-bg-light);
+    border: 1px solid var(--glass-border-light);
+    border-radius: var(--border-radius-sm);
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+.tech-specs-hint svg {
+    opacity: 0.6;
+    flex-shrink: 0;
+}
+
+.tech-specs-hint:hover {
+    opacity: 1;
+}
+
+@media (max-width: 768px) {
+    .tech-specs-hint {
+        font-size: 0.75rem;
+        padding: 0.375rem 0.625rem;
+        margin-top: 0.5rem;
+    }
+}
+
+/* ========================================
+   ANIMATIONS ET TRANSITIONS
+   ======================================== */
+
+@keyframes slideInFromLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+.spec-item {
+    animation: slideInFromLeft 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    opacity: 0;
+}
+
+.spec-item:nth-child(1) { animation-delay: 0.1s; }
+.spec-item:nth-child(2) { animation-delay: 0.2s; }
+.spec-item:nth-child(3) { animation-delay: 0.3s; }
+.spec-item:nth-child(4) { animation-delay: 0.4s; }
+.spec-item:nth-child(5) { animation-delay: 0.5s; }
+.spec-item:nth-child(6) { animation-delay: 0.6s; }
+.spec-item:nth-child(7) { animation-delay: 0.7s; }
+
+.tech-pill-spec {
+    animation: slideInFromLeft 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    opacity: 0;
+}
+
+.tech-pills-specs .tech-pill-spec:nth-child(1) { animation-delay: 0.1s; }
+.tech-pills-specs .tech-pill-spec:nth-child(2) { animation-delay: 0.15s; }
+.tech-pills-specs .tech-pill-spec:nth-child(3) { animation-delay: 0.2s; }
+.tech-pills-specs .tech-pill-spec:nth-child(4) { animation-delay: 0.25s; }
+.tech-pills-specs .tech-pill-spec:nth-child(5) { animation-delay: 0.3s; }
+
+/* Effet shimmer sur hover pour les valeurs custom */
+.spec-item[data-spec-type="custom"] .spec-value:not(.tech-pills-specs) {
+    background: linear-gradient(135deg, #fff 0%, rgba(255, 255, 255, 0.8) 100%);
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    transition: all 0.3s ease;
+}
+
+.spec-item[data-spec-type="custom"]:hover .spec-value:not(.tech-pills-specs) {
+    background: linear-gradient(
+        135deg, 
+        rgba(255, 255, 255, 0.6) 0%, 
+        #fff 25%, 
+        #fff 50%, 
+        rgba(255, 255, 255, 0.6) 75%, 
+        rgba(255, 255, 255, 0.6) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+}
+
+/* Effet de focus pour l'accessibilité */
+.spec-item:focus-within {
+    outline: 2px solid rgba(0, 122, 255, 0.6);
+    outline-offset: 2px;
+    border-radius: 14px;
+}
+
+/* Amélioration de l'effet de glow pour les pills */
+.tech-pill-spec:focus {
+    outline: none;
+    box-shadow: 
+        0 0 0 2px rgba(0, 122, 255, 0.4),
+        0 4px 16px rgba(0, 122, 255, 0.25);
+}
+
+/* ========================================
+   TECHNOLOGY ICONS DANS LES PILLS
+   ======================================== */
+
+.tech-icon-mini {
+    width: 14px;
+    height: 14px;
+    object-fit: contain;
+    flex-shrink: 0;
+    margin-right: 4px;
+}
+
+.tech-icon-emoji {
+    font-size: 12px;
+    flex-shrink: 0;
+    margin-right: 2px;
+}
+
+/* Alignement amélioré pour les pills avec icônes */
+.tech-pill-spec {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+}
+
+/* ========================================
+   INFO-BOX TECHNICAL SPECS BEHAVIOR
+   ======================================== */
+
+/* Assurer que le contenu est visible quand expanded */
+.project-widget.technical-specs-box.expanded .project-widget-content {
+    display: block;
+}
+
+/* Masquer le contenu quand pas expanded */
+.project-widget.technical-specs-box:not(.expanded) .project-widget-content {
+    display: none;
+}
+
+/* ========================================
+   TECH CHIPS INTEGRATION - Use existing styles
+   ======================================== */
+
+/* Les tech-chips utilisent déjà les styles définis dans experience.css */
+/* Petit ajustement pour l'intégration dans les spécifications techniques */
+.technical-specs-list .tech-chips, .project-widget-technical-specs-list .tech-chips {
+    margin-top: 0.5rem;
+}

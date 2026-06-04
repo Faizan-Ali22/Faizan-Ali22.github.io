@@ -1,0 +1,22 @@
+(function(){"use strict";if(window.notificationsManagerInitialized)return;function d(){const e=window.location.pathname;return e.startsWith("/en/")||e==="/en"?"en":"fr"}const p={fr:{just_now:"À l'instant",minutes_ago:"il y a {0}m",hours_ago:"il y a {0}h"},en:{just_now:"Just now",minutes_ago:"{0}m ago",hours_ago:"{0}h ago"}};let e=[];function b(){try{const t=localStorage.getItem("notifications");if(t){const n=JSON.parse(t);e=n.map(e=>({...e,timestamp:new Date(e.timestamp)})),f()}}catch(t){console.warn("⚠️ Error loading notifications:",t),e=[]}}function f(){const t=new Date;t.setDate(t.getDate()-7);const s=e.length;e=e.filter(e=>new Date(e.timestamp)>t),e.length!==s&&n()}function n(){try{localStorage.setItem("notifications",JSON.stringify(e))}catch(e){console.warn("⚠️ Error saving notifications:",e)}}function t(){const s=document.getElementById("notification-badge"),o=document.getElementById("mobile-notification-badge"),t=e.filter(e=>!e.read).length,n=e=>{if(!e)return;t>0?(e.textContent=t>99?"99+":t,e.style.display="flex"):e.style.display="none"};n(s),n(o),window.dispatchEvent(new CustomEvent("notificationBadgeUpdated",{detail:{unreadCount:t}}))}function r(o,i,a="info"){const r={id:Date.now(),title:o,message:i,type:a,timestamp:new Date,read:!1};return e.unshift(r),s(),t(),e.length>50&&(e=e.slice(0,50)),n(),r}function s(){const t=document.getElementById("notifications-list"),n=document.getElementById("mobile-notifications-list"),s=e.length===0?'<div class="no-notifications">Aucune notification</div>':e.map(e=>`
+          <div class="notification-item ${e.type} ${e.read?"read":"unread"}" data-id="${e.id}">
+            <div class="notification-icon">${u(e.type)}</div>
+            <div class="notification-content">
+              <div class="notification-title">${e.title}</div>
+              <div class="notification-message">${e.message}</div>
+              <div class="notification-time">${m(e.timestamp)}</div>
+            </div>
+            <button class="notification-close" onclick="event.stopPropagation(); window.NotificationsManager.removeNotification(${e.id})">×</button>
+          </div>
+        `).join("");t&&(t.innerHTML=s),n&&(n.innerHTML=s)}function u(e){const t={info:"ℹ️",success:"✅",warning:"⚠️",error:"❌",trophy:"🏆"};return t[e]||t.info}function o(o){e=e.filter(e=>e.id!==o),s(),t(),n()}function l(){e=[],s(),t(),n()}function h(){e.forEach(e=>{e.read=!0}),t(),n()}function m(e){const i=new Date,s=i-e,t=Math.floor(s/6e4),o=Math.floor(s/36e5),a=d(),n=p[a];return t<1?n.just_now:t<60?n.minutes_ago.replace("{0}",t):o<24?n.hours_ago.replace("{0}",o):e.toLocaleDateString()}function i(e,t="info",n={}){const i=document.getElementById("toast-container");if(!i){console.warn("⚠️ Toast container not found");return}const s=document.createElement("div");let a=`toast toast-${t}`,o;n.avatar?(a+=" personal with-shine",o=`
+        <div class="toast-avatar">
+          <img src="${n.avatar}" alt="${n.avatarAlt||"Avatar"}" />
+        </div>
+        <div class="toast-content">
+          ${n.title?`<div class="toast-title">${n.title}</div>`:""}
+          <div class="toast-text">${e}</div>
+        </div>
+      `):o=`<span class="toast-message">${e}</span>`,s.className=a,s.innerHTML=`
+      ${o}
+      <button class="toast-close" aria-label="Fermer">×</button>
+    `,i.appendChild(s),requestAnimationFrame(()=>{s.classList.add("show")});const r=s.querySelector(".toast-close");r.addEventListener("click",()=>c(s));const l=n.duration||5e3;setTimeout(()=>{c(s)},l)}function c(e){e.classList.remove("show"),setTimeout(()=>{e.parentNode&&e.parentNode.removeChild(e)},300)}function g(){return[...e]}function v(){return e.filter(e=>!e.read).length}function a(){b(),s(),t(),window.notificationsManagerInitialized=!0,console.log("✅ Notifications Manager initialized")}const j={addNotification:r,removeNotification:o,clearAllNotifications:l,showNotification:i,markNotificationsAsRead:h,updateNotificationsList:s,updateNotificationBadge:t,getNotifications:g,getUnreadCount:v};window.NotificationsManager=j,window.addNotification=r,window.removeNotification=o,window.showNotification=i,window.clearAllNotifications=l,document.readyState==="loading"?document.addEventListener("DOMContentLoaded",a):a()})()

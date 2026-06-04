@@ -1,0 +1,172 @@
+/**
+ * Hero Background - Deep Space Aesthetic
+ * Specifications: 16:9 ratio, 1920x1080px reference
+ * Based on detailed requirements for luminous ribbon and particle effects
+ */
+
+.hero-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -20; /* Plus bas que l'image de background du projet */
+  overflow: hidden;
+  
+  /* Gradient radial + linéaire selon les spécifications exactes */
+  background:
+    var(--hero-radial-gradient),
+    var(--hero-linear-gradient);
+  
+  /* Optimisation performance */
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+/* SVG Ruban lumineux */
+.luminous-ribbon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  mix-blend-mode: screen; /* Mode additif pour brillance */
+  transform: rotate(-5deg) scale(1.1); /* Inclinaison légère */
+  transform-origin: center center;
+  pointer-events: none;
+}
+
+/* Groupe de rubans pour effet de soie superposée */
+.ribbon-group {
+  animation: ribbonFlow 8s ease-in-out infinite alternate;
+}
+
+/* Animation du ruban - mouvement suggéré vers haut-droite */
+@keyframes ribbonFlow {
+  0% {
+    transform: translateY(0px) translateX(0px);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateY(-15px) translateX(10px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-8px) translateX(5px);
+    opacity: 0.9;
+  }
+}
+
+/* Canvas pour les particules */
+#particles-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -15; /* Plus bas que l'image de background du projet */
+}
+
+/* Ajout: canvas des vagues (ex-hero-inline.css) */
+#waves-canvas {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: -18; /* Sous les particules mais au-dessus du fond */
+  opacity: 0.8;
+  mix-blend-mode: screen;
+}
+
+/* Intensification des vagues en mode clair */
+[data-theme="light"] #waves-canvas {
+  mix-blend-mode: multiply; /* bleu plus lisible sur fond clair */
+  opacity: 0.95;
+  filter: saturate(1.35) drop-shadow(0 0 6px rgba(0,118,255,0.35)) drop-shadow(0 0 14px rgba(0,140,255,0.25));
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .hero-background {
+    background-size: 120% 120%;
+  }
+  /* Ajustements rubans (ex-hero-inline.css) */
+  .ribbon-main { height: 100px; top: 38%; }
+  .ribbon-secondary-1 { height: 70px; top: 33%; }
+  .ribbon-secondary-2 { height: 50px; top: 40%; }
+  .ribbon-tertiary { height: 35px; top: 36%; }
+}
+
+@media (max-width: 768px) {
+  .luminous-ribbon {
+    transform: rotate(-3deg) scale(1.05);
+  }
+  .hero-background {
+    background-size: 150% 150%;
+  }
+  /* Ajustements rubans */
+  .ribbon-main { height: 80px; top: 40%; }
+  .ribbon-secondary-1 { height: 60px; top: 36%; }
+  .ribbon-secondary-2 { height: 40px; top: 42%; }
+  .ribbon-tertiary { height: 30px; top: 38%; }
+}
+
+@media (max-width: 480px) {
+  .hero-background {
+    background-size: 200% 200%;
+    background-position: center top;
+  }
+  
+  .luminous-ribbon {
+    transform: rotate(-2deg) scale(1.02);
+  }
+  /* Ajustements rubans */
+  .ribbon-main { height: 60px; top: 42%; }
+  .ribbon-secondary-1 { height: 45px; top: 38%; }
+  .ribbon-secondary-2 { height: 35px; top: 44%; }
+  .ribbon-tertiary { height: 25px; top: 40%; }
+  
+  /* Réduction du nombre de particules sur mobile */
+  .hero-background::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(10, 30, 84, 0.1);
+    z-index: 2;
+  }
+}
+
+/* Mode sombre - ajustements si nécessaire */
+@media (prefers-color-scheme: dark) {
+  .hero-background {
+    filter: brightness(0.9) contrast(1.1);
+  }
+}
+
+/* Réduction de mouvement pour accessibilité */
+@media (prefers-reduced-motion: reduce) {
+  .ribbon-group {
+    animation: none;
+  }
+  
+  #particles-canvas {
+    display: none;
+  }
+}
+
+/* Performance pour écrans haute résolution */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .hero-background {
+    background-attachment: fixed;
+  }
+}
+
+/* Optimisation pour impression */
+@media print {
+  .hero-background {
+    display: none;
+  }
+}

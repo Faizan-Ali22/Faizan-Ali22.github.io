@@ -1,0 +1,204 @@
+/**
+ * INFO SECTIONS CSS
+ * 
+ * This file contains all styles related to information sections and panels
+ * in the portfolio theme. It includes standard info sections and the special
+ * aero-glass effect for enhanced visual appeal.
+ * 
+ * @author Portfolio Theme
+ * @version 1.0.0
+ */
+
+/* ============================================================================
+   BASE INFO SECTION STYLES
+   ============================================================================ */
+
+/**
+ * Standard information section container
+ * 
+ * Creates a glassmorphism container with backdrop blur effects
+ * and subtle borders for displaying information blocks.
+ */
+.info-section { 
+    background: var(--info-section-bg, rgba(55, 65, 81, 0.6));
+    backdrop-filter: blur(15px) saturate(180%);
+    padding: 1.5rem;
+    border-radius: 16px;
+    margin-bottom: 2rem;
+    border: var(--info-section-border, 1px solid rgba(79, 209, 199, 0.2));
+    box-shadow: var(--info-section-shadow, 0 8px 32px rgba(0, 0, 0, 0.2)), var(--info-section-inner-highlight, inset 0 1px 0 rgba(255, 255, 255, 0.1));
+}
+
+/**
+ * Section title styling
+ * 
+ * Applies brand color and proper spacing to section headings.
+ */
+.info-section h3 { 
+    color: var(--accent); 
+    margin-bottom: 1.5rem; 
+    font-size: 1.3rem;
+}
+
+/**
+ * Individual information item container
+ * 
+ * Creates a flex layout for label-value pairs with proper alignment.
+ */
+.info-item { 
+    display: flex; 
+    margin-bottom: 0.8rem; 
+    align-items: center;
+    color: var(--info-item-text, rgba(255, 255, 255, 0.9));
+}
+
+/**
+ * Information label styling
+ * 
+ * Sets fixed width and bright color for better visibility on dark background.
+ */
+.info-label { 
+    width: 140px; 
+    color: var(--info-label-text, rgba(255, 255, 255, 0.7)); 
+    font-weight: 500;
+}
+
+/**
+ * Information value styling
+ * 
+ * Main text content with bright color for readability.
+ */
+.info-item span:not(.info-label) {
+    color: var(--info-value-text, rgba(255, 255, 255, 0.85));
+}
+
+/* ============================================================================
+   AERO GLASS EFFECT STYLES
+   ============================================================================ */
+
+/**
+ * Enhanced aero-glass information section
+ * 
+ * This creates a premium glassmorphism effect with:
+ * - Gradient background with brand colors
+ * - Enhanced backdrop blur
+ * - Stronger border visibility
+ * - Special shadow effects
+ * - Relative positioning for pseudo-elements
+ */
+.info-section.aero-glass {
+    background: var(--info-aero-bg-gradient, linear-gradient(135deg, 
+        rgba(79, 209, 199, 0.12) 0%, 
+        rgba(55, 65, 81, 0.5) 50%, 
+        rgba(79, 209, 199, 0.08) 100%));
+    backdrop-filter: blur(20px) saturate(180%);
+    border: var(--info-aero-border, 1px solid rgba(79, 209, 199, 0.3));
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--info-aero-shadow, 0 8px 32px rgba(79, 209, 199, 0.1)), var(--info-aero-inner-highlight, inset 0 1px 0 rgba(255, 255, 255, 0.2));
+}
+
+/**
+ * Glass reflection effect
+ * 
+ * Creates a subtle light reflection on the top portion of the
+ * aero-glass section to simulate real glass material.
+ */
+.info-section.aero-glass::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 40%;
+    background: var(--info-aero-reflection-gradient, linear-gradient(180deg, 
+        rgba(255, 255, 255, 0.15) 0%, 
+        transparent 100%));
+    border-radius: 20px 20px 0 0;
+    pointer-events: none;
+}
+
+/**
+ * Aero-glass section title enhancement
+ * 
+ * Ensures proper visibility and layering of titles within
+ * the aero-glass effect by setting z-index and colors.
+ */
+.info-section.aero-glass h3 {
+    color: var(--info-aero-title-color, #fff);
+    position: relative;
+    z-index: 2;
+    margin-bottom: 1.8rem;
+    font-weight: 600;
+}
+
+/**
+ * Aero-glass info item enhancement
+ * 
+ * Ensures info items are properly layered above the glass effect.
+ */
+.info-section.aero-glass .info-item {
+    position: relative;
+    z-index: 2;
+}
+
+/**
+ * Aero-glass label styling
+ * 
+ * Enhances label visibility with brand color and bold weight
+ * when used within the aero-glass effect.
+ */
+.info-section.aero-glass .info-label {
+    color: var(--accent);
+    font-weight: 600;
+}
+
+/* ============================================================================
+   RESPONSIVE DESIGN
+   ============================================================================ */
+
+/**
+ * Tablet and mobile adjustments
+ */
+@media (max-width: 768px) {
+    .info-section {
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .info-section h3 {
+        font-size: 1.2rem;
+        margin-bottom: 1.2rem;
+    }
+    
+    .info-item {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 1rem;
+    }
+    
+    .info-label {
+        width: auto;
+        margin-bottom: 0.3rem;
+        font-weight: 600;
+    }
+}
+
+/**
+ * Small mobile devices
+ */
+@media (max-width: 480px) {
+    .info-section {
+        padding: 0.8rem;
+        border-radius: 12px;
+    }
+    
+    .info-section.aero-glass {
+        border-radius: 16px;
+    }
+    
+    .info-section h3 {
+        font-size: 1.1rem;
+    }
+}
