@@ -20,17 +20,17 @@
   displayedInPortfolio: true
   color: "#3776AB"
 
+- key: "pl_html"
+  iconPath: "/images/skills/html.svg"
+  experience: 3
+  displayedInPortfolio: true
+  color: "#00599C"
+
 # - key: "pl_javascript"
 #   iconPath: "/images/skills/javascript.svg"
 #   experience: 3
 #   displayedInPortfolio: true
 #   color: "#F7DF1E"
-
-# - key: "pl_html"
-#   iconPath: "/images/skills/html.svg"
-#   experience: 3
-#   displayedInPortfolio: true
-#   color: "#E34F26"
 
 # - key: "pl_css"
 #   iconPath: "/images/skills/css.svg"

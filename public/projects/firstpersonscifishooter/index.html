@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr" data-theme="dark" data-page="portfolio">
-<head>
-	<meta name="generator" content="Hugo 0.163.3"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<html lang="en" dir="ltr" data-theme="dark" data-page="projects">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width">
-<title>My Portfolio</title>
+<title>First Person Sci Fi Shooter | My Portfolio</title>
 
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,7 +21,7 @@
 
 
 
-    <link rel="stylesheet" href="/css/variables.portfolio.css">
+    <link rel="stylesheet" href="/css/variables.projects.css">
 
 
 
@@ -106,9 +105,6 @@
 
 
 
-  
-    <link rel="stylesheet" href="/css/skills.css">
-
 
 
 
@@ -139,6 +135,12 @@
 
 
 
+
+  
+    
+    <link rel="stylesheet" href="/css/projects-list.css">
+
+  
 
 
 
@@ -183,7 +185,23 @@
 
 
 
+  
+  
+    <link rel="stylesheet" href="/css/projects/variables.widgets.css">
 
+  
+    <link rel="stylesheet" href="/css/projects/variables.ps5.css">
+
+  
+  
+    <link rel="stylesheet" href="/css/projects/developer-widgets.css">
+
+
+
+
+
+  
+      <link rel="stylesheet" href="/scss/projects/widgets/_index.min.css">
 
 
 
@@ -197,6 +215,20 @@
     <link rel="stylesheet" href="/css/shared/components/youtube-modal.css">
 
 
+
+
+  
+    <link rel="stylesheet" href="/css/projects/actions.css">
+    <link rel="stylesheet" href="/css/projects/content.css">
+    <link rel="stylesheet" href="/css/projects/developer-widgets.css">
+    <link rel="stylesheet" href="/css/projects/fact-card.css">
+    <link rel="stylesheet" href="/css/projects/hero.css">
+    <link rel="stylesheet" href="/css/projects/meta-info.css">
+    <link rel="stylesheet" href="/css/projects/projects-list.css">
+    <link rel="stylesheet" href="/css/projects/responsive.css">
+    <link rel="stylesheet" href="/css/projects/variables.css">
+    <link rel="stylesheet" href="/css/projects/variables.ps5.css">
+    <link rel="stylesheet" href="/css/projects/variables.widgets.css">
 
 
 
@@ -258,715 +290,6 @@
   </script>
   
   
-  
-    
-<div id="hero-background" class="hero-background">
-  
-  <canvas id="particles-canvas"></canvas>
-  
-  
-  <svg style="position: absolute; width: 0; height: 0;" aria-hidden="true">
-    <defs>
-      <mask id="organic-mask-1">
-        <path d="M 0,0 L 100,0 Q 90,15 100,30 Q 85,45 100,60 Q 95,75 100,90 L 100,100 L 0,100 Q 15,85 0,70 Q 25,55 0,40 Q 10,25 0,10 Z" fill="white" transform="scale(5,0.8)"/>
-      </mask>
-      <mask id="organic-mask-2">
-        <path d="M 0,0 L 100,0 Q 95,20 100,35 Q 80,50 100,65 Q 92,80 100,95 L 100,100 L 0,100 Q 20,80 0,65 Q 30,50 0,35 Q 8,20 0,5 Z" fill="white" transform="scale(5,0.8)"/>
-      </mask>
-      <mask id="organic-mask-3">
-        <path d="M 0,0 L 100,0 Q 88,25 100,40 Q 78,55 100,70 Q 90,85 100,100 L 0,100 Q 22,75 0,60 Q 35,45 0,30 Q 12,15 0,0 Z" fill="white" transform="scale(5,0.8)"/>
-      </mask>
-    </defs>
-  </svg>
-
-  
-  <canvas id="waves-canvas"></canvas>
-</div>
-
-<script src="/js/paper-minimal.js"></script>
-<script>
-
-const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-if (!prefersReducedMotion) {
-  document.addEventListener('DOMContentLoaded', function() {
-    
-    
-
-    class SeededRandom {
-      constructor(seed = 12345) {
-        this.seed = seed;
-        this.originalSeed = seed;
-      }
-      
-      reset() {
-        this.seed = this.originalSeed;
-      }
-      
-      next() {
-        
-        this.seed = (this.seed * 1664525 + 1013904223) % (2**32);
-        return this.seed / (2**32);
-      }
-    }
-    
-    
-
-    class FluidWaves {
-      constructor() {
-        this.canvas = document.getElementById('waves-canvas');
-        if (!this.canvas) {
-          console.warn('Canvas waves-canvas not found');
-          return;
-        }
-        
-        
-        paper.setup(this.canvas);
-        
-        
-        this.rng = new SeededRandom(42); 
-        
-        
-        this.isMobile = window.innerWidth <= 768 || 
-                       ('ontouchstart' in window) || 
-                       (navigator.maxTouchPoints > 0);
-        
-        
-        this.h = window.innerHeight;
-        this.w = window.innerWidth;
-        this.halfH = this.h * 0.5;
-        
-        
-        if (this.isMobile) {
-          this.speed = 0.15; 
-          this.strokeWidth = 70; 
-          this.frequency = 2.5; 
-          this.pathCount = 5; 
-          this.pathPoints = 10; 
-          this.magnitude = 0.07; 
-        } else {
-          
-          this.speed = 0.22;
-          this.strokeWidth = 70;
-          this.frequency = 3;
-          this.pathCount = 7;
-          this.pathPoints = 24;
-          this.magnitude = 0.15;
-        }
-        
-        this.paths = [];
-        this.offsetRandom = 3;
-        this.randomOffsets = [];
-        this.maxDistRandom = 1.2;
-        this.randomDistances = [];
-        this.randomHeights = [];
-        this.magnitudeValue = this.magnitude; 
-        
-        
-        this.initializeRandomValues();
-        
-        this.readColors();
-        
-        this.init();
-        this.observeTheme();
-      }
-      
-      initializeRandomValues() {
-        
-        this.rng.reset();
-        
-        
-        for (let i = 0; i < this.pathCount; i++) {
-          this.randomOffsets[i] = this.rng.next() * this.offsetRandom;
-          this.randomDistances[i] = Math.max(this.rng.next() * this.maxDistRandom, 0.3);
-          this.randomHeights[i] = Math.max(this.rng.next() + 0.5, 0.3);
-        }
-      }
-      
-      readColors() {
-        const cs = getComputedStyle(document.documentElement);
-        const isLight = document.documentElement.getAttribute('data-theme') === 'light';
-        this.colors = [1,2,3,4,5,6,7].map(i => {
-          let c = cs.getPropertyValue(`--hero-wave-color-${i}`).trim();
-          if (isLight) {
-            
-            if (/^rgb\(\s*\d+/.test(c) && !/rgba/.test(c)) {
-              c = c.replace(/^rgb\((.*)\)$/,'rgba($1,0.85)');
-            } else if (/rgba\(/.test(c)) {
-              
-              c = c.replace(/rgba\((\s*\d+\s*,\s*\d+\s*,\s*\d+\s*,)([^)]+)\)/, (m,prefix,a)=> {
-                let val=parseFloat(a); if(isNaN(val)) return m; return `rgba(${prefix}${Math.min(1,val+0.25)})`; });
-            }
-          }
-          return c;
-        }).filter(Boolean);
-      }
-      
-      observeTheme() {
-        const observer = new MutationObserver(muts => {
-          for (const m of muts) {
-            if (m.attributeName === 'data-theme') {
-              this.readColors();
-              
-              
-              this.paths.forEach((p, idx) => { p.strokeColor = this.colors[idx % this.colors.length]; });
-            }
-          }
-        });
-        observer.observe(document.documentElement, { attributes: true });
-        this.themeObserver = observer;
-      }
-      
-      init() {
-        this.createWaves();
-        this.setupEvents();
-        this.animate();
-      }
-      
-      createWaves() {
-        
-        if (this.paths.length > 0) {
-          this.paths.forEach(path => path.remove());
-          this.paths = [];
-        }
-        
-        
-        if (!this.baseYPositions) {
-          this.baseYPositions = [];
-        }
-        if (!this.waveAmplitudes) {
-          this.waveAmplitudes = [];
-        }
-        
-        
-        for (let i = 0; i < this.pathCount; i++) {
-          
-          
-          
-          const path = new paper.Path();
-          path.strokeCap = 'round';
-          path.strokeColor = this.colors[i % this.colors.length];
-          path.strokeWidth = this.strokeWidth * this.randomDistances[i];
-          
-          
-          
-          if (!this.baseYPositions[i]) {
-            this.baseYPositions[i] = this.halfH + (i - this.pathCount/2) * 40;
-          }
-          const baseY = this.baseYPositions[i];
-          
-          
-          if (!this.waveAmplitudes[i]) {
-            this.waveAmplitudes[i] = this.h * this.magnitudeValue * this.randomHeights[i];
-          }
-          
-          
-          for (let v = 0; v < this.pathPoints; v++) {
-            const x = this.w * (v / (this.pathPoints - 1));
-            path.add(new paper.Point(x, baseY));
-          }
-          
-          
-          path.smooth();
-          this.paths[i] = path;
-        }
-      }
-      
-      animate() {
-        
-        let frameCount = 0;
-        
-        
-        const smoothInterval = this.isMobile ? 15 : 10; 
-        const initialSmoothFrames = this.isMobile ? 20 : 30; 
-        
-        paper.view.onFrame = (event) => {
-          
-          const systemTime = Date.now() / 1000; 
-          const timeOffset = systemTime * this.speed;
-          frameCount++;
-          
-          
-          const shouldSmooth = frameCount <= initialSmoothFrames || frameCount % smoothInterval === 0;
-          
-          for (let p = 0; p < this.paths.length; p++) {
-            const path = this.paths[p];
-            const randomHeight = this.randomHeights[p];
-            const randomOffset = this.randomOffsets[p];
-            
-            
-            const baseY = this.baseYPositions[p];
-            const waveAmplitude = this.waveAmplitudes[p];
-            
-            
-            for (let i = 0; i < this.pathPoints; i++) {
-              const segment = path.segments[i];
-              
-              
-              const positionOffset = (i / this.pathPoints) * this.frequency * randomHeight;
-              
-              
-              const sinus = Math.sin(timeOffset - positionOffset + randomOffset);
-              
-              
-              segment.point.y = baseY + sinus * waveAmplitude;
-            }
-            
-            
-            if (shouldSmooth) {
-              path.smooth();
-            }
-          }
-        };
-      }
-      
-      resize() {
-        const wasMobile = this.isMobile;
-        this.isMobile = window.innerWidth <= 768 || 
-                       ('ontouchstart' in window) || 
-                       (navigator.maxTouchPoints > 0);
-        
-        
-        const oldW = this.w;
-        
-        this.h = window.innerHeight;
-        this.w = window.innerWidth;
-        this.halfH = this.h * 0.5;
-        
-        
-        if (wasMobile !== this.isMobile) {
-          
-          if (this.isMobile) {
-            this.speed = 0.15;
-            this.strokeWidth = 50;
-            this.frequency = 2.5;
-            this.pathCount = 5;
-            this.pathPoints = 16;
-            this.magnitudeValue = 0.12;
-          } else {
-            this.speed = 0.22;
-            this.strokeWidth = 70;
-            this.frequency = 3;
-            this.pathCount = 7;
-            this.pathPoints = 24;
-            this.magnitudeValue = 0.15;
-          }
-          
-          
-          this.initializeRandomValues();
-          
-          
-          this.createWaves();
-          return;
-        }
-        
-        
-        paper.view.viewSize = new paper.Size(this.w, this.h);
-        
-        
-        
-        for (let i = 0; i < this.paths.length; i++) {
-          if (this.paths[i]) {
-            
-            this.paths[i].strokeWidth = this.strokeWidth * this.randomDistances[i];
-            
-            
-            for (let v = 0; v < this.paths[i].segments.length; v++) {
-              
-              const segment = this.paths[i].segments[v];
-              const xRatio = segment.point.x / oldW;
-              segment.point.x = this.w * xRatio;
-              
-            }
-            
-            
-            this.paths[i].smooth();
-          }
-        }
-        
-        
-        if (this.paths.length === 0) {
-          this.createWaves();
-        }
-      }
-      
-      setupEvents() {
-        window.addEventListener('resize', () => {
-          this.resize();
-        });
-        
-        document.addEventListener('visibilitychange', () => {
-          if (document.hidden) {
-            paper.view.pause();
-          } else if (!document.hidden) {
-            paper.view.play();
-          }
-        });
-      }
-    }
-    
-    
-
-    class HeroParticles {
-      constructor() {
-        this.canvas = document.getElementById('particles-canvas');
-        if (!this.canvas) {
-          console.warn('Canvas particles-canvas not found');
-          return;
-        }
-        
-        this.ctx = this.canvas.getContext('2d');
-        this.particles = [];
-        this.animationId = null;
-        
-        
-        this.particleRng = new SeededRandom(123); 
-        
-        
-        this.isMobile = window.innerWidth <= 768 || 
-                       ('ontouchstart' in window) || 
-                       (navigator.maxTouchPoints > 0);
-        
-        
-        this.lastWindowPosition = { x: window.screenX, y: window.screenY };
-        this.windowVelocity = { x: 0, y: 0 };
-        this.impulse = { x: 0, y: 0 };
-        this.impulseDecay = 0.95; 
-        this.impulseMultiplier = 0.02; 
-        
-        
-        this.mousePosition = { x: -1000, y: -1000 }; 
-        this.mouseActive = false;
-        this.mouseRepulsionRadius = 120; 
-        this.mouseRepulsionStrength = 1.2; 
-        
-        
-        this.config = {
-          count: this.getParticleCount(),
-          colors: ['#FFFFFF', '#B0D2FF', '#D8ECFF'], 
-          sizes: this.isMobile ? [1, 1.5, 2] : [1, 1.5, 2, 2.5, 3], 
-          opacities: this.isMobile ? [0.3, 0.4, 0.5, 0.6] : [0.4, 0.5, 0.6, 0.7, 0.8], 
-          bokehChance: this.isMobile ? 0.02 : 0.05 
-        };
-        
-        this.init();
-      }
-      
-      getParticleCount() {
-        
-        const baseCount = this.isMobile ? 80 : 150; 
-        const screenRatio = (window.innerWidth * window.innerHeight) / (1920 * 1080);
-        return Math.floor(baseCount * Math.min(screenRatio, 1.2));
-      }
-      
-      init() {
-        this.resizeCanvas();
-        this.createParticles();
-        this.setupEvents();
-        this.animate();
-      }
-      
-      resizeCanvas() {
-        this.canvas.width = window.innerWidth;
-        this.canvas.height = window.innerHeight;
-      }
-      
-      createParticle(index = null) {
-        
-        
-        if (index !== null) {
-          this.particleRng.seed = this.particleRng.originalSeed + index * 17; 
-        }
-        
-        const isNearWaves = this.particleRng.next() < 0.4; 
-        let x, y;
-        
-        if (isNearWaves) {
-          
-          x = this.particleRng.next() * this.canvas.width;
-          y = this.canvas.height * 0.4 + (this.particleRng.next() - 0.5) * 200; 
-        } else {
-          
-          x = this.particleRng.next() * this.canvas.width;
-          y = this.particleRng.next() * (this.canvas.height * 0.8);
-          
-          
-          if (this.particleRng.next() < 0.6) {
-            x = this.canvas.width * 0.3 + this.particleRng.next() * this.canvas.width * 0.7;
-            y = this.particleRng.next() * this.canvas.height * 0.5;
-          }
-        }
-        
-        return {
-          x, y,
-          size: this.config.sizes[Math.floor(this.particleRng.next() * this.config.sizes.length)],
-          color: this.config.colors[Math.floor(this.particleRng.next() * this.config.colors.length)],
-          baseOpacity: this.config.opacities[Math.floor(this.particleRng.next() * this.config.opacities.length)],
-          opacity: 0,
-          bokeh: this.particleRng.next() < this.config.bokehChance,
-          drift: {
-            x: (this.particleRng.next() - 0.5) * 0.2,
-            y: (this.particleRng.next() - 0.5) * 0.2
-          },
-          
-          velocity: {
-            x: 0,
-            y: 0
-          },
-          pulse: this.particleRng.next() * Math.PI * 2,
-          age: 0,
-          maxAge: 1000 + this.particleRng.next() * 2000,
-          shape: this.particleRng.next() < 0.3 ? 'hexagon' : 'circle',
-          index: index !== null ? index : -1 
-        };
-      }
-      
-      createParticles() {
-        this.particles = [];
-        for (let i = 0; i < this.config.count; i++) {
-          this.particles.push(this.createParticle(i));
-        }
-      }
-      
-      updateParticle(particle) {
-        particle.age++;
-        
-        
-        
-        const sizeInfluence = Math.max(0.1, (4 - particle.size) / 3); 
-        const impulseEffect = {
-          x: this.impulse.x * sizeInfluence,
-          y: this.impulse.y * sizeInfluence
-        };
-        
-        
-        this.applyMouseRepulsion(particle);
-        
-        
-        const velocityDamping = 0.95; 
-        particle.velocity.x *= velocityDamping;
-        particle.velocity.y *= velocityDamping;
-        
-        
-        particle.x += particle.drift.x + impulseEffect.x + particle.velocity.x;
-        particle.y += particle.drift.y + impulseEffect.y + particle.velocity.y;
-        
-        
-        const systemTime = Date.now() / 1000;
-        const pulseOffset = Math.sin(systemTime * 2 + particle.pulse) * 0.1;
-        particle.opacity = Math.max(0.1, Math.min(1, particle.baseOpacity + pulseOffset));
-        
-        
-        
-        const impulseIntensity = Math.abs(this.impulse.x) + Math.abs(this.impulse.y);
-        if (impulseIntensity > 0.5) {
-          const flashIntensity = sizeInfluence * 0.15; 
-          particle.opacity *= 1 + (impulseIntensity * flashIntensity);
-        }
-        
-        
-        const ageRatio = particle.age / particle.maxAge;
-        if (ageRatio < 0.1) {
-          particle.opacity *= ageRatio / 0.1;
-        } else if (ageRatio > 0.9) {
-          particle.opacity *= (1 - ageRatio) / 0.1;
-        }
-        
-        
-        if (particle.age >= particle.maxAge || 
-            particle.x < -50 || particle.x > this.canvas.width + 50 || 
-            particle.y < -50 || particle.y > this.canvas.height + 50) {
-          
-          Object.assign(particle, this.createParticle(particle.index));
-        }
-      }
-      
-      drawParticle(particle) {
-        this.ctx.save();
-        this.ctx.globalAlpha = particle.opacity;
-        
-        
-        if (particle.bokeh) {
-          this.ctx.filter = 'blur(2px)';
-        }
-        
-        this.ctx.fillStyle = particle.color;
-        this.ctx.beginPath();
-        
-        if (particle.shape === 'hexagon') {
-          
-          const sides = 6;
-          const angle = Math.PI * 2 / sides;
-          this.ctx.moveTo(
-            particle.x + particle.size * Math.cos(0),
-            particle.y + particle.size * Math.sin(0)
-          );
-          for (let i = 1; i <= sides; i++) {
-            this.ctx.lineTo(
-              particle.x + particle.size * Math.cos(i * angle),
-              particle.y + particle.size * Math.sin(i * angle)
-            );
-          }
-        } else {
-          this.ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-        }
-        
-        this.ctx.fill();
-        this.ctx.restore();
-      }
-      
-      animate() {
-        
-        this.updateWindowMovement();
-        
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        
-        this.particles.forEach(particle => {
-          this.updateParticle(particle);
-          this.drawParticle(particle);
-        });
-        
-        this.animationId = requestAnimationFrame(this.animate.bind(this));
-      }
-      
-      setupEvents() {
-        window.addEventListener('resize', () => {
-          this.resizeCanvas();
-          this.adjustParticlesForResize();
-        });
-        
-        
-        document.addEventListener('mousemove', (e) => {
-          const rect = this.canvas.getBoundingClientRect();
-          this.mousePosition.x = e.clientX - rect.left;
-          this.mousePosition.y = e.clientY - rect.top;
-          this.mouseActive = true;
-        });
-        
-        this.canvas.addEventListener('mouseenter', () => {
-          this.mouseActive = true;
-        });
-        
-        this.canvas.addEventListener('mouseleave', () => {
-          this.mouseActive = false;
-          this.mousePosition.x = -1000;
-          this.mousePosition.y = -1000;
-        });
-        
-        document.addEventListener('visibilitychange', () => {
-          if (document.hidden && this.animationId) {
-            cancelAnimationFrame(this.animationId);
-            this.animationId = null;
-          } else if (!document.hidden && !this.animationId) {
-            this.animate();
-          }
-        });
-      }
-      
-      applyMouseRepulsion(particle) {
-        
-        if (!this.mouseActive) {
-          return;
-        }
-        
-        
-        const dx = particle.x - this.mousePosition.x;
-        const dy = particle.y - this.mousePosition.y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-        
-        
-        if (distance > this.mouseRepulsionRadius || distance === 0) {
-          return;
-        }
-        
-        
-        const normalizedDistance = distance / this.mouseRepulsionRadius;
-        const repulsionIntensity = Math.pow(1 - normalizedDistance, 2); 
-        
-        
-        const directionX = dx / distance;
-        const directionY = dy / distance;
-        
-        
-        const sizeInfluence = Math.max(0.3, (4 - particle.size) / 2); 
-        
-        
-        const repulsionForce = this.mouseRepulsionStrength * repulsionIntensity * sizeInfluence;
-        
-        
-        particle.velocity.x += directionX * repulsionForce * 0.15; 
-        particle.velocity.y += directionY * repulsionForce * 0.15;
-      }
-      
-      adjustParticlesForResize() {
-        const newCount = this.getParticleCount();
-        
-        
-        if (newCount > this.particles.length) {
-          for (let i = this.particles.length; i < newCount; i++) {
-            this.particles.push(this.createParticle(i));
-          }
-        }
-        
-        else if (newCount < this.particles.length) {
-          this.particles.splice(newCount);
-        }
-        
-        
-        this.particles.forEach((particle, index) => {
-          
-          if (particle.x > this.canvas.width) {
-            particle.x = this.canvas.width * 0.9; 
-          }
-          if (particle.y > this.canvas.height) {
-            particle.y = this.canvas.height * 0.9; 
-          }
-        });
-        
-        this.config.count = newCount;
-      }
-      
-      updateWindowMovement() {
-        
-        const currentPosition = { x: window.screenX, y: window.screenY };
-        
-        
-        this.windowVelocity.x = currentPosition.x - this.lastWindowPosition.x;
-        this.windowVelocity.y = currentPosition.y - this.lastWindowPosition.y;
-        
-        
-        if (Math.abs(this.windowVelocity.x) > 1 || Math.abs(this.windowVelocity.y) > 1) {
-          this.impulse.x += this.windowVelocity.x * this.impulseMultiplier;
-          this.impulse.y += this.windowVelocity.y * this.impulseMultiplier;
-          
-          
-          const maxImpulse = 5;
-          this.impulse.x = Math.max(-maxImpulse, Math.min(maxImpulse, this.impulse.x));
-          this.impulse.y = Math.max(-maxImpulse, Math.min(maxImpulse, this.impulse.y));
-        }
-        
-        
-        this.lastWindowPosition = currentPosition;
-        
-        
-        this.impulse.x *= this.impulseDecay;
-        this.impulse.y *= this.impulseDecay;
-      }
-    }
-    
-    
-    try {
-      window.fluidWaves = new FluidWaves();
-      window.heroParticles = new HeroParticles();
-    } catch (error) {
-      console.warn('⚠️ Error during Hero Background initialization:', error);
-    }
-  });
-} else {
-  
-}
-</script>
-
   
   
   
@@ -1132,7 +455,7 @@ if (!prefersReducedMotion) {
                 
                 
                 
-                <a href="/"
+                <a href="/projects/firstpersonscifishooter/"
                    class="mobile-menu-language-option active"
                    data-lang="en">
                   <span class="language-flag">🇬🇧</span>
@@ -1460,1935 +783,1283 @@ document.addEventListener('DOMContentLoaded', function() {
   <main>
     
 
-<section id="profil" class="profile-section hero-centered">
-    
-    <div class="hero-main">
-        <div class="hero-avatar">
-            <div class="avatar-container"><img src="/images/perofile.jpg" 
-                     alt="Muhammad Faizan Ali" 
-                     class="hero-profile-image">
-                <div class="status-badge available">
-                    Job seeking
-                </div>
-            </div>
-        </div>
+<style>
+    body {
+        --hero-bg-image: url('/images/projects/first_person_sci_fi_shooter.jpg');
+    }
+</style>
 
-        <div class="hero-content">
-            <p class="hero-greeting">Hello, I&#39;m <span class="hero-name">Faizan Ali</span></p>
-            <h1 class="hero-title">
-                
-                <span class="hero-action">Game</span>
-                
-                <span class="hero-action">Developer</span>
-                
-                <span class="hero-action">&amp;</span>
-                
-                <span class="hero-action">3D Artist</span>
-                
-            </h1>
-            
-            <p class="hero-description">
-                Versatile developer specialized in Video games with C# &amp; C&#43;&#43; in Unity &amp; Unreal Engine. From conception to production, I transform ideas into captivating interactive experiences that leave a mark on players.
-            </p>
 
-            <div class="hero-actions">
-                <a href="mailto:faizanali95466@gmail.com" class="btn-action"><svg class="icon " width="18" height="18" style="color: inherit;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
 
-Contact
-                </a>
-                <a href="/cv/" class="btn-action primary cv-choice-trigger"><svg class="icon " width="18" height="18" style="color: inherit;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
 
-Download CV
-                </a>
-            </div>
+<link rel="stylesheet" href="/scss/sector-badge.css">
 
-            <div class="hero-stats" style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
-                <div class="stat-item">
-                    <div class="stat-value">4&#43;</div>
-                    <div class="stat-label">years pro experience</div>
-                </div>
-                <div class="stat-item"><div class="stat-value">7</div>
-                    <div class="stat-label">games created</div>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="hero-bottom" onclick="(function(){const target=document.querySelector('main.main-content section:first-child') || document.querySelector('#recommandations');if(target){const rect=target.getBoundingClientRect();const pos=rect.top+window.pageYOffset;window.scrollTo({top:pos-100,behavior:'smooth'});}else{console.log('No target section found');}})()">
-        <div class="hero-scroll-indicator"></div>
-    </div>
-</section>
 
-<script>
+<link rel="stylesheet" href="/scss/image-modal.css">
 
-window.PROJECT_DESCRIPTIONS = {
-    games: "\"Video game development projects, from prototyping to commercial production.\"",
-    "apps-web": "\"Modern web applications and full-stack solutions using the latest technologies.\"",
-    "mods-tools": "\"Development tools, mods, and utilities to improve creative workflows.\""
-};
-</script>
 
-<div class="container">
-    
-    <div class="scroll-progress">
-        <div class="scroll-progress-bar"></div>
-    </div>
 
-    <main class="main-content">
-
+<div class="project-hero-overlay"></div>
+<section class="project-hero">
+    <div class="project-hero-content no-top">
         
-        <section id="projets">
-            <section class="projects-section">
-    <div class="projects-header section-header-unified">
-        <h2 class="section-title-unified">Projects</h2>
-        <p class="projects-subtitle section-subtitle-unified">Designing meaningful experiences and tools that make life easier - great products are never built alone.</p>
-    </div>
-
-    
-    <div class="tabs" data-can-collapse="true" data-collapse-id="projects">
-        <button class="tab-btn active" data-category="games" data-tab="games">
-            <span class="icon">🎮</span>
-            <span class="tab-label">Games</span>
-        </button>
-        <button class="tab-btn" data-category="apps-web" data-tab="apps-web">
-            <span class="icon">💻</span>
-            <span class="tab-label">Apps/Web</span>
-        </button>
-        <button class="tab-btn" data-category="mods-tools" data-tab="mods-tools">
-            <span class="icon">🛠️</span>
-            <span class="tab-label">Mods &amp; Tools</span>
-        </button>
-    </div>
-
-    
-    <div class="projects-description">
-    <p id="section-description">Explore my projects by area of expertise: video games, web applications, and developer tools.</p>
-    </div>
-
-    
-    <div class="projects-grid" id="projects-grid">
-        
-            
+        <div class="project-hero-bottom">
+            <div class="project-info-grid">
+                
+                <div class="project-description-block">
                     
                     
-                        
-                    
-                    
-                        
-                    
-                    
-                    
-                    <div class="project-card-wrapper"
-                         data-project-id="CyberSafe"
-                         data-background-image="/images/projects/cybersafe.jpg"
-                         data-sector="games-personnel"
-                         data-category="games"
-                         data-technologies='
-
-
-
-
-
-    
-
-
-
-
-    
-
-
-
-
-    
-
-
-
-
-
-
-
-pl_csharp,fw_unity,fw_blender,fw_adobe_photoshop,fw_adobe_illustrator,tool_jira,VS-code,tool_github
-'>
-                        
+                    <div class="mobile-sector-badge">
                         
 
-<div class="project-card-unified">
-    <div class="project-card-unified-header">
-        
-        <div class="project-card-unified-image"><img src="/images/projects/cybersafe.jpg" 
-                 alt="CyberSafe - 3D Mobile RPG"loading="lazy">
-        </div>
-        
-        
-        
-        <div class="project-card-unified-content">
-            <h3 class="project-card-unified-title">CyberSafe - 3D Mobile RPG</h3>
-            
-            
-        </div>
-        
-        
-        <div class="project-card-unified-detailed-info">
-            <div>
-                <h3 class="project-card-unified-title">CyberSafe - 3D Mobile RPG</h3>
-                
-                <p class="project-card-unified-detailed-description">An offline 3D educational RPG focusing on gamified cybersecurity concepts optimized for mobile devices.</p>
-                
-                
-                
-                
-                <div class="project-card-unified-technologies">
-                    
-                    <span class="project-card-unified-tech-item">C#</span>
-                    
-                    <span class="project-card-unified-tech-item">Unity</span>
-                    
-                    <span class="project-card-unified-tech-item">Blender</span>
-                    
-                    <span class="project-card-unified-tech-item">Adobe Photoshop</span>
-                    
-                    
-                    <span class="project-card-unified-tech-item">+1</span>
-                    
-                </div>
-                
-                
-                
-            </div>
-            
-            <a href="http://localhost:1313/projects/cybersafe/" class="btn-action">
-                See project
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M7 17L17 7M17 7H7M17 7V17"/>
-                </svg>
-            </a>
-            
-        </div>
-    </div>
+
+
+
+
+
+
+    
+    
+
+
+<div class="ps5-sector-badge">
+    <span class="sector-primary">Game</span>
+    
+    <span class="sector-divider"></span>
+    <span class="sector-secondary">Personal</span>
+    
 </div>
 
                     </div>
-        
-            
-                    
-                    
-                        
-                    
-                    
-                        
                     
                     
                     
-                    <div class="project-card-wrapper"
-                         data-project-id="Extinguisher"
-                         data-background-image="/images/projects/extinguisher.jpg"
-                         data-sector="games-personnel"
-                         data-category="games"
-                         data-technologies='
-
-
-
-
-
-    
-
-
-
-
-    
-
-
-
-
-    
-
-
-
-
-
-
-
-pl_csharp,fw_unity,fw_blender,fw_adobe_photoshop,fw_adobe_illustrator,VS-code,tool_github
-'>
+                    <h2 class="project-name-bottom">First Person Sci Fi Shooter</h2>
+                    
+                    
+                    
+                    
+                    <div class="project-actions">
                         
                         
-
-<div class="project-card-unified">
-    <div class="project-card-unified-header">
-        
-        <div class="project-card-unified-image"><img src="/images/projects/extinguisher.jpg" 
-                 alt="Extinguisher"loading="lazy">
-        </div>
-        
-        
-        
-        <div class="project-card-unified-content">
-            <h3 class="project-card-unified-title">Extinguisher</h3>
-            
-            
-        </div>
-        
-        
-        <div class="project-card-unified-detailed-info">
-            <div>
-                <h3 class="project-card-unified-title">Extinguisher</h3>
-                
-                <p class="project-card-unified-detailed-description">A mobile firefighter simulation game with progressive difficulty.</p>
-                
-                
-                
-                
-                <div class="project-card-unified-technologies">
-                    
-                    <span class="project-card-unified-tech-item">C#</span>
-                    
-                    <span class="project-card-unified-tech-item">Unity</span>
-                    
-                    <span class="project-card-unified-tech-item">Blender</span>
-                    
-                    <span class="project-card-unified-tech-item">Adobe Photoshop</span>
-                    
-                    
-                    <span class="project-card-unified-tech-item">+1</span>
-                    
-                </div>
-                
-                
-                
-            </div>
-            
-            <a href="http://localhost:1313/projects/extinguisher/" class="btn-action">
-                See project
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M7 17L17 7M17 7H7M17 7V17"/>
-                </svg>
-            </a>
-            
-        </div>
-    </div>
-</div>
-
-                    </div>
-        
-            
-                    
-                    
-                        
-                    
-                    
-                        
-                    
-                    
-                    
-                    <div class="project-card-wrapper"
-                         data-project-id="FirstPersonSciFiShooter"
-                         data-background-image="/images/projects/first_person_sci_fi_shooter.jpg"
-                         data-sector="games-personnel"
-                         data-category="games"
-                         data-technologies='
-
-
-
-
-
-    
-
-
-
-
-    
-
-
-
-
-    
-
-
-
-
-
-
-
-pl_csharp,pl_html,fw_unity,VS-code,tool_github
-'>
-                        
-                        
-
-<div class="project-card-unified">
-    <div class="project-card-unified-header">
-        
-        <div class="project-card-unified-image"><img src="/images/projects/first_person_sci_fi_shooter.jpg" 
-                 alt="First Person Sci Fi Shooter"loading="lazy">
-        </div>
-        
-        
-        
-        <div class="project-card-unified-content">
-            <h3 class="project-card-unified-title">First Person Sci Fi Shooter</h3>
-            
-            
-        </div>
-        
-        
-        <div class="project-card-unified-detailed-info">
-            <div>
-                <h3 class="project-card-unified-title">First Person Sci Fi Shooter</h3>
-                
-                <p class="project-card-unified-detailed-description">Unity WebGL first-person sci-fi shooter built with C# and HTML for browser delivery, featuring optimized gameplay systems, UI, debugging, and responsive performance.</p>
-                
-                
-                
-                
-                <div class="project-card-unified-technologies">
-                    
-                    <span class="project-card-unified-tech-item">C#</span>
-                    
-                    <span class="project-card-unified-tech-item">HTML</span>
-                    
-                    <span class="project-card-unified-tech-item">Unity</span>
-                    
-                    
-                </div>
-                
-                
-                
-                <div class="project-card-unified-meta">
-                    
-                    
-                    <span class="project-card-unified-status status-completed">Completed</span>
-                    
-                </div>
-                
-            </div>
-            
-            <a href="http://localhost:1313/projects/firstpersonscifishooter/" class="btn-action">
-                See project
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M7 17L17 7M17 7H7M17 7V17"/>
-                </svg>
-            </a>
-            
-        </div>
-    </div>
-</div>
-
-                    </div>
-        
-            
-                    
-                    
-                        
-                    
-                    
-                        
-                    
-                    
-                    
-                    <div class="project-card-wrapper"
-                         data-project-id="AstroRush"
-                         data-background-image="/images/projects/astro_rush.jpg"
-                         data-sector="games-personnel"
-                         data-category="games"
-                         data-technologies='
-
-
-
-
-
-    
-
-
-
-
-    
-
-
-
-
-    
-
-
-
-
-
-
-
-pl_csharp,fw_unity,fw_blender,fw_adobe_photoshop,fw_adobe_illustrator,VS-code,tool_github
-'>
-                        
-                        
-
-<div class="project-card-unified">
-    <div class="project-card-unified-header">
-        
-        <div class="project-card-unified-image"><img src="/images/projects/astro_rush.jpg" 
-                 alt="Astro Rush"loading="lazy">
-        </div>
-        
-        
-        
-        <div class="project-card-unified-content">
-            <h3 class="project-card-unified-title">Astro Rush</h3>
-            
-            
-        </div>
-        
-        
-        <div class="project-card-unified-detailed-info">
-            <div>
-                <h3 class="project-card-unified-title">Astro Rush</h3>
-                
-                <p class="project-card-unified-detailed-description">A multi-level 3D driving game with physics-based vehicle mechanics.</p>
-                
-                
-                
-                
-                <div class="project-card-unified-technologies">
-                    
-                    <span class="project-card-unified-tech-item">C#</span>
-                    
-                    <span class="project-card-unified-tech-item">Unity</span>
-                    
-                    <span class="project-card-unified-tech-item">Blender</span>
-                    
-                    <span class="project-card-unified-tech-item">Adobe Photoshop</span>
-                    
-                    
-                    <span class="project-card-unified-tech-item">+1</span>
-                    
-                </div>
-                
-                
-                
-            </div>
-            
-            <a href="http://localhost:1313/projects/astrorush/" class="btn-action">
-                See project
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M7 17L17 7M17 7H7M17 7V17"/>
-                </svg>
-            </a>
-            
-        </div>
-    </div>
-</div>
-
-                    </div>
-        
-            
-                    
-                    
-                        
-                    
-                    
-                    
-                    
-                    <div class="project-card-wrapper"
-                         data-project-id="archery"
-                         data-background-image="/images/projects/archery.jpg"
-                         data-sector="games-personnel"
-                         data-category="games"
-                         data-technologies='
-
-
-
-
-
-    
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-pl_cpp,VS-code
-'>
-                        
-                        
-
-<div class="project-card-unified">
-    <div class="project-card-unified-header">
-        
-        <div class="project-card-unified-image"><img src="/images/projects/archery.jpg" 
-                 alt="Archery"loading="lazy">
-        </div>
-        
-        
-        
-        <div class="project-card-unified-content">
-            <h3 class="project-card-unified-title">Archery</h3>
-            
-            
-        </div>
-        
-        
-        <div class="project-card-unified-detailed-info">
-            <div>
-                <h3 class="project-card-unified-title">Archery</h3>
-                
-                <p class="project-card-unified-detailed-description">A simple shooter game built with C&#43;&#43; focusing on game logic and memory management.</p>
-                
-                
-                
-                
-                <div class="project-card-unified-technologies">
-                    
-                    <span class="project-card-unified-tech-item">C&#43;&#43;</span>
-                    
-                    
-                </div>
-                
-                
-                
-                <div class="project-card-unified-meta">
-                    
-                    
-                    <span class="project-card-unified-status status-completed">Completed</span>
-                    
-                </div>
-                
-            </div>
-            
-            <a href="http://localhost:1313/projects/archery/" class="btn-action">
-                See project
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M7 17L17 7M17 7H7M17 7V17"/>
-                </svg>
-            </a>
-            
-        </div>
-    </div>
-</div>
-
-                    </div>
-        
-            
-                    
-                    
-                        
-                    
-                    
-                        
-                    
-                    
-                    
-                    <div class="project-card-wrapper"
-                         data-project-id="AIDrivenGameSystems"
-                         data-background-image="/images/projects/ai_game_systems.jpg"
-                         data-sector="mods"
-                         data-category="mods-tools"
-                         data-technologies='
-
-
-
-
-
-    
-
-
-
-
-    
-
-
-
-
-    
-
-
-
-
-
-
-
-pl_csharp,pl_python,fw_unity,fw_blender,tool_jira,VS-code,tool_github
-'>
-                        
-                        
-
-<div class="project-card-unified">
-    <div class="project-card-unified-header">
-        
-        <div class="project-card-unified-image"><img src="/images/projects/ai_game_systems.jpg" 
-                 alt="AI-Driven Football Game"loading="lazy">
-        </div>
-        
-        
-        
-        <div class="project-card-unified-content">
-            <h3 class="project-card-unified-title">AI-Driven Football Game</h3>
-            
-            
-        </div>
-        
-        
-        <div class="project-card-unified-detailed-info">
-            <div>
-                <h3 class="project-card-unified-title">AI-Driven Football Game</h3>
-                
-                <p class="project-card-unified-detailed-description">Intelligent NPC behavior systems using finite state machines and ML-Agents for dynamic gameplay.</p>
-                
-                
-                
-                
-                <div class="project-card-unified-technologies">
-                    
-                    <span class="project-card-unified-tech-item">C#</span>
-                    
-                    <span class="project-card-unified-tech-item">pl_python</span>
-                    
-                    <span class="project-card-unified-tech-item">Unity</span>
-                    
-                    <span class="project-card-unified-tech-item">Blender</span>
-                    
-                    
-                </div>
-                
-                
-                
-                <div class="project-card-unified-meta">
-                    
-                    
-                    <span class="project-card-unified-status status-completed">Completed</span>
-                    
-                </div>
-                
-            </div>
-            
-            <a href="http://localhost:1313/projects/aidrivengamesystems/" class="btn-action">
-                See project
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M7 17L17 7M17 7H7M17 7V17"/>
-                </svg>
-            </a>
-            
-        </div>
-    </div>
-</div>
-
-                    </div>
-        
-            
-                    
-                    
-                        
-                    
-                    
-                    
-                    
-                    <div class="project-card-wrapper"
-                         data-project-id="Custom3DRenderEngine"
-                         data-background-image="/images/projects/custom_rendering_engine.jpg"
-                         data-sector="tools"
-                         data-category="mods-tools"
-                         data-technologies='
-
-
-
-
-
-    
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-pl_cpp,tool_jira,VS-code
-'>
-                        
-                        
-
-<div class="project-card-unified">
-    <div class="project-card-unified-header">
-        
-        <div class="project-card-unified-image"><img src="/images/projects/custom_rendering_engine.jpg" 
-                 alt="Custom 3D Rendering Engine"loading="lazy">
-        </div>
-        
-        
-        
-        <div class="project-card-unified-content">
-            <h3 class="project-card-unified-title">Custom 3D Rendering Engine</h3>
-            
-            
-        </div>
-        
-        
-        <div class="project-card-unified-detailed-info">
-            <div>
-                <h3 class="project-card-unified-title">Custom 3D Rendering Engine</h3>
-                
-                <p class="project-card-unified-detailed-description">A custom rendering engine built from scratch demonstrating low-level graphics programming and rendering optimization.</p>
-                
-                
-                
-                
-                <div class="project-card-unified-technologies">
-                    
-                    <span class="project-card-unified-tech-item">C&#43;&#43;</span>
-                    
-                    
-                </div>
-                
-                
-                
-                <div class="project-card-unified-meta">
-                    
-                    
-                    <span class="project-card-unified-status status-completed">Completed</span>
-                    
-                </div>
-                
-            </div>
-            
-            <a href="http://localhost:1313/projects/custom3drenderengine/" class="btn-action">
-                See project
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M7 17L17 7M17 7H7M17 7V17"/>
-                </svg>
-            </a>
-            
-        </div>
-    </div>
-</div>
-
-                    </div>
-        
-            
-                    
-                    
-                    
-                    
-                    
-                    <div class="project-card-wrapper"
-                         data-project-id="GamePay"
-                         data-background-image="/images/projects/gamepay.jpg"
-                         data-sector="appsweb-etude"
-                         data-category="apps-web"
-                         data-technologies='
-
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-tool_figma
-'>
-                        
-                        
-
-<div class="project-card-unified">
-    <div class="project-card-unified-header">
-        
-        <div class="project-card-unified-image"><img src="/images/projects/gamepay.jpg" 
-                 alt="GamePay"loading="lazy">
-        </div>
-        
-        
-        
-        <div class="project-card-unified-content">
-            <h3 class="project-card-unified-title">GamePay</h3>
-            
-            
-        </div>
-        
-        
-        <div class="project-card-unified-detailed-info">
-            <div>
-                <h3 class="project-card-unified-title">GamePay</h3>
-                
-                <p class="project-card-unified-detailed-description">Front-end UI/UX design for a gaming payment platform concept.</p>
-                
-                
-                
-                
-                
-                <div class="project-card-unified-meta">
-                    
-                    
-                    <span class="project-card-unified-status status-completed">Completed</span>
-                    
-                </div>
-                
-            </div>
-            
-            <a href="http://localhost:1313/projects/gamepay/" class="btn-action">
-                See project
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M7 17L17 7M17 7H7M17 7V17"/>
-                </svg>
-            </a>
-            
-        </div>
-    </div>
-</div>
-
-                    </div>
-        
-            
-                    
-                    
-                        
-                    
-                    
-                        
-                    
-                    
-                    
-                    <div class="project-card-wrapper"
-                         data-project-id="ZombieSurvival2D"
-                         data-background-image="/images/projects/zombie_survival.jpg"
-                         data-sector="games-personnel"
-                         data-category="games"
-                         data-technologies='
-
-
-
-
-
-    
-
-
-
-
-    
-
-
-
-
-    
-
-
-
-
-
-
-
-pl_cpp,fw_adobe_photoshop,fw_adobe_illustrator,VS-code,tool_github
-'>
-                        
-                        
-
-<div class="project-card-unified">
-    <div class="project-card-unified-header">
-        
-        <div class="project-card-unified-image"><img src="/images/projects/zombie_survival.jpg" 
-                 alt="Zombie Survival 2D"loading="lazy">
-        </div>
-        
-        
-        
-        <div class="project-card-unified-content">
-            <h3 class="project-card-unified-title">Zombie Survival 2D</h3>
-            
-            
-        </div>
-        
-        
-        <div class="project-card-unified-detailed-info">
-            <div>
-                <h3 class="project-card-unified-title">Zombie Survival 2D</h3>
-                
-                <p class="project-card-unified-detailed-description">A 2D top-down shooter game featuring multiple enemy types, power-ups, and wave-based survival mechanics.</p>
-                
-                
-                
-                
-                <div class="project-card-unified-technologies">
-                    
-                    <span class="project-card-unified-tech-item">C&#43;&#43;</span>
-                    
-                    <span class="project-card-unified-tech-item">Adobe Photoshop</span>
-                    
-                    <span class="project-card-unified-tech-item">Adobe Illustrator</span>
-                    
-                    
-                </div>
-                
-                
-                
-                <div class="project-card-unified-meta">
-                    
-                    
-                    <span class="project-card-unified-status status-completed">Completed</span>
-                    
-                </div>
-                
-            </div>
-            
-            <a href="http://localhost:1313/projects/zombiesurvival2d/" class="btn-action">
-                See project
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M7 17L17 7M17 7H7M17 7V17"/>
-                </svg>
-            </a>
-            
-        </div>
-    </div>
-</div>
-
-                    </div>
-        
-            
-                    
-                    
-                        
-                    
-                    
-                    
-                    
-                    <div class="project-card-wrapper"
-                         data-project-id="ZombieSurvivor3D"
-                         data-background-image="/images/projects/zombie_survivor_3d.jpg"
-                         data-sector="games-personnel"
-                         data-category="games"
-                         data-technologies='
-
-
-
-
-
-    
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-pl_cpp,VS-code,tool_github
-'>
-                        
-                        
-
-<div class="project-card-unified">
-    <div class="project-card-unified-header">
-        
-        <div class="project-card-unified-image"><img src="/images/projects/zombie_survivor_3d.jpg" 
-                 alt="Zombie Survivor 3D"loading="lazy">
-        </div>
-        
-        
-        
-        <div class="project-card-unified-content">
-            <h3 class="project-card-unified-title">Zombie Survivor 3D</h3>
-            
-            
-        </div>
-        
-        
-        <div class="project-card-unified-detailed-info">
-            <div>
-                <h3 class="project-card-unified-title">Zombie Survivor 3D</h3>
-                
-                <p class="project-card-unified-detailed-description">A post-apocalyptic 3D action-survival game with wave-based combat.</p>
-                
-                
-                
-                
-                <div class="project-card-unified-technologies">
-                    
-                    <span class="project-card-unified-tech-item">C&#43;&#43;</span>
-                    
-                    
-                </div>
-                
-                
-                
-                <div class="project-card-unified-meta">
-                    
-                    
-                    <span class="project-card-unified-status status-completed">Completed</span>
-                    
-                </div>
-                
-            </div>
-            
-            <a href="http://localhost:1313/projects/zombiesurvivor3d/" class="btn-action">
-                See project
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M7 17L17 7M17 7H7M17 7V17"/>
-                </svg>
-            </a>
-            
-        </div>
-    </div>
-</div>
-
-                    </div>
-        
-    </div>
-    
-    
-    <div class="projects-see-all">
-        <a href="/projects/" class="btn-action">
-            <span>See all projects</span><svg class="icon " width="18" height="18" style="color: inherit;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-
-</a>
-    </div>
-</section>
-        </section>
-
-        
-        <section id="experiences">
-            <section class="experience-section">
-    <div class="experience-header section-header-unified">
-    <h2 class="section-title-unified">Professional Experience</h2>
-    <p class="experience-subtitle section-subtitle-unified">My professional journey, from real-world projects to skills developed in companies</p>
-    </div>
-
-    
-    <div class="tabs" data-can-collapse="true" data-collapse-id="experience">
-        <button class="tab-btn active" data-tab="experiences">
-            <span class="icon">💼</span>
-            <span class="tab-label">Experiences</span>
-        </button>
-    </div>
-
-    
-    <div class="experience-timeline" id="experiences-timeline" data-tab="experiences">
-        
-        
-        <div class="experience-card ">
-            <div class="experience-header-card">
-                <div class="company-info">
-                    <div class="company-logo"><img src="/images/companies/wrp.png" 
-                             alt="WRP"loading="lazy">
-                    </div>
-                    <div class="company-details">
-                        <h3 class="job-title">Junior Game Developer</h3>
-                        <h4 class="company-name">WRP</h4>
-                        <div class="job-meta">
-                            <span class="job-period">2025 - 2025</span>
-                            <span class="job-duration">3 months</span>
-                        </div>
-                        <div class="job-info">
-                            <span class="job-type">experiences</span>
-                            <span class="job-location">📍 Islamabad, Pakistan · Hybrid</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="completed-badge">Completed</div>
-                
-            </div>
-
-            <div class="experience-content">
-                <p class="experience-description">Internship focused on game development, contributing to core gameplay mechanics and collaborative project workflows.</p>
-
-                <div class="experience-skills">
-                    <h5>Technical Skills</h5>
-                    <div class="skills-tags">
-                        
-                        
-                        
-                        
-                        
-                        
-                        <span class="skill-tag clickable" 
-                              onclick="openSkillModal('C#', '\/images\/skills\/csharp.svg', '', '4', 'svg', 'pl_csharp')"
-                              data-skill-name="pl_csharp"
-                              data-skill-type="programming-language">
                             
+                            
+                            
+                            <a href="https://play.unity.com/en/games/9800177d-2d6b-4dfa-8e07-e6cf2095517f/220530" target="_blank" class="btn-action primary">
+                                
+                                Play Demo
+                            </a>
+                            
+                            
+                        
+                    </div>
+                    
+                    
+                    <div class="description-content">
+                        <h3 class="description-title">Project information</h3>
+                        
+                        
+                        
+                        <div class="description-sector-badge">
+                            
+
+
+
+
+
+
+
+    
+    
+
+
+<div class="ps5-sector-badge">
+    <span class="sector-primary">Game</span>
+    
+    <span class="sector-divider"></span>
+    <span class="sector-secondary">Personal</span>
+    
+</div>
+
+                        </div>
+                        
+                        
+                        
+                        <div class="project-meta-bottom">
+                            <div class="meta-item-bottom">
+                                <span class="meta-label-bottom">Date</span>
+                                <span class="meta-value-bottom">June 25, 2025</span>
+                            </div>
+                            
+                            
+                            <div class="meta-item-bottom">
+                                <span class="meta-label-bottom">Status</span>
+                                <span class="meta-value-bottom status-completed">completed</span>
+                            </div>
+                            
+                            
+                            
+                        </div>
+                        
+                        
+                        
+
+
+
+
+
+                    </div>
+                </div>
+                
+                
+                
+            </div>
+        </div>
+        </div>
+    </div>
+    
+    
+    <div class="scroll-indicator">
+        <div class="scroll-arrow"></div>
+    </div>
+</section>
+
+
+
+
+<section class="project-widgets-section">
+    <div class="project-widgets-wrapper">
+    <div class="project-widgets">
+        
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+
+
+  
+  
+  
+  
+
+
+
+  
+  
+  
+  
+
+
+
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <div class="project-widget technical-specs-box size-medium">
+  <div class="project-widget-header" onclick="toggleInfoBox(this)">
+    <div class="project-widget-icon technical">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.22,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.22,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.94C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.68 16.04,18.34 16.56,17.94L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z"/>
+      </svg>
+    </div>
+    <div class="project-widget-header-content">
+      <h3 class="project-widget-title">Technical Specifications</h3><div class="project-widget-summary">3 specifications</div>
+    </div>
+    <div class="project-widget-toggle">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/>
+      </svg>
+    </div>
+  </div>
+  <div class="project-widget-content">
+    <div class="project-widget-technical-specs-list">
+      <div class="project-widget-spec-item">
+        <div class="project-widget-spec-label">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M9.4,16.6L4.8,12L9.4,7.4L8,6L2,12L8,18L9.4,16.6M14.6,16.6L19.2,12L14.6,7.4L16,6L22,12L16,18L14.6,16.6Z"/>
+          </svg>
+          Programming Languages
+        </div>
+        <div class="project-widget-spec-value">
+          
+
+
+
+
+
+
+
+<div class="tech-chips">
+    
+    
+    
+    
+    
+    
+        
+            
+                
+                
+                <span class="tech-chip clickable" 
+                      style="--tech-color: #239120"
+                      onclick="openSkillModal('C#', '\/images\/skills\/csharp.svg', '', '4', 'svg', 'pl_csharp')"
+                      data-skill-name="C#"
+                      data-skill-type="programming-language">
+                    
 
   <img src="http://localhost:1313/images/skills/csharp.svg" alt="" class="tech-icon-svg" width="24" height="24">
 
  C#
-                        </span>
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        <span class="skill-tag clickable" 
-                              onclick="openSkillModal('Unity', '\/images\/skills\/unity.svg', '', '3', 'svg', 'fw_unity')"
-                              data-skill-name="fw_unity"
-                              data-skill-type="framework-engine">
-                            
+                </span>
+            
+        
+            
+        
+            
+        
+            
+        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+                
+                
+                <span class="tech-chip clickable" 
+                      style="--tech-color: #00599C"
+                      onclick="openSkillModal('HTML', '\/images\/skills\/html.svg', '', '3', 'svg', 'pl_html')"
+                      data-skill-name="HTML"
+                      data-skill-type="programming-language">
+                    
+
+  <img src="http://localhost:1313/images/skills/html.svg" alt="" class="tech-icon-svg" width="24" height="24">
+
+ HTML
+                </span>
+            
+        
+    
+    
+    
+    
+    
+    
+    
+    
+</div>
+
+        </div>
+      </div><div class="project-widget-spec-item">
+        <div class="project-widget-spec-label">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.22,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.22,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.94C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.68 16.04,18.34 16.56,17.94L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z"/>
+          </svg>
+          Frameworks &amp; Engines
+        </div>
+        <div class="project-widget-spec-value">
+          
+
+
+
+
+
+
+
+<div class="tech-chips">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+        
+            
+                
+                
+                <span class="tech-chip clickable" 
+                      style="--tech-color: #000000"
+                      onclick="openSkillModal('Unity', '\/images\/skills\/unity.svg', '', '3', 'svg', 'fw_unity')"
+                      data-skill-name="Unity"
+                      data-skill-type="framework-engine">
+                    
 
   <img src="http://localhost:1313/images/skills/unity.svg" alt="" class="tech-icon-svg" width="24" height="24">
 
  Unity
-                        </span>
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        <span class="skill-tag clickable" 
-                              onclick="openSkillModal('Blender', '\/images\/skills\/blender.png', '', '2', 'svg', 'fw_blender')"
-                              data-skill-name="fw_blender"
-                              data-skill-type="framework-engine">
-                            
-
-  <img src="http://localhost:1313/images/skills/blender.png" alt="" class="tech-icon-svg" width="24" height="24">
-
- Blender
-                        </span>
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                    </div>
-                </div>
-
-                
-            </div>
-        </div>
+                </span>
+            
         
-    </div>
-
+            
+        
+            
+        
+            
+        
+            
+        
     
-    <div class="experience-timeline" id="internships-timeline" data-tab="internships" style="display: none;">
-    </div>
-
     
-    <div class="experience-footer">
-        <a href="/experiences/" class="btn-action">
-            <span>See all experiences</span><svg class="icon " width="18" height="18" style="color: inherit;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    
+    
+    
+</div>
 
-</a>
+        </div>
+      </div></div><div class="tech-specs-hint">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z"/>
+      </svg>
+      Click on the technologies to see details and related projects
+    </div></div>
+</div>
+  
+
+  
+    <div class="project-widget developer-specialties-box size-medium">
+  <div class="project-widget-header" onclick="toggleInfoBox(this)">
+    <div class="project-widget-icon specialties">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M20.5,11H19V7C19,5.89 18.1,5 17,5H13V3.5A2.5,2.5 0 0,0 10.5,1A2.5,2.5 0 0,0 8,3.5V5H4C2.89,5 2,5.89 2,7V10.8H3.5C5,10.8 6.2,12 6.2,13.5C6.2,15 5,16.2 3.5,16.2H2V20C2,21.11 2.89,22 4,22H7.8V20.5C7.8,19 9,17.8 10.5,17.8C12,17.8 13.2,19 13.2,20.5V22H17C18.11,22 19,21.11 19,20V16H20.5A2.5,2.5 0 0,0 23,13.5A2.5,2.5 0 0,0 20.5,11Z"/>
+      </svg>
+    </div>
+    <div class="project-widget-header-content">
+      <h3 class="project-widget-title">Specialties Used</h3>
+      <div class="project-widget-summary">5 domains applied</div>
+    </div>
+    <div class="project-widget-toggle">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/>
+      </svg>
+    </div>
+  </div>
+  <div class="project-widget-content">
+    
+    <div class="specialties-modal">
+    
+    <div class="specialties-stats-bar">
+      <div class="widget-count">
+        <strong>5</strong> domains applied
+      </div>
+    </div>
+    
+    <div class="developer-profile-note">
+      <div class="profile-avatar">
+        <img src="/images/perofile.jpg" alt="Muhammad Faizan Ali" loading="lazy">
+      </div>
+      <div class="profile-note-content">
+        <div class="profile-note-title">Faizan Ali&#39;s Specialties for this project</div>
+        <div class="profile-note-subtitle">Game Developer</div>
+      </div>
+    </div>
+    <div class="specialties-grid"><div class="specialty-card" 
+             data-specialty="Video Game Development" 
+             tabindex="0" 
+             role="button" 
+             aria-label="View details of Video Game Development"
+             onclick="openSkillModal('Video Game Development', '🎮', 'Specialty', '4', 'emoji', 'spec_video_game_development')"
+             style="cursor: pointer;">
+          
+          
+          <div class="specialty-header">
+            <div class="specialty-icon widget-icon widget-icon--lg" aria-hidden="true">🎮</div>
+            <div class="specialty-info">
+              <div class="specialty-title">Video Game Development</div></div>
+          </div>
+          
+          
+          <div class="specialty-badge widget-badge">
+            4 YEARS
+          </div>
+        </div><div class="specialty-card" 
+             data-specialty="Game Design" 
+             tabindex="0" 
+             role="button" 
+             aria-label="View details of Game Design"
+             onclick="openSkillModal('Game Design', '🎲', 'Specialty', '3', 'emoji', 'spec_game_design')"
+             style="cursor: pointer;">
+          
+          
+          <div class="specialty-header">
+            <div class="specialty-icon widget-icon widget-icon--lg" aria-hidden="true">🎲</div>
+            <div class="specialty-info">
+              <div class="specialty-title">Game Design</div></div>
+          </div>
+          
+          
+          <div class="specialty-badge widget-badge">
+            3 YEARS
+          </div>
+        </div><div class="specialty-card" 
+             data-specialty="Level Design" 
+             tabindex="0" 
+             role="button" 
+             aria-label="View details of Level Design"
+             onclick="openSkillModal('Level Design', '🗺️', 'Specialty', '2', 'emoji', 'spec_level_design')"
+             style="cursor: pointer;">
+          
+          
+          <div class="specialty-header">
+            <div class="specialty-icon widget-icon widget-icon--lg" aria-hidden="true">🗺️</div>
+            <div class="specialty-info">
+              <div class="specialty-title">Level Design</div></div>
+          </div>
+          
+          
+          <div class="specialty-badge widget-badge">
+            2 YEARS
+          </div>
+        </div><div class="specialty-card" 
+             data-specialty="Gameplay Development" 
+             tabindex="0" 
+             role="button" 
+             aria-label="View details of Gameplay Development"
+             onclick="openSkillModal('Gameplay Development', '🕹️', 'Specialty', '3', 'emoji', 'spec_gameplay_dev')"
+             style="cursor: pointer;">
+          
+          
+          <div class="specialty-header">
+            <div class="specialty-icon widget-icon widget-icon--lg" aria-hidden="true">🕹️</div>
+            <div class="specialty-info">
+              <div class="specialty-title">Gameplay Development</div></div>
+          </div>
+          
+          
+          <div class="specialty-badge widget-badge">
+            3 YEARS
+          </div>
+        </div><div class="specialty-card" 
+             data-specialty="UI/UX Design" 
+             tabindex="0" 
+             role="button" 
+             aria-label="View details of UI/UX Design"
+             onclick="openSkillModal('UI\/UX Design', '🎨', 'Specialty', '3', 'emoji', 'spec_ui_ux')"
+             style="cursor: pointer;">
+          
+          
+          <div class="specialty-header">
+            <div class="specialty-icon widget-icon widget-icon--lg" aria-hidden="true">🎨</div>
+            <div class="specialty-info">
+              <div class="specialty-title">UI/UX Design</div></div>
+          </div>
+          
+          
+          <div class="specialty-badge widget-badge">
+            3 YEARS
+          </div>
+        </div></div>
+    
+    
+    <div class="specialties-interaction-note">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z"/>
+      </svg>
+      Click on a specialty to see related projects and more details
+    </div>
+  </div>
+  </div>
+</div>
+  
+
+  
+    <div class="project-widget developer-soft-skills-box size-medium">
+  <div class="project-widget-header" onclick="toggleInfoBox(this)">
+    <div class="project-widget-icon soft-skills">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M16,11C17.66,11 18.99,9.66 18.99,8C18.99,6.34 17.66,5 16,5C14.34,5 13,6.34 13,8C13,9.66 14.34,11 16,11M8,11C9.66,11 10.99,9.66 10.99,8C10.99,6.34 9.66,5 8,5C6.34,5 5,6.34 5,8C5,9.66 6.34,11 8,11M8,13C5.67,13 1,14.17 1,16.5V19H15V16.5C15,14.17 10.33,13 8,13M16,13C15.71,13 15.38,13.02 15.03,13.05C16.19,13.89 17,15.02 17,16.5V19H23V16.5C23,14.17 18.33,13 16,13Z"/>
+      </svg>
+    </div>
+    <div class="project-widget-header-content">
+      <h3 class="project-widget-title">Soft Skills</h3>
+      <div class="project-widget-summary">6 skills mobilized</div>
+      
+      <div class="soft-skills-preview">
+        <div class="soft-skill-badges-preview"><div class="soft-skill-badge-mini clickable" onclick="openSkillModal('Teamwork', '🤝', 'Soft Skill', '', 'emoji', 'skill_teamwork')" title="Click to see details">
+            <span class="soft-skill-icon">🤝</span>
+            <span class="soft-skill-name">Teamwork</span>
+          </div><div class="soft-skill-badge-mini clickable" onclick="openSkillModal('Communication', '💬', 'Soft Skill', '', 'emoji', 'skill_communication')" title="Click to see details">
+            <span class="soft-skill-icon">💬</span>
+            <span class="soft-skill-name">Communication</span>
+          </div><div class="soft-skill-badge-mini clickable" onclick="openSkillModal('Problem Solving', '🧩', 'Soft Skill', '', 'emoji', 'skill_problem_solving')" title="Click to see details">
+            <span class="soft-skill-icon">🧩</span>
+            <span class="soft-skill-name">Problem Solving</span>
+          </div><div class="soft-skill-badge-mini more">
+            <span class="soft-skill-more">+3</span>
+          </div></div>
+      </div>
+    </div>
+    <div class="project-widget-toggle">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/>
+      </svg>
+    </div>
+  </div>
+  <div class="project-widget-content">
+    
+    <div class="soft-skills-modal">
+    
+    <div class="soft-skills-stats-bar">
+      <div class="widget-count">
+        <strong>6</strong> skills mobilized
+      </div>
+    </div>
+    
+    <div class="developer-profile-note">
+      <div class="profile-avatar">
+        <img src="/images/perofile.jpg" alt="Muhammad Faizan Ali" loading="lazy">
+      </div>
+      <div class="profile-note-content">
+        <div class="profile-note-title">Faizan Ali&#39;s Cross-Functional Skills for this project</div>
+        <div class="profile-note-subtitle">Game Developer</div>
+      </div>
+    </div>
+    <div class="soft-skills-grid"><div class="soft-skill-card" 
+             data-soft-skill="Teamwork" 
+             tabindex="0" 
+             role="button" 
+             aria-label="Voir les détails de Teamwork"
+             onclick="openSkillModal('Teamwork', '🤝', 'Soft Skill', '', 'emoji', 'skill_teamwork')"
+             style="cursor: pointer; --skill-color: #9C27B0;">
+          
+          
+          <div class="soft-skill-header">
+            <div class="soft-skill-icon widget-icon widget-icon--lg" aria-hidden="true">🤝</div>
+            <div class="soft-skill-info">
+              <div class="soft-skill-title">Teamwork</div><div class="soft-skill-subtitle">Collaboration</div></div>
+          </div>
+          
+          
+          <div class="soft-skill-badge widget-badge" style="background-color: #9C27B020; color: #9C27B0;">
+            Key skill
+          </div>
+        </div><div class="soft-skill-card" 
+             data-soft-skill="Communication" 
+             tabindex="0" 
+             role="button" 
+             aria-label="Voir les détails de Communication"
+             onclick="openSkillModal('Communication', '💬', 'Soft Skill', '', 'emoji', 'skill_communication')"
+             style="cursor: pointer; --skill-color: #9C27B0;">
+          
+          
+          <div class="soft-skill-header">
+            <div class="soft-skill-icon widget-icon widget-icon--lg" aria-hidden="true">💬</div>
+            <div class="soft-skill-info">
+              <div class="soft-skill-title">Communication</div></div>
+          </div>
+          
+          
+          <div class="soft-skill-badge widget-badge" style="background-color: #9C27B020; color: #9C27B0;">
+            Key skill
+          </div>
+        </div><div class="soft-skill-card" 
+             data-soft-skill="Problem Solving" 
+             tabindex="0" 
+             role="button" 
+             aria-label="Voir les détails de Problem Solving"
+             onclick="openSkillModal('Problem Solving', '🧩', 'Soft Skill', '', 'emoji', 'skill_problem_solving')"
+             style="cursor: pointer; --skill-color: #9C27B0;">
+          
+          
+          <div class="soft-skill-header">
+            <div class="soft-skill-icon widget-icon widget-icon--lg" aria-hidden="true">🧩</div>
+            <div class="soft-skill-info">
+              <div class="soft-skill-title">Problem Solving</div></div>
+          </div>
+          
+          
+          <div class="soft-skill-badge widget-badge" style="background-color: #9C27B020; color: #9C27B0;">
+            Key skill
+          </div>
+        </div><div class="soft-skill-card" 
+             data-soft-skill="Leadership" 
+             tabindex="0" 
+             role="button" 
+             aria-label="Voir les détails de Leadership"
+             onclick="openSkillModal('Leadership', '👑', 'Soft Skill', '', 'emoji', 'skill_leadership')"
+             style="cursor: pointer; --skill-color: #9C27B0;">
+          
+          
+          <div class="soft-skill-header">
+            <div class="soft-skill-icon widget-icon widget-icon--lg" aria-hidden="true">👑</div>
+            <div class="soft-skill-info">
+              <div class="soft-skill-title">Leadership</div></div>
+          </div>
+          
+          
+          <div class="soft-skill-badge widget-badge" style="background-color: #9C27B020; color: #9C27B0;">
+            Key skill
+          </div>
+        </div><div class="soft-skill-card" 
+             data-soft-skill="Creativity" 
+             tabindex="0" 
+             role="button" 
+             aria-label="Voir les détails de Creativity"
+             onclick="openSkillModal('Creativity', '💡', 'Soft Skill', '', 'emoji', 'skill_creativity')"
+             style="cursor: pointer; --skill-color: #9C27B0;">
+          
+          
+          <div class="soft-skill-header">
+            <div class="soft-skill-icon widget-icon widget-icon--lg" aria-hidden="true">💡</div>
+            <div class="soft-skill-info">
+              <div class="soft-skill-title">Creativity</div></div>
+          </div>
+          
+          
+          <div class="soft-skill-badge widget-badge" style="background-color: #9C27B020; color: #9C27B0;">
+            Key skill
+          </div>
+        </div><div class="soft-skill-card" 
+             data-soft-skill="Project Management" 
+             tabindex="0" 
+             role="button" 
+             aria-label="Voir les détails de Project Management"
+             onclick="openSkillModal('Project Management', '📋', 'Soft Skill', '', 'emoji', 'skill_project_management')"
+             style="cursor: pointer; --skill-color: #9C27B0;">
+          
+          
+          <div class="soft-skill-header">
+            <div class="soft-skill-icon widget-icon widget-icon--lg" aria-hidden="true">📋</div>
+            <div class="soft-skill-info">
+              <div class="soft-skill-title">Project Management</div></div>
+          </div>
+          
+          
+          <div class="soft-skill-badge widget-badge" style="background-color: #9C27B020; color: #9C27B0;">
+            Key skill
+          </div>
+        </div></div>
+    
+    
+    <div class="soft-skills-interaction-note">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z"/>
+      </svg>
+      Click on a skill to see related projects and experiences
+    </div>
+  </div>
+  </div>
+</div>
+  
+
+  
+    <div class="project-widget developer-tools-box size-large">
+  <div class="project-widget-header" onclick="toggleInfoBox(this)">
+    <div class="project-widget-icon tools">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M22.7,19L13.6,9.9C14.5,7.6 14,4.9 12.1,3C10.1,1 7.1,0.6 4.7,1.7L9,6L6,9L1.6,4.7C0.4,7.1 0.9,10.1 2.9,12.1C4.8,14 7.5,14.5 9.8,13.6L18.9,22.7C19.3,23.1 19.9,23.1 20.3,22.7L22.6,20.4C23.1,20 23.1,19.3 22.7,19Z"/>
+      </svg>
+    </div>
+    <div class="project-widget-header-content">
+      <h3 class="project-widget-title">Tools Used</h3>
+      <div class="project-widget-summary">2 tools employed</div>
+      
+      <div class="tools-preview">
+        <div class="tool-icons-preview"><div class="tool-icon-mini clickable" onclick="openSkillModal('', '/\/images\/skills\/vscode.svg', 'Tool', '3', 'svg', 'VS-code')" title=" - Click to see details"><img src="//images/skills/vscode.svg" alt=""></div><div class="tool-icon-mini clickable" onclick="openSkillModal('GitHub', '/\/images\/skills\/github.svg', 'Tool', '3', 'svg', 'tool_github')" title="GitHub - Click to see details"><img src="//images/skills/github.svg" alt="GitHub"></div></div>
+      </div>
+    </div>
+    <div class="project-widget-toggle">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/>
+      </svg>
+    </div>
+  </div>
+  <div class="project-widget-content">
+    
+    
+
+
+
+<div class="tools-modal">
+    
+    <div class="tools-stats-bar">
+      <div class="widget-count">
+        <strong>2</strong> tools
+      </div>
+      
+      <div class="tools-categories"><div class="tool-category-chip widget-badge widget-badge--sm">
+            ide (6)
+          </div><div class="tool-category-chip widget-badge widget-badge--sm">
+            version_control (6)
+          </div></div>
+    </div>
+    
+    <div class="developer-profile-note">
+      <div class="profile-avatar widget-icon widget-icon--lg">
+        <img src="/images/perofile.jpg" alt="Muhammad Faizan Ali" loading="lazy">
+      </div>
+      <div class="profile-note-content">
+        <div class="profile-note-title">Tools Used by Faizan Ali for this project</div>
+        <div class="profile-note-subtitle">Game Developer</div>
+      </div>
+    </div><div class="tools-category-section">
+        <div class="tools-category-title">ide</div>
+        
+        <div class="tools-grid"><div class="tool-card widget-card" 
+                 data-tool="VS-code" 
+                 tabindex="0" 
+                 role="button" 
+                 aria-label="View details of VS-code"
+                 onclick="openSkillModal('VS-code', '/\/images\/skills\/vscode.svg', 'Tool', '3', 'svg', 'VS-code')"
+                 style="cursor: pointer;">
+              
+              
+              <div class="tool-header">
+                <div class="tool-icon widget-icon widget-icon--lg" aria-hidden="true"><img src="//images/skills/vscode.svg" alt="VS-code" loading="lazy"></div>
+                <div class="tool-info">
+                  <div class="tool-title">VS-code</div><div class="tool-description">Primary code editor</div></div>
+              </div>
+              
+              
+              <div class="tool-badge widget-badge">
+                3 years
+              </div>
+            </div></div>
+      </div><div class="tools-category-section">
+        <div class="tools-category-title">version_control</div>
+        
+        <div class="tools-grid"><div class="tool-card widget-card" 
+                 data-tool="GitHub" 
+                 tabindex="0" 
+                 role="button" 
+                 aria-label="View details of GitHub"
+                 onclick="openSkillModal('GitHub', '/\/images\/skills\/github.svg', 'Tool', '3', 'svg', 'tool_github')"
+                 style="cursor: pointer;">
+              
+              
+              <div class="tool-header">
+                <div class="tool-icon widget-icon widget-icon--lg" aria-hidden="true"><img src="//images/skills/github.svg" alt="GitHub" loading="lazy"></div>
+                <div class="tool-info">
+                  <div class="tool-title">GitHub</div><div class="tool-description">Version control, CI/CD, team collaboration</div></div>
+              </div>
+              
+              
+              <div class="tool-badge widget-badge">
+                3 years
+              </div>
+            </div></div>
+      </div>
+    <div class="tools-interaction-note">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z"/>
+      </svg>
+      Click on a tool to see related projects and more details
+    </div>
+  </div>
+  </div>
+</div>
+  
+
     </div>
 </section>
 
-        </section>
 
-        
-        
-
-        <section id="competences" class="skills-section">
-    <div class="skills-header section-header-unified">
-        <h2 class="section-title-unified">Technical Skills</h2>
-        <p class="skills-subtitle section-subtitle-unified">Mastering modern technologies to build great user experiences and robust solutions.»</p>
-    </div>
-    
-    <div class="skills-categories-grid">
-        
-        
-        <div class="skills-category">
-            <h4>Programming Languages</h4>
-            <div class="skills-grid">
-                
-                
-                    
-                    <div class="skill-block clickable" 
-     onclick="openSkillModal('C#', 'http:\/\/localhost:1313\/images\/skills\/csharp.svg', '', '4', 'svg', 'pl_csharp')"
-     data-skill-name="C#"
-     data-skill-type="programming-language">
-    <span class="skill-icon">
-        
-          <img src="http://localhost:1313/images/skills/csharp.svg" alt="C#" class="tech-icon-svg" width="28" height="28">
-        
-    </span>
-    <span class="skill-name">C#</span><span class="skill-level">4 years</span></div>
-
-                    
-                
-                    
-                    <div class="skill-block clickable" 
-     onclick="openSkillModal('C\u002b\u002b', 'http:\/\/localhost:1313\/images\/skills\/cplusplus.svg', '', '3', 'svg', 'pl_cpp')"
-     data-skill-name="C&#43;&#43;"
-     data-skill-type="programming-language">
-    <span class="skill-icon">
-        
-          <img src="http://localhost:1313/images/skills/cplusplus.svg" alt="C&#43;&#43;" class="tech-icon-svg" width="28" height="28">
-        
-    </span>
-    <span class="skill-name">C&#43;&#43;</span><span class="skill-level">3 years</span></div>
-
-                    
-                
-                    
-                    <div class="skill-block clickable" 
-     onclick="openSkillModal('HTML', 'http:\/\/localhost:1313\/images\/skills\/html.svg', '', '3', 'svg', 'pl_html')"
-     data-skill-name="HTML"
-     data-skill-type="programming-language">
-    <span class="skill-icon">
-        
-          <img src="http://localhost:1313/images/skills/html.svg" alt="HTML" class="tech-icon-svg" width="28" height="28">
-        
-    </span>
-    <span class="skill-name">HTML</span><span class="skill-level">3 years</span></div>
-
-                    
-                
-                    
-                    <div class="skill-block clickable" 
-     onclick="openSkillModal('pl_python', 'http:\/\/localhost:1313\/images\/skills\/python.svg', '', '2', 'svg', 'pl_python')"
-     data-skill-name="pl_python"
-     data-skill-type="programming-language">
-    <span class="skill-icon">
-        
-          <img src="http://localhost:1313/images/skills/python.svg" alt="pl_python" class="tech-icon-svg" width="28" height="28">
-        
-    </span>
-    <span class="skill-name">pl_python</span><span class="skill-level">2 years</span></div>
-
-                    
-                
-                
-            </div>
-        </div>
-
-        
-        <div class="skills-category">
-            <h4>Frameworks &amp; Engines</h4>
-            <div class="skills-grid">
-                
-                
-                    
-                    <div class="skill-block clickable" 
-     onclick="openSkillModal('Unity', 'http:\/\/localhost:1313\/images\/skills\/unity.svg', '', '3', 'svg', 'fw_unity')"
-     data-skill-name="Unity"
-     data-skill-type="framework-engine">
-    <span class="skill-icon">
-        
-          <img src="http://localhost:1313/images/skills/unity.svg" alt="Unity" class="tech-icon-svg" width="28" height="28">
-        
-    </span>
-    <span class="skill-name">Unity</span><span class="skill-level">3 years</span></div>
-
-                    
-                
-                    
-                    <div class="skill-block clickable" 
-     onclick="openSkillModal('Unreal Engine', 'http:\/\/localhost:1313\/images\/skills\/unrealengine.svg', '', '2', 'svg', 'fw_unreal_engine')"
-     data-skill-name="Unreal Engine"
-     data-skill-type="framework-engine">
-    <span class="skill-icon">
-        
-          <img src="http://localhost:1313/images/skills/unrealengine.svg" alt="Unreal Engine" class="tech-icon-svg" width="28" height="28">
-        
-    </span>
-    <span class="skill-name">Unreal Engine</span><span class="skill-level">2 years</span></div>
-
-                    
-                
-                    
-                    <div class="skill-block clickable" 
-     onclick="openSkillModal('Blender', 'http:\/\/localhost:1313\/images\/skills\/blender.png', '', '2', 'svg', 'fw_blender')"
-     data-skill-name="Blender"
-     data-skill-type="framework-engine">
-    <span class="skill-icon">
-        
-          <img src="http://localhost:1313/images/skills/blender.png" alt="Blender" class="tech-icon-svg" width="28" height="28">
-        
-    </span>
-    <span class="skill-name">Blender</span><span class="skill-level">2 years</span></div>
-
-                    
-                
-                    
-                    <div class="skill-block clickable" 
-     onclick="openSkillModal('Adobe Photoshop', 'http:\/\/localhost:1313\/images\/skills\/adobephotoshop.png', '', '2', 'svg', 'fw_adobe_photoshop')"
-     data-skill-name="Adobe Photoshop"
-     data-skill-type="framework-engine">
-    <span class="skill-icon">
-        
-          <img src="http://localhost:1313/images/skills/adobephotoshop.png" alt="Adobe Photoshop" class="tech-icon-svg" width="28" height="28">
-        
-    </span>
-    <span class="skill-name">Adobe Photoshop</span><span class="skill-level">2 years</span></div>
-
-                    
-                
-                    
-                    <div class="skill-block clickable" 
-     onclick="openSkillModal('Adobe Illustrator', 'http:\/\/localhost:1313\/images\/skills\/adobeillustrator.png', '', '2', 'svg', 'fw_adobe_illustrator')"
-     data-skill-name="Adobe Illustrator"
-     data-skill-type="framework-engine">
-    <span class="skill-icon">
-        
-          <img src="http://localhost:1313/images/skills/adobeillustrator.png" alt="Adobe Illustrator" class="tech-icon-svg" width="28" height="28">
-        
-    </span>
-    <span class="skill-name">Adobe Illustrator</span><span class="skill-level">2 years</span></div>
-
-                    
-                
-                
-            </div>
-        </div>
-
-        
-        <div class="skills-category">
-            <h4>Specialties</h4>
-            <div class="skills-grid">
-                
-                
-                    
-                    <div class="skill-block clickable" 
-     onclick="openSkillModal('Video Game Development', '🎮', '', '4', 'emoji', 'spec_video_game_development')"
-     data-skill-name="Video Game Development"
-     data-skill-type="specialty">
-    <span class="skill-icon">
-        
-          <span class="tech-icon-emoji">🎮</span>
-        
-    </span>
-    <span class="skill-name">Video Game Development</span></div>
-
-                    
-                
-                    
-                    <div class="skill-block clickable" 
-     onclick="openSkillModal('Game Design', '🎲', '', '3', 'emoji', 'spec_game_design')"
-     data-skill-name="Game Design"
-     data-skill-type="specialty">
-    <span class="skill-icon">
-        
-          <span class="tech-icon-emoji">🎲</span>
-        
-    </span>
-    <span class="skill-name">Game Design</span></div>
-
-                    
-                
-                    
-                    <div class="skill-block clickable" 
-     onclick="openSkillModal('Level Design', '🗺️', '', '2', 'emoji', 'spec_level_design')"
-     data-skill-name="Level Design"
-     data-skill-type="specialty">
-    <span class="skill-icon">
-        
-          <span class="tech-icon-emoji">🗺️</span>
-        
-    </span>
-    <span class="skill-name">Level Design</span></div>
-
-                    
-                
-                    
-                    <div class="skill-block clickable" 
-     onclick="openSkillModal('Gameplay Development', '🕹️', '', '3', 'emoji', 'spec_gameplay_dev')"
-     data-skill-name="Gameplay Development"
-     data-skill-type="specialty">
-    <span class="skill-icon">
-        
-          <span class="tech-icon-emoji">🕹️</span>
-        
-    </span>
-    <span class="skill-name">Gameplay Development</span></div>
-
-                    
-                
-                    
-                    <div class="skill-block clickable" 
-     onclick="openSkillModal('Object-Oriented Programming', '⚙️', '', '3', 'emoji', 'spec_oop')"
-     data-skill-name="Object-Oriented Programming"
-     data-skill-type="specialty">
-    <span class="skill-icon">
-        
-          <span class="tech-icon-emoji">⚙️</span>
-        
-    </span>
-    <span class="skill-name">Object-Oriented Programming</span></div>
-
-                    
-                
-                    
-                    <div class="skill-block clickable" 
-     onclick="openSkillModal('3D Design', '🧊', '', '2', 'emoji', 'spec_3d_design')"
-     data-skill-name="3D Design"
-     data-skill-type="specialty">
-    <span class="skill-icon">
-        
-          <span class="tech-icon-emoji">🧊</span>
-        
-    </span>
-    <span class="skill-name">3D Design</span></div>
-
-                    
-                
-                    
-                    <div class="skill-block clickable" 
-     onclick="openSkillModal('UI\/UX Design', '🎨', '', '3', 'emoji', 'spec_ui_ux')"
-     data-skill-name="UI/UX Design"
-     data-skill-type="specialty">
-    <span class="skill-icon">
-        
-          <span class="tech-icon-emoji">🎨</span>
-        
-    </span>
-    <span class="skill-name">UI/UX Design</span></div>
-
-                    
-                
-                
-            </div>
-        </div>
-
-        
-        <div class="skills-category">
-            <h4>Soft Skills</h4>
-            <div class="skills-grid">
-                
-                
-                <div class="skill-block clickable" 
-     onclick="openSkillModal('Teamwork', '🤝', '', '', 'emoji', 'skill_teamwork')"
-     data-skill-name="Teamwork"
-     data-skill-type="soft-skill">
-    <span class="skill-icon">
-        
-          <span class="tech-icon-emoji">🤝</span>
-        
-    </span>
-    <span class="skill-name">Teamwork</span><span class="skill-level">Collaboration</span></div>
-
-                
-                <div class="skill-block clickable" 
-     onclick="openSkillModal('Communication', '💬', '', '', 'emoji', 'skill_communication')"
-     data-skill-name="Communication"
-     data-skill-type="soft-skill">
-    <span class="skill-icon">
-        
-          <span class="tech-icon-emoji">💬</span>
-        
-    </span>
-    <span class="skill-name">Communication</span></div>
-
-                
-                <div class="skill-block clickable" 
-     onclick="openSkillModal('Problem Solving', '🧩', '', '', 'emoji', 'skill_problem_solving')"
-     data-skill-name="Problem Solving"
-     data-skill-type="soft-skill">
-    <span class="skill-icon">
-        
-          <span class="tech-icon-emoji">🧩</span>
-        
-    </span>
-    <span class="skill-name">Problem Solving</span></div>
-
-                
-                <div class="skill-block clickable" 
-     onclick="openSkillModal('Leadership', '👑', '', '', 'emoji', 'skill_leadership')"
-     data-skill-name="Leadership"
-     data-skill-type="soft-skill">
-    <span class="skill-icon">
-        
-          <span class="tech-icon-emoji">👑</span>
-        
-    </span>
-    <span class="skill-name">Leadership</span></div>
-
-                
-                <div class="skill-block clickable" 
-     onclick="openSkillModal('Creativity', '💡', '', '', 'emoji', 'skill_creativity')"
-     data-skill-name="Creativity"
-     data-skill-type="soft-skill">
-    <span class="skill-icon">
-        
-          <span class="tech-icon-emoji">💡</span>
-        
-    </span>
-    <span class="skill-name">Creativity</span></div>
-
-                
-                <div class="skill-block clickable" 
-     onclick="openSkillModal('Project Management', '📋', '', '', 'emoji', 'skill_project_management')"
-     data-skill-name="Project Management"
-     data-skill-type="soft-skill">
-    <span class="skill-icon">
-        
-          <span class="tech-icon-emoji">📋</span>
-        
-    </span>
-    <span class="skill-name">Project Management</span></div>
-
-                
-                
-            </div>
-        </div>
-    </div>
-
-    
-    <div class="skills-footer">
-        <a href="/skills/" class="btn-action">
-            <span>See all skills</span><svg class="icon " width="18" height="18" style="color: inherit;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-
-</a>
-    </div>
-</section>
-
-        
-        <section id="formation">
-            <section class="education-section">
-    <div class="education-header section-header-unified">
-    <h2 class="section-title-unified">Education &amp; Certifications</h2>
-    <p class="education-subtitle section-subtitle-unified">My academic and professional journey, building the foundation of my technical expertise</p>
-    </div>
-
-    
-    <div class="tabs" data-can-collapse="true" data-collapse-id="education">
-        <button class="tab-btn active" data-tab="education">
-            <span class="icon">🎓</span>
-            <span class="tab-label">Education</span>
+<div id="youtubeModal" class="youtube-modal" onclick="closeYouTubeModal()">
+    <div class="youtube-modal-content" onclick="event.stopPropagation()">
+        <button class="youtube-modal-close" onclick="closeYouTubeModal()" title="Fermer la vidéo">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" />
+            </svg>
         </button>
-        
-        <button class="tab-btn" data-tab="certifications">
-            <span class="icon">📜</span>
-            <span class="tab-label">Certifications</span>
-        </button>
-        
+        <div class="youtube-modal-loading">Chargement...</div>
+        <iframe id="youtubeIframe" src="" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+        </iframe>
     </div>
-
-    
-    <div class="timeline-container" id="education-timeline" data-tab="education">
-        <div class="timeline-line"></div>
-        
-        
-        
-        <div class="timeline-item education-item" data-category="education">
-            <div class="timeline-marker" style="background-color: ;">
-                
-                    <span class="timeline-icon"></span>
-                
-            </div>
-            
-            <div class="timeline-content">
-                <div class="timeline-card">
-                    <div class="timeline-header">
-                        <div class="timeline-period">
-                            
-                                2022 - 
-                                
-                                    2026
-                                
-                            
-                        </div>
-                        <div class="timeline-status status-warning">In Progress</div>
-                    </div>
-                    
-                    <h3 class="timeline-title">Bachelor&#39;s in Computer Games Development</h3>
-                    <h4 class="timeline-institution">Air University  - Islamabad</h4>
-                    
-                    <p class="timeline-description">Specialized in Game Development and Computer Graphics.</p>
-                    
-                    <div class="timeline-details">
-                        <div class="timeline-results">
-                            <strong>Results:</strong>
-                            <div class="results-badges">
-                                
-                                    
-                                    
-                                        <div class="result-badge general">
-                                            <span class="badge-icon">📚</span>
-                                            <span class="badge-text">Education</span>
-                                            <span class="badge-status"></span>
-                                        </div>
-                                    
-                                
-                            </div>
-                        </div>
-                        
-                        
-                        <div class="timeline-skills">
-                            <strong>Technical skills:</strong>
-                            <div class="skills-tags">
-                                <span class="skill-tag clickable" 
-            onclick="openSkillModal('C#', '\/images\/skills\/csharp.svg', '', '4', 'svg', 'pl_csharp')"
-            data-skill-name="pl_csharp"
-            data-skill-type="programming-language">
-
-  <img src="http://localhost:1313/images/skills/csharp.svg" alt="" class="tech-icon-svg" width="24" height="24">
-
- C#</span><span class="skill-tag clickable" 
-            onclick="openSkillModal('C\u002b\u002b', '\/images\/skills\/cplusplus.svg', '', '3', 'svg', 'pl_cpp')"
-            data-skill-name="pl_cpp"
-            data-skill-type="programming-language">
-
-  <img src="http://localhost:1313/images/skills/cplusplus.svg" alt="" class="tech-icon-svg" width="24" height="24">
-
- C&#43;&#43;</span><span class="skill-tag clickable" 
-            onclick="openSkillModal('pl_python', '\/images\/skills\/python.svg', '', '2', 'svg', 'pl_python')"
-            data-skill-name="pl_python"
-            data-skill-type="programming-language">
-
-  <img src="http://localhost:1313/images/skills/python.svg" alt="" class="tech-icon-svg" width="24" height="24">
-
- pl_python</span>
-                                <span class="skill-tag clickable" 
-            onclick="openSkillModal('Unity', '\/images\/skills\/unity.svg', '', '3', 'svg', 'fw_unity')"
-            data-skill-name="fw_unity"
-            data-skill-type="framework-engine">
-
-  <img src="http://localhost:1313/images/skills/unity.svg" alt="" class="tech-icon-svg" width="24" height="24">
-
- Unity</span><span class="skill-tag clickable" 
-            onclick="openSkillModal('Unreal Engine', '\/images\/skills\/unrealengine.svg', '', '2', 'svg', 'fw_unreal_engine')"
-            data-skill-name="fw_unreal_engine"
-            data-skill-type="framework-engine">
-
-  <img src="http://localhost:1313/images/skills/unrealengine.svg" alt="" class="tech-icon-svg" width="24" height="24">
-
- Unreal Engine</span>
-                                
-                            </div>
-                        </div>
-                        
-                        
-                        
-                        <div class="timeline-skills">
-                            <strong>Cross-functional skills:</strong>
-                            <div class="skills-tags">
-                                <span class="skill-tag clickable" 
-            onclick="openSkillModal('Video Game Development', '🎮', '', '4', 'emoji', 'spec_video_game_development')"
-            data-skill-name="spec_video_game_development"
-            data-skill-type="specialty">
-
-  <span class="tech-icon-emoji">🎮</span>
-
- Video Game Development</span><span class="skill-tag clickable" 
-            onclick="openSkillModal('Game Design', '🎲', '', '3', 'emoji', 'spec_game_design')"
-            data-skill-name="spec_game_design"
-            data-skill-type="specialty">
-
-  <span class="tech-icon-emoji">🎲</span>
-
- Game Design</span><span class="skill-tag clickable" 
-            onclick="openSkillModal('UI\/UX Design', '🎨', '', '3', 'emoji', 'spec_ui_ux')"
-            data-skill-name="spec_ui_ux"
-            data-skill-type="specialty">
-
-  <span class="tech-icon-emoji">🎨</span>
-
- UI/UX Design</span><span class="skill-tag clickable" 
-            onclick="openSkillModal('3D Design', '🧊', '', '2', 'emoji', 'spec_3d_design')"
-            data-skill-name="spec_3d_design"
-            data-skill-type="specialty">
-
-  <span class="tech-icon-emoji">🧊</span>
-
- 3D Design</span><span class="skill-tag clickable" 
-            onclick="openSkillModal('Gameplay Development', '🕹️', '', '3', 'emoji', 'spec_gameplay_dev')"
-            data-skill-name="spec_gameplay_dev"
-            data-skill-type="specialty">
-
-  <span class="tech-icon-emoji">🕹️</span>
-
- Gameplay Development</span>
-                                <span class="skill-tag clickable" 
-            onclick="openSkillModal('Teamwork', '🤝', '', '', 'emoji', 'skill_teamwork')"
-            data-skill-name="skill_teamwork"
-            data-skill-type="soft-skill">
-
-  <span class="tech-icon-emoji">🤝</span>
-
- Teamwork</span><span class="skill-tag clickable" 
-            onclick="openSkillModal('Creativity', '💡', '', '', 'emoji', 'skill_creativity')"
-            data-skill-name="skill_creativity"
-            data-skill-type="soft-skill">
-
-  <span class="tech-icon-emoji">💡</span>
-
- Creativity</span><span class="skill-tag clickable" 
-            onclick="openSkillModal('Project Management', '📋', '', '', 'emoji', 'skill_project_management')"
-            data-skill-name="skill_project_management"
-            data-skill-type="soft-skill">
-
-  <span class="tech-icon-emoji">📋</span>
-
- Project Management</span><span class="skill-tag clickable" 
-            onclick="openSkillModal('Communication', '💬', '', '', 'emoji', 'skill_communication')"
-            data-skill-name="skill_communication"
-            data-skill-type="soft-skill">
-
-  <span class="tech-icon-emoji">💬</span>
-
- Communication</span>
-                            </div>
-                        </div>
-                        
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-
-    
-    
-    <div class="timeline-container" id="certifications-timeline" data-tab="certifications" style="display: none;">
-        <div class="timeline-line"></div>
-        <div class="timeline-item certification-item" data-category="certifications">
-            <div class="timeline-marker" style="background-color: #000000;">
-                <span class="timeline-icon">Epic</span>
-            </div>
-            
-            <div class="timeline-content">
-                <div class="timeline-card">
-                    <div class="timeline-header">
-                        <div class="timeline-period">June 1, 2026</div>
-                        <div class="timeline-status status-obtained">Obtained</div>
-                    </div>
-                    
-                    <h3 class="timeline-title">Epic Games Game Design Professional Certificate</h3>
-                    <h4 class="timeline-institution">Epic Games (Coursera)</h4>
-                    
-                    <p class="timeline-description">Completed June 1, 2026.</p>
-                </div>
-            </div>
-        </div>
-        
-        <div class="timeline-item certification-item" data-category="certifications">
-            <div class="timeline-marker" style="background-color: #4E79FF;">
-                <span class="timeline-icon">UE5</span>
-            </div>
-            
-            <div class="timeline-content">
-                <div class="timeline-card">
-                    <div class="timeline-header">
-                        <div class="timeline-period">June 14, 2024</div>
-                        <div class="timeline-status status-obtained">Obtained</div>
-                    </div>
-                    
-                    <h3 class="timeline-title">Unreal Engine 5 - The Complete Beginner&#39;s Course</h3>
-                    <h4 class="timeline-institution">Packt (Coursera)</h4>
-                    
-                    <p class="timeline-description">Completed June 14, 2024.</p>
-                </div>
-            </div>
-        </div>
-        
-        <div class="timeline-item certification-item" data-category="certifications">
-            <div class="timeline-marker" style="background-color: #1A73E8;">
-                <span class="timeline-icon">CYB</span>
-            </div>
-            
-            <div class="timeline-content">
-                <div class="timeline-card">
-                    <div class="timeline-header">
-                        <div class="timeline-period">June 17, 2025</div>
-                        <div class="timeline-status status-obtained">Obtained</div>
-                    </div>
-                    
-                    <h3 class="timeline-title">Foundations of Cybersecurity</h3>
-                    <h4 class="timeline-institution">Google (Coursera)</h4>
-                    
-                    <p class="timeline-description">Completed June 17, 2025.</p>
-                </div>
-            </div>
-        </div>
-        
-        <div class="timeline-item certification-item" data-category="certifications">
-            <div class="timeline-marker" style="background-color: #00B3A4;">
-                <span class="timeline-icon">IBM</span>
-            </div>
-            
-            <div class="timeline-content">
-                <div class="timeline-card">
-                    <div class="timeline-header">
-                        <div class="timeline-period">Oct 1, 2023</div>
-                        <div class="timeline-status status-obtained">Obtained</div>
-                    </div>
-                    
-                    <h3 class="timeline-title">IBM Data Science Professional Certificate</h3>
-                    <h4 class="timeline-institution">IBM (Coursera)</h4>
-                    
-                    <p class="timeline-description">Completed Oct 17, 2023.</p>
-                </div>
-            </div>
-        </div>
-        
-    </div>
-    
-
-    
-    <div class="education-footer">
-        <a href="/educations/" class="btn-action">
-            <span>View all education</span><svg class="icon " width="18" height="18" style="color: inherit;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-
-</a>
-    </div>
-</section>
-
-        </section>
-
-        
-
-    </main>
 </div>
 
 
 
 
 
+
+
+<div class="blog-theme blog-single-page">
+    
+    <div class="project-content-layout">
+        
+        <main class="blog-article-content project-main-content">
+            <div class="blog-content-wrapper">
+                <h2 id="overview">Overview</h2>
+<p>Built a first-person sci-fi shooter in Unity for WebGL delivery, focusing on playable browser performance, maintainable C# code, and a clean player experience across desktop and mobile-sized viewports.</p>
+<h2 id="technical-highlights">Technical Highlights</h2>
+<ul>
+<li><strong>Unity WebGL Delivery</strong>: Developed and optimized browser-based gameplay for HTML5/WebGL deployment.</li>
+<li><strong>Gameplay Systems</strong>: Implemented combat, movement, UI flows, animations, and feedback loops to support engaging moment-to-moment play.</li>
+<li><strong>Performance Optimization</strong>: Tuned memory usage, loading behavior, and responsiveness to keep the experience stable in the browser.</li>
+<li><strong>Production Readiness</strong>: Used Git for version control, debugging, and iterative improvement during development.</li>
+</ul>
+
+            </div>
+        </main>
+        
+        
+        
+    </div>
+    
+    </div>
+
+
+
+
+<nav class="blog-post-navigation">
+    
+    <div class="blog-nav-item blog-nav-prev">
+        <span class="blog-nav-label">Previous project</span>
+        <a href="http://localhost:1313/projects/astrorush/" class="blog-nav-link">
+            <h4>Astro Rush</h4>
+            
+            <time>18 Dec 2023</time>
+            
+        </a>
+    </div>
+    
+
+    
+    <div class="blog-nav-item blog-nav-next">
+        <span class="blog-nav-label">Next project</span>
+        <a href="http://localhost:1313/projects/extinguisher/" class="blog-nav-link">
+            <h4>Extinguisher</h4>
+            
+            <time>18 May 2023</time>
+            
+        </a>
+    </div>
+    
+</nav>
+
+
+<div id="imageModal" class="image-modal" onclick="closeImageModal()" style="z-index: 999999 !important;">
+    <div class="image-modal-content">
+        <span class="image-modal-close" onclick="closeImageModal()" style="z-index: 1000000 !important;">&times;</span>
+        <button class="image-modal-download" onclick="event.stopPropagation(); downloadImage();" title="Download source image">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z"/>
+            </svg>
+        </button>
+        <img id="modalImage" src="" alt="">
+        <div id="modalCaption" class="image-modal-caption"></div>
+    </div>
+</div>
+
+<script>
+
+
+
+
+function openProjectActionsModal() {
+    console.warn('No additional actions to display');
+}
+
+
+
+function initializeInfoBoxSystem() {
+    const infoBoxes = document.querySelectorAll('.project-widget');
+    
+    infoBoxes.forEach(function(infoBox) {
+        
+        const computedStyle = window.getComputedStyle(infoBox);
+        const gridColumn = computedStyle.gridColumn;
+        
+        infoBox.setAttribute('data-original-span', gridColumn);
+        infoBox.style.setProperty('--original-span', gridColumn);
+        
+        
+        infoBox.addEventListener('transitionstart', function(e) {
+            if (e.propertyName === 'grid-column') {
+                
+                infoBox.classList.add('transitioning');
+            }
+        });
+        
+        infoBox.addEventListener('transitionend', function(e) {
+            if (e.propertyName === 'grid-column') {
+                
+                infoBox.classList.remove('transitioning');
+            }
+        });
+        
+        
+        if (window.ResizeObserver) {
+            const resizeObserver = new ResizeObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    
+                    if (entry.target.classList.contains('expanded')) {
+                        entry.target.style.minHeight = 'auto';
+                    }
+                });
+            });
+            
+            resizeObserver.observe(infoBox);
+        }
+    });
+    
+    
+    let currentlyExpanding = null;
+    
+    window.addEventListener('click', function(e) {
+    const header = e.target.closest('.project-widget-header');
+        if (header && currentlyExpanding === null) {
+            const infoBox = header.closest('.project-widget');
+            if (infoBox.classList.contains('expanding') || infoBox.classList.contains('collapsing')) {
+                return; 
+            }
+            
+            currentlyExpanding = infoBox;
+            setTimeout(() => {
+                currentlyExpanding = null;
+            }, 500); 
+        }
+    });
+}
+
+function toggleInfoBox(header) {
+    const infoBox = header.closest('.project-widget');
+    if (!infoBox) return;
+
+    
+    if (window.UnifiedModal && typeof window.UnifiedModal.openProjectWidget === 'function') {
+        window.UnifiedModal.openProjectWidget(infoBox);
+        return;
+    }
+
+    
+    const isExpanded = infoBox.classList.contains('expanded');
+    infoBox.classList.toggle('expanded', !isExpanded);
+}
+
+function openImageModal(imageUrl, caption) {
+    const modal = document.getElementById('imageModal');
+    const modalImage = document.getElementById('modalImage');
+    const modalCaption = document.getElementById('modalCaption');
+    
+    
+    if (typeof window.pauseAllTestimonials === 'function') {
+        window.pauseAllTestimonials();
+    }
+    
+    modalImage.src = imageUrl;
+    modalCaption.textContent = caption || '';
+    modal.style.display = 'flex';
+    
+    
+    modal.dataset.currentImageUrl = imageUrl;
+    
+    
+    document.body.style.overflow = 'hidden';
+    
+    
+    setTimeout(() => modal.classList.add('active'), 10);
+}
+
+function downloadImage() {
+    const modal = document.getElementById('imageModal');
+    const imageUrl = modal.dataset.currentImageUrl;
+    
+    if (!imageUrl) return;
+    
+    
+    const urlParts = imageUrl.split('/');
+    const filename = urlParts[urlParts.length - 1] || 'image.jpg';
+    
+    
+    const link = document.createElement('a');
+    link.href = imageUrl;
+    link.download = filename;
+    link.style.display = 'none';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+function closeImageModal() {
+    const modal = document.getElementById('imageModal');
+    modal.classList.remove('active');
+    
+    
+    if (typeof window.resumeAllTestimonials === 'function') {
+        window.resumeAllTestimonials();
+    }
+    
+    setTimeout(() => {
+        modal.style.display = 'none';
+        
+        
+        try {
+            const modalIds = ['unifiedModal', 'skillModal', 'personModal'];
+            const anyModalOpen = modalIds.some(id => {
+                const el = document.getElementById(id);
+                if (!el) return false;
+                const display = (el.style && el.style.display) ? el.style.display : window.getComputedStyle(el).display;
+                return display && display !== 'none';
+            });
+            
+            
+            document.body.style.overflow = anyModalOpen ? 'hidden' : 'auto';
+        } catch(e) {
+            
+            document.body.style.overflow = 'auto';
+        }
+    }, 300);
+}
+
+
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        closeImageModal();
+    }
+});
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    const body = document.body;
+    
+    
+    initializeInfoBoxSystem();
+    
+    
+    const galleryBoxes = document.querySelectorAll('.gallery-box:not(.expanded)');
+    
+    galleryBoxes.forEach(function(galleryBox, index) {
+        
+        const uniqueId = `gallery-slideshow-${index}`;
+        galleryBox.id = uniqueId;
+        
+        
+        const slideshow = new GallerySlideshow(`#${uniqueId}`, {
+            interval: 4000,
+            transitionDuration: 1000,
+            preloadAll: true,
+            pauseWhenExpanded: true
+        });
+    });
+    
+    
+    setTimeout(() => {
+        body.classList.add('blur-animated');
+    }, 300);
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="skillModal" class="skill-modal" style="display: none;">
+    <div class="skill-modal-backdrop" onclick="closeSkillModal()"></div>
+    <div class="skill-modal-content unified-modal-content">
+        <div class="skill-modal-header unified-modal-header">
+            <button class="skill-modal-close unified-modal-close" onclick="closeSkillModal()">&times;</button>
+
+            
+            <div class="skill-info skill-modal-header-section unified-modal-content-header">
+                <div class="skill-modal-header-left unified-modal-content-header-left">
+                    <div class="skill-modal-skill-icon-large unified-modal-icon-large" id="skillIconLarge">
+                        <span id="modalSkillIcon"></span>
+                    </div>
+                    <div class="skill-modal-title-block unified-modal-title-block">
+                        <h2 id="modalSkillName"></h2>
+                        <div class="skill-modal-chips unified-modal-chips">
+                            <span class="skill-modal-chip chip" id="modalSkillLevel" hidden></span>
+                            <span class="skill-modal-chip chip secondary" id="modalSkillExperience" hidden></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+            
+            <div class="skill-modal-tabs unified-modal-tabs tabs" role="tablist" data-can-collapse="true" data-collapse-id="skillModal">
+                <button class="skill-modal-tab tab-btn active" role="tab" aria-selected="true" aria-controls="skillModalTabProjects" data-tab="projects">
+                    <span class="icon">💼</span><span>Projects</span>
+                    <span class="skill-modal-tab-count count" id="skillModalProjectsCount"></span>
+                </button>
+                <button class="skill-modal-tab tab-btn" role="tab" aria-selected="false" aria-controls="skillModalTabExperiences" data-tab="experiences">
+                    <span class="icon">🏢</span><span>Experiences</span>
+                    <span class="skill-modal-tab-count count" id="skillModalExperiencesCount"></span>
+                </button>
+                <button class="skill-modal-tab tab-btn" role="tab" aria-selected="false" aria-controls="skillModalTabEducations" data-tab="educations">
+                    <span class="icon">🎓</span><span>Educations</span>
+                    <span class="skill-modal-tab-count count" id="skillModalEducationsCount"></span>
+                </button>
+            </div>
+        </div>
+
+        <div class="skill-modal-body unified-modal-body skill-modal-layout">
+            
+            <div class="skill-modal-tab-panels unified-modal-panels">
+                <div class="skill-modal-tab-panel unified-modal-panel active" id="skillModalTabProjects" role="tabpanel" aria-labelledby="skillModalTabBtnProjects">
+                    <div id="modalProjectsList" class="skill-modal-projects-grid" data-empty-text="Aucun projet trouvé pour cette technologie.">
+                        
+                    </div>
+                </div>
+                <div class="skill-modal-tab-panel unified-modal-panel" id="skillModalTabExperiences" role="tabpanel" aria-labelledby="skillModalTabBtnExperiences" hidden>
+                    <div id="modalExperiencesList" class="skill-modal-experiences-list" data-empty-text="Aucune expérience trouvée.">
+                        
+                    </div>
+                </div>
+                <div class="skill-modal-tab-panel unified-modal-panel" id="skillModalTabEducations" role="tabpanel" aria-labelledby="skillModalTabBtnEducations" hidden>
+                    <div id="modalEducationsList" class="skill-modal-educations-list" data-empty-text="Aucune formation trouvée.">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('skillModal');
+    if (!modal) return;
+    
+    
+    const skillModalTabs = new TabController('#skillModal .skill-modal-tab', {
+        contentSelector: '#skillModal .skill-modal-tab-panel',
+        contentAttribute: 'data-tab',
+        animationType: 'none', 
+        useHiddenAttribute: true,
+        contentMatchingStrategy: 'id-pattern',
+        idPattern: 'skillModalTab{Category}',
+        enableKeyboardNav: true
+    });
+    
+    const counts = {
+        projects: document.getElementById('skillModalProjectsCount'),
+        experiences: document.getElementById('skillModalExperiencesCount'),
+        educations: document.getElementById('skillModalEducationsCount')
+    };
+    
+
+    
+    const originalOpen = window.openSkillModal;
+    if (typeof originalOpen === 'function') {
+        window.openSkillModal = function(name, icon, level, experience, iconType, skillKey) {
+            originalOpen(name, icon, level, experience, iconType, skillKey);
+            
+            
+            const searchKey = skillKey || name;
+
+            
+            try {
+                const lvlEl = document.getElementById('modalSkillLevel');
+                if (lvlEl) {
+                    const raw = lvlEl.textContent ? lvlEl.textContent.trim() : '';
+                    let hide = false;
+                    if (!raw) hide = true;
+                    else {
+                        const normalized = raw.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+                        if (normalized === 'non specifie') hide = true;
+                    }
+                    if (hide) {
+                        lvlEl.textContent = '';
+                        lvlEl.style.display = 'none';
+                        lvlEl.hidden = true;
+                    } else {
+                        lvlEl.style.display = '';
+                        lvlEl.hidden = false;
+                    }
+                }
+            } catch (e) {   }
+
+            
+            
+
+            updateStats(searchKey);
+            skillModalTabs.activateTab('projects');
+        };
+    }
+
+    function updateStats(skillName) {
+        const normalize = v => Array.isArray(v) ? v : (v ? [v] : []);
+        const hasSkill = (arr) => arr.some(t => t && (t === skillName || t.toLowerCase() === skillName.toLowerCase()));
+
+        const proj = (window.portfolioProjects||[]).filter(p => hasSkill(normalize(p.technologies||[])));
+        const exp = (window.portfolioExperiences||[]).filter(e => hasSkill(normalize(e.technologies||[])));
+        const edu = (window.portfolioEducations||[]).filter(ed => hasSkill(normalize(ed.technologies||[])));
+
+        if (counts.projects) counts.projects.textContent = proj.length > 0 ? proj.length : '0';
+        if (counts.experiences) counts.experiences.textContent = exp.length > 0 ? exp.length : '0';
+        if (counts.educations) counts.educations.textContent = edu.length > 0 ? edu.length : '0';
+
+        
+    }
+});
+</script>
 
 
   </main>
