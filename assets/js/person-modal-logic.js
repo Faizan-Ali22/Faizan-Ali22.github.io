@@ -30,7 +30,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const modal = document.getElementById('personModal');
     if (!modal) {
-        console.error('Person modal element not found!');
         return;
     }
     

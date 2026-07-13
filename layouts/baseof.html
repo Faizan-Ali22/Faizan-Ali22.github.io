@@ -55,12 +55,6 @@
     <script>{{ $mobileMenuJs.Content | safeJS }}</script>
   {{ end }}
   
-  <!-- Scripts pour la modal des compétences -->
-  {{ $skillModalJs := resources.Get "js/skill-modal.js" }}
-  {{ if $skillModalJs }}
-    <script>{{ $skillModalJs.Content | safeJS }}</script>
-  {{ end }}
-  
   <!-- Scripts pour la modal des personnes -->
   {{ $personModalLogic := resources.Get "js/person-modal-logic.js" }}
   {{ if $personModalLogic }}

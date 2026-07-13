@@ -97,6 +97,7 @@ const MODAL_TRANSLATIONS = {
         phone_note: "Feel free to call or text me on Whatsapp!",
         
         // CV modal
+        download_cv_title: "Download my Resume",
         cv_choose: "Choose the version to download:",
         cv_color_title: "Color version",
         cv_color_desc: "PDF with full design and colors",
@@ -234,7 +235,10 @@ const CONTENT_TEMPLATES = {
         </div>
     `,
 
-    cv: (config) => `
+    cv: (config) => {
+        const showPrintableCv = window.portfolioFeatures?.printableCv === true;
+
+        return `
         <div class="unified-modal-simple-content cv-content">
             <p>${t('cv_choose')}</p>
             <div class="cv-options">
@@ -246,6 +250,7 @@ const CONTENT_TEMPLATES = {
                         <span class="badge">${t('cv_color_badge')}</span>
                     </div>
                 </button>
+                ${showPrintableCv ? `
                 <button class="btn-action cv-option" onclick="UnifiedModal.downloadFile('/cv/CV%20-%20Copy.pdf','CV - Copy.pdf')">
                     <div class="cv-icon">${getPrinterIcon(32)}</div>
                     <div class="cv-text">
@@ -254,9 +259,11 @@ const CONTENT_TEMPLATES = {
                         <span class="badge">${t('cv_print_badge')}</span>
                     </div>
                 </button>
+                ` : ''}
             </div>
         </div>
-    `,
+    `;
+    },
 
     // New dynamic template for project widgets opened fullscreen
     projectWidget: (config) => `
@@ -847,22 +854,14 @@ class UnifiedModal {
      * Affiche le modal
      */
     static showModal(modal, config) {
-        // Track CV modal opening for trophy system
-        if (config && config.type === 'cv') {
+        // Track CV modal opening for trophy system only when enabled
+        if (config && config.type === 'cv' && window.portfolioFeatures?.trophies === true) {
             console.log('✅ CV modal opened! Setting cvDownloaded flag');
             localStorage.setItem('cvDownloaded', 'true');
-            
-            // Check trophies after a short delay
-            const checkTrophies = () => {
-                if (window.trophySystem) {
-                    console.log('✅ Checking trophies after CV modal opened');
-                    window.trophySystem.checkTrophies();
-                } else {
-                    console.warn('⚠️ Trophy system not yet available, retrying...');
-                    setTimeout(checkTrophies, 100);
-                }
-            };
-            setTimeout(checkTrophies, 100);
+
+            if (window.trophySystem && typeof window.trophySystem.checkTrophies === 'function') {
+                window.trophySystem.checkTrophies();
+            }
         }
         
         // Prepare and show with CSS-driven animation

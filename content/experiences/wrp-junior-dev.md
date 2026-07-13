@@ -5,7 +5,7 @@ location: "Islamabad, Pakistan · Hybrid"
 logo: "/images/companies/wrp.png"
 
 start_date: 2025-06-01
-end_date: 2025-09-01
+end_date: 2025-11-01
 
 description: "Internship focused on game development, contributing to core gameplay mechanics and collaborative project workflows."
 

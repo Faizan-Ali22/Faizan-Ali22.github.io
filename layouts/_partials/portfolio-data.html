@@ -1,5 +1,6 @@
 {{/* Global portfolio data - loaded once per page */}}
 <script>
+window.portfolioFeatures = {{ .Site.Data.config.features | jsonify }};
 window.portfolioProjects = [
     {{- range where (where .Site.RegularPages "Section" "projects") "Draft" false -}}
         {{- $allTechnologies := partial "get-all-technologies.html" . -}}

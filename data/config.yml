@@ -10,6 +10,8 @@ site:
 features:
   trophies: false        # Set to true to enable the gamification trophy system
   notifications: false   # Show notification bell in sidebar
+  themeSwitcher: false   # Show theme toggle in the mobile menu
+  printableCv: false     # Show the printable CV download option
   languageSwitcher: false # Show language switcher
 
 # Navigation links shown in the sidebar/menu

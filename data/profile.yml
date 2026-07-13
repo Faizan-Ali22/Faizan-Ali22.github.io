@@ -18,7 +18,7 @@ personal:
     - "&"
     - "3D Artist"
 
-  yearsExperience: "4+"                 # Stat shown on homepage (e.g. "3+", "5")
+  yearsExperience: "3+"                 # Stat shown on homepage (e.g. "3+", "5")
 
 # Profile photo — place the file in static/images/
 media:

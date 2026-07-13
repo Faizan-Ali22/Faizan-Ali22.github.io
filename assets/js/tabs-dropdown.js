@@ -17,6 +17,12 @@
             console.warn('Tabs with data-can-collapse must have data-collapse-id attribute');
             return;
         }
+
+        // Skip initialization when the tab container is inside a hidden modal or collapsed parent.
+        const hiddenAncestor = tabsContainer.closest('[hidden], [style*="display: none"], .skill-modal[style*="display: none"], .person-modal[style*="display: none"], .unified-modal[style*="display: none"]');
+        if (hiddenAncestor) {
+            return;
+        }
         
         // Find or create mobile dropdown container
         let mobileContainer = document.querySelector(`.tabs-mobile[data-collapse-id="${collapseId}"]`);
@@ -27,7 +33,6 @@
             
             // If no visible tabs, skip initialization
             if (!mobileContainer) {
-                console.warn(`No visible tabs for ${collapseId}, skipping dropdown creation`);
                 return;
             }
             
@@ -99,7 +104,6 @@
         });
         
         if (tabs.length === 0) {
-            console.warn('No visible tabs found for dropdown');
             return null;
         }
         
