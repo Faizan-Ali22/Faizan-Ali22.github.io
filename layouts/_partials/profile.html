@@ -16,7 +16,7 @@
         </div>
 
         <div class="hero-content">
-            <p class="hero-greeting">{{ i18n "hero_greeting" | default "👋 Bonjour, je suis" }} <span class="hero-name">{{ .personal.firstName }}</span></p>
+            <p class="hero-greeting">{{ i18n "hero_greeting" | default "Hello, I'm" }} <span class="hero-name">{{ .personal.firstName }}</span></p>
             <h1 class="hero-title">
                 {{ range .personal.heroTitle }}
                 <span class="hero-action">{{ . }}</span>
@@ -24,7 +24,7 @@
             </h1>
             
             <p class="hero-description">
-                {{ i18n "hero_description" | default "A versatile developer passionate about building exceptional digital experiences." }}
+                {{ i18n "hero_description" | default "Versatile developer specialized in Video games with C# & C++ in Unity & Unreal Engine. From conception to production, I transform ideas into captivating interactive experiences that leave a mark on players." }}
             </p>
 
             <div class="hero-actions">
@@ -41,7 +41,7 @@
             <div class="hero-stats" style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
                 <div class="stat-item">
                     <div class="stat-value">{{ with $.Site.Data.profile.personal.yearsExperience }}{{ . }}{{ else }}0{{ end }}</div>
-                    <div class="stat-label">{{ i18n "years_pro_experience" | default "ans d'expérience pro" }}</div>
+                    <div class="stat-label">{{ i18n "years_pro_experience" | default "years pro experience" }}</div>
                 </div>
                 <div class="stat-item">
                     {{- $allProjects := where (where $.Site.RegularPages "Section" "projects") "Draft" false -}}
@@ -51,7 +51,7 @@
                     {{- $gamesCount := add (add (len $gamesPro) (len $gamesPerso)) (len $gamesJams) -}}
                 
                     <div class="stat-value">{{ if eq $gamesCount 0 }}0{{ else }}{{ $gamesCount }}{{ end }}</div>
-                    <div class="stat-label">{{ i18n "games_created" | default "jeux créés" }}</div>
+                    <div class="stat-label">{{ i18n "games_created" | default "games created" }}</div>
                 </div>
             </div>
         </div>

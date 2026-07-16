@@ -8,15 +8,15 @@
 <section class="skills-section">
     <!-- Skills Header -->
     <header class="skills-header section-header-unified">
-        <h2 class="section-title-unified">{{ i18n "technical_skills" | default "Compétences Techniques" }}</h2>
-        <p class="skills-subtitle section-subtitle-unified">{{ i18n "skills_subtitle" | default "Maîtrise des technologies modernes pour créer des expériences utilisateur exceptionnelles et des solutions techniques robustes. 💻" }}</p>
+        <h2 class="section-title-unified">{{ i18n "technical_skills" | default "Technical Skills" }}</h2>
+        <p class="skills-subtitle section-subtitle-unified">{{ i18n "skills_subtitle" | default "Mastering modern technologies to build great user experiences and robust solutions.»" }}</p>
     </header>
 
     <!-- Info Box -->
     <div class="skills-info-box">
         <span class="info-icon">�</span>
         <p class="info-text">
-            {{ i18n "skills_clickable_info" | default "Cliquez sur une compétence pour découvrir les projets, formations et expériences où elle a été utilisée !" }}
+            {{ i18n "skills_clickable_info" | default "Click on a skill to discover related projects, educations and experiences!" }}
         </p>
     </div>
 
@@ -25,7 +25,7 @@
         
         {{/* Programming Languages */}}
         <div class="skills-category" data-category="programming-languages">
-            <h4>{{ i18n "programming_languages" | default "Langages de programmation" }}</h4>
+            <h4>{{ i18n "programming_languages" | default "Programming Languages" }}</h4>
             <div class="skills-grid">
                 {{ range $programmingLanguages }}
                     {{ partial "helpers/skill-block.html" (dict "skill" . "skillType" "programming-language" "skillCategory" "programming-languages" "context" $ "useRelURL" true) }}
@@ -47,7 +47,7 @@
 
         {{/* Game Engines */}}
         <div class="skills-category" data-category="engines">
-            <h4>{{ i18n "game_engines" | default "Moteurs de jeu" }}</h4>
+            <h4>{{ i18n "game_engines" | default "Game Engines" }}</h4>
             <div class="skills-grid">
                 {{ range $frameworksEngines }}
                     {{ if or (eq .key "fw_unity") (eq .key "fw_unreal_engine") (eq .key "fw_black_ops_iii_engine") }}
@@ -59,7 +59,7 @@
 
         {{/* Environments */}}
         <div class="skills-category" data-category="environments">
-            <h4>{{ i18n "environments" | default "Environnements de développement" }}</h4>
+            <h4>{{ i18n "environments" | default "Environments" }}</h4>
             <div class="skills-grid">
                 {{ range sort $tools "experience" "desc" }}
                     {{ if eq .category "ide" }}
@@ -71,7 +71,7 @@
 
         {{/* Tools */}}
         <div class="skills-category" data-category="tools">
-            <h4>{{ i18n "tools" | default "Outils" }}</h4>
+            <h4>{{ i18n "tools" | default "Tools & Environments" }}</h4>
             <div class="skills-grid">
                 {{ range sort $tools "experience" "desc" }}
                     {{ if ne .category "ide" }}
@@ -83,7 +83,7 @@
 
         {{/* Specialties */}}
         <div class="skills-category" data-category="specialties">
-            <h4>{{ i18n "specialties" | default "Spécialités" }}</h4>
+            <h4>{{ i18n "specialties" | default "Specialties" }}</h4>
             <div class="skills-grid">
                 {{ range $specialties }}
                 {{ partial "helpers/skill-block.html" (dict "skill" . "skillType" "specialty" "skillCategory" "specialties" "context" $ "useRelURL" true "showExperience" false) }}

@@ -12,67 +12,13 @@
  * Detect current language from HTML lang attribute or URL
  */
 function getCurrentLanguage() {
-    // Check HTML lang attribute first
-    const htmlLang = document.documentElement.lang;
-    if (htmlLang && htmlLang.startsWith('en')) return 'en';
-    if (htmlLang && htmlLang.startsWith('fr')) return 'fr';
-    
-    // Fallback: check URL for /en/ prefix
-    if (window.location.pathname.startsWith('/en/') || window.location.pathname === '/en') return 'en';
-    
-    // Default to French
-    return 'fr';
+    return 'en';
 }
 
 /**
  * Translations for the modal system
  */
 const MODAL_TRANSLATIONS = {
-    fr: {
-        // Contact modal
-        my_coordinates: "Mes coordonnées",
-        send_message: "Envoyez-moi un message",
-        full_name: "Nom complet",
-        your_name: "Votre nom",
-        email: "Email",
-        subject: "Sujet",
-        message_subject: "Objet de votre message",
-        message: "Message",
-        your_message: "Votre message...",
-        send: "Envoyer",
-        location: "Localisation",
-        
-        // Discord modal
-        discord_intro: "Voici mon ID Discord :",
-        copy: "Copier",
-        discord_note: "Tu peux m'ajouter sur Discord ou m'envoyer un message !",
-        
-        // Phone modal
-        phone_intro: "Voici mon numéro de téléphone :",
-        phone_note: "N'hésite pas à m'appeler ou m'envoyer un SMS !",
-        
-        // CV modal
-        cv_choose: "Choisissez la version à télécharger :",
-        cv_color_title: "Version couleur",
-        cv_color_desc: "PDF avec design complet et couleurs",
-        cv_color_badge: "Recommandée écran",
-        cv_print_title: "Version imprimable",
-        cv_print_desc: "PDF noir et blanc, optimisé pour l'impression",
-        cv_print_badge: "Économise l'encre",
-        
-        // Project widget
-        widget_no_content: "Aucun contenu disponible pour ce widget.",
-        no_content_available: "Aucun contenu disponible",
-        
-        // Buttons & actions
-        view_project: "Voir le projet",
-        view_experience: "Voir l'expérience",
-        close: "Fermer",
-        
-        // Copy feedback
-        copied: "Copié !",
-        copy_error: "Erreur de copie"
-    },
     en: {
         // Contact modal
         my_coordinates: "My contact info",
@@ -99,12 +45,12 @@ const MODAL_TRANSLATIONS = {
         // CV modal
         download_cv_title: "Download my Resume",
         cv_choose: "Choose the version to download:",
-        cv_color_title: "Color version",
-        cv_color_desc: "PDF with full design and colors",
-        cv_color_badge: "Recommended for screen",
-        cv_print_title: "Printable version",
-        cv_print_desc: "Black and white PDF, optimized for printing",
-        cv_print_badge: "Saves ink",
+        cv_color_title: "Resume",
+        cv_color_desc: "PDF",
+        cv_color_badge: "Click to Download",
+        cv_print_title: "Resume for Unreal Dev",
+        cv_print_desc: "PDF ",
+        cv_print_badge: "Unreal Engine",
         
         // Project widget
         widget_no_content: "No content available for this widget.",
@@ -125,8 +71,7 @@ const MODAL_TRANSLATIONS = {
  * Get a translated string
  */
 function t(key) {
-    const lang = getCurrentLanguage();
-    return MODAL_TRANSLATIONS[lang]?.[key] || MODAL_TRANSLATIONS['fr'][key] || key;
+    return MODAL_TRANSLATIONS['en']?.[key] || key;
 }
 
 // ================================
@@ -251,7 +196,7 @@ const CONTENT_TEMPLATES = {
                     </div>
                 </button>
                 ${showPrintableCv ? `
-                <button class="btn-action cv-option" onclick="UnifiedModal.downloadFile('/cv/CV%20-%20Copy.pdf','CV - Copy.pdf')">
+                <button class="btn-action cv-option" onclick="UnifiedModal.downloadFile('/cv/CV_Unreal_Engine.pdf','CV_Unreal_Engine.pdf')">
                     <div class="cv-icon">${getPrinterIcon(32)}</div>
                     <div class="cv-text">
                         <div class="cv-title">${t('cv_print_title')}</div>
@@ -350,7 +295,7 @@ function generateTabPanel(tab, content) {
     const isActive = tab.active === true;
     return `
         <div class="unified-modal-panel ${isActive ? 'active' : ''}" data-panel="${tab.key}">
-            ${content || `<p>Contenu du tab ${tab.label}</p>`}
+            ${content || `<p>Tab content ${tab.label}</p>`}
         </div>
     `;
 }
@@ -375,7 +320,7 @@ function generateActionItem(action) {
 }
 
 /**
- * Génère les éléments de contact
+ * Generate contact items
  */
 function generateContactItems(contacts) {
     return contacts.map(contact => {
@@ -402,7 +347,7 @@ function generateContactItems(contacts) {
 }
 
 /**
- * Génère le formulaire de contact
+ * Generate contact form
  */
 function generateContactForm(formConfig = {}) {
     return `
@@ -433,7 +378,7 @@ function generateContactForm(formConfig = {}) {
 }
 
 /**
- * Génère le contenu pour un modal de compétence
+ * Generate skill modal content
  */
 function generateSkillContent(content) {
     if (!content) return `<p>${t('no_content_available')}</p>`;
@@ -448,7 +393,7 @@ function generateSkillContent(content) {
 }
 
 /**
- * Génère le contenu pour un modal de personne
+ * Generate person modal content
  */
 function generatePersonContent(content) {
     if (!content) return `<p>${t('no_content_available')}</p>`;
@@ -575,7 +520,7 @@ class UnifiedModal {
     static previousActiveElement = null;
 
     /**
-     * Crée et affiche un modal unifié
+     * Create and display a unified modal
      */
     static create(config) {
         const modal = this.getOrCreateModalElement();
@@ -594,7 +539,7 @@ class UnifiedModal {
     }
 
     /**
-     * Récupère ou crée l'élément modal
+     * Get or create the modal element
      */
     static getOrCreateModalElement() {
         let modal = document.getElementById('unifiedModal');
@@ -611,7 +556,7 @@ class UnifiedModal {
     }
 
     /**
-     * Génère le contenu du modal
+     * Generate modal content
      */
     static generateModalContent(config) {
         const width = config.desiredWidth || MODAL_TEMPLATES.widths[config.type] || MODAL_TEMPLATES.widths.default;
@@ -634,7 +579,7 @@ class UnifiedModal {
     }
 
     /**
-     * Génère le header du modal
+     * Generate modal header
      */
     static generateModalHeader(config) {
         return `
@@ -646,7 +591,7 @@ class UnifiedModal {
     }
 
     /**
-     * Génère le body du modal
+     * Generate modal body
      */
     static generateModalBody(config, contentTemplate) {
         return `
@@ -657,7 +602,7 @@ class UnifiedModal {
     }
 
     /**
-     * Génère le header du contenu
+     * Generate content header
      */
     static generateContentHeader(config) {
         const hasRightContent = config.headerRight;
@@ -843,7 +788,7 @@ class UnifiedModal {
                     if (!el.hasAttribute('tabindex')) {
                         el.setAttribute('tabindex', '0');
                         el.setAttribute('role', 'button');
-                        el.setAttribute('aria-label', 'Ouvrir le profil');
+                        el.setAttribute('aria-label', 'Open profile');
                     }
                 });
             } catch(err) { /* silent */ }
@@ -851,7 +796,7 @@ class UnifiedModal {
     }
 
     /**
-     * Affiche le modal
+     * Show the modal
      */
     static showModal(modal, config) {
         // Track CV modal opening for trophy system only when enabled
@@ -937,7 +882,7 @@ class UnifiedModal {
     }
 
     /**
-     * Attache les event listeners
+     * Attach event listeners
      */
     static attachEventListeners(modal) {
         // Bouton de fermeture

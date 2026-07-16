@@ -13,8 +13,8 @@
       {{- partial "icon.html" (dict "iconId" "award") -}}
     </div>
     <div class="project-widget-header-content">
-      <h3 class="project-widget-title">{{ i18n "awards_recognition" | default "Récompenses & Reconnaissance" }}</h3>
-      <div class="project-widget-summary">{{ len .Params.awards }} {{ if eq (len .Params.awards) 1 }}{{ i18n "reward" | default "récompense" }}{{ else }}{{ i18n "rewards" | default "récompenses" }}{{ end }}</div>
+      <h3 class="project-widget-title">{{ i18n "awards_recognition" | default "Awards & Recognition" }}</h3>
+      <div class="project-widget-summary">{{ len .Params.awards }} {{ if eq (len .Params.awards) 1 }}{{ i18n "reward" | default "reward" }}{{ else }}{{ i18n "rewards" | default "rewards" }}{{ end }}</div>
     </div>
     <div class="project-widget-toggle">
       {{- partial "icon.html" (dict "iconId" "chevron-down") -}}

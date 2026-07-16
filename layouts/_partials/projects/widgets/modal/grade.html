@@ -40,28 +40,28 @@
     <div class="grade-details-grid">
       {{- if $grade.institution -}}
       <div class="grade-detail-card">
-        <div class="detail-label">{{ i18n "institution" | default "Établissement" }}</div>
+        <div class="detail-label">{{ i18n "institution" | default "Institution" }}</div>
         <div class="detail-value">{{ $grade.institution }}</div>
       </div>
       {{- end -}}
       
       {{- if $grade.semester -}}
       <div class="grade-detail-card">
-        <div class="detail-label">{{ i18n "semester" | default "Semestre" }}</div>
+        <div class="detail-label">{{ i18n "semester" | default "Semester" }}</div>
         <div class="detail-value">{{ $grade.semester }}</div>
       </div>
       {{- end -}}
       
       {{- if $grade.academic_year -}}
       <div class="grade-detail-card">
-        <div class="detail-label">{{ i18n "academic_year" | default "Année" }}</div>
+        <div class="detail-label">{{ i18n "academic_year" | default "Academic Year" }}</div>
         <div class="detail-value">{{ $grade.academic_year }}</div>
       </div>
       {{- end -}}
       
       {{- if $grade.comment -}}
       <div class="grade-comment-card">
-        <div class="comment-label">{{ i18n "comment" | default "Commentaire" }}</div>
+        <div class="comment-label">{{ i18n "comment" | default "Comment" }}</div>
         <div class="comment-text">{{ $grade.comment | markdownify }}</div>
       </div>
       {{- end -}}
@@ -76,7 +76,7 @@
       </div>
     </div>
     <div class="grade-display-card">
-      <p>{{ i18n "no_evaluation_found" | default "Aucune évaluation n'a été trouvée pour ce projet." }}</p>
+      <p>{{ i18n "no_evaluation_found" | default "No evaluation found for this project." }}</p>
     </div>
   </div>
 {{- end -}}

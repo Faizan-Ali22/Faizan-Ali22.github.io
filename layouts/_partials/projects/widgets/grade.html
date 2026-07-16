@@ -13,7 +13,7 @@
       {{- partial "icon.html" (dict "iconId" "grade") -}}
     </div>
     <div class="project-widget-header-content">
-      <h3 class="project-widget-title">{{ i18n "academic_grade" | default "Note académique" }}</h3>
+      <h3 class="project-widget-title">{{ i18n "academic_grade" | default "Academic Grade" }}</h3>
       <div class="project-widget-summary">{{ .Params.grade.subject | default (i18n "evaluation" | default "Évaluation") }}</div>
       <!-- Aperçu simple de la note -->
       <div class="project-widget-grade-preview">

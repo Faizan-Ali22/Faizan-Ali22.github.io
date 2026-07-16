@@ -48,7 +48,7 @@
                     </div>
                 </div>
                 {{ if eq $experienceData.status "current" }}
-                <div class="current-badge">{{ i18n "in_progress" | default "In Progress" }}</div>
+                <div class="current-badge">{{ i18n "in_progress" | default "In progress" }}</div>
                 {{ else }}
                 <div class="completed-badge">{{ i18n "completed" | default "Completed" }}</div>
                 {{ end }}
@@ -128,7 +128,7 @@
                 {{- $programmingLanguages := partial "get-localized-data.html" (dict "context" $ "dataName" "programming_languages") -}}
 
                 <div class="experience-skills">
-                    <h5>{{ i18n "technical_skills" | default "Technical skills:" }}</h5>
+                    <h5>{{ i18n "technical_skills" | default "Technical Skills" }}</h5>
                     <div class="skills-tags">
                         {{ range $exp.Params.programming_languages }}
                         {{ $skillKey := . }}
@@ -263,7 +263,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="seeking-badge">{{ i18n "actively_seeking" | default "Actively Seeking" }}</div>
+                <div class="seeking-badge">{{ i18n "actively_seeking" | default "Actively seeking" }}</div>
             </div>
 
             <div class="experience-content">
@@ -358,7 +358,7 @@
     {{- if .IsHome }}
     <div class="experience-footer">
         <a href="{{ "/experiences/" | relLangURL }}" class="btn-action">
-            <span>{{ i18n "see_all_experiences" | default "See all experiences" }}</span>
+            <span>{{ i18n "see_all_experiences" | default "" }}</span>
             {{- partial "icon.html" (dict "iconId" "arrow-right" "size" "18") -}}
         </a>
     </div>

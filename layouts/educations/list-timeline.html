@@ -13,7 +13,7 @@
     <!-- Navigation Tabs -->
     {{ $hasCertifications := gt (len .Site.Data.certifications) 0 }}
     <div class="education-tabs">
-        <button class="edu-tab-btn active" data-tab="education">{{ i18n "education" | default "Formation" }}</button>
+        <button class="edu-tab-btn active" data-tab="education">{{ i18n "education" | default "Education" }}</button>
         {{ if $hasCertifications }}
         <button class="edu-tab-btn" data-tab="certifications">{{ i18n "certifications" | default "Certifications" }}</button>
         {{ end }}
@@ -43,7 +43,7 @@
                                 {{ if .Params.end_date }}
                                     {{ dateFormat "2006" .Params.end_date }}
                                 {{ else }}
-                                    {{ i18n "present" | default "Présent" }}
+                                    {{ i18n "present" | default "Present" }}
                                 {{ end }}
                             {{ end }}
                         </div>
@@ -67,38 +67,38 @@
                     
                     <div class="timeline-details">
                         <div class="timeline-results">
-                            <strong>{{ i18n "results" | default "Résultats :" }}</strong>
+                            <strong>{{ i18n "results" | default "Results:" }}</strong>
                             <div class="results-badges">
                                 {{ if .Params.years_detail }}
                                     {{/* Use custom year details */}}
                                     {{ range .Params.years_detail }}
                                         {{ if eq .status "validated" }}
                                             <div class="result-badge validated">
-                                                <span class="badge-text">{{ i18n "year" | default "Année" }} {{ .year }}</span>
-                                                <span class="badge-status">{{ i18n "validated" | default "Validée" }}</span>
+                                                <span class="badge-text">{{ i18n "year" | default "year" }} {{ .year }}</span>
+                                                <span class="badge-status">{{ i18n "validated" | default "Validated" }}</span>
                                             </div>
                                         {{ else if eq .status "in_progress" }}
                                             <div class="result-badge in-progress">
                                                 <span class="badge-icon">⏳</span>
-                                                <span class="badge-text">{{ i18n "year" | default "Année" }} {{ .year }}</span>
-                                                <span class="badge-status">{{ i18n "in_progress" | default "En cours" }}</span>
+                                                <span class="badge-text">{{ i18n "year" | default "year" }} {{ .year }}</span>
+                                                <span class="badge-status">{{ i18n "in_progress" | default "In progress" }}</span>
                                             </div>
                                         {{ else if eq .status "not_taken" }}
                                             <div class="result-badge not-taken">
                                                 <span class="badge-icon">🚫</span>
-                                                <span class="badge-text">{{ i18n "year" | default "Année" }} {{ .year }}</span>
-                                                <span class="badge-status">{{ i18n "not_taken" | default "Non suivie" }}</span>
+                                                <span class="badge-text">{{ i18n "year" | default "year" }} {{ .year }}</span>
+                                                <span class="badge-status">{{ i18n "not_taken" | default "Not taken" }}</span>
                                             </div>
                                         {{ else if eq .status "skipped" }}
                                             <div class="result-badge skipped">
-                                                <span class="badge-text">{{ i18n "year" | default "Année" }} {{ .year }}</span>
-                                                <span class="badge-status">{{ i18n "skipped" | default "Admis directement" }}</span>
+                                                <span class="badge-text">{{ i18n "year" | default "year" }} {{ .year }}</span>
+                                                <span class="badge-status">{{ i18n "skipped" | default "Skipped" }}</span>
                                             </div>
                                         {{ else if eq .status "completed" }}
                                             <div class="result-badge completed">
                                                 <span class="badge-icon">🎓</span>
-                                                <span class="badge-text">{{ i18n "year" | default "Année" }} {{ .year }}</span>
-                                                <span class="badge-status">{{ i18n "completed" | default "Terminé" }}</span>
+                                                <span class="badge-text">{{ i18n "year" | default "year" }} {{ .year }}</span>
+                                                <span class="badge-status">{{ i18n "completed" | default "Completed" }}</span>
                                             </div>
                                         {{ end }}
                                     {{ end }}
@@ -110,8 +110,8 @@
                                         {{ $duration := sub (int $endYear) (int $startYear) }}
                                         {{ range seq $duration }}
                                             <div class="result-badge validated">
-                                                <span class="badge-text">{{ i18n "year" | default "Année" }} {{ . }}</span>
-                                                <span class="badge-status">{{ i18n "validated" | default "Validée" }}</span>
+                                                <span class="badge-text">{{ i18n "year" | default "year" }} {{ . }}</span>
+                                                <span class="badge-status">{{ i18n "validated" | default "Validated" }}</span>
                                             </div>
                                         {{ end }}
                                     {{ else if or (eq .Params.status "En cours") (eq .Params.status "In progress") }}
@@ -121,20 +121,20 @@
                                         {{ if gt $yearsCompleted 0 }}
                                             {{ range seq $yearsCompleted }}
                                                 <div class="result-badge validated">
-                                                    <span class="badge-text">{{ i18n "year" | default "Année" }} {{ . }}</span>
-                                                    <span class="badge-status">{{ i18n "validated" | default "Validée" }}</span>
+                                                    <span class="badge-text">{{ i18n "year" | default "year" }} {{ . }}</span>
+                                                    <span class="badge-status">{{ i18n "validated" | default "Validated" }}</span>
                                                 </div>
                                             {{ end }}
                                         {{ end }}
                                         <div class="result-badge in-progress">
                                             <span class="badge-icon">⏳</span>
-                                            <span class="badge-text">{{ i18n "year" | default "Année" }} {{ add $yearsCompleted 1 }}</span>
-                                            <span class="badge-status">{{ i18n "in_progress" | default "En cours" }}</span>
+                                            <span class="badge-text">{{ i18n "year" | default "year" }} {{ add $yearsCompleted 1 }}</span>
+                                            <span class="badge-status">{{ i18n "in_progress" | default "In progress" }}</span>
                                         </div>
                                     {{ else }}
                                         <div class="result-badge general">
                                             <span class="badge-icon">📚</span>
-                                            <span class="badge-text">{{ i18n "education" | default "Formation" }}</span>
+                                            <span class="badge-text">{{ i18n "education" | default "Education" }}</span>
                                             <span class="badge-status">{{ .Params.grade }}</span>
                                         </div>
                                     {{ end }}
@@ -144,7 +144,7 @@
                         
                         {{ if or .Params.programming_languages .Params.frameworks_engines .Params.tools }}
                         <div class="timeline-skills">
-                            <strong>{{ i18n "technical_skills_label" | default "Compétences techniques :" }}</strong>
+                            <strong>{{ i18n "technical_skills_label" | default "Technical skills:" }}</strong>
                             <div class="skills-tags">
                                 {{ range .Params.programming_languages }}
                                 {{ $skillKey := . }}
@@ -209,7 +209,7 @@
                         
                         {{ if or .Params.specialties .Params.soft_skills }}
                         <div class="timeline-skills">
-                            <strong>{{ i18n "cross_skills_label" | default "Compétences transversales :" }}</strong>
+                            <strong>{{ i18n "cross_skills_label" | default "Cross-functional skills:" }}</strong>
                             <div class="skills-tags">
                                 {{ range .Params.specialties }}
                                 {{ $skillKey := . }}

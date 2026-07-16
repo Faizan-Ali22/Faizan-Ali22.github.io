@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
 		<title>Projects on My Portfolio</title>
-		<link>http://localhost:1313/projects/</link>
+		<link>https://Faizan-Ali22.github.io/projects/</link>
 		<description>Recent content in Projects on My Portfolio</description>
 		<generator>Hugo</generator>
 		<language>en-us</language>
@@ -12,75 +12,89 @@
 		
 			<lastBuildDate>Mon, 18 May 2026 00:00:00 +0000</lastBuildDate>
 		
-			<atom:link href="http://localhost:1313/projects/index.xml" rel="self" type="application/rss+xml" />
+			<atom:link href="https://Faizan-Ali22.github.io/projects/index.xml" rel="self" type="application/rss+xml" />
 			<item>
 				<title>CyberSafe - 3D Mobile RPG</title>
-				<link>http://localhost:1313/projects/cybersafe/</link>
+				<link>https://Faizan-Ali22.github.io/projects/cybersafe/</link>
 				<pubDate>Mon, 18 May 2026 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/projects/cybersafe/</guid>
+				<guid>https://Faizan-Ali22.github.io/projects/cybersafe/</guid>
 				<description>&lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;&#xA;&lt;p&gt;Developing an offline 3D educational RPG focusing on gamified cybersecurity concepts. The game is highly optimized for mobile devices.&lt;/p&gt;&#xA;&lt;h2 id=&#34;key-features&#34;&gt;Key Features&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Mobile-Optimized Mechanics&lt;/strong&gt;: Engineered interactive UI elements, including a responsive password strength analyzer custom-built for mobile keyboard overlays.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Performance Optimization&lt;/strong&gt;: Executed extensive mobile performance optimizations utilizing static batching, mesh compression, and GPU instancing to maximize framerates.&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
 			</item>
 			<item>
+				<title>Neon Dash - 3D Endless Runner</title>
+				<link>https://Faizan-Ali22.github.io/projects/neondash/</link>
+				<pubDate>Wed, 16 Jul 2025 00:00:00 +0000</pubDate>
+				<guid>https://Faizan-Ali22.github.io/projects/neondash/</guid>
+				<description>&lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;&#xA;&lt;p&gt;Neon Dash is a high-speed 3D platformer endless runner developed in Unreal Engine 5.7. Players control a futuristic runner traversing floating neon tracks high above a cyberpunk metropolis, dodging dynamic vertical obstacles and collecting energy cores to maintain speed.&lt;/p&gt;&#xA;&lt;h2 id=&#34;key-features&#34;&gt;Key Features&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Dynamic Procedural Generation&lt;/strong&gt;: Implemented a highly optimized level spawner that procedurally generates tracks, obstacles, and power-ups, ensuring a unique path for every run while maintaining constant memory usage.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Physics-Based Fluid Movement&lt;/strong&gt;: Programmed custom character movement physics using C++ to achieve tight, responsive controls including wall-running, sliding, and double-jumping.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Visual Effects &amp;amp; Materials&lt;/strong&gt;: Authored stylized neon materials and particle effects in Unreal Engine to create a vibrant cyberpunk aesthetic with high-speed motion blur and global illumination.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Unreal Engine 5.7 Architecture&lt;/strong&gt;: Utilized a hybrid C++ and Blueprint system to balance performance and rapid prototyping.&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
+			</item>
+			<item>
+				<title>Cyberborn: Cyberpunk Survival</title>
+				<link>https://Faizan-Ali22.github.io/projects/cyberborn/</link>
+				<pubDate>Tue, 16 Dec 2025 00:00:00 +0000</pubDate>
+				<guid>https://Faizan-Ali22.github.io/projects/cyberborn/</guid>
+				<description>&lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;&#xA;&lt;p&gt;Cyberborn is an open-world 3D cyberpunk survival game developed in Unreal Engine 5.7. Utilizing the AAA assets from the Cyberpunk MEGApack Environment Bundle, the game drops players into a vast, rain-slicked neon metropolis where they must gather energy cores, craft shelter/defenses, and survive against rogue synthetics patrolling the streets.&lt;/p&gt;&#xA;&lt;h2 id=&#34;key-features&#34;&gt;Key Features&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Survival &amp;amp; Crafting Mechanics&lt;/strong&gt;: Implemented survival attributes (hunger, thirst, shield energy, and stamina) paired with an intuitive modular crafting and grid-based base-building system.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Environment Bundle Integration&lt;/strong&gt;: Integrated the Cyberpunk MEGApack Environment assets using customized PBR master materials, volumetric rain/fog, and interactive neon signs to establish a rich, rain-soaked sci-fi atmosphere.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Optimization for Open World&lt;/strong&gt;: Achieved playable framerates by leveraging Unreal Engine 5.7&amp;rsquo;s &lt;strong&gt;Nanite&lt;/strong&gt; virtualized geometry and &lt;strong&gt;Lumen&lt;/strong&gt; global illumination, along with aggressive Hierarchical Level of Detail (HLOD) and custom draw distance tuning.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;AI Rogue Synthetics&lt;/strong&gt;: Programmed combat-ready AI enemies using Behavior Trees and Blackboard states, allowing them to patrol, investigate disturbances, search for players, and coordinate attacks.&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
+			</item>
+			<item>
 				<title>Extinguisher</title>
-				<link>http://localhost:1313/projects/extinguisher/</link>
+				<link>https://Faizan-Ali22.github.io/projects/extinguisher/</link>
 				<pubDate>Thu, 18 May 2023 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/projects/extinguisher/</guid>
+				<guid>https://Faizan-Ali22.github.io/projects/extinguisher/</guid>
 				<description>&lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;&#xA;&lt;p&gt;A mobile firefighter simulation game with one-touch controls and progressive difficulty.&lt;/p&gt;&#xA;&lt;h2 id=&#34;key-features&#34;&gt;Key Features&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Gameplay Loops&lt;/strong&gt;: Developed scoring, fire propagation, and session-based engagement loops for mobile play.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;UI/UX&lt;/strong&gt;: Designed a responsive UI and UX across different screen sizes and resolutions.&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
 			</item>
 			<item>
 				<title>First Person Sci Fi Shooter</title>
-				<link>http://localhost:1313/projects/firstpersonscifishooter/</link>
+				<link>https://Faizan-Ali22.github.io/projects/firstpersonscifishooter/</link>
 				<pubDate>Wed, 25 Jun 2025 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/projects/firstpersonscifishooter/</guid>
+				<guid>https://Faizan-Ali22.github.io/projects/firstpersonscifishooter/</guid>
 				<description>&lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;&#xA;&lt;p&gt;Built a first-person sci-fi shooter in Unity for WebGL delivery, focusing on playable browser performance, maintainable C# code, and a clean player experience across desktop and mobile-sized viewports.&lt;/p&gt;&#xA;&lt;h2 id=&#34;technical-highlights&#34;&gt;Technical Highlights&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Unity WebGL Delivery&lt;/strong&gt;: Developed and optimized browser-based gameplay for HTML5/WebGL deployment.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Gameplay Systems&lt;/strong&gt;: Implemented combat, movement, UI flows, animations, and feedback loops to support engaging moment-to-moment play.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Performance Optimization&lt;/strong&gt;: Tuned memory usage, loading behavior, and responsiveness to keep the experience stable in the browser.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Production Readiness&lt;/strong&gt;: Used Git for version control, debugging, and iterative improvement during development.&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
 			</item>
 			<item>
 				<title>Astro Rush</title>
-				<link>http://localhost:1313/projects/astrorush/</link>
+				<link>https://Faizan-Ali22.github.io/projects/astrorush/</link>
 				<pubDate>Mon, 18 Dec 2023 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/projects/astrorush/</guid>
+				<guid>https://Faizan-Ali22.github.io/projects/astrorush/</guid>
 				<description>&lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;&#xA;&lt;p&gt;A multi-level 3D driving game with physics-based vehicle mechanics and planetary environments.&lt;/p&gt;&#xA;&lt;h2 id=&#34;key-features&#34;&gt;Key Features&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Mechanics&lt;/strong&gt;: Implemented responsive controls, collision detection, obstacle generation, and performance optimization.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Environments&lt;/strong&gt;: Physics-based vehicle mechanics across different planetary environments.&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
 			</item>
 			<item>
 				<title>Archery</title>
-				<link>http://localhost:1313/projects/archery/</link>
+				<link>https://Faizan-Ali22.github.io/projects/archery/</link>
 				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/projects/archery/</guid>
+				<guid>https://Faizan-Ali22.github.io/projects/archery/</guid>
 				<description>&lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;&#xA;&lt;p&gt;A classic archery game where the player aims and shoots at targets. This project was created to demonstrate core C++ concepts including:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Object-Oriented Programming (Classes/Inheritance)&lt;/li&gt;&#xA;&lt;li&gt;Memory Management (Pointers/References)&lt;/li&gt;&#xA;&lt;li&gt;Game Loop implementation&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
 			</item>
 			<item>
 				<title>AI-Driven Football Game</title>
-				<link>http://localhost:1313/projects/aidrivengamesystems/</link>
+				<link>https://Faizan-Ali22.github.io/projects/aidrivengamesystems/</link>
 				<pubDate>Sun, 18 May 2025 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/projects/aidrivengamesystems/</guid>
+				<guid>https://Faizan-Ali22.github.io/projects/aidrivengamesystems/</guid>
 				<description>&lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;&#xA;&lt;p&gt;Designed intelligent NPC behavior systems using finite state machines for patrol, chase, and attack states to create dynamic and adaptive gameplay.&lt;/p&gt;&#xA;&lt;h2 id=&#34;technical-highlights&#34;&gt;Technical Highlights&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Machine Learning&lt;/strong&gt;: Trained ML models using Unity ML-Agents with Python, exporting via ONNX for real-time inference in Unity.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Hybrid Systems&lt;/strong&gt;: Combined rule-based and machine-learning approaches to improve adaptability and gameplay depth.&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
 			</item>
 			<item>
 				<title>Custom 3D Rendering Engine</title>
-				<link>http://localhost:1313/projects/custom3drenderengine/</link>
+				<link>https://Faizan-Ali22.github.io/projects/custom3drenderengine/</link>
 				<pubDate>Sat, 18 May 2024 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/projects/custom3drenderengine/</guid>
+				<guid>https://Faizan-Ali22.github.io/projects/custom3drenderengine/</guid>
 				<description>&lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;&#xA;&lt;p&gt;A custom rendering engine built from scratch with real-time 3D model importing, scene placement, and camera manipulation.&lt;/p&gt;&#xA;&lt;h2 id=&#34;technical-highlights&#34;&gt;Technical Highlights&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Core Systems&lt;/strong&gt;: Programmed transformation matrices, lighting calculations, projection systems, and viewport controls.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Pipeline Development&lt;/strong&gt;: Developed a streamlined 3D asset pipeline, demonstrating low-level graphics programming and rendering optimization.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Technology&lt;/strong&gt;: C++ and OpenGL.&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
 			</item>
 			<item>
 				<title>GamePay</title>
-				<link>http://localhost:1313/projects/gamepay/</link>
+				<link>https://Faizan-Ali22.github.io/projects/gamepay/</link>
 				<pubDate>Sat, 18 May 2024 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/projects/gamepay/</guid>
+				<guid>https://Faizan-Ali22.github.io/projects/gamepay/</guid>
 				<description>&lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;&#xA;&lt;p&gt;Designed and developed front-end UI/UX for a gaming payment platform concept.&lt;/p&gt;&#xA;&lt;h2 id=&#34;key-features&#34;&gt;Key Features&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Prototyping&lt;/strong&gt;: Created high-fidelity UI/UX layouts utilizing Figma.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Concept&lt;/strong&gt;: Focused on creating an intuitive and accessible interface tailored for gamers managing their gaming-related payments and transactions.&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
 			</item>
 			<item>
 				<title>Zombie Survival 2D</title>
-				<link>http://localhost:1313/projects/zombiesurvival2d/</link>
+				<link>https://Faizan-Ali22.github.io/projects/zombiesurvival2d/</link>
 				<pubDate>Sat, 18 May 2024 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/projects/zombiesurvival2d/</guid>
+				<guid>https://Faizan-Ali22.github.io/projects/zombiesurvival2d/</guid>
 				<description>&lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;&#xA;&lt;p&gt;Zombie Survival 2D is a top-down view shooter where the player fights for survival against waves of incoming enemies. Developed as a semester project for Object Oriented Programming , the game challenges players to defeat zombies while managing limited lives and utilizing strategic power-ups.&lt;/p&gt;&#xA;&lt;h2 id=&#34;key-features&#34;&gt;Key Features&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Wave-Based Progression:&lt;/strong&gt; The game features multiple levels where difficulty increases as new, more dangerous types of zombies spawn.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Diverse Enemies:&lt;/strong&gt; Players face off against distinct enemy types, including basic zombies, blocky Level 2 zombies, and spiky Level 3 variants.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Dynamic Power-Up System:&lt;/strong&gt; A unique &amp;ldquo;Power Giving Spider&amp;rdquo; spawns randomly to drop distinct advantages:&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Shield:&lt;/strong&gt; Protects the player from damage.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Faster Shots:&lt;/strong&gt; Increases fire rate.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Triple Shots:&lt;/strong&gt; Allows the player to fire three projectiles at once.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Scoring &amp;amp; Lives:&lt;/strong&gt; The player starts with 3 lives, and the score increases as enemies are defeated.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;technical-highlights&#34;&gt;Technical Highlights&lt;/h2&gt;&#xA;&lt;p&gt;This project demonstrates core OOP concepts, including:&lt;/p&gt;</description>
 			</item>
 			<item>
 				<title>Zombie Survivor 3D</title>
-				<link>http://localhost:1313/projects/zombiesurvivor3d/</link>
+				<link>https://Faizan-Ali22.github.io/projects/zombiesurvivor3d/</link>
 				<pubDate>Sat, 18 May 2024 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/projects/zombiesurvivor3d/</guid>
+				<guid>https://Faizan-Ali22.github.io/projects/zombiesurvivor3d/</guid>
 				<description>&lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;&#xA;&lt;p&gt;A post-apocalyptic 3D action-survival game with wave-based combat and resource management.&lt;/p&gt;&#xA;&lt;h2 id=&#34;key-features&#34;&gt;Key Features&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Asset Creation&lt;/strong&gt;: Created all 3D models, environments, and animations from scratch in Blender using PBR texturing workflows tailored for Unity integration.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;AI &amp;amp; Gameplay&lt;/strong&gt;: Engineered enemy AI behavior using finite state machines and dynamic pathfinding. logic. Delivered a complete gameplay loop including weapons, health, scoring, and game state management.&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
 			</item>
 	</channel>

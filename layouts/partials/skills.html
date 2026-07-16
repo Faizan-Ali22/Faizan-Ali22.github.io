@@ -6,15 +6,15 @@
 
 <section id="competences" class="skills-section">
     <div class="skills-header section-header-unified">
-        <h2 class="section-title-unified">{{ i18n "technical_skills" | default "Compétences techniques" }}</h2>
-        <p class="skills-subtitle section-subtitle-unified">{{ i18n "skills_subtitle" | default "Maîtrise des technologies modernes pour créer des expériences utilisateur exceptionnelles et des solutions techniques robustes. 💻" }}</p>
+        <h2 class="section-title-unified">{{ i18n "technical_skills" | default "Technical Skills" }}</h2>
+        <p class="skills-subtitle section-subtitle-unified">{{ i18n "skills_subtitle" | default "Mastering modern technologies to build great user experiences and robust solutions.»" }}</p>
     </div>
     
     <div class="skills-categories-grid">
         
         {{/* Programming Languages - localized data */}}
         <div class="skills-category">
-            <h4>{{ i18n "programming_languages" | default "Langages de programmation" }}</h4>
+            <h4>{{ i18n "programming_languages" | default "Programming Languages" }}</h4>
             <div class="skills-grid">
                 {{ with $programmingLanguages }}
                 {{ range sort . "experience" "desc" }}
@@ -28,7 +28,7 @@
 
         {{/* Frameworks & Game Engines - localized data */}}
         <div class="skills-category">
-            <h4>{{ i18n "frameworks_engines" | default "Frameworks & Moteurs" }}</h4>
+            <h4>{{ i18n "frameworks_engines" | default "Frameworks & Engines" }}</h4>
             <div class="skills-grid">
                 {{ with $frameworksEngines }}
                 {{ range . }}
@@ -42,7 +42,7 @@
 
         {{/* Specialties - localized data */}}
         <div class="skills-category">
-            <h4>{{ i18n "specialties" | default "Spécialités" }}</h4>
+            <h4>{{ i18n "specialties" | default "Specialties" }}</h4>
             <div class="skills-grid">
                 {{ with $specialties }}
                 {{ range . }}
@@ -70,7 +70,7 @@
     <!-- Bouton voir toutes les compétences -->
     <div class="skills-footer">
         <a href="{{ "/skills/" | relLangURL }}" class="btn-action">
-            <span>{{ i18n "see_all_skills" | default "Voir toutes les compétences" }}</span>
+            <span>{{ i18n "see_all_skills" | default "See all skills" }}</span>
             {{- partial "icon.html" (dict "iconId" "arrow-right" "size" "18") -}}
         </a>
     </div>

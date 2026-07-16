@@ -47,6 +47,9 @@
 - key: "tool_visual_studio"
   name: "Visual Studio"
   icon: "💻"
+  category: "ide"
+  description: "Integrated development environment for C++ and C#"
+  experience: 3
   displayedInPortfolio: true
 
 # - key: "tool_git"

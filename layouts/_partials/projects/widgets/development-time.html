@@ -13,7 +13,7 @@
       {{- partial "icon.html" (dict "iconId" "clock") -}}
     </div>
     <div class="project-widget-header-content">
-      <h3 class="project-widget-title">{{ i18n "development_time" | default "Temps de développement" }}</h3>
+      <h3 class="project-widget-title">{{ i18n "development_time" | default "Development time" }}</h3>
       <div class="project-widget-summary">{{ .Params.development_time.total }}</div>
     </div>
     <div class="project-widget-toggle">

@@ -12,7 +12,7 @@
     <div class="tabs" data-can-collapse="true" data-collapse-id="posts">
         <button class="tab-btn active" data-category="all" data-tab="all">
             <span class="icon">📚</span>
-            <span class="tab-label">{{ i18n "all" | default "Tous" }}</span>
+            <span class="tab-label">{{ i18n "all" | default "All" }}</span>
         </button>
         {{/* Générer les tabs dynamiquement basé sur les catégories des posts publiés */}}
         {{ $publishedPages := where .Pages "Draft" false }}
@@ -54,12 +54,12 @@
 
     <!-- Blog Sort Controls - Temporairement caché -->
     <div class="blog-sort-controls" style="display: none;">
-        <label for="blog-sort" class="blog-filter-label">{{ i18n "sort_by" | default "Trier par :" }}</label>
+        <label for="blog-sort" class="blog-filter-label">{{ i18n "sort_by" | default "Sort by:" }}</label>
         <select id="blog-sort" class="blog-sort-select">
-            <option value="date-desc">{{ i18n "newest" | default "Plus récent" }}</option>
-            <option value="date-asc">{{ i18n "oldest" | default "Plus ancien" }}</option>
-            <option value="title-asc">{{ i18n "title_az" | default "Titre A-Z" }}</option>
-            <option value="title-desc">{{ i18n "title_za" | default "Titre Z-A" }}</option>
+            <option value="date-desc">{{ i18n "newest" | default "Newest" }}</option>
+            <option value="date-asc">{{ i18n "oldest" | default "Oldest" }}</option>
+            <option value="title-asc">{{ i18n "title_az" | default "Title A-Z" }}</option>
+            <option value="title-desc">{{ i18n "title_za" | default "Title Z-A" }}</option>
         </select>
     </div>
 
@@ -67,7 +67,7 @@
     <div class="blog-search" style="display: none;">
         <input type="text" 
                class="blog-search-input" 
-               placeholder="{{ i18n "search_posts" | default "Rechercher un article..." }}" 
+               placeholder="{{ i18n "search_posts" | default "Search an article..." }}" 
                id="blog-search-input">
     </div>
 
@@ -87,7 +87,7 @@
             
             <!-- Reading Time (top right) -->
             {{ if .ReadingTime }}
-            <div class="blog-reading-time">{{ .ReadingTime }} {{ i18n "reading_minutes" | default "min de lecture" }}</div>
+            <div class="blog-reading-time">{{ .ReadingTime }} {{ i18n "reading_minutes" | default "min read" }}</div>
             {{ end }}
 
             {{ if .Params.image }}
@@ -132,7 +132,7 @@
                 
                 <!-- Read Article Button (bottom right) -->
                 <a href="{{ .Permalink }}" class="read-more-btn">
-                    {{ i18n "read_article" | default "Lire l'article" }}
+                    {{ i18n "read_article" | default "Read article" }}
                 </a>
             </div>
         </article>
@@ -142,7 +142,7 @@
     <!-- Blog Footer -->
     <footer class="blog-footer">
         <div class="blog-stats">
-            <p>{{ len .Pages }} {{ i18n "posts_published" | default "articles publiés" }}</p>
+            <p>{{ len .Pages }} {{ i18n "posts_published" | default "posts published" }}</p>
         </div>
     </footer>
 </div>

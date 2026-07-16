@@ -110,7 +110,7 @@
                     {{ end }}
                     
                     <div class="description-content">
-                        <h3 class="description-title">{{ i18n "project_information" | default "Informations du projet" }}</h3>
+                        <h3 class="description-title">{{ i18n "project_information" | default "Project information" }}</h3>
                         
                         <!-- Sector Badge in Description -->
                         {{ if .Params.sector }}
@@ -128,7 +128,7 @@
                             
                             {{ if .Params.status }}
                             <div class="meta-item-bottom">
-                                <span class="meta-label-bottom">{{ i18n "status" | default "Statut" }}</span>
+                                <span class="meta-label-bottom">{{ i18n "status" | default "Status" }}</span>
                                 <span class="meta-value-bottom status-{{ .Params.status | lower }}">{{ .Params.status }}</span>
                             </div>
                             {{ end }}
@@ -136,7 +136,7 @@
                             {{ if .Params.link }}
                             <div class="meta-item-bottom">
                                 <a href="{{ .Params.link }}" target="_blank" class="project-link-bottom">
-                                    {{ i18n "see_project" | default "Voir le projet" }} <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                                    {{ i18n "see_project" | default "See project" }} <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
                                         <path d="M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z" />
                                     </svg>
                                 </a>
@@ -153,7 +153,7 @@
                 {{ if .Params.notable_facts }}
                 <div class="project-notable-facts-hero">
                     <div class="notable-facts-content">
-                        <h3 class="notable-facts-title-hero">{{ i18n "notable_facts" | default "Faits notables" }}</h3>
+                        <h3 class="notable-facts-title-hero">{{ i18n "notable_facts" | default "Notable facts" }}</h3>
                         {{ range .Params.notable_facts }}
                         <div class="fact-card-hero">
                             <div class="fact-icon-hero {{ .type }}">{{ .icon }}</div>
@@ -224,7 +224,7 @@
         {{ if .Params.notable_facts }}
         <aside class="project-sidebar">
             <div class="notable-facts">
-                <h3 class="notable-facts-title">{{ i18n "notable_facts" | default "Faits notables" }}</h3>
+                <h3 class="notable-facts-title">{{ i18n "notable_facts" | default "Notable facts" }}</h3>
                 {{ range .Params.notable_facts }}
                 <div class="fact-card">
                     <div class="fact-icon {{ .type }}">{{ .icon }}</div>
@@ -245,7 +245,7 @@
 <nav class="blog-post-navigation">
     {{ with .PrevInSection }}
     <div class="blog-nav-item blog-nav-prev">
-        <span class="blog-nav-label">{{ i18n "previous_project" | default "Projet précédent" }}</span>
+        <span class="blog-nav-label">{{ i18n "previous_project" | default "Previous project" }}</span>
         <a href="{{ .Permalink }}" class="blog-nav-link">
             <h4>{{ .Title }}</h4>
             {{ if .Params.period_start }}
@@ -259,7 +259,7 @@
 
     {{ with .NextInSection }}
     <div class="blog-nav-item blog-nav-next">
-        <span class="blog-nav-label">{{ i18n "next_project" | default "Projet suivant" }}</span>
+        <span class="blog-nav-label">{{ i18n "next_project" | default "Next project" }}</span>
         <a href="{{ .Permalink }}" class="blog-nav-link">
             <h4>{{ .Title }}</h4>
             {{ if .Params.period_start }}

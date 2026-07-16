@@ -14,7 +14,7 @@
     </div>
     <div class="project-widget-header-content">
       {{- $total := default 0 .Params.downloads.total -}}
-      <h3 class="project-widget-title">{{ partial "helpers/format-number.html" $total }} {{ if eq $total 1 }}{{ i18n "download" | default "téléchargement" }}{{ else }}{{ i18n "downloads_plural" | default "téléchargements" }}{{ end }}</h3>
+      <h3 class="project-widget-title">{{ partial "helpers/format-number.html" $total }} {{ if eq $total 1 }}{{ i18n "download" | default "download" }}{{ else }}{{ i18n "downloads_plural" | default "downloads" }}{{ end }}</h3>
     </div>
     <div class="project-widget-toggle">
       {{- partial "icon.html" (dict "iconId" "chevron-down") -}}

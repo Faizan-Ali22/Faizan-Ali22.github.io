@@ -24,7 +24,7 @@
   <div class="clients-modal-enhanced">
     <div class="clients-stats-bar">
       <div class="clients-count">
-        <strong>{{ $total }}</strong> {{ i18n "partner_companies" | default "entreprises partenaires" }}
+        <strong>{{ $total }}</strong> {{ i18n "partner_companies" | default "partner companies" }}
       </div>
       <div class="clients-sectors">
         {{- range first 3 $distinctSectors -}}
@@ -34,7 +34,7 @@
     </div>
     
     <div class="clients-group">
-      <div class="clients-group-title">{{ i18n "partners" | default "Partenaires" }}</div>
+      <div class="clients-group-title">{{ i18n "partners" | default "Partners" }}</div>
       <div class="clients-grid">
         {{- range $clients -}}
           {{- $initials := substr (.name | default "?") 0 1 | upper -}}
@@ -79,13 +79,13 @@
   <div class="clients-modal-enhanced">
     <div class="clients-stats-bar">
       <div class="clients-count">
-        <strong>0</strong> {{ i18n "clients" | default "clients" }}
+        <strong>0</strong> {{ i18n "clients" | default "Clients" }}
       </div>
     </div>
     <div class="clients-group">
-      <div class="clients-group-title">{{ i18n "no_client" | default "Aucun client" }}</div>
+      <div class="clients-group-title">{{ i18n "no_client" | default "No client" }}</div>
       <div class="clients-grid">
-        <p>{{ i18n "no_client_found" | default "Aucun client n'a été trouvé pour ce projet." }}</p>
+        <p>{{ i18n "no_client_found" | default "No client found for this project." }}</p>
       </div>
     </div>
   </div>

@@ -30,7 +30,7 @@
     <div class="skill-info">
         <span class="skill-name">{{ $name }}</span>
         {{ if and $showExperience (gt $experience 0) }}
-            <span class="skill-experience">{{ $experience }} {{ i18n "years_short" | default "ans" }}</span>
+            <span class="skill-experience">{{ $experience }} {{ i18n "years_short" | default "y" }}</span>
         {{ end }}
     </div>
 </div>

@@ -29,14 +29,14 @@
       </svg>
     </div>
     <div class="project-widget-header-content">
-      <h3 class="project-widget-title">{{ i18n "soft_skills_cross" | default "Compétences transversales" }}</h3>
-      <div class="project-widget-summary">{{ len $usedSoftSkills }} {{ i18n "skills_mobilized" | default "compétences mobilisées" }}</div>
+      <h3 class="project-widget-title">{{ i18n "soft_skills_cross" | default "Soft Skills" }}</h3>
+      <div class="project-widget-summary">{{ len $usedSoftSkills }} {{ i18n "skills_mobilized" | default "skills mobilized" }}</div>
       <!-- Aperçu des soft skills -->
       <div class="soft-skills-preview">
         <div class="soft-skill-badges-preview">
           {{- range first 3 $usedSoftSkills -}}
           {{- $softSkillName := i18n .key -}}
-          <div class="soft-skill-badge-mini clickable" onclick="openSkillModal('{{ $softSkillName }}', '{{ if .iconPath }}{{ .iconPath }}{{ else }}{{ .icon }}{{ end }}', 'Soft Skill', '', '{{ if .iconPath }}svg{{ else }}emoji{{ end }}', '{{ .key }}')" title="{{ i18n "click_to_see_details" | default "Cliquez pour voir les détails" }}">
+          <div class="soft-skill-badge-mini clickable" onclick="openSkillModal('{{ $softSkillName }}', '{{ if .iconPath }}{{ .iconPath }}{{ else }}{{ .icon }}{{ end }}', 'Soft Skill', '', '{{ if .iconPath }}svg{{ else }}emoji{{ end }}', '{{ .key }}')" title="{{ i18n "click_to_see_details" | default "Click to see details" }}">
             <span class="soft-skill-icon">{{ .icon }}</span>
             <span class="soft-skill-name">{{ $softSkillName }}</span>
           </div>

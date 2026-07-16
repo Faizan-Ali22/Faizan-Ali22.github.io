@@ -16,11 +16,11 @@
     {{/* Stats bar avec informations contextuelles */}}
     <div class="downloads-stats-bar">
       <div class="downloads-context">
-        <strong>{{ partial "helpers/format-number.html" $total }}</strong> {{ i18n "downloads_text" | default "téléchargements" }}
+        <strong>{{ partial "helpers/format-number.html" $total }}</strong> {{ i18n "downloads_text" | default "downloads" }}
       </div>
       <div class="downloads-meta">
         {{- if $platforms -}}
-          <span class="platforms-count-chip">{{ len $platforms }} {{ i18n "platforms" | default "plateformes" }}</span>
+          <span class="platforms-count-chip">{{ len $platforms }} {{ i18n "platforms" | default "platforms" }}</span>
         {{- end -}}
         {{- if $downloads.last_updated -}}
           <span class="update-date-chip">{{ $downloads.last_updated | dateFormat "January 2006" }}</span>
@@ -31,7 +31,7 @@
     {{/* Grille des plateformes */}}
     {{- if $platforms -}}
     <div class="downloads-platforms-group">
-      <div class="platforms-group-title">{{ i18n "platform_distribution" | default "Répartition par plateforme" }}</div>
+      <div class="platforms-group-title">{{ i18n "platform_distribution" | default "Distribution by Platform" }}</div>
       <div class="platforms-grid">
         {{- range $platforms -}}
           {{- $platformName := .name | default (i18n "platform" | default "Plateforme") -}}
@@ -58,13 +58,13 @@
             <div class="platform-info">
               <div class="platform-name">{{ $platformName }}</div>
               <div class="platform-downloads">
-                {{ partial "helpers/format-number.html" $platformDownloads }} {{ i18n "downloads_text" | default "téléchargements" }}
+                {{ partial "helpers/format-number.html" $platformDownloads }} {{ i18n "downloads_text" | default "downloads" }}
               </div>
               {{- if and $platformDownloads $total (gt $total 0) -}}
               <div class="platform-percentage">
                 {{- $percentage := div (mul $platformDownloads 100.0) $total -}}
                 {{- $roundedPercentage := math.Round $percentage -}}
-                {{ $roundedPercentage }}{{ i18n "percent_of_total" | default "% du total" }}
+                {{ $roundedPercentage }}{{ i18n "percent_of_total" | default "% of total" }}
               </div>
               {{- end -}}
             </div>
@@ -77,7 +77,7 @@
     {{/* Timeline si disponible */}}
     {{- if $downloads.timeline -}}
     <div class="downloads-timeline-group">
-      <div class="timeline-group-title">{{ i18n "time_evolution" | default "Évolution temporelle" }}</div>
+      <div class="timeline-group-title">{{ i18n "time_evolution" | default "Time evolution" }}</div>
       <div class="timeline-grid">
         {{- range $downloads.timeline -}}
         <div class="timeline-card">
@@ -93,13 +93,13 @@
   <div class="downloads-modal-enhanced">
     <div class="downloads-stats-bar">
       <div class="downloads-context">
-        <strong>0</strong> {{ i18n "downloads_text" | default "téléchargements" }}
+        <strong>0</strong> {{ i18n "downloads_text" | default "downloads" }}
       </div>
     </div>
     <div class="downloads-platforms-group">
-      <div class="platforms-group-title">{{ i18n "no_data" | default "Aucune donnée" }}</div>
+      <div class="platforms-group-title">{{ i18n "no_data" | default "No data" }}</div>
       <div class="platforms-grid">
-        <p>{{ i18n "no_download_stats" | default "Aucune statistique de téléchargement n'a été trouvée pour ce projet." }}</p>
+        <p>{{ i18n "no_download_stats" | default "No download statistics found for this project." }}</p>
       </div>
     </div>
   </div>

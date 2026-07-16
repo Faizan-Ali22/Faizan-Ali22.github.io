@@ -11,7 +11,7 @@
         <section class="projects-section projects-page">
             <div class="projects-header section-header-unified">
                 <h1 class="section-title-unified">{{ i18n "projects_title" | default (i18n "projects") }}</h1>
-                <p class="projects-subtitle section-subtitle-unified">{{ i18n "projects_subtitle" | default "Construire des applications utiles qui simplifient la vie." }}</p>
+                <p class="projects-subtitle section-subtitle-unified">{{ i18n "projects_subtitle" | default "Designing meaningful experiences and tools that make life easier - great products are never built alone." }}</p>
             </div>
 
             {{/* Calculate project counts for each category */}}
@@ -57,13 +57,13 @@
                 <div class="tabs projects-tabs" role="tablist" aria-label="Types de projets" data-can-collapse="true" data-collapse-id="projectsList">
                     <button class="tab-btn active" data-category="all" data-tab="all" role="tab" aria-selected="true">
                         <span class="tab-icon icon">📦</span>
-                        <span class="tab-label">{{ i18n "all" | default "Tous" }}</span>
+                        <span class="tab-label">{{ i18n "all" | default "All" }}</span>
                         <span class="count">{{ $allCount }}</span>
                     </button>
                     {{ if gt $gamesCount 0 }}
                     <button class="tab-btn" data-category="games" data-tab="games" role="tab" aria-selected="false">
                         <span class="tab-icon icon">🎮</span>
-                        <span class="tab-label">{{ i18n "games" | default "Jeux" }}</span>
+                        <span class="tab-label">{{ i18n "games" | default "Games" }}</span>
                         <span class="count">{{ $gamesCount }}</span>
                     </button>
                     {{ end }}
@@ -84,7 +84,7 @@
                     {{ if gt $toolsCount 0 }}
                     <button class="tab-btn" data-category="tools" data-tab="tools" role="tab" aria-selected="false">
                         <span class="tab-icon icon">🛠️</span>
-                        <span class="tab-label">{{ i18n "tools" | default "Tools" }}</span>
+                        <span class="tab-label">{{ i18n "tools" | default "Tools & Environments" }}</span>
                         <span class="count">{{ $toolsCount }}</span>
                     </button>
                     {{ end }}
@@ -94,17 +94,17 @@
                 {{ if gt $gamesCount 0 }}
                 <div class="sub-tabs" id="games-subtabs">
                     <button class="sub-tab-btn active" data-subcategory="games-all">
-                        <span class="subtab-icon">📦</span>{{ i18n "all" | default "Tous" }}
+                        <span class="subtab-icon">📦</span>{{ i18n "all" | default "All" }}
                     </button>
                     {{ if gt $gamesProfCount 0 }}
                     <button class="sub-tab-btn" data-subcategory="games-professionnel">
-                        <span class="subtab-icon">💼</span>{{ i18n "professional" | default "Professionnel" }}
+                        <span class="subtab-icon">💼</span>{{ i18n "professional" | default "Professional" }}
                         <span class="count">{{ $gamesProfCount }}</span>
                     </button>
                     {{ end }}
                     {{ if gt $gamesPersoCount 0 }}
                     <button class="sub-tab-btn" data-subcategory="games-personnel">
-                        <span class="subtab-icon">🎯</span>{{ i18n "personal" | default "Personnel" }}
+                        <span class="subtab-icon">🎯</span>{{ i18n "personal" | default "Personal" }}
                         <span class="count">{{ $gamesPersoCount }}</span>
                     </button>
                     {{ end }}
@@ -121,17 +121,17 @@
                 {{ if gt $appsWebCount 0 }}
                 <div class="sub-tabs" id="appsweb-subtabs">
                     <button class="sub-tab-btn active" data-subcategory="appsweb-all">
-                        <span class="subtab-icon">📦</span>{{ i18n "all" | default "Tous" }}
+                        <span class="subtab-icon">📦</span>{{ i18n "all" | default "All" }}
                     </button>
                     {{ if gt $appsWebProfCount 0 }}
                     <button class="sub-tab-btn" data-subcategory="appsweb-professionnel">
-                        <span class="subtab-icon">🏢</span>{{ i18n "professional" | default "Professionnel" }}
+                        <span class="subtab-icon">🏢</span>{{ i18n "professional" | default "Professional" }}
                         <span class="count">{{ $appsWebProfCount }}</span>
                     </button>
                     {{ end }}
                     {{ if gt $appsWebEtudeCount 0 }}
                     <button class="sub-tab-btn" data-subcategory="appsweb-etude">
-                        <span class="subtab-icon">🎓</span>{{ i18n "study" | default "Étude" }}
+                        <span class="subtab-icon">🎓</span>{{ i18n "study" | default "Study" }}
                         <span class="count">{{ $appsWebEtudeCount }}</span>
                     </button>
                     {{ end }}
@@ -141,7 +141,7 @@
 
             <!-- Description Text -->
             <div class="projects-description">
-                <p id="section-description">{{ i18n "projects_description" | default "Découvrez mes projets organisés par secteur d'expertise : jeux vidéo, applications web et outils de développement." }}</p>
+                <p id="section-description">{{ i18n "projects_description" | default "Explore my projects by area of expertise: video games, web applications, and developer tools." }}</p>
             </div>
 
             <!-- Single Projects Grid with all projects -->
@@ -198,11 +198,11 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Localized descriptions - injected from Hugo i18n
         const descriptions = {
-            all: "{{ i18n "projects_description" | default "Découvrez mes projets organisés par secteur d'expertise : jeux vidéo, applications web et outils de développement." }}",
-            games: "{{ i18n "projects_description_games" | default "Projets de développement de jeux vidéo, du prototypage à la production commerciale." }}",
-            appsweb: "{{ i18n "projects_description_appsweb" | default "Applications web modernes et solutions full-stack utilisant les dernières technologies." }}",
-            mods: "{{ i18n "projects_description_mods" | default "Mods créatifs pour enrichir et étendre les jeux existants avec de nouvelles fonctionnalités." }}",
-            tools: "{{ i18n "projects_description_tools" | default "Outils de développement et utilitaires pour améliorer les workflows créatifs." }}"
+            all: "{{ i18n "projects_description" | default "Explore my projects by area of expertise: video games, web applications, and developer tools." }}",
+            games: "{{ i18n "projects_description_games" | default "Video game development projects, from prototyping to commercial production." }}",
+            appsweb: "{{ i18n "projects_description_appsweb" | default "Modern web applications and full-stack solutions using the latest technologies." }}",
+            mods: "{{ i18n "projects_description_mods" | default "Creative mods to enrich and extend existing games with new features." }}",
+            tools: "{{ i18n "projects_description_tools" | default "Development tools, mods, and utilities to improve creative workflows." }}"
         };
         
         // Update description text

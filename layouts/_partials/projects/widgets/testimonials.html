@@ -7,7 +7,7 @@
 */}}
 
 {{- if .Params.testimonials -}}
-<div class="project-widget widget-testimonials-box {{ .Params.testimonials_size | default "size-large" }}" data-modal-title="{{ i18n "project_testimonials" | default "Témoignages" }}">
+<div class="project-widget widget-testimonials-box {{ .Params.testimonials_size | default "size-large" }}" data-modal-title="{{ i18n "project_testimonials" | default "Testimonials" }}">
   <div class="project-widget-header" onclick="toggleInfoBox(this)">
     <div class="project-widget-header-content">
       {{- if .Params.testimonials -}}

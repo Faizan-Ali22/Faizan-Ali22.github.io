@@ -22,7 +22,7 @@
     </div>
     <div class="project-widget-header-content">
       <h3 class="project-widget-title">{{ $galleryTitle }}</h3>
-      <div class="project-widget-summary">{{ len $videos }} {{ if eq (len $videos) 1 }}{{ i18n "video" | default "vidéo" }}{{ else }}{{ i18n "videos" | default "vidéos" }}{{ end }}</div>
+      <div class="project-widget-summary">{{ len $videos }} {{ if eq (len $videos) 1 }}{{ i18n "video" | default "video" }}{{ else }}{{ i18n "videos" | default "videos" }}{{ end }}</div>
       {{ if $gallery.description }}
       <div class="project-widget-description">{{ $gallery.description }}</div>
       {{ end }}

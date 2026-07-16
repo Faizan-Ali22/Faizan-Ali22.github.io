@@ -16,7 +16,7 @@
     </div>
     <div class="project-widget-header-content">
       <h3 class="project-widget-title">{{ i18n "clients" | default "Clients" }}</h3>
-      <div class="project-widget-summary">{{ len .Params.clients }} {{ if eq (len .Params.clients) 1 }}{{ i18n "company" | default "entreprise" }}{{ else }}{{ i18n "companies" | default "entreprises" }}{{ end }}</div>
+      <div class="project-widget-summary">{{ len .Params.clients }} {{ if eq (len .Params.clients) 1 }}{{ i18n "company" | default "company" }}{{ else }}{{ i18n "companies" | default "companies" }}{{ end }}</div>
       <!-- Aperçu des logos -->
       {{- if .Params.clients -}}
       <div class="project-widget-clients-preview">
@@ -32,7 +32,7 @@
           {{- end -}}
         </div>
         {{- if gt (len .Params.clients) 4 -}}
-        <div class="project-widget-clients-preview-more">+{{ sub (len .Params.clients) 4 }} {{ i18n "others" | default "autres" }}</div>
+        <div class="project-widget-clients-preview-more">+{{ sub (len .Params.clients) 4 }} {{ i18n "others" | default "others" }}</div>
         {{- end -}}
       </div>
       {{- end -}}

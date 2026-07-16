@@ -32,7 +32,7 @@
     {{/* Barre de statistiques */}}
     <div class="specialties-stats-bar">
       <div class="widget-count">
-        <strong>{{ $total }}</strong> {{ i18n "domains_applied" | default "domaines appliqués" }}
+        <strong>{{ $total }}</strong> {{ i18n "domains_applied" | default "domains applied" }}
       </div>
     </div>
     
@@ -62,8 +62,8 @@
              data-specialty="{{ $specialtyName }}" 
              tabindex="0" 
              role="button" 
-             aria-label="{{ i18n "view_details_of" | default "Voir les détails de" }} {{ $specialtyName }}"
-             onclick="openSkillModal('{{ $specialtyName }}', '{{ $specialtyIcon }}', '{{ i18n "specialty" | default "Spécialité" }}', '{{ $specialtyExperience }}', 'emoji', '{{ .key }}')"
+             aria-label="{{ i18n "view_details_of" | default "View details of" }} {{ $specialtyName }}"
+             onclick="openSkillModal('{{ $specialtyName }}', '{{ $specialtyIcon }}', '{{ i18n "specialty" | default "Specialty" }}', '{{ $specialtyExperience }}', 'emoji', '{{ .key }}')"
              style="cursor: pointer;">
           
           {{/* En-tête de spécialité */}}
@@ -90,7 +90,7 @@
       <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
         <path d="M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z"/>
       </svg>
-      {{ i18n "click_specialty_see_projects" | default "Cliquez sur une spécialité pour voir les projets associés et plus de détails" }}
+      {{ i18n "click_specialty_see_projects" | default "Click on a specialty to see related projects and more details" }}
     </div>
   </div>
 {{- else -}}

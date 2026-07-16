@@ -14,8 +14,8 @@
       {{- partial "icon.html" (dict "iconId" "users") -}}
     </div>
     <div class="project-widget-header-content">
-      <h3 class="project-widget-title">{{ i18n "contributors" | default "Contributeurs" }}</h3>
-      <div class="project-widget-summary">{{ len .Params.contributors }} {{ if eq (len .Params.contributors) 1 }}{{ i18n "contributor" | default "contributeur" }}{{ else }}{{ i18n "contributors_plural" | default "contributeurs" }}{{ end }}</div>
+      <h3 class="project-widget-title">{{ i18n "contributors" | default "Contributors" }}</h3>
+      <div class="project-widget-summary">{{ len .Params.contributors }} {{ if eq (len .Params.contributors) 1 }}{{ i18n "contributor" | default "contributor" }}{{ else }}{{ i18n "contributors_plural" | default "contributors" }}{{ end }}</div>
       <!-- Aperçu des avatars -->
       <div class="contributors-preview">
         <div class="contributor-avatars">
@@ -26,7 +26,7 @@
               {{- if $person.Params.avatar -}}
                 {{- $avatarImg = partial "get-optimized-image.html" (dict "imagePath" $person.Params.avatar "width" 80 "quality" 90) -}}
               {{- end -}}
-          <div class="contributor-avatar-mini {{ if not $person.Params.avatar }}placeholder{{ end }}{{ if $person }} clickable-person{{ end }}"{{ if $person }} data-person-id="{{ .person }}" title="{{ i18n "view_profile_of" | default "Voir le profil de" }} {{ $person.Params.title }}"{{ end }}>
+          <div class="contributor-avatar-mini {{ if not $person.Params.avatar }}placeholder{{ end }}{{ if $person }} clickable-person{{ end }}"{{ if $person }} data-person-id="{{ .person }}" title="{{ i18n "view_profile_of" | default "View profile of" }} {{ $person.Params.title }}"{{ end }}>
             {{- if $person.Params.avatar -}}
             <img src="{{ $avatarImg.src }}" width="{{ $avatarImg.width }}" height="{{ $avatarImg.height }}" alt="{{ $person.Params.title }}">
             {{- else -}}

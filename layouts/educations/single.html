@@ -47,7 +47,7 @@
         
         {{- if .Params.external_link -}}
           <a href="{{ .Params.external_link }}" target="_blank" rel="noopener noreferrer" class="external-link-btn">
-            🔗 {{ i18n "view_education" | default "Voir la formation" }}
+            🔗 {{ i18n "view_education" | default "" }}
           </a>
         {{- end -}}
       </div>
@@ -56,7 +56,7 @@
 
   <main class="education-content">
     <div class="description">
-      <h2>{{ i18n "education_description" | default "Description de la formation" }}</h2>
+      <h2>{{ i18n "education_description" | default "Education description" }}</h2>
       <p>{{ .Params.description }}</p>
     </div>
 
@@ -64,23 +64,23 @@
 
     {{- if .Params.years_detail -}}
     <div class="progression-section">
-      <h2>{{ i18n "year_progression" | default "Progression par année" }}</h2>
+      <h2>{{ i18n "year_progression" | default "Year progression" }}</h2>
       <div class="years-progress">
         <div class="years-grid">
           {{- range .Params.years_detail -}}
             <div class="year-item status-{{ .status }}">
-              <span class="year-number">{{ i18n "year" | default "Année" }} {{ .year }}</span>
+              <span class="year-number">{{ i18n "year" | default "year" }} {{ .year }}</span>
               <span class="year-status">
                 {{- if eq .status "validated" -}}
-                  ✅ {{ i18n "validated" | default "Validée" }}
+                  ✅ {{ i18n "validated" | default "Validated" }}
                 {{- else if eq .status "in_progress" -}}
-                  🟢 {{ i18n "in_progress" | default "En cours" }}
+                  🟢 {{ i18n "in_progress" | default "In progress" }}
                 {{- else if eq .status "skipped" -}}
-                  ⏭️ {{ i18n "skipped" | default "Admis directement" }}
+                  ⏭️ {{ i18n "skipped" | default "Skipped" }}
                 {{- else if eq .status "not_taken" -}}
-                  📋 {{ i18n "not_taken" | default "Non suivie" }}
+                  📋 {{ i18n "not_taken" | default "Not taken" }}
                 {{- else if eq .status "completed" -}}
-                  🎓 {{ i18n "completed" | default "Terminé" }}
+                  🎓 {{ i18n "completed" | default "Completed" }}
                 {{- else -}}
                   📋 {{ .label }}
                 {{- end -}}
@@ -116,7 +116,7 @@
                     "{{ $testimonial.text }}"
                   </p>
                   {{- if $person -}}
-                  <div class="testimonial-education-author clickable-person" data-person-id="{{ $testimonial.personId }}" title="{{ i18n "view_profile_of" | default "Voir le profil de" }} {{ $person.Params.title }}">
+                  <div class="testimonial-education-author clickable-person" data-person-id="{{ $testimonial.personId }}" title="{{ i18n "view_profile_of" | default "View profile of" }} {{ $person.Params.title }}">
                     <div class="testimonial-education-avatar {{ if not $person.Params.avatar }}placeholder{{ end }}">
                       {{- if $person.Params.avatar -}}
                         <img src="{{ $person.Params.avatar }}" alt="{{ $person.Params.title }}">
@@ -263,11 +263,11 @@
     {{- $hasAnySkills := or $hasValidProgrammingLangs $hasValidFrameworks $hasValidSpecialties $hasValidSoftSkills $hasValidTools -}}
     {{- if $hasAnySkills -}}
     <div class="technologies">
-      <h2>{{ i18n "acquired_skills" | default "Compétences acquises" }}</h2>
+      <h2>{{ i18n "acquired_skills" | default "Acquired skills" }}</h2>
       <div class="skills-categories-grid">
         {{- if $hasValidProgrammingLangs -}}
         <div class="skills-category" data-category="programming-languages">
-          <h3>{{ i18n "programming_languages" | default "Langages de programmation" }}</h3>
+          <h3>{{ i18n "programming_languages" | default "Programming Languages" }}</h3>
         <div class="skills-grid">
           {{- range .Params.programming_languages -}}
             {{- $langKey := "" -}}
@@ -305,7 +305,7 @@
 
         {{- if $hasValidFrameworks -}}
         <div class="skills-category" data-category="frameworks-engines">
-        <h3>{{ i18n "frameworks_engines" | default "Frameworks & Moteurs" }}</h3>
+        <h3>{{ i18n "frameworks_engines" | default "Frameworks & Engines" }}</h3>
         <div class="skills-grid">
           {{- range .Params.frameworks_engines -}}
             {{- $frameworkKey := "" -}}
@@ -343,7 +343,7 @@
 
         {{- if $hasValidSpecialties -}}
         <div class="skills-category" data-category="specialties">
-        <h3>{{ i18n "specialties" | default "Spécialités" }}</h3>
+        <h3>{{ i18n "specialties" | default "Specialties" }}</h3>
         <div class="skills-grid">
           {{- range .Params.specialties -}}
             {{- $specialtyKey := "" -}}
@@ -383,7 +383,7 @@
 
         {{- if $hasValidSoftSkills -}}
         <div class="skills-category" data-category="soft-skills">
-        <h3>{{ i18n "cross_functional_skills" | default "Compétences transversales" }}</h3>
+        <h3>{{ i18n "cross_functional_skills" | default "Cross-functional skills" }}</h3>
         <div class="skills-grid">
           {{- range .Params.soft_skills -}}
             {{- $softSkillKey := "" -}}
@@ -421,7 +421,7 @@
 
         {{- if $hasValidTools -}}
         <div class="skills-category" data-category="tools">
-        <h3>{{ i18n "tools" | default "Outils" }}</h3>
+        <h3>{{ i18n "tools" | default "Tools & Environments" }}</h3>
         <div class="skills-grid">
           {{- range .Params.tools -}}
             {{- $toolKey := "" -}}
@@ -462,7 +462,7 @@
 
     {{- if .Params.projects -}}
     <div class="projects-section">
-      <h2>{{ i18n "completed_projects" | default "Projets réalisés" }}</h2>
+      <h2>{{ i18n "completed_projects" | default "Completed projects" }}</h2>
       <div class="ps5-projects-tiles">
         {{- range .Params.projects -}}
           {{- $projectSlug := . -}}

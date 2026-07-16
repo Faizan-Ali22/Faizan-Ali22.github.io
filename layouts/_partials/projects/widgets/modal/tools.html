@@ -26,7 +26,7 @@
   {{- range $allTools -}}
     {{- if eq .key $toolKey -}}
       {{- $usedTools = $usedTools | append . -}}
-      {{- $totalExperience = add $totalExperience .experience -}}
+      {{- $totalExperience = add $totalExperience (int (.experience | default 0)) -}}
       
       {{/* Groupement par catégorie */}}
       {{- $category := .category | default "other" -}}
@@ -44,7 +44,7 @@
     {{/* Barre de statistiques */}}
     <div class="tools-stats-bar">
       <div class="widget-count">
-        <strong>{{ $total }}</strong> {{ if eq $total 1 }}{{ i18n "tool_lowercase" | default "outil" }}{{ else }}{{ i18n "tools_lowercase" | default "outils" }}{{ end }}
+        <strong>{{ $total }}</strong> {{ if eq $total 1 }}{{ i18n "tool_lowercase" | default "tool" }}{{ else }}{{ i18n "tools_lowercase" | default "tools" }}{{ end }}
       </div>
       {{/* Affichage des catégories regroupées */}}
       <div class="tools-categories">
@@ -79,7 +79,7 @@
         <img src="{{ $profileData.media.profileImage }}" alt="{{ $profileData.personal.fullName }}" loading="lazy">
       </div>
       <div class="profile-note-content">
-        <div class="profile-note-title">{{ i18n "tools_used" | default "Outils utilisés" }} {{ i18n "by" | default "par" }} {{ $profileData.personal.firstName }} {{ i18n "for_this_project" | default "pour ce projet" }}</div>
+        <div class="profile-note-title">{{ i18n "tools_used" | default "Tools Used" }} {{ i18n "by" | default "by" }} {{ $profileData.personal.firstName }} {{ i18n "for_this_project" | default "for this project" }}</div>
         <div class="profile-note-subtitle">{{ $profileData.personal.title }}</div>
       </div>
     </div>
@@ -117,8 +117,8 @@
                  data-tool="{{ $toolName }}" 
                  tabindex="0" 
                  role="button" 
-                 aria-label="{{ i18n "view_details_of" | default "Voir les détails de" }} {{ $toolName }}"
-                 onclick="openSkillModal('{{ $toolName }}', '{{ if $toolIcon }}/{{ $toolIcon }}{{ else }}🛠️{{ end }}', '{{ i18n "tool" | default "Outil" }}', '{{ $toolExperience }}', '{{ if $toolIcon }}svg{{ else }}emoji{{ end }}', '{{ .key }}')"
+                 aria-label="{{ i18n "view_details_of" | default "View details of" }} {{ $toolName }}"
+                 onclick="openSkillModal('{{ $toolName }}', '{{ if $toolIcon }}/{{ $toolIcon }}{{ else }}🛠️{{ end }}', '{{ i18n "tool" | default "Tool" }}', '{{ $toolExperience }}', '{{ if $toolIcon }}svg{{ else }}emoji{{ end }}', '{{ .key }}')"
                  style="cursor: pointer;">
               
               {{/* En-tête de l'outil */}}
@@ -153,24 +153,24 @@
       <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
         <path d="M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z"/>
       </svg>
-      {{ i18n "click_tool_see_projects" | default "Cliquez sur un outil pour voir les projets associés et plus de détails" }}
+      {{ i18n "click_tool_see_projects" | default "Click on a tool to see related projects and more details" }}
     </div>
   </div>
 {{- else -}}
   <div class="tools-modal">
     <div class="tools-stats-bar">
       <div class="widget-count">
-        <strong>0</strong> {{ i18n "tools_lowercase" | default "outils" }}
+        <strong>0</strong> {{ i18n "tools_lowercase" | default "tools" }}
       </div>
     </div>
     
     <div class="tools-empty-state widget-note">
       <div class="widget-note-header">
         <div class="widget-note-icon widget-icon widget-icon--md">🛠️</div>
-        <div class="widget-note-title">{{ i18n "no_specific_tool" | default "Aucun outil spécifique" }}</div>
+        <div class="widget-note-title">{{ i18n "no_specific_tool" | default "No specific tool" }}</div>
       </div>
       <div class="widget-note-content">
-        <p>{{ i18n "no_tool_used" | default "Ce projet n'utilise pas d'outils spécifiques répertoriés dans le portfolio." }}</p>
+        <p>{{ i18n "no_tool_used" | default "This project does not use any specific tools listed in the portfolio." }}</p>
       </div>
     </div>
   </div>

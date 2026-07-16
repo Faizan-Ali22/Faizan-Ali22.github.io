@@ -62,7 +62,7 @@
   <div class="contributors-modal-enhanced">
     <div class="contributors-stats-bar">
       <div class="contributors-count">
-        <strong>{{ $total }}</strong> {{ if eq $total 1 }}{{ i18n "contributor" | default "contributeur" }}{{ else }}{{ i18n "contributors_plural" | default "contributeurs" }}{{ end }}
+        <strong>{{ $total }}</strong> {{ if eq $total 1 }}{{ i18n "contributor" | default "contributor" }}{{ else }}{{ i18n "contributors_plural" | default "contributors" }}{{ end }}
       </div>
       <div class="contributors-roles">
         {{- range $role := $distinctRoles -}}
@@ -160,13 +160,13 @@
   <div class="contributors-modal-enhanced">
     <div class="contributors-stats-bar">
       <div class="contributors-count">
-        <strong>0</strong> {{ i18n "contributors_plural" | default "contributeurs" }}
+        <strong>0</strong> {{ i18n "contributors_plural" | default "contributors" }}
       </div>
     </div>
     <div class="contributors-group">
-      <div class="contributors-group-title">{{ i18n "no_contributors" | default "Aucun contributeur" }}</div>
+      <div class="contributors-group-title">{{ i18n "no_contributors" | default "No contributors" }}</div>
       <div class="contributors-grid">
-        <p>{{ i18n "no_contributors_found" | default "Aucun contributeur n'a été trouvé pour ce projet." }}</p>
+        <p>{{ i18n "no_contributors_found" | default "No contributors were found for this project." }}</p>
       </div>
     </div>
   </div>

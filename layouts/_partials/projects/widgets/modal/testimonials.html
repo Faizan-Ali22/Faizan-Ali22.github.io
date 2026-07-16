@@ -18,7 +18,7 @@
     {{/* Barre de statistiques */}}
     <div class="testimonials-stats-bar">
       <div class="widget-count">
-        <strong>{{ $total }}</strong> {{ if eq $total 1 }}{{ i18n "testimonial" | default "témoignage" }}{{ else }}{{ i18n "testimonials" | default "témoignages" }}{{ end }}
+        <strong>{{ $total }}</strong> {{ if eq $total 1 }}{{ i18n "testimonial" | default "testimonial" }}{{ else }}{{ i18n "testimonials" | default "témoignages" }}{{ end }}
       </div>
       
       {{/* Rôles représentés */}}
@@ -128,8 +128,8 @@
   <div class="testimonials-modal testimonials-modal--empty">
     <div class="empty-state">
       <div class="empty-icon">💬</div>
-      <h3>{{ i18n "no_testimonials" | default "Aucun témoignage disponible" }}</h3>
-      <p>{{ i18n "no_testimonials_yet" | default "Ce projet n'a pas encore de témoignages associés." }}</p>
+      <h3>{{ i18n "no_testimonials" | default "No testimonials available" }}</h3>
+      <p>{{ i18n "no_testimonials_yet" | default "This project doesn't have any testimonials yet." }}</p>
     </div>
   </div>
 {{- end -}}

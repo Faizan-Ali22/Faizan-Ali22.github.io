@@ -9,61 +9,13 @@ let skillModalData = null;
  * Detect current language from HTML lang attribute or URL
  */
 function getSkillModalLang() {
-    // Check URL for /en/ prefix first (most reliable)
-    const pathname = window.location.pathname;
-    if (pathname.startsWith('/en/') || pathname === '/en') return 'en';
-    
-    // Check HTML lang attribute
-    const htmlLang = document.documentElement.getAttribute('lang');
-    if (htmlLang) {
-        if (htmlLang.startsWith('en')) return 'en';
-        if (htmlLang.startsWith('fr')) return 'fr';
-    }
-    
-    // Default to French
-    return 'fr';    
+    return 'en';
 }
 
 /**
  * Translations for the skill modal
  */
 const SKILL_MODAL_TRANSLATIONS = {
-    fr: {
-        // Loading states
-        loading_projects: "Chargement des projets...",
-        loading_experiences: "Chargement des expériences...",
-        loading_educations: "Chargement des formations...",
-        
-        // Empty states
-        no_projects: "Aucun projet trouvé pour cette technologie.",
-        no_projects_sub: "De nouveaux projets arrivent bientôt !",
-        no_experiences: "Aucune expérience professionnelle trouvée pour cette technologie.",
-        no_experiences_sub: "Cette compétence a été développée dans un contexte personnel ou académique.",
-        no_educations: "Aucune formation trouvée pour cette technologie.",
-        no_educations_sub: "Cette compétence a été développée de manière autodidacte ou professionnelle.",
-        
-        // Error states
-        error_loading_projects: "Erreur lors du chargement des projets.",
-        error_loading_experiences: "Erreur lors du chargement des expériences.",
-        error_loading_educations: "Erreur lors du chargement des formations.",
-        please_refresh: "Veuillez rafraîchir la page.",
-        
-        // Experience info
-        years_experience_singular: "an d'expérience",
-        years_experience_plural: "ans d'expérience",
-        position: "Poste",
-        present: "Présent",
-        education_label: "Formation",
-        
-        // Actions
-        view_details: "Voir les détails",
-        view_project: "Voir le projet",
-        confidential: "Confidentiel",
-        
-        // Default descriptions
-        default_project_description: "Découvrez ce projet innovant et ses fonctionnalités."
-    },
-    en: {
         // Loading states
         loading_projects: "Loading projects...",
         loading_experiences: "Loading experiences...",
@@ -97,22 +49,20 @@ const SKILL_MODAL_TRANSLATIONS = {
         
         // Default descriptions
         default_project_description: "Discover this innovative project and its features."
-    }
 };
 
 /**
  * Get a translated string for skill modal
  */
 function ts(key) {
-    const lang = getSkillModalLang();
-    return SKILL_MODAL_TRANSLATIONS[lang]?.[key] || SKILL_MODAL_TRANSLATIONS['fr'][key] || key;
+    return SKILL_MODAL_TRANSLATIONS[key] || key;
 }
 
 /**
  * Get locale string for date formatting
  */
 function getDateLocale() {
-    return getSkillModalLang() === 'en' ? 'en-US' : 'fr-FR';
+    return 'en-US';
 }
 
 // Utility: check if ANY overlay modal (unified / skill / person) remains open

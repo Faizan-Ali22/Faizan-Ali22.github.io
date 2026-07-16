@@ -279,7 +279,7 @@ function initDemoActionButtons() {
             e.preventDefault();
             const action = this.textContent.trim();
             
-            // Animation de retour visuel
+            // Visual return animation
             this.style.transform = 'scale(0.95)';
             this.style.opacity = '0.7';
             setTimeout(() => {
@@ -310,7 +310,7 @@ function initModalCloseButtons() {
             e.preventDefault();
             console.log('Démo - Modal fermé');
             
-            // Animation de retour visuel
+            // Visual return animation
             this.style.transform = 'scale(0.9)';
             setTimeout(() => {
                 this.style.transform = '';

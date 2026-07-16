@@ -20,7 +20,7 @@
     <div class="devtime-stats-overview">
       <div class="devtime-main-stat">
         <div class="devtime-main-value">{{ $devTime.total }}</div>
-        <div class="devtime-main-label">{{ i18n "total_time" | default "Temps total" }}</div>
+        <div class="devtime-main-label">{{ i18n "total_time" | default "Total time" }}</div>
       </div>
       
       {{- if $hasDateRange -}}
@@ -43,7 +43,7 @@
                   {{ $startDate }}
                 {{- end -}}
               </div>
-              <div class="devtime-date-label">{{ i18n "project_start" | default "Début du projet" }}</div>
+              <div class="devtime-date-label">{{ i18n "project_start" | default "Project start" }}</div>
             </div>
           </div>
           <div class="devtime-date-separator">
@@ -68,7 +68,7 @@
                   {{ $endDate }}
                 {{- end -}}
               </div>
-              <div class="devtime-date-label">{{ i18n "project_end" | default "Fin du projet" }}</div>
+              <div class="devtime-date-label">{{ i18n "project_end" | default "Project end" }}</div>
             </div>
           </div>
         </div>

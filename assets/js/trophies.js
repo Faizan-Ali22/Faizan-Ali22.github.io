@@ -410,7 +410,7 @@
      * Vérifie si l'utilisateur a scrollé jusqu'en bas d'une page
      */
     checkScrolledToBottom(data) {
-      // Toujours retourner true si déjà scrollé, peu importe la page actuelle
+      // Always return true if already scrolled, regardless of current page
       return localStorage.getItem('scrolledToBottomHome') === 'true';
     }
 
@@ -675,7 +675,7 @@
             (trophy.condition && trophy.condition());
             
           if (isUnlocked) {
-            // unlockTrophy retourne true si le trophée a été réellement débloqué
+            // unlockTrophy returns true if the trophy was actually unlocked
             const wasUnlocked = this.unlockTrophy(trophy.id);
             if (wasUnlocked) {
               newTrophies.push(trophy);
