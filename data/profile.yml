@@ -9,14 +9,14 @@ personal:
   firstName: "Faizan Ali"          # Shown in hero section & navigation
   lastName: "Ali"            # Shown in mobile menu
   fullName: "Muhammad Faizan Ali"            # Shown in footer & copyright
-  title: "Full Stack Web + Game Developer"         # Job title shown in mobile menu
+  title: "Full Stack Web + Game Designer/Developer"         # Job title shown in mobile menu
 
   # The animated hero heading text — each item becomes a line
   heroTitle:
     - "Full Stack Web"
     - "+"
     - "Game"
-    - "Developer"
+    - "Designer/Developer"
 
   yearsExperience: "3+"                 # Stat shown on homepage (e.g. "3+", "5")
 
