@@ -26,11 +26,11 @@
   displayedInPortfolio: true
   color: "#00599C"
 
-# - key: "pl_javascript"
-#   iconPath: "/images/skills/javascript.svg"
-#   experience: 3
-#   displayedInPortfolio: true
-#   color: "#F7DF1E"
+- key: "pl_javascript"
+  iconPath: "/images/skills/javascript.svg"
+  experience: 3
+  displayedInPortfolio: true
+  color: "#F7DF1E"
 
 # - key: "pl_css"
 #   iconPath: "/images/skills/css.svg"

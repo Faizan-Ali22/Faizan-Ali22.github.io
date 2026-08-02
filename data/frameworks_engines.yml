@@ -14,19 +14,25 @@
 #   fw_unity: "Unity"
 # ============================================================
 
-# Uncomment and customize:
+# Web Frameworks & Databases:
 
-# - key: "fw_react"
-#   iconPath: "/images/skills/react.svg"
-#   experience: 2
-#   displayedInPortfolio: true
-#   color: "#61DAFB"
+- key: "fw_react"
+  iconPath: "/images/skills/react.svg"
+  experience: 2
+  displayedInPortfolio: true
+  color: "#61DAFB"
 
-# - key: "fw_nodejs"
-#   iconPath: "/images/skills/nodejs.svg"
-#   experience: 2
-#   displayedInPortfolio: true
-#   color: "#339933"
+- key: "fw_nodejs"
+  iconPath: "/images/skills/nodejs.svg"
+  experience: 2
+  displayedInPortfolio: true
+  color: "#339933"
+
+- key: "fw_mysql"
+  iconPath: "/images/skills/mysql.svg"
+  experience: 2
+  displayedInPortfolio: true
+  color: "#4479A1"
 
 - key: "fw_unity"
   iconPath: "/images/skills/unity.svg"

@@ -14,6 +14,27 @@
 		
 			<atom:link href="https://Faizan-Ali22.github.io/projects/index.xml" rel="self" type="application/rss+xml" />
 			<item>
+				<title>University Portal Management System</title>
+				<link>https://Faizan-Ali22.github.io/projects/universityportal/</link>
+				<pubDate>Thu, 01 Aug 2024 00:00:00 +0000</pubDate>
+				<guid>https://Faizan-Ali22.github.io/projects/universityportal/</guid>
+				<description>&lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;&#xA;&lt;p&gt;A full-stack university portal management system providing role-based access for students, faculty, and administrators. Handles course enrollment, grade tracking, timetable management, and administrative operations.&lt;/p&gt;&#xA;&lt;h2 id=&#34;key-features&#34;&gt;Key Features&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Role-Based Access&lt;/strong&gt;: Separate dashboards and permissions for students, faculty, and administrators.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Course Management&lt;/strong&gt;: Enrollment workflows, course catalogs, and timetable scheduling.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Grade Tracking&lt;/strong&gt;: Comprehensive academic records with GPA calculation and transcript generation.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Full-Stack Architecture&lt;/strong&gt;: Built with React, Node.js, and MySQL for a complete, production-ready solution.&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
+			</item>
+			<item>
+				<title>EcoRoots</title>
+				<link>https://Faizan-Ali22.github.io/projects/ecoroots/</link>
+				<pubDate>Wed, 10 Jul 2024 00:00:00 +0000</pubDate>
+				<guid>https://Faizan-Ali22.github.io/projects/ecoroots/</guid>
+				<description>&lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;&#xA;&lt;p&gt;A full-stack tree plantation and reforestation initiative platform showcasing a multi-layer architecture with React on the front end, Django and Node.js on the back end, and a comprehensive database layer.&lt;/p&gt;&#xA;&lt;h2 id=&#34;key-features&#34;&gt;Key Features&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;React Front End&lt;/strong&gt;: Interactive, responsive UI for users to explore reforestation projects and track tree-planting progress.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Django + Node.js Back End&lt;/strong&gt;: Dual-backend architecture demonstrating versatility across Python and JavaScript ecosystems.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Database Architecture&lt;/strong&gt;: Robust data layer managing plantation records, user contributions, and environmental impact metrics.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Full-Stack Showcase&lt;/strong&gt;: End-to-end implementation demonstrating modern web development best practices.&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
+			</item>
+			<item>
+				<title>GamePay - Full Stack</title>
+				<link>https://Faizan-Ali22.github.io/projects/gamepayfullstack/</link>
+				<pubDate>Sat, 15 Jun 2024 00:00:00 +0000</pubDate>
+				<guid>https://Faizan-Ali22.github.io/projects/gamepayfullstack/</guid>
+				<description>&lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;&#xA;&lt;p&gt;Full-stack implementation of the GamePay gaming payment platform concept. Built with React on the front end and Node.js with MySQL on the back end, turning the original UI/UX design into a fully functional web application.&lt;/p&gt;&#xA;&lt;h2 id=&#34;key-features&#34;&gt;Key Features&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;React Front End&lt;/strong&gt;: Component-based UI built with React for a responsive, dynamic user experience.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Node.js Back End&lt;/strong&gt;: RESTful API server handling authentication, transactions, and data management.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;MySQL Database&lt;/strong&gt;: Relational database powering user accounts, payment records, and game catalogs.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Full-Stack Architecture&lt;/strong&gt;: End-to-end implementation from client to server to database.&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
+			</item>
+			<item>
 				<title>CyberSafe - 3D Mobile RPG</title>
 				<link>https://Faizan-Ali22.github.io/projects/cybersafe/</link>
 				<pubDate>Mon, 18 May 2026 00:00:00 +0000</pubDate>
