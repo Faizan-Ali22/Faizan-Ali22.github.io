@@ -11,12 +11,12 @@ personal:
   fullName: "Muhammad Faizan Ali"            # Shown in footer & copyright
   title: "Full Stack Web + Game Designer/Developer"         # Job title shown in mobile menu
 
-  # The animated hero heading text — each item becomes a line
+  # The animated hero heading text — each role cycles with a typewriter animation
   heroTitle:
-    - "Full Stack Web"
-    - "+"
-    - "Game"
-    - "Designer/Developer"
+    - "Game Developer"
+    - "Game Designer"
+    - "Technical 3D Artist"
+    - "Full Stack Web Developer"
 
   yearsExperience: "3+"                 # Stat shown on homepage (e.g. "3+", "5")
 

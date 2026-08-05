@@ -18,10 +18,11 @@
         <div class="hero-content">
             <p class="hero-greeting">{{ i18n "hero_greeting" | default "Hello, I'm" }} <span class="hero-name">{{ .personal.firstName }}</span></p>
             <h1 class="hero-title">
-                {{ range .personal.heroTitle }}
-                <span class="hero-action">{{ . }}</span>
-                {{ end }}
+                <span class="hero-title-static">I'm a </span><span id="typewriter-text" class="hero-typewriter-text"></span><span class="hero-typewriter-cursor">|</span>
             </h1>
+            <script>
+                window.TYPEWRITER_ROLES = [{{ range $i, $e := .personal.heroTitle }}{{ if $i }}, {{ end }}{{ . | jsonify }}{{ end }}];
+            </script>
             
             <p class="hero-description">
                 {{ i18n "hero_description" | default "Versatile developer specialized in Video games with C# & C++ in Unity & Unreal Engine. From conception to production, I transform ideas into captivating interactive experiences that leave a mark on players." }}

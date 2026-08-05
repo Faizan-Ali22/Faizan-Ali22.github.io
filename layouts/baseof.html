@@ -79,6 +79,12 @@
     <script>{{ $widgetsFormatterJs.Content | safeJS }}</script>
   {{ end }}
   
+  <!-- Typewriter animation for hero section -->
+  {{ $typewriterJs := resources.Get "js/typewriter.js" }}
+  {{ if $typewriterJs }}
+    <script>{{ $typewriterJs.Content | safeJS }}</script>
+  {{ end }}
+  
   <!-- Global portfolio data for skill modal and other components -->
   {{ partial "portfolio-data.html" . }}
   
