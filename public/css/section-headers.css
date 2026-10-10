@@ -1,0 +1,68 @@
+/**
+ * UNIFIED SECTION HEADERS
+ * ======================
+ * 
+ * This CSS class unifies the appearance of all section headers
+ * across the portfolio to maintain visual consistency.
+ * 
+ * Usage:
+ * - Apply 'section-header-unified' class to all header containers
+ * - Apply 'section-title-unified' class to h2 titles
+ * - Apply 'section-subtitle-unified' class to subtitles
+ */
+
+/* Unified header container */
+.section-header-unified {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+/* Unified main title */
+.section-title-unified {
+    color: #fff !important;
+    font-size: 3rem !important;
+    font-weight: 700 !important;
+    margin-bottom: 1rem !important;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Unified subtitle */
+.section-subtitle-unified {
+    color: #c0c0c0 !important;
+    font-size: 1.1rem !important;
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0 auto !important;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7), 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .section-title-unified {
+        font-size: 1.8rem !important;
+    }
+    
+    .section-subtitle-unified {
+        font-size: 0.95rem !important;
+        max-width: 90%;
+        line-height: 1.5;
+    }
+    
+    .section-header-unified {
+        margin-bottom: 2.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .section-title-unified {
+        font-size: 1.5rem !important;
+    }
+    
+    .section-subtitle-unified {
+        font-size: 0.9rem !important;
+    }
+    
+    .section-header-unified {
+        margin-bottom: 2rem;
+    }
+}

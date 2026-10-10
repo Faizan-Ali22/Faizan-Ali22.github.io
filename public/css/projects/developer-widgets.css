@@ -1,0 +1,523 @@
+/* ========================================
+   DEVELOPER WIDGETS - SPÉCIALITÉS ET OUTILS
+   ======================================== */
+
+/* ========================================
+   DEVELOPER PROFILE NOTE - SIGNATURE DÉVELOPPEUR
+   ======================================== */
+
+.developer-profile-note {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.2rem;
+    background: linear-gradient(135deg, rgba(52, 152, 219, 0.08) 0%, rgba(52, 152, 219, 0.03) 100%);
+    border: 1px solid rgba(52, 152, 219, 0.2);
+    border-radius: var(--border-radius-md);
+    margin-bottom: 1.5rem;
+    backdrop-filter: blur(10px);
+}
+
+.developer-profile-note .profile-avatar {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    border: 2px solid rgba(52, 152, 219, 0.3);
+}
+
+.developer-profile-note .profile-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.developer-profile-note .profile-note-content {
+    flex: 1;
+}
+
+.developer-profile-note .profile-note-title {
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 0.2rem;
+}
+
+.developer-profile-note .profile-note-subtitle {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    opacity: 0.8;
+}
+
+/* ========================================
+   DEVELOPER SPECIALTIES BOX - SPÉCIALITÉS
+   ======================================== */
+
+/* Aperçu des spécialités dans l'en-tête */
+.specialties-preview {
+    margin-top: 0.8rem;
+}
+
+.specialty-badges-preview {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.specialty-badge-mini {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.3rem 0.6rem;
+    background: linear-gradient(135deg, rgba(155, 89, 182, 0.1) 0%, rgba(155, 89, 182, 0.05) 100%);
+    border: 1px solid rgba(155, 89, 182, 0.2);
+    border-radius: var(--border-radius-sm);
+    font-size: 0.75rem;
+    color: var(--text-primary);
+    backdrop-filter: blur(5px);
+}
+
+.specialty-badge-mini .specialty-icon {
+    font-size: 0.9rem;
+}
+
+.specialty-badge-mini .specialty-name {
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.specialty-badge-mini.more {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.04) 100%);
+    border-color: rgba(255, 255, 255, 0.15);
+    justify-content: center;
+}
+
+.specialty-badge-mini.more .specialty-more {
+    font-weight: 600;
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+}
+
+/* Grille des spécialités */
+.specialties-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.specialty-item {
+    padding: 1.2rem;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.01) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--border-radius-md);
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.specialty-item:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+    border-color: rgba(155, 89, 182, 0.3);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.specialty-item.clickable {
+    cursor: pointer;
+}
+
+.specialty-item.clickable:active {
+    transform: translateY(-1px);
+}
+
+.specialty-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.specialty-item .specialty-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    background: linear-gradient(135deg, rgba(155, 89, 182, 0.15) 0%, rgba(155, 89, 182, 0.08) 100%);
+    border: 1px solid rgba(155, 89, 182, 0.3);
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.specialty-info {
+    flex: 1;
+}
+
+.specialty-item .specialty-name {
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 0.3rem;
+}
+
+.specialty-item .specialty-subtitle {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    opacity: 0.8;
+}
+
+.specialty-experience {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.specialty-experience .experience-bar {
+    flex: 1;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.specialty-experience .experience-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #9b59b6 0%, #8e44ad 100%);
+    transition: width 0.8s ease;
+    border-radius: 2px;
+}
+
+.specialty-experience .experience-text {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+/* ========================================
+   DEVELOPER TOOLS BOX - OUTILS DE DÉVELOPPEMENT
+   ======================================== */
+
+/* Aperçu des outils dans l'en-tête */
+.tools-preview {
+    margin-top: 0.8rem;
+}
+
+.tool-icons-preview {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+}
+
+.tool-icon-mini {
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(52, 152, 219, 0.1) 0%, rgba(52, 152, 219, 0.05) 100%);
+    border: 1px solid rgba(52, 152, 219, 0.2);
+    border-radius: var(--border-radius-sm);
+    overflow: hidden;
+    backdrop-filter: blur(5px);
+}
+
+.tool-icon-mini img {
+    width: 1.2rem;
+    height: 1.2rem;
+    object-fit: contain;
+    filter: brightness(1.1);
+}
+
+.tool-icon-mini span {
+    font-size: 0.6rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.tool-icon-mini.more {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.04) 100%);
+    border-color: rgba(255, 255, 255, 0.15);
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+}
+
+.tool-icon-mini.clickable {
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.tool-icon-mini.clickable:hover {
+    transform: scale(1.1);
+    border-color: rgba(52, 152, 219, 0.4);
+}
+
+.specialty-badge-mini.clickable {
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.specialty-badge-mini.clickable:hover {
+    transform: scale(1.05);
+    border-color: rgba(155, 89, 182, 0.4);
+    background: linear-gradient(135deg, rgba(155, 89, 182, 0.15) 0%, rgba(155, 89, 182, 0.08) 100%);
+}
+
+/* Outils organisés par catégorie */
+.tools-by-category {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.tools-category {
+    margin-bottom: 1rem;
+}
+
+.tools-category-title {
+    color: var(--text-primary);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid rgba(52, 152, 219, 0.2);
+    position: relative;
+}
+
+.tools-category-title::before {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 3rem;
+    height: 2px;
+    background: linear-gradient(90deg, #3498db 0%, #2980b9 100%);
+}
+
+.tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+}
+
+.tool-item {
+    padding: 1.2rem;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.01) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--border-radius-md);
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.tool-item:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+    border-color: rgba(52, 152, 219, 0.3);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.tool-item.clickable {
+    cursor: pointer;
+}
+
+.tool-item.clickable:active {
+    transform: translateY(-1px);
+}
+
+.tool-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.tool-item .tool-icon {
+    width: 2.8rem;
+    height: 2.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(52, 152, 219, 0.15) 0%, rgba(52, 152, 219, 0.08) 100%);
+    border: 1px solid rgba(52, 152, 219, 0.3);
+    border-radius: var(--border-radius-sm);
+    overflow: hidden;
+    flex-shrink: 0;
+    backdrop-filter: blur(5px);
+}
+
+.tool-item .tool-icon[style*="--tool-color"] {
+    background: linear-gradient(135deg, var(--tool-color, #3498db) 0%, color-mix(in srgb, var(--tool-color, #3498db) 80%, black) 100%);
+    border-color: var(--tool-color, #3498db);
+}
+
+.tool-item .tool-icon img {
+    width: 1.8rem;
+    height: 1.8rem;
+    object-fit: contain;
+    filter: brightness(1.1);
+}
+
+.tool-item .tool-icon span {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: white;
+}
+
+.tool-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.tool-item .tool-name {
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 0.4rem;
+}
+
+.tool-item .tool-description {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    line-height: 1.4;
+    opacity: 0.9;
+}
+
+.tool-experience {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-top: 0.5rem;
+}
+
+.tool-experience .experience-bar {
+    flex: 1;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.tool-experience .experience-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #3498db 0%, #2980b9 100%);
+    transition: width 0.8s ease;
+    border-radius: 2px;
+}
+
+.tool-experience .experience-text {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+/* ========================================
+   WIDGET INFO-BOX ICONS - ICÔNES SPÉCIALISÉES
+   ======================================== */
+
+.project-widget-icon.specialties {
+    background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+    color: white;
+}
+
+.project-widget-icon.tools {
+    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    color: white;
+}
+
+/* ========================================
+   PREVIEW VISIBILITY - MASQUAGE AUTOMATIQUE
+   ======================================== */
+
+.project-widget.developer-specialties-box.expanded .specialties-preview {
+    display: none;
+}
+
+.project-widget.developer-tools-box.expanded .tools-preview {
+    display: none;
+}
+
+.project-widget.developer-specialties-box:not(.expanded) .specialties-grid {
+    display: none;
+}
+
+.project-widget.developer-tools-box:not(.expanded) .tools-by-category {
+    display: none;
+}
+
+.project-widget.developer-specialties-box:not(.expanded) .developer-profile-note {
+    display: none;
+}
+
+.project-widget.developer-tools-box:not(.expanded) .developer-profile-note {
+    display: none;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+
+@media (max-width: 768px) {
+    .specialties-grid {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+    }
+    
+    .tools-grid {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+    }
+    
+    .specialty-badges-preview {
+        gap: 0.3rem;
+    }
+    
+    .specialty-badge-mini {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.7rem;
+    }
+    
+    .tool-icons-preview {
+        gap: 0.3rem;
+    }
+    
+    .tool-icon-mini {
+        width: 1.8rem;
+        height: 1.8rem;
+    }
+    
+    .developer-profile-note {
+        padding: 1rem;
+        gap: 0.8rem;
+    }
+    
+    .developer-profile-note .profile-avatar {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .specialty-item,
+    .tool-item {
+        padding: 1rem;
+    }
+    
+    .specialty-header,
+    .tool-header {
+        gap: 0.8rem;
+    }
+    
+    .specialty-item .specialty-icon,
+    .tool-item .tool-icon {
+        width: 2.2rem;
+        height: 2.2rem;
+        font-size: 1.2rem;
+    }
+    
+    .tool-item .tool-icon img {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+}

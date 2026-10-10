@@ -1,0 +1,222 @@
+/**
+ * Système de boutons réutilisables
+ * Style EXACT copié des .project-action-button
+ * Reproduit fidèlement le style des vrais boutons des projets
+ */
+
+/* Classe de base - COPIE EXACTE du .project-action-button */
+.btn-action {
+    /* Inherit base button styles */
+    display: inline-flex;
+    align-items: center;
+    gap: var(--gap-sm);
+    padding: var(--padding-btn);
+    color: var(--text-primary);
+    text-decoration: none;
+    border-radius: var(--border-radius-lg);
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-base);
+    transition: var(--transition-smooth);
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    min-height: 44px;
+    /* Glass effect */
+    background: var(--glass-bg);
+    backdrop-filter: blur(5px);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--shadow-glass);
+    /* Layout specific */
+    justify-content: center;
+    white-space: nowrap;
+}
+
+/* Ensure button elements have same styles as link elements */
+button.btn-action {
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    cursor: pointer;
+}
+
+.btn-action::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--glass-bg-light);
+    border-radius: var(--border-radius-lg);
+    z-index: -1;
+}
+
+.btn-action:hover {
+    background: var(--primary-blue-bg);
+    border-color: var(--primary-blue-border);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+    color: var(--text-primary);
+    text-decoration: none;
+}
+
+/* Variante primaire (équivalent du .primary des projets) */
+.btn-action.primary {
+    background: var(--primary-blue-bg);
+    border-color: var(--primary-blue-border);
+    box-shadow: var(--shadow-primary);
+    font-weight: var(--font-weight-bold);
+}
+
+.btn-action.primary::after {
+    background: rgba(52, 152, 219, 0.15);
+}
+
+.btn-action.primary:hover {
+    background: var(--primary-blue-bg-hover);
+    border-color: var(--primary-blue-border-hover);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-primary-hover);
+}
+
+/* Icônes dans les boutons */
+.btn-action svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+/* Classe pour compatibilité avec l'ancien système */
+.btn-action .btn-icon {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+/* Variante avec couleur accent pour boutons spéciaux comme Contact */
+.btn-action.accent {
+    background: var(--primary-blue-bg);
+    border-color: rgba(255, 107, 53, 0.4);
+    color: rgba(255, 107, 53, 1);
+}
+
+.btn-action.accent:hover {
+    background: var(--primary-blue-bg-hover);
+    border-color: rgba(255, 107, 53, 0.6);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 107, 53, 0.3);
+    color: rgba(255, 107, 53, 1);
+}
+
+/* Variante bouton icône rond - pour "plus d'options" et réseaux sociaux */
+.btn-action-icon {
+    /* Hérite des styles de base de btn-action */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    color: var(--text-primary);
+    text-decoration: none;
+    border-radius: var(--border-radius-circle);
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-base);
+    transition: var(--transition-smooth);
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    width: 44px;
+    height: 44px;
+    min-height: 44px;
+    /* Glass effect */
+    background: var(--glass-bg);
+    backdrop-filter: blur(5px);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--shadow-glass);
+    /* Spécifique au bouton icône */
+    flex-shrink: 0;
+}
+
+/* Ensure button elements have same styles as link elements */
+button.btn-action-icon {
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+    color: var(--text-primary);
+    font-family: inherit;
+    cursor: pointer;
+}
+
+.btn-action-icon::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--glass-bg-light);
+    border-radius: var(--border-radius-circle);
+    z-index: -1;
+}
+
+.btn-action-icon:hover {
+    background: var(--primary-blue-bg);
+    border-color: var(--primary-blue-border);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+    color: var(--text-primary);
+}
+
+/* Variante primary pour btn-action-icon */
+.btn-action-icon.primary {
+    background: var(--primary-blue-bg);
+    border-color: var(--primary-blue-border);
+    box-shadow: var(--shadow-primary);
+}
+
+.btn-action-icon.primary::after {
+    background: rgba(52, 152, 219, 0.15);
+}
+
+.btn-action-icon.primary:hover {
+    background: var(--primary-blue-bg-hover);
+    border-color: var(--primary-blue-border-hover);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-primary-hover);
+}
+
+/* Variante accent pour btn-action-icon */
+.btn-action-icon.accent {
+    background: var(--primary-blue-bg);
+    border-color: rgba(255, 107, 53, 0.4);
+    color: rgba(255, 107, 53, 1);
+}
+
+.btn-action-icon.accent:hover {
+    background: var(--primary-blue-bg-hover);
+    border-color: rgba(255, 107, 53, 0.6);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 107, 53, 0.3);
+    color: rgba(255, 107, 53, 1);
+}
+
+/* Icônes dans les boutons icône */
+.btn-action-icon svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+/* ===================================
+   RESPONSIVE - MOBILE
+   =================================== */
+
+@media (max-width: 768px) {
+    /* Boutons "Voir tous..." prennent toute la largeur sur mobile */
+    .btn-action {
+        width: 100%;
+        display: flex;
+        white-space: normal; /* Permet le retour à la ligne si nécessaire */
+        text-align: center;
+    }
+    
+    /* Les boutons icône gardent leur taille fixe */
+    .btn-action-icon {
+        width: 44px;
+    }
+}

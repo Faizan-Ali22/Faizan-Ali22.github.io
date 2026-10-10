@@ -1,0 +1,4 @@
+/* Variables spécifiques PS5 (si besoin de découplage futur) */
+:root[data-page="projects"] {
+  --ps5-background-gradient: linear-gradient(135deg, var(--ps5-gray-900) 0%, var(--ps5-gray-850) 50%, var(--ps5-gray-800) 100%);
+}

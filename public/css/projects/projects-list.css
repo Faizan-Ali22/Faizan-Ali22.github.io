@@ -1,0 +1,298 @@
+/**
+ * ========================================
+ * PROJECTS LIST PAGE CSS
+ * ========================================
+ * 
+ * Styles for the projects listing page (/projects/)
+ * Includes header, project items layout, and responsive design
+ */
+
+/* ========================================
+   PROJECTS PAGE CONTAINER
+   ======================================== */
+
+.projects-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    color: #fff;
+}
+
+/* ========================================
+   PAGE HEADER
+   ======================================== */
+
+.page-header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.page-header h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.page-description {
+    font-size: 1.2rem;
+    color: #ccc;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* ========================================
+   PROJECTS LIST LAYOUT
+   ======================================== */
+
+.projects-list {
+    display: grid;
+    gap: 3rem;
+}
+
+.project-item {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 2rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 1rem;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.project-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(52, 152, 219, 0.3);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* ========================================
+   PROJECT ITEM IMAGE
+   ======================================== */
+
+.project-item-image {
+    position: relative;
+    overflow: hidden;
+}
+
+.project-item-image a {
+    display: block;
+    height: 100%;
+}
+
+.project-item-image img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.project-item-image:hover img {
+    transform: scale(1.05);
+}
+
+/* ========================================
+   PROJECT ITEM CONTENT
+   ======================================== */
+
+.project-item-content {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.project-item-header {
+    margin-bottom: 1rem;
+}
+
+.project-item-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.project-item-title a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.project-item-title a:hover {
+    color: #3498db;
+}
+
+.project-item-subtitle {
+    color: #3498db;
+    font-size: 1rem;
+    font-weight: 500;
+    margin: 0;
+}
+
+/* ========================================
+   PROJECT ITEM META
+   ======================================== */
+
+.project-item-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    color: #999;
+}
+
+.featured-badge {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: #fff;
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* ========================================
+   PROJECT ITEM DESCRIPTION
+   ======================================== */
+
+.project-item-description {
+    color: #ccc;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+}
+
+/* ========================================
+   PROJECT ITEM TECHNOLOGIES AND TAGS
+   ======================================== */
+
+.project-item-technologies,
+.project-item-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.project-item-technologies .tech-chip {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: #fff;
+    padding: 0.3rem 0.8rem;
+    border-radius: 1rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.project-item-tags .tag-chip {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    padding: 0.3rem 0.8rem;
+    border-radius: 1rem;
+    font-size: 0.8rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* ========================================
+   PROJECT ITEM ACTIONS
+   ======================================== */
+
+.project-item-actions {
+    margin-top: auto;
+    padding-top: 1rem;
+}
+
+.btn-primary {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #2980b9, #1f4e79);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(52, 152, 219, 0.3);
+    text-decoration: none;
+    color: #fff;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+
+@media (max-width: 768px) {
+    .projects-page {
+        padding: 1rem;
+    }
+    
+    .page-header h1 {
+        font-size: 2.5rem;
+    }
+    
+    .page-description {
+        font-size: 1rem;
+    }
+    
+    .project-item {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+    
+    .project-item-image img {
+        height: 200px;
+    }
+    
+    .project-item-content {
+        padding: 1.5rem;
+    }
+    
+    .project-item-title {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-header h1 {
+        font-size: 2rem;
+    }
+    
+    .project-item-content {
+        padding: 1rem;
+    }
+    
+    .project-item-title {
+        font-size: 1.3rem;
+    }
+    
+    .project-item-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .project-item-technologies,
+    .project-item-tags {
+        gap: 0.3rem;
+    }
+    
+    .tech-chip,
+    .tag-chip {
+        font-size: 0.7rem;
+        padding: 0.25rem 0.6rem;
+    }
+}

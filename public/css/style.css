@@ -1,0 +1,481 @@
+/**
+ * MAIN STYLE CSS
+ * 
+ * This file imports and orchestrates all CSS components for the portfolio theme.
+ * It includes the navigation and general layout styles.
+ */
+
+/* Navigation and Section Styles */
+html {
+    scroll-behavior: smooth;
+}
+
+section {
+    scroll-margin-top: 2rem;
+    margin-bottom: 4rem;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: sectionFadeIn 0.8s ease forwards;
+}
+
+/* Reduce spacing for the first section after profile */
+.main-content section:first-child {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+@keyframes sectionFadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+section:target {
+    animation: sectionHighlight 1s ease-in-out;
+}
+
+@keyframes sectionHighlight {
+    0% {
+        border-radius: 20px;
+        box-shadow: 0 0 30px rgba(var(--accent-rgb), 0.3);
+    }
+    100% {
+        box-shadow: none;
+    }
+}
+
+/* Animation delays for sections */
+#profil { animation-delay: 0.1s; }
+#competences { animation-delay: 0.2s; }
+#blog { animation-delay: 0.3s; }
+#projets { animation-delay: 0.4s; }
+#experiences { animation-delay: 0.5s; }
+#contact { animation-delay: 0.6s; }
+
+.contact-section {
+    padding: 4rem 2rem;
+    border-radius: 20px;
+    border: 1px solid rgba(var(--accent-rgb), 0.2);
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    margin-bottom: 2rem;
+}
+
+.contact-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.contact-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.contact-header h2 {
+    font-size: 2.5rem;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1rem;
+}
+
+.contact-header p {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.7);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.contact-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    padding: 1.5rem;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+}
+
+.contact-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(var(--accent-rgb), 0.2);
+    border-color: rgba(var(--accent-rgb), 0.4);
+}
+
+.contact-icon {
+    font-size: 2rem;
+    margin-right: 1rem;
+    min-width: 50px;
+    text-align: center;
+}
+
+.contact-details h4 {
+    color: var(--accent);
+    margin: 0 0 0.5rem 0;
+    font-size: 1.1rem;
+}
+
+.contact-details a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.contact-details a:hover {
+    color: var(--accent);
+}
+
+.contact-details span {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.social-links { 
+    display: flex; 
+    gap: 1rem; 
+    margin-top: 2rem; 
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .contact-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .contact-section {
+        padding: 2rem 1rem;
+    }
+    
+    .contact-header h2 {
+        font-size: 2rem;
+    }
+    
+    .contact-item {
+        padding: 1rem;
+    }
+    
+    .social-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+    }
+}
+
+/* Scroll Progress Bar */
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    z-index: 9999;
+}
+
+.scroll-progress-bar {
+    height: 100%;
+    width: 0%;
+    transition: width 0.1s ease;
+    box-shadow: 0 0 10px rgba(var(--accent-rgb), 0.5);
+}
+
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+}
+
+body { 
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+    color: #fff; 
+    line-height: 1.6;
+}
+
+/* Background styles moved to background.css */
+
+.container { 
+    display: flex; 
+    min-height: 100vh; 
+    max-width: 100%;
+    overflow-x: hidden;
+    position: relative;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+.main-content { 
+    flex: 1; 
+    margin-left: 0; /* Plus de sidebar */
+    padding: 2rem; 
+    min-height: 100vh;
+    transition: all 0.3s ease;
+}
+
+/* Info section styles moved to info-sections.css */
+
+.social-links { 
+    display: flex; 
+    gap: 1rem; 
+    margin-top: 2rem; 
+}
+
+.social-links a { 
+    color: #a0a0a0; 
+    font-size: 1.5rem; 
+}
+
+.social-links a:hover { 
+    color: var(--accent);
+}
+
+
+
+
+
+/* Skills Section Styles */
+.skills-section {
+    margin-top: 2rem;
+    width: 100%;
+}
+
+/* Skills header styles are now handled by section-headers.css */
+
+.skills-section h3 {
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    font-size: 1.4rem;
+}
+
+/* Projects styles moved to projects.css */
+
+/* Experience styles moved to experience.css */
+
+.skills-categories-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.skills-category {
+    background: rgba(55, 65, 81, 0.4);
+    backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(var(--accent-rgb), 0.2);
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.1),
+        0 0 20px rgba(var(--accent-rgb), 0.05);
+}
+
+.skills-category h4 {
+    color: #fff;
+    margin-bottom: 1.5rem;
+    font-size: 1.3rem;
+    font-weight: 600;
+    text-align: center;
+    border-bottom: 2px solid rgba(var(--accent-rgb), 0.3);
+    padding-bottom: 0.75rem;
+}
+
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 0.75rem;
+    width: 100%;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.skill-block {
+    background: rgba(75, 85, 99, 0.5);
+    border: 1px solid rgba(var(--accent-rgb), 0.3);
+    border-radius: 12px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 0.3rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    min-height: 100px;
+    aspect-ratio: 1;
+}
+
+.skill-block:hover {
+    background: rgba(var(--accent-rgb), 0.3);
+    border-color: rgba(var(--accent-rgb), 0.8);
+    box-shadow: 
+        0 8px 25px rgba(var(--accent-rgb), 0.3),
+        0 0 25px rgba(var(--accent-rgb), 0.2);
+}
+
+.skill-icon {
+    font-size: 1.4rem;
+    width: auto;
+    text-align: center;
+    margin-bottom: 0.2rem;
+}
+
+.skill-name {
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.8rem;
+    margin-bottom: 0.1rem;
+    line-height: 1.1;
+}
+
+.skill-level {
+    color: var(--accent);
+    font-size: 0.7rem;
+    font-weight: 500;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .skills-categories-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        gap: 1.5rem;
+    }
+    
+    .skills-category {
+        padding: 1.5rem;
+    }
+    
+    .skills-category h4 {
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+    }
+    
+    .skills-grid {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+        gap: 0.5rem;
+    }
+    
+    .skill-block {
+        padding: 0.6rem;
+        min-height: 80px;
+        gap: 0.2rem;
+    }
+    
+    .skill-icon {
+        font-size: 1.2rem;
+        margin-bottom: 0.1rem;
+    }
+    
+    .skill-name {
+        font-size: 0.7rem;
+        margin-bottom: 0.1rem;
+    }
+    
+    .skill-level {
+        display: none;
+    }
+    
+    /* Skills header responsive styles are now handled by section-headers.css */
+    
+    /* Contact section responsive styles */
+    .contact-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .contact-section {
+        padding: 2rem 1rem;
+    }
+    
+    .contact-header h2 {
+        font-size: 2rem;
+    }
+    
+    .contact-item {
+        padding: 1rem;
+    }
+    
+    .social-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 1024px) and (min-width: 769px) {
+    .skills-categories-grid {
+        gap: 1.5rem;
+    }
+    
+    .skills-category {
+        padding: 1.75rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        padding: 1.5rem 0.20rem;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Skills header responsive styles are now handled by section-headers.css */
+    
+    .main-content {
+        padding: 1rem 0.20rem;
+    }
+    
+    .skills-categories-grid {
+        gap: 1rem;
+    }
+    
+    .skills-category {
+        padding: 1rem;
+    }
+    
+    .skills-category h4 {
+        font-size: 1rem;
+    }
+
+    /* Reduce skill-block size by roughly one third for small mobile screens */
+    .skill-block {
+        padding: 0.45rem; /* from 0.75rem -> ~40% smaller */
+        min-height: 66px; /* from 100px -> ~two thirds (approx -1/3) */
+        gap: 0.18rem;
+        border-radius: 10px;
+    }
+
+    .skill-icon {
+        font-size: 0.9rem; /* smaller icons */
+    }
+
+    .skill-name {
+        font-size: 0.6rem;
+    }
+}
+
+/* Blog styles moved to projects.css */

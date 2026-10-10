@@ -1,0 +1,129 @@
+/* ========================================
+   PROJECT HERO INFO
+   ======================================== */
+
+.project-hero-info {
+    max-width: 800px;
+}
+
+.project-title {
+    color: #fff;
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 900;
+    line-height: 1.1;
+    margin: 0 0 1.5rem 0;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* ========================================
+   INLINE META INFORMATION
+   ======================================== */
+
+.project-meta-inline {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+    align-items: center;
+}
+
+.meta-item-inline {
+    display: flex;
+    align-items: center;
+}
+
+.meta-item-inline .meta-label {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.project-link-inline {
+    color: #3498db !important;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.project-link-inline:hover {
+    color: #2980b9 !important;
+    transform: translateX(2px);
+}
+
+/* ========================================
+   INLINE TECHNOLOGIES
+   ======================================== */
+
+.project-technologies-inline {
+    margin-bottom: 2rem;
+}
+
+.project-technologies-inline .tech-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+/* ========================================
+   PROJECT INFO BLOCK - BOTTOM LEFT
+   ======================================== */
+
+.project-hero-bottom {
+    position: relative;
+    z-index: 10;
+    align-self: flex-start;
+    width: 100%;
+    padding: 0;
+}
+
+.project-info-grid {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 3rem;
+    width: 100%;
+    align-items: end;
+    justify-content: space-between;
+}
+
+.project-description-block {
+    position: relative;
+    z-index: 10;
+    max-width: none;
+    margin: 0;
+    padding: 0 2rem 0 2rem;
+    max-width: 500px;
+}
+
+/* Hide mobile sector badge on desktop by default - only show on mobile */
+.mobile-sector-badge {
+    display: none !important;
+}
+
+/* Show sector badge in description on desktop */
+.description-sector-badge {
+    display: block;
+}
+
+.project-name-bottom {
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 0 1rem 0;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.project-logo-bottom {
+    margin: 0 0 1rem 0;
+}
+
+.project-logo-img {
+    max-height: 250px;
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.5));
+}

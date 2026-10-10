@@ -1,0 +1,189 @@
+/* ========================================
+   PROJECTS LIST PAGE - Styles spécifiques
+   ======================================== */
+
+/* Compensation pour le top dock (72px height + 20px top + marge) */
+.projects-list-page {
+    padding-top: 120px;
+}
+
+.projects-list-content {
+    padding-top: 2rem;
+}
+
+/* Header de la page liste */
+.projects-list-page .projects-header {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.projects-list-page .section-title-unified {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.projects-list-page .section-subtitle-unified {
+    font-size: 1.25rem;
+    max-width: 800px;
+    margin: 0 auto;
+    opacity: 0.9;
+}
+
+/* Tabs pour la page liste */
+.projects-list-page .tabs {
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+/* Compteur dans les tabs */
+.projects-list-page .tab-btn .count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 8px;
+    background: rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.9);
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    min-width: 24px;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.projects-list-page .tab-btn:hover .count {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+}
+
+.projects-list-page .tab-btn.active .count {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.3);
+    color: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Description de la section */
+.projects-list-page .projects-description {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.projects-list-page .projects-description p {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.8);
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+/* Container for grids with proper padding */
+.projects-list-page .projects-section.projects-page {
+    padding: 0 2rem !important;
+    max-width: 1600px !important;
+    margin: 0 auto !important;
+}
+
+/* Grille de projets pour la page liste - 3 colonnes */
+.projects-list-page .projects-section .projects-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 1.5rem !important;
+    margin-bottom: 3rem !important;
+    width: 100% !important;
+}
+
+/* Hide when hidden attribute is present - override default display */
+.projects-list-page .projects-grid[hidden] {
+    display: none !important;
+}
+
+/* Force 16:9 aspect ratio for project cards in grid */
+.projects-list-page .project-card-unified {
+    aspect-ratio: 16 / 9;
+    height: auto;
+    width: 100%;
+}
+
+/* Responsive pour la grille */
+@media (max-width: 1200px) {
+    .projects-list-page .projects-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 900px) {
+    .projects-list-page {
+        padding-top: 100px;
+    }
+
+    .projects-list-page .section-title-unified {
+        font-size: 2.5rem;
+    }
+
+    .projects-list-page .section-subtitle-unified {
+        font-size: 1.125rem;
+    }
+
+    .projects-list-page .projects-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .projects-list-page .projects-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 560px) {
+    .projects-list-page {
+        padding-top: 90px;
+    }
+
+    .projects-list-page .section-title-unified {
+        font-size: 2rem;
+    }
+
+    .projects-list-page .section-subtitle-unified {
+        font-size: 1rem;
+    }
+
+    .projects-list-page .projects-grid {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+    }
+
+    .projects-list-page .tabs {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .projects-list-page .tab-btn {
+        font-size: 0.875rem;
+        padding: 0.5rem 1rem;
+    }
+
+    .projects-list-page .tab-btn .count {
+        font-size: 0.7rem;
+        padding: 2px 6px;
+        margin-left: 6px;
+        min-width: 20px;
+    }
+}
+
+/* Old PS5 project tile animations removed - now handled by project-card-unified.scss */
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+} */
