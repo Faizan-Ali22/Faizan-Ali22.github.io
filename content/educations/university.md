@@ -7,7 +7,7 @@ logo: "/images/schools/university.png"
 start_date: 2022-09-01
 end_date: 2026-06-01
 
-status: "In Progress"
+status: "Completed"
 description: "Specialized in Game Development and Computer Graphics."
 
 # --- TECHNICAL SKILLS ---

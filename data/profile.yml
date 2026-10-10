@@ -18,7 +18,7 @@ personal:
     - "Technical 3D Artist"
     - "Full Stack Web Developer"
 
-  yearsExperience: "3+"                 # Stat shown on homepage (e.g. "3+", "5")
+  yearsExperience: "2+"                 # Stat shown on homepage (e.g. "3+", "5")
 
 # Profile photo — place the file in static/images/
 media:
