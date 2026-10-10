@@ -53,7 +53,7 @@
 }
 
 /* Light overrides pour le blog */
-[data-theme="light"][data-page="blog"] {
+[data-theme="disabled-light"][data-page="blog"] {
   --blog-text-primary: #1a1f29;
   --blog-text-secondary: rgba(26, 31, 41, 0.85);
   --blog-text-muted: rgba(26, 31, 41, 0.6);
@@ -97,7 +97,7 @@
   --blog-glass-border: rgba(255,255,255,0.08);
 }
 
-[data-theme="light"][data-page="portfolio"] .blog-theme {
+[data-theme="disabled-light"][data-page="portfolio"] .blog-theme {
   --blog-card-gradient: linear-gradient(145deg, rgba(255,255,255,0.90), rgba(240,244,248,0.88), rgba(255,255,255,0.90));
   --blog-card-gradient-hover: linear-gradient(145deg, rgba(255,255,255,0.97), rgba(240,244,248,0.94), rgba(255,255,255,0.97));
   --blog-image-gradient: linear-gradient(135deg, var(--blog-accent-15, rgba(var(--accent-rgb,79,209,199),0.15)), rgba(220,230,238,0.80), rgba(150,200,255,0.10));

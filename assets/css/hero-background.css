@@ -79,7 +79,7 @@
 }
 
 /* Intensification des vagues en mode clair */
-[data-theme="light"] #waves-canvas {
+[data-theme="disabled-light"] #waves-canvas {
   mix-blend-mode: multiply; /* bleu plus lisible sur fond clair */
   opacity: 0.95;
   filter: saturate(1.35) drop-shadow(0 0 6px rgba(0,118,255,0.35)) drop-shadow(0 0 14px rgba(0,140,255,0.25));

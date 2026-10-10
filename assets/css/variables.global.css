@@ -199,7 +199,7 @@
   --hero-wave-color-7: rgba(80,160,255,0.1);
 }
 
-[data-theme="light"] {
+[data-theme="disabled-light"] {
   --primary-bg: #f5f7fa;
   --text-primary: #1a1f29;
   --text-secondary: rgba(26, 31, 41, 0.85);

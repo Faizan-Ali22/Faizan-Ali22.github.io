@@ -181,7 +181,7 @@
 /* ========================================
    MODE CLAIR (overrides uniquement)
    ======================================== */
-[data-theme="light"][data-page="portfolio"] {
+[data-theme="disabled-light"][data-page="portfolio"] {
   /* Switch accent dérivé -> bleu hero */
   --edu-tabs-border: rgba(var(--accent-rgb),0.30);
   --edu-period-gradient: linear-gradient(135deg, rgba(var(--accent-rgb),0.30), rgba(var(--accent-rgb),0.18));

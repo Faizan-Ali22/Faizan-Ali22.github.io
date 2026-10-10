@@ -431,10 +431,7 @@
    * Initialise le thème au chargement
    */
   function initTheme() {
-    const savedTheme = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    
-    currentTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+    currentTheme = 'dark';
     document.documentElement.setAttribute('data-theme', currentTheme);
     document.body.setAttribute('data-theme', currentTheme);
   }

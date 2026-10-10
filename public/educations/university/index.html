@@ -17,16 +17,16 @@
 
 
 
-      <link rel="stylesheet" href="/css/variables.global.min.327d8877a7fcb725b5e65fce0bcbf7d7f23773b5743649411fbddc384f93a94b.css" integrity="sha256-Mn2Id6f8tyW15l/OC8v31/I3c7V0NklBH73cOE&#43;TqUs=" crossorigin="anonymous">
+      <link rel="stylesheet" href="/css/variables.global.min.da4cd47211533e0266c10bee2fe185bd2f6e3f9592cb5d6e7858089a83ba8d7a.css" integrity="sha256-2kzUchFTPgJmwQvuL&#43;GFvS9uP5WSy11ueFgImoO6jXo=" crossorigin="anonymous">
 
 
 
-      <link rel="stylesheet" href="/css/variables.portfolio.min.80ad2d94fa79616a30ebffeb5d0eb6afff745596892a76d9856dab2bcb6ca58f.css" integrity="sha256-gK0tlPp5YWow6//rXQ62r/90VZaJKnbZhW2rK8tspY8=" crossorigin="anonymous">
+      <link rel="stylesheet" href="/css/variables.portfolio.min.6b77d561464581f5faf97a5bea3c34a0a8f2d0774ff6401913b41eb28784e016.css" integrity="sha256-a3fVYUZFgfX6&#43;Xpb6jw0oKjy0HdP9kAZE7QesoeE4BY=" crossorigin="anonymous">
 
 
 
 
-      <link rel="stylesheet" href="/css/hero-background.min.5e1a4e5ff90bbf533ab83a69d7f19c30ddc86c41949bc8b274616df1b3694ab9.css" integrity="sha256-XhpOX/kLv1M6uDpp1/GcMN3IbEGUm8iydGFt8bNpSrk=" crossorigin="anonymous">
+      <link rel="stylesheet" href="/css/hero-background.min.bc3167a380a52888ee874cfe358a15a29cebf10d44f3ae756b3706ec3ba88704.css" integrity="sha256-vDFno4ClKIjuh0z&#43;NYoVopzr8Q1E8651azcG7DuohwQ=" crossorigin="anonymous">
 
 
 
@@ -222,7 +222,7 @@
       <script src="/js/notifications-manager.min.cc98dfd105d3dd5cb13638a5508357bcd990ab1c23651588671743734a619877.js" integrity="sha256-zJjf0QXT3VyxNjilUINXvNmQqxwjZRWIZxdDc0phmHc=" crossorigin="anonymous"></script>
 
 
-      <script src="/js/right-dock.min.47374320f5657d64ab75729283c501708cc022bb34b3d746023bc3879978dd11.js" integrity="sha256-RzdDIPVlfWSrdXKSg8UBcIzAIrs0s9dGAjvDh5l43RE=" crossorigin="anonymous"></script>
+      <script src="/js/right-dock.min.99519f390de385fd3dfa4ba415ba7e31dbbdf75f3cdb38be2f07683ac49d4f8e.js" integrity="sha256-mVGfOQ3jhf09&#43;kukFbp&#43;Mdu991882zi&#43;LwdoOsSdT44=" crossorigin="anonymous"></script>
 
 
       <script src="/js/personal-notifications-v2.min.56cbe2d3f9a4385c7098112a9be46099acc34954f4092e5b298a6c67d4d2c714.js" integrity="sha256-Vsvi0/mkOFxwmBEqm&#43;RgmazDSVT0CS5bKYpsZ9TSxxQ=" crossorigin="anonymous"></script>
@@ -366,7 +366,7 @@ if (!prefersReducedMotion) {
       
       readColors() {
         const cs = getComputedStyle(document.documentElement);
-        const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+        const isLight = false; 
         this.colors = [1,2,3,4,5,6,7].map(i => {
           let c = cs.getPropertyValue(`--hero-wave-color-${i}`).trim();
           if (isLight) {
