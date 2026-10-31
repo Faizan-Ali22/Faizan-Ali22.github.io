@@ -57,6 +57,21 @@
 #   icon: "gd"
 #   displayedInPortfolio: true
 
+- key: "tool_unity_xr"
+  name: "Unity XR"
+  icon: "🥽"
+  category: "vr"
+  description: "Unity XR Interaction Toolkit & spatial development"
+  experience: 2
+  displayedInPortfolio: true
+
+- key: "tool_oculus_sdk"
+  name: "Oculus SDK"
+  icon: "👓"
+  category: "vr"
+  description: "Meta XR / Oculus Integration SDK"
+  experience: 2
+  displayedInPortfolio: true
 - key: "tool_jira"
   iconPath: "/images/skills/jira.svg"
   category: "project_management"

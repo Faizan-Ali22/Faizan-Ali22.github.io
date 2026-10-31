@@ -2,6 +2,10 @@
 # 🎯 SPECIALTIES
 # ============================================================
 
+- key: "spec_vr_development"
+  icon: "🥽"
+  experience: 2
+  displayedInPortfolio: true
 - key: "spec_video_game_development"
   icon: "🎮"
   experience: 4

@@ -67,6 +67,11 @@
                                 {{ partial "icon.html" (dict "iconId" .type "size" "18") }}
                                 {{ .label }}
                             </button>
+                            {{ else if or (eq .type "video") (eq .type "play") }}
+                            <button class="btn-action {{ if .primary }}primary{{ end }}" onclick="openLocalVideoModal('{{ .url }}', '{{ .label }}');">
+                                {{ partial "icon.html" (dict "iconId" "play" "size" "18") }}
+                                {{ .label }}
+                            </button>
                             {{ else }}
                             <a href="{{ .url }}" {{ if ne .url "#" }}target="_blank"{{ end }} class="btn-action {{ if .primary }}primary{{ end }}">
                                 {{ partial "icon.html" (dict "iconId" .type "size" "18") }}
@@ -88,6 +93,11 @@
                             {{ end }}
                             <button class="btn-action {{ if .primary }}primary{{ end }}" onclick="openYouTubeModal('{{ $videoId }}', '{{ .label }}');">
                                 {{ partial "icon.html" (dict "iconId" .type "size" "18") }}
+                                {{ .label }}
+                            </button>
+                            {{ else if or (eq .type "video") (eq .type "play") }}
+                            <button class="btn-action {{ if .primary }}primary{{ end }}" onclick="openLocalVideoModal('{{ .url }}', '{{ .label }}');">
+                                {{ partial "icon.html" (dict "iconId" "play" "size" "18") }}
                                 {{ .label }}
                             </button>
                             {{ else }}
@@ -283,6 +293,17 @@
         </button>
         <img id="modalImage" src="" alt="">
         <div id="modalCaption" class="image-modal-caption"></div>
+    </div>
+</div>
+<!-- Video Modal for Local Demos -->
+<div id="localVideoModal" class="video-modal" onclick="closeLocalVideoModal()">
+    <div class="video-modal-content" onclick="event.stopPropagation()">
+        <span class="video-modal-close" onclick="closeLocalVideoModal()">&times;</span>
+        <video id="modalVideoPlayer" controls playsinline preload="metadata">
+            <source id="modalVideoSource" src="" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div id="videoModalCaption" class="video-modal-caption"></div>
     </div>
 </div>
 
@@ -487,6 +508,53 @@ function closeImageModal() {
     }, 300);
 }
 
+
+// Local Video Modal Functions
+function openLocalVideoModal(videoUrl, caption) {
+    const modal = document.getElementById('localVideoModal');
+    const player = document.getElementById('modalVideoPlayer');
+    const source = document.getElementById('modalVideoSource');
+    const captionEl = document.getElementById('videoModalCaption');
+    
+    if (modal && player && source) {
+        if (typeof window.pauseAllTestimonials === 'function') {
+            window.pauseAllTestimonials();
+        }
+        source.src = videoUrl;
+        player.load();
+        if (captionEl) captionEl.textContent = caption || '';
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+        setTimeout(() => {
+            modal.classList.add('active');
+            player.play().catch(() => {});
+        }, 10);
+    }
+}
+
+function closeLocalVideoModal() {
+    const modal = document.getElementById('localVideoModal');
+    const player = document.getElementById('modalVideoPlayer');
+    if (modal && player) {
+        player.pause();
+        modal.classList.remove('active');
+        if (typeof window.resumeAllTestimonials === 'function') {
+            window.resumeAllTestimonials();
+        }
+        setTimeout(() => {
+            modal.style.display = 'none';
+            player.currentTime = 0;
+            document.body.style.overflow = 'auto';
+        }, 300);
+    }
+}
+
+// Close video modal on Escape
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeLocalVideoModal();
+    }
+});
 // Close modal with Escape key
 document.addEventListener('keydown', function(event) {
     if (event.key === 'Escape') {

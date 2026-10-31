@@ -25,6 +25,7 @@
             {{ $appsWebEtudeCount := 0 }}
             {{ $modsCount := 0 }}
             {{ $toolsCount := 0 }}
+            {{ $vrCount := 0 }}
             
             {{ range where (where $.Site.RegularPages "Section" "projects") "Draft" false }}
                 {{ $allCount = add $allCount 1 }}
@@ -48,6 +49,8 @@
                     {{ $modsCount = add $modsCount 1 }}
                 {{ else if eq .Params.sector "tools" }}
                     {{ $toolsCount = add $toolsCount 1 }}
+                {{ else if or (hasPrefix .Params.sector "vr") (eq .Params.sector "virtual-reality") }}
+                    {{ $vrCount = add $vrCount 1 }}
                 {{ end }}
             {{ end }}
 
@@ -157,7 +160,7 @@
                                 "subtitle" .Params.subtitle
                                 "description" .Params.description
                                 "image" $projectImage
-                                "url" .Permalink
+                                "url" .RelPermalink
                                 "status" (cond (eq .Params.status "completed") "Completed" (cond (eq .Params.status "in-progress") "En cours" ""))
                             ) }}
                         </div>
@@ -201,6 +204,7 @@ document.addEventListener('DOMContentLoaded', function() {
             all: "{{ i18n "projects_description" | default "Explore my projects by area of expertise: video games, web applications, and developer tools." }}",
             games: "{{ i18n "projects_description_games" | default "Video game development projects, from prototyping to commercial production." }}",
             appsweb: "{{ i18n "projects_description_appsweb" | default "Modern web applications and full-stack solutions using the latest technologies." }}",
+            vr: "{{ i18n "projects_description_vr" | default "Immersive Virtual Reality simulations, interactive XR training tools, and spatial computing experiences." }}",
             mods: "{{ i18n "projects_description_mods" | default "Creative mods to enrich and extend existing games with new features." }}",
             tools: "{{ i18n "projects_description_tools" | default "Development tools, mods, and utilities to improve creative workflows." }}"
         };

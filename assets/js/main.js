@@ -204,6 +204,7 @@ document.addEventListener('DOMContentLoaded', function() {
             descriptions: window.PROJECT_DESCRIPTIONS || {
                 games: "Projets de développement de jeux vidéo, du prototypage à la production commerciale.",
                 "apps-web": "Applications web modernes et solutions full-stack utilisant les dernières technologies.",
+                vr: "Simulations immersives de réalité virtuelle, outils de formation XR interactifs et expériences spatiales.",
                 "mods-tools": "Outils de développement, mods et utilitaires pour améliorer les workflows créatifs."
             }
         });

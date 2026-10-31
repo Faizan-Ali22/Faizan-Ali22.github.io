@@ -14,6 +14,10 @@
             <span class="icon">💻</span>
             <span class="tab-label">{{ i18n "apps_web" | default "Apps/Web" }}</span>
         </button>
+        <button class="tab-btn" data-category="vr" data-tab="vr">
+            <span class="icon">🥽</span>
+            <span class="tab-label">{{ i18n "vr" | default "VR" }}</span>
+        </button>
         <button class="tab-btn" data-category="mods-tools" data-tab="mods-tools">
             <span class="icon">🛠️</span>
             <span class="tab-label">{{ i18n "mods_tools" | default "Mods & Tools" }}</span>
@@ -35,6 +39,8 @@
                     {{- $category = "games" -}}
                 {{- else if hasPrefix .Params.sector "appsweb" -}}
                     {{- $category = "apps-web" -}}
+                {{- else if or (hasPrefix .Params.sector "vr") (eq .Params.sector "virtual-reality") -}}
+                    {{- $category = "vr" -}}
                 {{- else if or (eq .Params.sector "mods") (eq .Params.sector "tools") -}}
                     {{- $category = "mods-tools" -}}
                 {{- end -}}
@@ -62,7 +68,7 @@
                             "subtitle" .Params.subtitle
                             "description" .Params.description
                             "image" $projectImage
-                            "url" .Permalink
+                            "url" .RelPermalink
                             "status" (cond (eq .Params.status "completed") (i18n "completed" | default "Completed") (cond (eq .Params.status "in-progress") (i18n "in_progress" | default "In Progress") ""))
                             "technologies" $allTechnologies
                             "maxTechnologies" 4

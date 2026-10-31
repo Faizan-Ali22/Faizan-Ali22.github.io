@@ -160,6 +160,7 @@
         descriptions: window.PROJECT_DESCRIPTIONS || {
           games: "Projets de d\xE9veloppement de jeux vid\xE9o, du prototypage \xE0 la production commerciale.",
           "apps-web": "Applications web modernes et solutions full-stack utilisant les derni\xE8res technologies.",
+          vr: "Simulations immersives de r\xE9alit\xE9 virtuelle, outils de formation XR interactifs et exp\xE9riences spatiales.",
           "mods-tools": "Outils de d\xE9veloppement, mods et utilitaires pour am\xE9liorer les workflows cr\xE9atifs."
         }
       });

@@ -24,6 +24,15 @@
 {{ else if eq $sector "appsweb-etude" }}
     {{ $sectorPrimary = "App" }}
     {{ $sectorSecondary = "Study" }}
+{{ else if eq $sector "vr-professionnel" }}
+    {{ $sectorPrimary = "VR" }}
+    {{ $sectorSecondary = "Client" }}
+{{ else if eq $sector "vr-personnel" }}
+    {{ $sectorPrimary = "VR" }}
+    {{ $sectorSecondary = "Personal" }}
+{{ else if hasPrefix $sector "vr" }}
+    {{ $sectorPrimary = "VR" }}
+    {{ $sectorSecondary = "" }}
 {{ else if eq $sector "mods" }}
     {{ $sectorPrimary = "Mods" }}
     {{ $sectorSecondary = "" }}
