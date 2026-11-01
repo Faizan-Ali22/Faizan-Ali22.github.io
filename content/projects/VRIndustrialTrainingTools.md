@@ -2,14 +2,14 @@
 title: "VR Industrial Training Tools"
 weight: 11
 description: "Client project: built a Unity XR jigsaw-machine and trade tools simulation library with cutting physics, custom shaders, Addressables architecture, and realistic haptics."
-image: "/images/projects/vr_industrial_training.jpg"
+image: "/images/projects/vr_industrial_training.png"
 
 date: 2026-02-15
 
 actions:
   - label: "GitHub"
     type: "github"
-    url: "https://github.com/Faizan-Ali22"
+    url: "https://github.com/Faizan-Ali22/Tools-Workshop-Vr"
     primary: true
   - label: "Watch Demo"
     type: "youtube"
